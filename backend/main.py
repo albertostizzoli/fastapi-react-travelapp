@@ -6,6 +6,23 @@ import os # per gestire i percorsi dei file
 
 app = FastAPI() # creo l'istanza di FastAPI
 
+# creo una classe Day per rappresentare i dati dei giorni di viaggio
+class Day(BaseModel):
+    date: str  # data
+    notes: str # note
+    photo: List[str] = [] # foto
+
+# creo una classe Travel per rappresentare i dati dei dettagli del viaggio
+class Travel(BaseModel):
+    town: str  # paese
+    city: str  # città
+    year: int  # anno
+    start_date: str  # data inizio
+    end_date: str  # data fine
+    general_vote: List[int] = None  # voto generale
+    votes: List[dict] = None  # voti
+    days: List[Day] = [] # giorni
+
 TRAVELS_FILE = "travels.json" # file dove verrano salvati i dati
 
 # creo una funzione per caricare i viaggi
