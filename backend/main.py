@@ -87,4 +87,18 @@ def update_travel(travel_id: int, updated_travel: Travel):
             return updated_travel
         
     raise HTTPException(status_code=404, detail="Viaggio non trovato")
+
+
+# creo una funzione per cancellare i viaggi
+@app.delete("/travels/{travel_id}")
+def delete_travel(travel_id: int):
+    travels = load_travels()
+
+    for i, travel in enumerate(travels):
+        if travel["id"] == travel_id:
+            travels.pop(i)  # rimuovo il viaggio dalla lista
+            write_data(travels)  # salvo i viaggi aggiornati
+            return {"messaggio": f"Viaggio eliminato con successo"}
+
+    raise HTTPException(status_code=404, detail="Viaggio non trovato")
     
