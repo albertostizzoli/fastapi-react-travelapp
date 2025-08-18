@@ -1,6 +1,6 @@
-from fastapi import FastAPI # importo FastAPI
+from fastapi import FastAPI # importo FastAPI 
 from pydantic import BaseModel # importo BaseModel per la validazione dei dati
-from typing import List 
+from typing import List, Optional
 import json # per gestire i dati in formato json
 import os # per gestire i percorsi dei file
 
@@ -8,26 +8,28 @@ app = FastAPI() # creo l'istanza di FastAPI
 
 # creo una classe Day per rappresentare i dati dei giorni di viaggio
 class Day(BaseModel):
+    id: Optional[int] = None
     date: str  # data
-    notes: str # note
+    notes: str # esperienze
     photo: List[str] = [] # foto
 
 # creo una classe Travel per rappresentare i dati dei dettagli del viaggio
 class Travel(BaseModel):
+    id: Optional[int] = None
     town: str  # paese
     city: str  # città
     year: int  # anno
     start_date: str  # data inizio
     end_date: str  # data fine
-    general_vote: List[int] = None  # voto generale
-    votes: List[dict] = None  # voti
+    general_vote: Optional[int] = None # voto generale
+    votes: Optional[dict] = None # voti
     days: List[Day] = [] # giorni
 
 TRAVELS_FILE = "travels.json" # file dove verrano salvati i dati
 
 # creo una funzione per caricare i viaggi
 def load_travels():
-    if not os.path(TRAVELS_FILE): # controllo se il file esiste
+    if not os.path.exists(TRAVELS_FILE): # controllo se il file esiste
         return []
     with open(TRAVELS_FILE, "r", encoding="utf-8") as f: # file aperto in modalità lettura
         return json.load(f) # dati caricati
@@ -47,4 +49,23 @@ def home():
 @app.get("/travels")
 def get_travels():
     return load_travels()
+
+# creo una funzione per aggiungere un nuovo viaggio
+@app.post("/travels")
+def add_travel(travel: Travel):
+    travels = load_travels()
+
+    # Genero un nuovo id per il viaggio
+    new_id = max([t["id"] for t in travels], default=0) + 1
+    travel.id = new_id
+
+    # Assegno id progressivi ai giorni
+    for i, day in enumerate(travel.days, start=1):
+        day.id = i
+
+    # Converto in dict e salvo
+    travels.append(travel.dict())
+    write_data(travels)
+
+    return travel
 
