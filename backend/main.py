@@ -43,3 +43,8 @@ def write_data(data):
 def home():
     return {"messaggio": "Ciao da FastAPI!"}
 
+# creo una funzione per ottenere tutti i viaggi
+@app.get("/travels")
+def get_travels():
+    return load_travels()
+
