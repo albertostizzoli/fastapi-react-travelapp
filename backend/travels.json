@@ -2,34 +2,33 @@
     {
         "id": 1,
         "town": "Italia",
-        "city": "Roma",
+        "city": "Milano",
         "year": 2024,
-        "start_date": "2024-04-12",
-        "end_date": "2024-04-18",
-        "general_vote": 4,
+        "start_date": "2024-05-01",
+        "end_date": "2024-05-05",
+        "general_vote": 5,
         "votes": {
-            "cibo": 5,
-            "paesaggio": 4,
-            "attività": 3,
+            "cibo": 4,
+            "paesaggio": 3,
+            "attività": 5,
             "svago": 4,
-            "relax": 2
+            "relax": 5
         },
         "days": [
             {
                 "id": 1,
-                "date": "2024-04-12",
-                "notes": "Visita al Colosseo",
+                "date": "2024-05-01",
+                "notes": "Duomo e Galleria Vittorio Emanuele",
                 "photo": [
-                    "colosseo.jpg",
-                    "fori.jpg"
+                    "duomo.jpg"
                 ]
             },
             {
                 "id": 2,
-                "date": "2024-04-13",
-                "notes": "Musei Vaticani",
+                "date": "2024-05-02",
+                "notes": "Castello Sforzesco",
                 "photo": [
-                    "vaticano.jpg"
+                    "castello.jpg"
                 ]
             }
         ]

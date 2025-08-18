@@ -68,3 +68,23 @@ def add_travel(travel: Travel):
     travels.append(travel.dict()) # converto in dict e salvo
     write_data(travels)
     return travel
+
+
+# creo una funzione per modificare i viaggi
+@app.put("/travels/{travel_id}")
+def update_travel(travel_id: int, updated_travel: Travel):
+    travels = load_travels()
+
+    for i, travel in enumerate(travels):
+        if travel["id"] == travel_id:
+            updated_travel.id = travel_id # mantengo lo stesso id
+
+            for j, day in enumerate(updated_travel.days, start=1): # aggiorno id dei giorni
+                day.id = j
+
+            travels[i] = updated_travel.dict()
+            write_data(travels)
+            return updated_travel
+        
+    raise HTTPException(status_code=404, detail="Viaggio non trovato")
+    
