@@ -120,4 +120,22 @@ def add_day_travel(travel_id: int, day: Day):
     raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
 
+# creo una funzione per poter cancellare un giorno dal viaggio
+@app.delete("/travels/{travel_id}/days/{day_id}")
+def delete_day_travel(travel_id: int, day_id: int):
+    travels = load_travels()
+
+    for travel in travels:
+        if travel["id"] == travel_id:
+            
+            for day in travel["days"]: # cerco il giorno da cancellare
+                if day["id"] == day_id: # se l'id del giorno corrisponde
+                    travel["days"].remove(day) # viene rimosso
+                    write_data(travels) # e i dati vengpno aggiornati
+                    return {"messaggio": f"Giorno {day_id} eliminato dal viaggio {travel_id}"}
+            
+            raise HTTPException(status_code=404, detail="Giorno non trovato")
+    raise HTTPException(status_code=404, detail="Viaggio non trovato")
+
+
     
