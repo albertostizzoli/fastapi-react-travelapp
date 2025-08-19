@@ -1,1 +1,45 @@
-[]
+[
+    {
+        "id": 1,
+        "town": "Italia",
+        "city": "Roma",
+        "year": 2024,
+        "start_date": "2024-04-12",
+        "end_date": "2024-04-18",
+        "general_vote": 4,
+        "votes": {
+            "cibo": 5,
+            "paesaggio": 4,
+            "attività": 3,
+            "svago": 4,
+            "relax": 2
+        },
+        "days": [
+            {
+                "id": 1,
+                "date": "2024-04-12",
+                "notes": "Visita al Colosseo",
+                "photo": [
+                    "colosseo.jpg",
+                    "fori.jpg"
+                ]
+            },
+            {
+                "id": 2,
+                "date": "2024-04-13",
+                "notes": "Musei Vaticani",
+                "photo": [
+                    "vaticano.jpg"
+                ]
+            },
+            {
+                "id": 3,
+                "date": "2024-04-14",
+                "notes": "Passeggiata a Trastevere",
+                "photo": [
+                    "trastevere.jpg"
+                ]
+            }
+        ]
+    }
+]

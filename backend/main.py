@@ -81,7 +81,6 @@ def update_travel(travel_id: int, updated_travel: Travel):
 
             for j, day in enumerate(updated_travel.days, start=1): # aggiorno id dei giorni
                 day.id = j
-
             travels[i] = updated_travel.dict()
             write_data(travels)
             return updated_travel
@@ -101,4 +100,24 @@ def delete_travel(travel_id: int):
             return {"messaggio": f"Viaggio eliminato con successo"}
 
     raise HTTPException(status_code=404, detail="Viaggio non trovato")
+
+
+# creo una funzione per poter aggiungere un giorno ad un viaggio
+@app.post("/travels/{travel_id}/days")
+def add_day_travel(travel_id: int, day: Day):
+    travels = load_travels()
+
+    for travel in travels:
+        if travel["id"] == travel_id:
+            new_day_id = max([d["id"] for d in travel["days"]], default=0) + 1 # calcolo nuovo id per il giorno
+            day.id = new_day_id
+
+            travel["days"].append(day.dict()) # aggiungo il giorno
+            write_data(travels) # salvo i dati aggiornati
+
+            return {"messaggio": f"Giorno aggiunto al viaggio", "day": day}
+
+    raise HTTPException(status_code=404, detail="Viaggio non trovato")
+
+
     
