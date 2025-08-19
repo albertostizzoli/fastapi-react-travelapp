@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException # importo FastAPI e HTTPException 
 from pydantic import BaseModel # importo BaseModel per la validazione dei dati
-from typing import List, Optional
+from typing import List, Optional  # Importo i tipi List e Optional per annotare funzioni e variabili
 import json # per gestire i dati in formato json
 import os # per gestire i percorsi dei file
 
