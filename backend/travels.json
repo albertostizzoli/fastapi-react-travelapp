@@ -20,8 +20,8 @@
                 "date": "2024-04-12",
                 "notes": "Visita al Colosseo",
                 "photo": [
-                    "colosseo.jpg",
-                    "fori.jpg"
+                    "/images/colosseo.jpg",
+                    "/images/fori.jpg"
                 ]
             },
             {
@@ -29,7 +29,7 @@
                 "date": "2024-04-13",
                 "notes": "Musei Vaticani",
                 "photo": [
-                    "vaticano.jpg"
+                    "/images/vaticano.jpg"
                 ]
             }
         ]

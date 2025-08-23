@@ -4,7 +4,18 @@ from typing import List, Optional  # Importo i tipi List e Optional per annotare
 import json # per gestire i dati in formato json
 import os # per gestire i percorsi dei file
 
+from fastapi.middleware.cors import CORSMiddleware # importo e configuro il middleware CORS
+
 app = FastAPI() # creo l'istanza di FastAPI
+
+# Abilito CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # creo una classe Day per rappresentare i dati dei giorni di viaggio
 class Day(BaseModel):
