@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";       // ✅ importa Home
 import AddTravel from "./pages/AddTravel"; // ✅ importa AddTravel
+import AddDay from "./pages/AddDay"; 
 
 function App() {
   return (
@@ -10,12 +11,14 @@ function App() {
       <nav className="p-4 bg-gray-200 flex gap-4">
         <Link to="/">🏠 Home</Link>
         <Link to="/add">➕ Aggiungi viaggio</Link>
+        <Link to="/addDay">➕ Aggiungi giorno</Link>
       </nav>
 
       {/* Rotte */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add" element={<AddTravel />} />
+        <Route path="/addDay" element={<AddDay />} />
       </Routes>
     </BrowserRouter>
   );

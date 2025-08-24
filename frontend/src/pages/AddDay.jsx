@@ -1,0 +1,156 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+function AddDay() {
+  const [travels, setTravels] = useState([]); // lista viaggi esistenti
+  const [selectedTravel, setSelectedTravel] = useState("");
+  const [form, setForm] = useState({
+    date: "",
+    notes: "",
+    photo: [""], // inizialmente una foto vuota
+  });
+  const [message, setMessage] = useState("");
+
+  // Carico i viaggi dal backend
+  useEffect(() => {
+    const fetchTravels = async () => {
+      try {
+        const res = await axios.get("http://127.0.0.1:8000/travels");
+        setTravels(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchTravels();
+  }, []);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handlePhotoChange = (index, value) => {
+    const newPhotos = [...form.photo];
+    newPhotos[index] = value;
+    setForm({ ...form, photo: newPhotos });
+  };
+
+  const addPhotoField = () => {
+    setForm({ ...form, photo: [...form.photo, ""] });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!selectedTravel) {
+      setMessage("❌ Devi selezionare un viaggio!");
+      return;
+    }
+
+    try {
+      const newDay = {
+        date: form.date,
+        notes: form.notes,
+        photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
+      };
+
+      await axios.post(
+        `http://127.0.0.1:8000/travels/${selectedTravel}/days`,
+        newDay
+      );
+
+      setMessage("✅ Giorno aggiunto con successo!");
+      setForm({ date: "", notes: "", photo: [""] });
+    } catch (err) {
+      console.error(err);
+      setMessage("❌ Errore durante l'aggiunta del giorno.");
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg border"
+      >
+        <h2 className="text-2xl font-bold mb-4">➕ Aggiungi un giorno a un viaggio</h2>
+
+        {/* Selezione viaggio */}
+        <div className="mb-4">
+          <label className="block text-gray-700">Seleziona viaggio</label>
+          <select
+            value={selectedTravel}
+            onChange={(e) => setSelectedTravel(e.target.value)}
+            className="w-full p-2 border rounded-lg"
+            required
+          >
+            <option value="">-- Seleziona --</option>
+            {travels.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.city} ({t.year})
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Data */}
+        <div className="mb-4">
+          <label className="block text-gray-700">Data</label>
+          <input
+            type="date"
+            name="date"
+            value={form.date}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded-lg"
+          />
+        </div>
+
+        {/* Note */}
+        <div className="mb-4">
+          <label className="block text-gray-700">Note</label>
+          <textarea
+            name="notes"
+            value={form.notes}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+            rows="3"
+          />
+        </div>
+
+        {/* Foto */}
+        <div className="mb-4">
+          <label className="block text-gray-700">Foto (URL)</label>
+          {form.photo.map((p, index) => (
+            <input
+              key={index}
+              type="text"
+              value={p}
+              onChange={(e) => handlePhotoChange(index, e.target.value)}
+              placeholder="Inserisci URL immagine"
+              className="w-full p-2 border rounded-lg mb-2"
+            />
+          ))}
+          <button
+            type="button"
+            onClick={addPhotoField}
+            className="text-blue-600 text-sm hover:underline"
+          >
+            ➕ Aggiungi un'altra foto
+          </button>
+        </div>
+
+        {/* Pulsante */}
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+        >
+          Aggiungi giorno
+        </button>
+
+        {message && <p className="mt-4 text-center">{message}</p>}
+      </form>
+    </div>
+  );
+}
+
+export default AddDay;

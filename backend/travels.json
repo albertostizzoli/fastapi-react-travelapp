@@ -20,8 +20,8 @@
                 "date": "2024-04-12",
                 "notes": "Visita al Colosseo",
                 "photo": [
-                    "/images/colosseo.jpg",
-                    "/images/fori.jpg"
+                    "https://tse1.mm.bing.net/th/id/OIP.XE-osTjROO9pDcOIUbPNrQHaE8?pid=Api&P=0&h=180",
+                    "https://tse2.mm.bing.net/th/id/OIP.7OWJUNFjL4RqorCMAlGyWgHaE8?pid=Api&P=0&h=180"
                 ]
             },
             {
@@ -29,7 +29,7 @@
                 "date": "2024-04-13",
                 "notes": "Musei Vaticani",
                 "photo": [
-                    "/images/vaticano.jpg"
+                    "https://tse3.mm.bing.net/th/id/OIP.CZa0Uq8DRHJvFRLc6fqloQHaFi?pid=Api&P=0&h=180"
                 ]
             }
         ]
@@ -49,6 +49,15 @@
             "svago": 3,
             "relax": 3
         },
-        "days": []
+        "days": [
+            {
+                "id": 1,
+                "date": "2025-08-13",
+                "notes": "Visita alla Tokyo Tower",
+                "photo": [
+                    "https://tse2.mm.bing.net/th/id/OIP.g1KpeTHeqDQVb2XpPWAtHwHaFj?pid=Api&P=0&h=180"
+                ]
+            }
+        ]
     }
 ]
