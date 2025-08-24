@@ -4,8 +4,8 @@
         "town": "Italia",
         "city": "Roma",
         "year": 2024,
-        "start_date": "2024-04-12",
-        "end_date": "2024-04-18",
+        "start_date": "12-04-2024",
+        "end_date": "18-04-2024",
         "general_vote": 4,
         "votes": {
             "cibo": 5,
@@ -17,7 +17,7 @@
         "days": [
             {
                 "id": 1,
-                "date": "2024-04-12",
+                "date": "12-04-2024",
                 "notes": "Visita al Colosseo",
                 "photo": [
                     "https://tse1.mm.bing.net/th/id/OIP.XE-osTjROO9pDcOIUbPNrQHaE8?pid=Api&P=0&h=180",
@@ -26,7 +26,7 @@
             },
             {
                 "id": 2,
-                "date": "2024-04-13",
+                "date": "13-04-2024",
                 "notes": "Musei Vaticani",
                 "photo": [
                     "https://tse3.mm.bing.net/th/id/OIP.CZa0Uq8DRHJvFRLc6fqloQHaFi?pid=Api&P=0&h=180"
@@ -39,8 +39,8 @@
         "town": "Giappone",
         "city": "Tokyo",
         "year": 2025,
-        "start_date": "2025-08-11",
-        "end_date": "2025-08-24",
+        "start_date": "11-08-2025",
+        "end_date": "24-08-2025",
         "general_vote": 2,
         "votes": {
             "cibo": 4,
@@ -52,10 +52,18 @@
         "days": [
             {
                 "id": 1,
-                "date": "2025-08-13",
+                "date": "13-08-2025",
                 "notes": "Visita alla Tokyo Tower",
                 "photo": [
                     "https://tse2.mm.bing.net/th/id/OIP.g1KpeTHeqDQVb2XpPWAtHwHaFj?pid=Api&P=0&h=180"
+                ]
+            },
+            {
+                "id": 2,
+                "date": "14-08-2025",
+                "notes": "Incrocio Shibuya Crossing",
+                "photo": [
+                    "https://tse2.mm.bing.net/th/id/OIP.vqmY_5gGASonl486gKS5mAHaFj?pid=Api&P=0&h=180"
                 ]
             }
         ]

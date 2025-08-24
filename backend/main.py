@@ -3,6 +3,7 @@ from pydantic import BaseModel # importo BaseModel per la validazione dei dati
 from typing import List, Optional  # Importo i tipi List e Optional per annotare funzioni e variabili
 import json # per gestire i dati in formato json
 import os # per gestire i percorsi dei file
+from datetime import datetime # importo datetime per formattare le date
 
 from fastapi.middleware.cors import CORSMiddleware # importo e configuro il middleware CORS
 
@@ -51,6 +52,14 @@ def write_data(data):
     with open(TRAVELS_FILE, "w", encoding="utf-8") as f: # file aperto in modalità scrittura
         json.dump(data, f, indent=4, ensure_ascii=False) #salvo i dati in formato JSON
 
+# creo una funzione per formattare le date
+def format_date(date_str: str) -> str:
+    try:
+        # converto da YYYY-MM-DD (ISO) → DD-MM-YYYY
+        return datetime.strptime(date_str, "%Y-%m-%d").strftime("%d-%m-%Y")
+    except ValueError:
+        return date_str  # se già formattata o non valida, la restituisco così com'è
+
 
 # creo una funzione per ottenere tutti i viaggi
 @app.get("/travels")
@@ -74,6 +83,11 @@ def add_travel(travel: Travel):
     travels = load_travels()
     new_id = max([t["id"] for t in travels], default=0) + 1 # genero un nuovo id per il viaggio
     travel.id = new_id
+
+     # formatto le date
+    travel.start_date = format_date(travel.start_date)
+    travel.end_date = format_date(travel.end_date)
+
     for i, day in enumerate(travel.days, start=1): # assegno id progressivi ai giorni
         day.id = i
     travels.append(travel.dict()) # converto in dict e salvo
@@ -122,6 +136,9 @@ def add_day_travel(travel_id: int, day: Day):
         if travel["id"] == travel_id:
             new_day_id = max([d["id"] for d in travel["days"]], default=0) + 1 # calcolo nuovo id per il giorno
             day.id = new_day_id
+
+            # formatto la data del giorno
+            day.date = format_date(day.date)
 
             travel["days"].append(day.dict()) # aggiungo il giorno
             write_data(travels) # salvo i dati aggiornati
