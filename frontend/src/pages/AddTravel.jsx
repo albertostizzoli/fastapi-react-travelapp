@@ -9,6 +9,11 @@ function AddTravel() {
     start_date: "",
     end_date: "",
     general_vote: "",
+    cibo: "",
+    paesaggio: "",
+    attività: "",
+    svago: "",
+    relax: "",
   });
 
   const [message, setMessage] = useState("");
@@ -22,15 +27,26 @@ function AddTravel() {
 
     try {
       const newTravel = {
-        ...form,
+        town: form.town,
+        city: form.city,
         year: parseInt(form.year),
+        start_date: form.start_date,
+        end_date: form.end_date,
         general_vote: form.general_vote ? parseInt(form.general_vote) : null,
-        days: [], // inizio vuoto
-        votes: {}, // inizio vuoto
+        days: [], // parte vuoto
+        votes: {
+          cibo: form.cibo ? parseInt(form.cibo) : null,
+          paesaggio: form.paesaggio ? parseInt(form.paesaggio) : null,
+          attività: form.attività ? parseInt(form.attività) : null,
+          svago: form.svago ? parseInt(form.svago) : null,
+          relax: form.relax ? parseInt(form.relax) : null,
+        },
       };
 
       await axios.post("http://127.0.0.1:8000/travels", newTravel);
       setMessage("✅ Viaggio aggiunto con successo!");
+
+      // reset form
       setForm({
         town: "",
         city: "",
@@ -38,6 +54,11 @@ function AddTravel() {
         start_date: "",
         end_date: "",
         general_vote: "",
+        cibo: "",
+        paesaggio: "",
+        attività: "",
+        svago: "",
+        relax: "",
       });
     } catch (err) {
       console.error(err);
@@ -132,10 +153,30 @@ function AddTravel() {
           />
         </div>
 
+        {/* Voti dettagliati */}
+        <h3 className="font-semibold text-lg mt-6 mb-2">Voti dettagliati</h3>
+
+        {["cibo", "paesaggio", "attività", "svago", "relax"].map((field) => (
+          <div key={field} className="mb-3">
+            <label className="block text-gray-700 capitalize">
+              {field} (1-5)
+            </label>
+            <input
+              type="number"
+              name={field}
+              min="1"
+              max="5"
+              value={form[field]}
+              onChange={handleChange}
+              className="w-full p-2 border rounded-lg"
+            />
+          </div>
+        ))}
+
         {/* Pulsante */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 mt-4"
         >
           Aggiungi viaggio
         </button>

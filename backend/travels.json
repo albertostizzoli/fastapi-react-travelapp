@@ -33,5 +33,22 @@
                 ]
             }
         ]
+    },
+    {
+        "id": 2,
+        "town": "Giappone",
+        "city": "Tokyo",
+        "year": 2025,
+        "start_date": "2025-08-11",
+        "end_date": "2025-08-24",
+        "general_vote": 2,
+        "votes": {
+            "cibo": 4,
+            "paesaggio": 2,
+            "attività": 4,
+            "svago": 3,
+            "relax": 3
+        },
+        "days": []
     }
 ]
