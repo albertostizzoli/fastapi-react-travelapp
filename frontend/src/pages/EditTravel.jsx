@@ -3,10 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function EditTravel() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [travel, setTravel] = useState(null);
+  const { id } = useParams(); // recupero l'ID del viaggio dall'URL
+  const navigate = useNavigate(); // hook per navigare fra le pagine
+  const [travel, setTravel] = useState(null); // per salvare i dati del viaggio
 
+  // recupero i viaggi dal backend
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/travels`)
@@ -17,11 +18,13 @@ function EditTravel() {
       .catch((err) => console.error(err));
   }, [id]);
 
+  // gestisce il cambiamento dei campi principali ( town, city...)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTravel({ ...travel, [name]: value });
   };
 
+  // gestisce il cambiamento dei voti (paesaggio, relax...)
   const handleVoteChange = (e) => {
     const { name, value } = e.target;
     setTravel({
@@ -30,6 +33,7 @@ function EditTravel() {
     });
   };
 
+  // invio dal form e aggiorna il backend
   const handleSubmit = (e) => {
     e.preventDefault();
     axios

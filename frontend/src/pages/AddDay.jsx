@@ -11,7 +11,7 @@ function AddDay() {
   });
   const [message, setMessage] = useState("");
 
-  // Carico i viaggi dal backend
+  // carico i viaggi dal backend
   useEffect(() => {
     const fetchTravels = async () => {
       try {
@@ -24,47 +24,52 @@ function AddDay() {
     fetchTravels();
   }, []);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+// gestisce il cambiamento di input generico (date, notes, ecc.)
+const handleChange = (e) => {
+  setForm({ ...form, [e.target.name]: e.target.value });
+};
 
-  const handlePhotoChange = (index, value) => {
-    const newPhotos = [...form.photo];
-    newPhotos[index] = value;
-    setForm({ ...form, photo: newPhotos });
-  };
+// gestisce il cambiamento di un campo foto specifico
+const handlePhotoChange = (index, value) => {
+  const newPhotos = [...form.photo];
+  newPhotos[index] = value;
+  setForm({ ...form, photo: newPhotos });
+};
 
-  const addPhotoField = () => {
-    setForm({ ...form, photo: [...form.photo, ""] });
-  };
+// aggiunge un nuovo campo foto vuoto al form
+const addPhotoField = () => {
+  setForm({ ...form, photo: [...form.photo, ""] });
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+// gestisce l'invio del form e salva il nuovo giorno nel backend
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!selectedTravel) {
-      setMessage("❌ Devi selezionare un viaggio!");
-      return;
-    }
+  if (!selectedTravel) {
+    setMessage("❌ Devi selezionare un viaggio!");
+    return;
+  }
 
-    try {
-      const newDay = {
-        date: form.date,
-        notes: form.notes,
-        photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
-      };
+  try {
+    const newDay = {
+      date: form.date,
+      notes: form.notes,
+      photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
+    };
 
-      await axios.post(
-        `http://127.0.0.1:8000/travels/${selectedTravel}/days`,
-        newDay
-      );
+    await axios.post(
+      `http://127.0.0.1:8000/travels/${selectedTravel}/days`,
+      newDay
+    );
 
-      setMessage("✅ Giorno aggiunto con successo!");
-      setForm({ date: "", notes: "", photo: [""] });
-    } catch (err) {
-      console.error(err);
-      setMessage("❌ Errore durante l'aggiunta del giorno.");
-    }
-  };
+    setMessage("✅ Giorno aggiunto con successo!");
+    setForm({ date: "", notes: "", photo: [""] });
+  } catch (err) {
+    console.error(err);
+    setMessage("❌ Errore durante l'aggiunta del giorno.");
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">

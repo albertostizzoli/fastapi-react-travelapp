@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function AddTravel() {
+  // stato del form con tutti i campi del viaggio
   const [form, setForm] = useState({
     town: "",
     city: "",
@@ -16,16 +17,20 @@ function AddTravel() {
     relax: "",
   });
 
+  // stato per mostrare messaggi di conferma/errore
   const [message, setMessage] = useState("");
 
+  // gestisce il cambiamento dei campi input del form
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // gestisce l’invio del form e salva un nuovo viaggio nel backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // creo l'oggetto viaggio da inviare all’API
       const newTravel = {
         town: form.town,
         city: form.city,
@@ -33,7 +38,7 @@ function AddTravel() {
         start_date: form.start_date,
         end_date: form.end_date,
         general_vote: form.general_vote ? parseInt(form.general_vote) : null,
-        days: [], // parte vuoto
+        days: [], // inizialmente vuoto
         votes: {
           cibo: form.cibo ? parseInt(form.cibo) : null,
           paesaggio: form.paesaggio ? parseInt(form.paesaggio) : null,
@@ -43,10 +48,11 @@ function AddTravel() {
         },
       };
 
+      // invio al backend
       await axios.post("http://127.0.0.1:8000/travels", newTravel);
       setMessage("✅ Viaggio aggiunto con successo!");
 
-      // reset form
+      // il form si resetta dopo l'invio
       setForm({
         town: "",
         city: "",
@@ -65,6 +71,7 @@ function AddTravel() {
       setMessage("❌ Errore durante l'aggiunta del viaggio.");
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
