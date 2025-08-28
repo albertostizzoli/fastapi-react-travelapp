@@ -2,7 +2,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";       // ✅ importa Home
 import AddTravel from "./pages/AddTravel"; // ✅ importa AddTravel
-import AddDay from "./pages/AddDay"; 
+import AddDay from "./pages/AddDay";
+import TravelDays from "./pages/TravelDays"; 
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/add" element={<AddTravel />} />
         <Route path="/addDay" element={<AddDay />} />
+        <Route path="/travels/:id/days" element={<TravelDays />} />
       </Routes>
     </BrowserRouter>
   );

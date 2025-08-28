@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Home() {
@@ -67,33 +68,13 @@ function Home() {
                   </div>
                 )}
 
-                {/* giorni */}
-                <div>
-                  <h3 className="font-semibold text-gray-800 mb-2">Giorni:</h3>
-                  <ul className="space-y-3">
-                    {v.days.map((d) => (
-                      <li
-                        key={d.id}
-                        className="p-3 bg-gray-50 rounded-lg border border-gray-200"
-                      >
-                        <p className="text-sm text-gray-500">{d.date}</p>
-                        <p className="font-medium">{d.notes}</p>
-                        {d.photo.length > 0 && (
-                          <div className="flex gap-2 mt-2 flex-wrap">
-                            {d.photo.map((p, i) => (
-                              <img
-                                key={i}
-                                src={p}
-                                alt="foto viaggio"
-                                className="w-20 h-20 object-cover rounded-lg border"
-                              />
-                            ))}
-                          </div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {/* Pulsante che porta ai giorni */}
+              <Link
+                to={`/travels/${v.id}/days`}
+                className="p-2 bg-blue-100 hover:bg-blue-200 rounded-full"
+                title="Vai ai giorni"
+              >➡ Dettagli Giorno
+              </Link>
               </div>
             )}
           </div>
