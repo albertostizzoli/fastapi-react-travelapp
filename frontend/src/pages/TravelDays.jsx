@@ -53,9 +53,9 @@ function TravelDays() {
 
         <Link
           to="/"
-          className="inline-block mt-6 text-blue-600 hover:underline"
+          className=" p-2 inline-block mt-6 bg-blue-500 hover:bg-blue-400 rounded-full text-white"
         >
-          ⬅️ Torna ai viaggi
+        Torna ai viaggi
         </Link>
       </div>
     </div>

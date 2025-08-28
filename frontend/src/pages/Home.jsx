@@ -50,8 +50,12 @@ function Home() {
             {openTravel === v.id && (
               <div className="px-4 pb-4 border-t">
                 <p className="text-gray-700 font-medium mt-2 mb-4">
-                  Anno: {v.year} | Voto generale: ⭐ {v.general_vote}
+                  Anno: {v.year} | Voto generale:{" "}
+                  {Array.from({ length: v.general_vote || 0 }, (_, i) => (
+                    <span key={i}>⭐</span>
+                  ))}
                 </p>
+
 
                 {/* voti */}
                 {v.votes && (
@@ -61,20 +65,25 @@ function Home() {
                       {Object.entries(v.votes).map(([key, value]) => (
                         <li key={key} className="flex justify-between">
                           <span className="capitalize">{key}:</span>
-                          <span>⭐ {value}</span>
+                          <span>
+                            {Array.from({ length: value }, (_, i) => (
+                              <span key={i}>⭐</span>
+                            ))}
+                          </span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
 
+
                 {/* Pulsante che porta ai giorni */}
-              <Link
-                to={`/travels/${v.id}/days`}
-                className="p-2 bg-blue-100 hover:bg-blue-200 rounded-full"
-                title="Vai ai giorni"
-              >➡ Dettagli Giorno
-              </Link>
+                <Link
+                  to={`/travels/${v.id}/days`}
+                  className="p-2 bg-blue-500 hover:bg-blue-400 rounded-full text-white"
+                  title="Vai ai giorni"
+                >Dettagli Giorno
+                </Link>
               </div>
             )}
           </div>
