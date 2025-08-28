@@ -77,13 +77,23 @@ function Home() {
                 )}
 
 
-                {/* Pulsante che porta ai giorni */}
-                <Link
-                  to={`/travels/${v.id}/days`}
-                  className="p-2 bg-blue-500 hover:bg-blue-400 rounded-full text-white"
-                  title="Vai ai giorni"
-                >Dettagli Giorno
-                </Link>
+                {/* Pulsanti sotto l'accordion */}
+                <div className="flex gap-3">
+                  <Link
+                    to={`/travels/${v.id}/days`}
+                    className="p-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white"
+                  >
+                    Dettagli Giorno
+                  </Link>
+
+                  <Link
+                    to={`/travels/${v.id}/edit`}
+                    className="p-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg"
+                  >
+                    Modifica Viaggio 
+                  </Link>
+                </div>
+
               </div>
             )}
           </div>

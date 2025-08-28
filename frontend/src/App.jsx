@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from "./pages/Home";       // ✅ importa Home
-import AddTravel from "./pages/AddTravel"; // ✅ importa AddTravel
-import AddDay from "./pages/AddDay";
-import TravelDays from "./pages/TravelDays"; 
+import Home from "./pages/Home";       // pagina Home Principale
+import AddTravel from "./pages/AddTravel"; //  pagina Aggiungi Viaggio
+import AddDay from "./pages/AddDay"; // pagina Aggiungi Giorno
+import TravelDays from "./pages/TravelDays"; // pagina Dettagli Viaggio
+import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/add" element={<AddTravel />} />
         <Route path="/addDay" element={<AddDay />} />
         <Route path="/travels/:id/days" element={<TravelDays />} />
+        <Route path="/travels/:id/edit" element={<EditTravel />} />
       </Routes>
     </BrowserRouter>
   );

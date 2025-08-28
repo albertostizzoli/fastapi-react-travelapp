@@ -41,10 +41,10 @@
         "year": 2025,
         "start_date": "11-08-2025",
         "end_date": "24-08-2025",
-        "general_vote": 2,
+        "general_vote": 4,
         "votes": {
             "cibo": 4,
-            "paesaggio": 2,
+            "paesaggio": 4,
             "attività": 4,
             "svago": 3,
             "relax": 3
