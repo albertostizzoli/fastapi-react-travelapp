@@ -33,39 +33,5 @@
                 ]
             }
         ]
-    },
-    {
-        "id": 2,
-        "town": "Giappone",
-        "city": "Tokyo",
-        "year": 2025,
-        "start_date": "11-08-2025",
-        "end_date": "24-08-2025",
-        "general_vote": 4,
-        "votes": {
-            "cibo": 4,
-            "paesaggio": 4,
-            "attività": 4,
-            "svago": 3,
-            "relax": 3
-        },
-        "days": [
-            {
-                "id": 1,
-                "date": "13-08-2025",
-                "notes": "Visita alla Tokyo Tower",
-                "photo": [
-                    "https://tse2.mm.bing.net/th/id/OIP.g1KpeTHeqDQVb2XpPWAtHwHaFj?pid=Api&P=0&h=180"
-                ]
-            },
-            {
-                "id": 2,
-                "date": "14-08-2025",
-                "notes": "Incrocio Shibuya Crossing",
-                "photo": [
-                    "https://tse2.mm.bing.net/th/id/OIP.vqmY_5gGASonl486gKS5mAHaFj?pid=Api&P=0&h=180"
-                ]
-            }
-        ]
     }
 ]

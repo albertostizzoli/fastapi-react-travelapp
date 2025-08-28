@@ -5,7 +5,9 @@ import axios from "axios";
 function Home() {
   const [travels, setTravels] = useState([]);
   const [openTravel, setOpenTravel] = useState(null); // id viaggio aperto
+  const [deleteId, setDeleteId] = useState(null); // id viaggio da eliminare
 
+// uso lo useEffect per ottenere i dati dei viaggi
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/travels")
@@ -13,11 +15,23 @@ function Home() {
       .catch((err) => console.error(err));
   }, []);
 
+  // mi serve per ottenere l'effetto di apertura dell'accordion
   const toggleAccordion = (id) => {
     setOpenTravel(openTravel === id ? null : id);
   };
 
-  return (
+  // con questa cancello tutti i dati del viaggio
+  const handleDelete = () => {
+    axios
+      .delete(`http://127.0.0.1:8000/travels/${deleteId}`)
+      .then(() => {
+        setTravels(travels.filter((t) => t.id !== deleteId)); // aggiorna lista
+        setDeleteId(null); // chiudi modale
+      })
+      .catch((err) => console.error(err));
+  };
+
+    return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold text-center mb-8">🌍 I miei viaggi</h1>
 
@@ -45,7 +59,6 @@ function Home() {
               </span>
             </button>
 
-
             {/* contenuto accordion */}
             {openTravel === v.id && (
               <div className="px-4 pb-4 border-t">
@@ -55,7 +68,6 @@ function Home() {
                     <span key={i}>⭐</span>
                   ))}
                 </p>
-
 
                 {/* voti */}
                 {v.votes && (
@@ -76,7 +88,6 @@ function Home() {
                   </div>
                 )}
 
-
                 {/* Pulsanti sotto l'accordion */}
                 <div className="flex gap-3">
                   <Link
@@ -88,17 +99,48 @@ function Home() {
 
                   <Link
                     to={`/travels/${v.id}/edit`}
-                    className="p-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg"
+                    className="p-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white"
                   >
-                    Modifica Viaggio 
+                    Modifica Viaggio
                   </Link>
-                </div>
 
+                  <button
+                    onClick={() => setDeleteId(v.id)}
+                    className="p-2 bg-red-600 hover:bg-red-500 rounded-lg text-white"
+                  >
+                    Elimina Viaggio
+                  </button>
+                </div>
               </div>
             )}
           </div>
         ))}
       </div>
+
+      {/* Modale di conferma eliminazione */}
+      {deleteId && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-96 text-center">
+            <h2 className="text-xl font-bold mb-4">
+              Sei sicuro di voler cancellare il viaggio?
+            </h2>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleDelete}
+                className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg"
+              >
+               Sì
+              </button>
+              <button
+                onClick={() => setDeleteId(null)}
+                className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+              >
+               No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
