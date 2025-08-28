@@ -4,24 +4,25 @@
         "town": "Italia",
         "city": "Roma",
         "year": 2024,
-        "start_date": "12-04-2024",
-        "end_date": "18-04-2024",
-        "general_vote": 4,
+        "start_date": "08-10-2024",
+        "end_date": "20-10-2024",
+        "general_vote": 3,
         "votes": {
-            "cibo": 5,
-            "paesaggio": 4,
-            "attività": 3,
-            "svago": 4,
+            "cibo": 4,
+            "paesaggio": 3,
+            "attività": 2,
+            "svago": 2,
             "relax": 2
         },
         "days": [
             {
                 "id": 1,
-                "date": "12-04-2024",
+                "date": "10-08-2024",
                 "notes": "Visita al Colosseo",
+                "description": "Oggi sono stato al Colosseo: è enorme e mozzafiato, camminare tra le gradinate fa sentire la storia viva. I sotterranei sono incredibili, non riesco a smettere di immaginare i gladiatori e gli spettacoli di un tempo.",
                 "photo": [
-                    "https://tse1.mm.bing.net/th/id/OIP.XE-osTjROO9pDcOIUbPNrQHaE8?pid=Api&P=0&h=180",
-                    "https://tse2.mm.bing.net/th/id/OIP.7OWJUNFjL4RqorCMAlGyWgHaE8?pid=Api&P=0&h=180"
+                    "https://tse1.mm.bing.net/th/id/OIP.TwMOfIWvMw181O0K2ICJRgHaE4?pid=Api&P=0&h=180",
+                    "https://tse2.mm.bing.net/th/id/OIP.HJSMGrp5DdH1oeYDhGrvHwHaGG?pid=Api&P=0&h=180"
                 ]
             }
         ]

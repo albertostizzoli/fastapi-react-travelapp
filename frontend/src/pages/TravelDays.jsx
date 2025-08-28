@@ -68,6 +68,7 @@ function TravelDays() {
                       ))}
                     </div>
                   )}
+                  <p className="text-sm text-gray-500">{d.description}</p>
                 </div>
                 <button
                   onClick={() => setDeleteDayId(d.id)}

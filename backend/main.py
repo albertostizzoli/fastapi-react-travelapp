@@ -22,7 +22,8 @@ app.add_middleware(
 class Day(BaseModel):
     id: Optional[int] = None
     date: str  # data
-    notes: str # esperienze
+    notes: str # titolo giornata
+    description: str # descrizione giornata
     photo: List[str] = [] # foto
 
 # creo una classe Travel per rappresentare i dati dei dettagli del viaggio

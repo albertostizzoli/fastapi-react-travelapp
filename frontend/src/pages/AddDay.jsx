@@ -7,6 +7,7 @@ function AddDay() {
   const [form, setForm] = useState({
     date: "",
     notes: "",
+    description: "",
     photo: [""], // inizialmente una foto vuota
   });
   const [message, setMessage] = useState("");
@@ -54,6 +55,7 @@ const handleSubmit = async (e) => {
     const newDay = {
       date: form.date,
       notes: form.notes,
+      description: form.description,
       photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
     };
 
@@ -63,7 +65,7 @@ const handleSubmit = async (e) => {
     );
 
     setMessage("✅ Giorno aggiunto con successo!");
-    setForm({ date: "", notes: "", photo: [""] });
+    setForm({ date: "", notes: "", description: "", photo: [""] });
   } catch (err) {
     console.error(err);
     setMessage("❌ Errore durante l'aggiunta del giorno.");
@@ -110,12 +112,23 @@ const handleSubmit = async (e) => {
           />
         </div>
 
-        {/* Note */}
+        {/* Titolo */}
         <div className="mb-4">
-          <label className="block text-gray-700">Note</label>
-          <textarea
+          <label className="block text-gray-700">Titolo</label>
+          <input
             name="notes"
             value={form.notes}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </div>
+
+        {/* Descrizione */}
+        <div className="mb-4">
+          <label className="block text-gray-700">Riassunto della giornata</label>
+          <textarea
+            name="description"
+            value={form.description}
             onChange={handleChange}
             className="w-full p-2 border rounded-lg"
             rows="3"
