@@ -34,7 +34,7 @@ class Travel(BaseModel):
     year: int  # anno
     start_date: str  # data inizio
     end_date: str  # data fine
-    general_vote: Optional[int] = None # voto generale
+    general_vote: Optional[float] = None # voto generale
     votes: Optional[dict] = None # voti
     days: List[Day] = [] # giorni
 

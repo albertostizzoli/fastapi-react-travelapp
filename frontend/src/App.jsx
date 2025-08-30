@@ -33,8 +33,13 @@ function Layout({ children }) {
     >
       {/* Navbar solo nella Home */}
       {location.pathname === "/" && (
-        <nav className="p-4 bg-transparent text-white flex gap-4 justify-end">
-          <Link to="/add">➕ Aggiungi viaggio</Link>
+        <nav className="p-3 bg-transparent text-white flex gap-4 justify-end">
+          <Link
+            to="/add"
+            className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105"
+          >
+            Aggiungi Viaggio
+          </Link>
         </nav>
       )}
 

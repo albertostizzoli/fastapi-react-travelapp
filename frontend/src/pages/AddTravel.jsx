@@ -9,7 +9,6 @@ function AddTravel() {
     year: "",
     start_date: "",
     end_date: "",
-    general_vote: "",
     cibo: "",
     paesaggio: "",
     attività: "",
@@ -25,11 +24,29 @@ function AddTravel() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // calcolo la media dei voti 
+  const calculateGeneralVote = () => {
+    const votes = ["cibo", "paesaggio", "attività", "svago", "relax"]
+      .map((field) => parseFloat(form[field]))
+      .filter((v) => !isNaN(v));
+
+    if (votes.length === 0) return null;
+
+    const avg = votes.reduce((a, b) => a + b, 0) / votes.length;
+    return avg.toFixed(1); // restituisce una stringa con 1 decimale, es. "3.6"
+  };
+
+
   // gestisce l’invio del form e salva un nuovo viaggio nel backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // calcolo il voto generale come media
+      const general_vote = calculateGeneralVote()
+        ? parseFloat(calculateGeneralVote())
+        : null;
+
       // creo l'oggetto viaggio da inviare all’API
       const newTravel = {
         town: form.town,
@@ -37,7 +54,7 @@ function AddTravel() {
         year: parseInt(form.year),
         start_date: form.start_date,
         end_date: form.end_date,
-        general_vote: form.general_vote ? parseInt(form.general_vote) : null,
+        general_vote: general_vote, // calcolato
         days: [], // inizialmente vuoto
         votes: {
           cibo: form.cibo ? parseInt(form.cibo) : null,
@@ -59,7 +76,6 @@ function AddTravel() {
         year: "",
         start_date: "",
         end_date: "",
-        general_vote: "",
         cibo: "",
         paesaggio: "",
         attività: "",
@@ -72,9 +88,8 @@ function AddTravel() {
     }
   };
 
-
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-transparent p-6 overflow-hidden">
+    <div className=" flex items-center justify-center bg-transparent p-6 overflow-hidden">
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-lg border"
@@ -107,32 +122,30 @@ function AddTravel() {
           </div>
         </div>
 
-        {/* Anno e Voto generale */}
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-black">Anno</label>
-            <input
-              type="number"
-              name="year"
-              value={form.year}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded-lg"
-            />
-          </div>
-          <div>
-            <label className="block text-black">Voto generale (1-5)</label>
-            <input
-              type="number"
-              name="general_vote"
-              min="1"
-              max="5"
-              value={form.general_vote}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
-            />
-          </div>
+        {/* Anno */}
+        <div className="mb-4">
+          <label className="block text-black">Anno</label>
+          <input
+            type="number"
+            name="year"
+            value={form.year}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded-lg"
+          />
         </div>
+
+        {/* Media Voto */}
+        <div className="mb-4">
+          <label className="mb-1 text-black">Media Voto</label>
+          <input
+            type="text"
+            value={calculateGeneralVote() ?? "-"}
+            readOnly
+            className="w-full p-2 border font-semibold rounded "
+          />
+        </div>
+
 
         {/* Date */}
         <div className="grid grid-cols-2 gap-4 mb-4">
@@ -165,12 +178,13 @@ function AddTravel() {
         <div className="grid grid-cols-2 gap-4">
           {["cibo", "paesaggio", "attività", "svago", "relax"].map((field) => (
             <div key={field}>
-              <label className="block text-black capitalize">{field} (1-5)</label>
+              <label className="block text-black capitalize">{field}</label>
               <input
                 type="number"
                 name={field}
                 min="1"
                 max="5"
+                step="0.1"
                 value={form[field]}
                 onChange={handleChange}
                 className="w-full p-2 border rounded-lg"
@@ -182,7 +196,7 @@ function AddTravel() {
         {/* Pulsante */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 mt-4 cursor-pointer"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 mt-4 cursor-pointer transition hover:scale-105"
         >
           Aggiungi viaggio
         </button>
@@ -191,7 +205,6 @@ function AddTravel() {
       </form>
     </div>
   );
-
 }
 
 export default AddTravel;

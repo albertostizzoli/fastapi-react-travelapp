@@ -173,7 +173,7 @@ function AddDay() {
         {/* Pulsante */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 cursor-pointer"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105"
         >
           Aggiungi giorno
         </button>
