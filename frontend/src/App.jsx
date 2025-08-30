@@ -1,29 +1,62 @@
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import Home from "./pages/Home";       // pagina Home Principale
 import AddTravel from "./pages/AddTravel"; //  pagina Aggiungi Viaggio
 import AddDay from "./pages/AddDay"; // pagina Aggiungi Giorno
 import TravelDays from "./pages/TravelDays"; // pagina Dettagli Viaggio
 import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
 
-function App() {
+function Layout({ children }) {
+  const location = useLocation();
+
+  // immagini diverse per ogni rotta
+  const backgrounds = {
+    "/": "url('/images/colosseo.jpg')",
+    "/add": "url('/images/giappone.jpg')",
+    "/addDay": "url('/images/addday-bg.jpg')",
+  };
+
+  // gestiamo anche rotte dinamiche
+  if (location.pathname.includes("/travels") && location.pathname.includes("/days")) {
+    backgrounds[location.pathname] = "url('/images/traveldays-bg.jpg')";
+  }
+  if (location.pathname.includes("/travels") && location.pathname.includes("/edit")) {
+    backgrounds[location.pathname] = "url('/images/edittravel-bg.jpg')";
+  }
+
+  const bgImage = backgrounds[location.pathname] || "url('/images/default-bg.jpg')";
+
   return (
-    <BrowserRouter>
+    <div
+      className="min-h-screen bg-cover bg-center"
+      style={{ backgroundImage: bgImage }}
+    >
       {/* Navbar */}
-      <nav className="p-4 bg-gray-200 flex gap-4">
+      <nav className="p-4 bg-transparent text-white flex gap-4">
         <Link to="/">🏠 Home</Link>
         <Link to="/add">➕ Aggiungi viaggio</Link>
         <Link to="/addDay">➕ Aggiungi giorno</Link>
       </nav>
 
-      {/* Rotte */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/add" element={<AddTravel />} />
-        <Route path="/addDay" element={<AddDay />} />
-        <Route path="/travels/:id/days" element={<TravelDays />} />
-        <Route path="/travels/:id/edit" element={<EditTravel />} />
-      </Routes>
+      {/* Contenuto pagina */}
+      <div className="p-8">{children}</div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Layout>
+        {/* Rotte */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/add" element={<AddTravel />} />
+          <Route path="/addDay" element={<AddDay />} />
+          <Route path="/travels/:id/days" element={<TravelDays />} />
+          <Route path="/travels/:id/edit" element={<EditTravel />} />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }
