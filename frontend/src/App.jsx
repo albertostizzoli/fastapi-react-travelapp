@@ -13,15 +13,15 @@ function Layout({ children }) {
   const backgrounds = {
     "/": "url('/images/colosseo.jpg')",
     "/add": "url('/images/giappone.jpg')",
-    "/addDay": "url('/images/addday-bg.jpg')",
+    "/addDay": "url('/images/newyork.jpg')",
   };
 
   // gestiamo anche rotte dinamiche
   if (location.pathname.includes("/travels") && location.pathname.includes("/days")) {
-    backgrounds[location.pathname] = "url('/images/traveldays-bg.jpg')";
+    backgrounds[location.pathname] = "url('/images/paris.jpg')";
   }
   if (location.pathname.includes("/travels") && location.pathname.includes("/edit")) {
-    backgrounds[location.pathname] = "url('/images/edittravel-bg.jpg')";
+    backgrounds[location.pathname] = "url('/images/london.jpg')";
   }
 
   const bgImage = backgrounds[location.pathname] || "url('/images/default-bg.jpg')";

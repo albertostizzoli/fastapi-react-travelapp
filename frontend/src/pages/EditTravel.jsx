@@ -48,14 +48,14 @@ function EditTravel() {
   if (!travel) return <p className="text-center">Caricamento...</p>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-transparent p-8">
       <h1 className="text-2xl font-bold text-center mb-6">
         ✏️ Modifica Viaggio
       </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-xl mx-auto bg-white shadow-lg rounded-2xl p-6 space-y-4"
+        className="max-w-xl mx-auto bg-transparent shadow-lg rounded-2xl p-6 space-y-4"
       >
         <input
           type="text"

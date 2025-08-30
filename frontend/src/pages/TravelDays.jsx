@@ -35,7 +35,7 @@ function TravelDays() {
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-transparent p-8">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-2xl font-bold mb-4">
           📍 {travel.town} - {travel.city}
@@ -50,7 +50,7 @@ function TravelDays() {
           {travel.days.map((d) => (
             <li
               key={d.id}
-              className="p-3 bg-white shadow rounded-lg border border-gray-200"
+              className="p-3 bg-transparent shadow rounded-lg border border-gray-200"
             >
               <div className="flex justify-between items-start">
                 <div>

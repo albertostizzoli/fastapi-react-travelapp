@@ -74,10 +74,10 @@ const handleSubmit = async (e) => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-transparent p-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg border"
+        className="bg-transparent shadow-lg rounded-2xl p-6 w-full max-w-lg border"
       >
         <h2 className="text-2xl font-bold mb-4">➕ Aggiungi un giorno a un viaggio</h2>
 
