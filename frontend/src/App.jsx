@@ -24,19 +24,19 @@ function Layout({ children }) {
     backgrounds[location.pathname] = "url('/images/london.jpg')";
   }
 
-  const bgImage = backgrounds[location.pathname] || "url('/images/default-bg.jpg')";
+  const bgImage = backgrounds[location.pathname];
 
   return (
     <div
       className="min-h-screen bg-cover bg-center"
       style={{ backgroundImage: bgImage }}
     >
-      {/* Navbar */}
-      <nav className="p-4 bg-transparent text-white flex gap-4">
-        <Link to="/">🏠 Home</Link>
-        <Link to="/add">➕ Aggiungi viaggio</Link>
-        <Link to="/addDay">➕ Aggiungi giorno</Link>
-      </nav>
+      {/* Navbar solo nella Home */}
+      {location.pathname === "/" && (
+        <nav className="p-4 bg-transparent text-white flex gap-4 justify-end">
+          <Link to="/add">➕ Aggiungi viaggio</Link>
+        </nav>
+      )}
 
       {/* Contenuto pagina */}
       <div className="p-8">{children}</div>

@@ -39,7 +39,7 @@ function Home() {
         {travels.map((v) => (
           <div
             key={v.id}
-            className="bg-white shadow-lg rounded-2xl border border-gray-200"
+            className="backdrop-blur-xl shadow-lg rounded-2xl border border-gray-200"
           >
             {/* intestazione accordion */}
             <button
@@ -47,14 +47,14 @@ function Home() {
               className="w-full flex justify-between items-center p-4 text-left"
             >
               <div>
-                <h2 className="text-lg font-semibold">
+                <h2 className="text-lg font-semibold text-white">
                   {v.town} - {v.city}
                 </h2>
-                <p className="text-gray-600 text-sm">
+                <p className="text-white text-sm">
                   📅 {v.start_date} → {v.end_date}
                 </p>
               </div>
-              <span className="text-gray-600">
+              <span className="text-gray-800">
                 {openTravel === v.id ? "▲" : "▼"}
               </span>
             </button>
@@ -62,7 +62,7 @@ function Home() {
             {/* contenuto accordion */}
             {openTravel === v.id && (
               <div className="px-4 pb-4 border-t">
-                <p className="text-gray-700 font-medium mt-2 mb-4">
+                <p className="text-white font-medium mt-2 mb-4">
                   Anno: {v.year} | Voto generale:{" "}
                   {Array.from({ length: v.general_vote || 0 }, (_, i) => (
                     <span key={i}>⭐</span>
@@ -72,8 +72,8 @@ function Home() {
                 {/* voti */}
                 {v.votes && (
                   <div className="mb-4">
-                    <h3 className="font-semibold text-gray-800 mb-2">Voti:</h3>
-                    <ul className="grid grid-cols-2 gap-2 text-sm text-gray-700">
+                    <h3 className="font-semibold text-white mb-2">Voti:</h3>
+                    <ul className="grid grid-cols-2 gap-2 text-sm text-white">
                       {Object.entries(v.votes).map(([key, value]) => (
                         <li key={key} className="flex justify-between">
                           <span className="capitalize">{key}:</span>
@@ -94,7 +94,7 @@ function Home() {
                     to={`/travels/${v.id}/days`}
                     className="p-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white"
                   >
-                    Dettagli Giorno
+                    Dettagli Viaggio
                   </Link>
 
                   <Link
@@ -119,7 +119,7 @@ function Home() {
 
       {/* Modale di conferma eliminazione */}
       {deleteId && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xl bg-opacity-50">
           <div className="bg-white p-6 rounded-xl shadow-lg w-96 text-center">
             <h2 className="text-xl font-bold mb-4">
               Sei sicuro di voler cancellare il viaggio?

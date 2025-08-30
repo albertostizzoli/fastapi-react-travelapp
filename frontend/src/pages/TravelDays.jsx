@@ -36,16 +36,22 @@ function TravelDays() {
 
   return (
     <div className="min-h-screen bg-transparent p-8">
+      <Link
+        to="/addDay"
+        state={{ travelId: id }} // recupero l'id del viaggio andando nella pagina AddDay per avere già il viaggio selezionato
+        className="p-2 bg-green-500 hover:bg-green-400 rounded-lg text-white"
+      >
+        Aggiungi Giorno
+      </Link>
+
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">
+        <h1 className="text-2xl font-bold mb-4 text-center">🗓️ Giorni del viaggio</h1>
+        <h2 className="text-xl font-semibold mb-4">
           📍 {travel.town} - {travel.city}
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Dal {travel.start_date} al {travel.end_date}
+        </h2>
+        <p className="text-white mb-6">
+          {travel.start_date} - {travel.end_date}
         </p>
-
-        <h2 className="text-xl font-semibold mb-4">🗓️ Giorni del viaggio</h2>
-
         <ul className="space-y-3">
           {travel.days.map((d) => (
             <li
@@ -54,7 +60,7 @@ function TravelDays() {
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm text-gray-500">{d.date}</p>
+                  <p className="text-sm text-white">{d.date}</p>
                   <p className="font-medium">{d.notes}</p>
                   {d.photo.length > 0 && (
                     <div className="flex gap-2 mt-2 flex-wrap">
@@ -68,13 +74,13 @@ function TravelDays() {
                       ))}
                     </div>
                   )}
-                  <p className="text-sm text-gray-500">{d.description}</p>
+                  <p className="text-sm text-white">{d.description}</p>
                 </div>
                 <button
                   onClick={() => setDeleteDayId(d.id)}
                   className="p-2 bg-red-600 hover:bg-red-500 text-white rounded-lg"
                 >
-                Elimina Giorno
+                  Elimina Giorno
                 </button>
               </div>
             </li>
@@ -85,7 +91,7 @@ function TravelDays() {
           to="/"
           className="p-2 inline-block mt-6 bg-blue-500 hover:bg-blue-400 rounded-full text-white"
         >
-        Torna ai viaggi
+          Torna ai viaggi
         </Link>
       </div>
 

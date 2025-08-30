@@ -55,7 +55,7 @@ function EditTravel() {
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-xl mx-auto bg-transparent shadow-lg rounded-2xl p-6 space-y-4"
+        className="max-w-xl mx-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white"
       >
         <input
           type="text"
@@ -63,7 +63,7 @@ function EditTravel() {
           value={travel.town}
           onChange={handleChange}
           placeholder="Nazione"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-white rounded text-white"
         />
         <input
           type="text"
@@ -71,7 +71,7 @@ function EditTravel() {
           value={travel.city}
           onChange={handleChange}
           placeholder="Città"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-white text-white rounded"
         />
         <input
           type="number"
@@ -79,7 +79,7 @@ function EditTravel() {
           value={travel.year}
           onChange={handleChange}
           placeholder="Anno"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-white text-white rounded"
         />
         <input
           type="text"
@@ -87,7 +87,7 @@ function EditTravel() {
           value={travel.start_date}
           onChange={handleChange}
           placeholder="Data inizio"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-white text-white rounded"
         />
         <input
           type="text"
@@ -95,7 +95,7 @@ function EditTravel() {
           value={travel.end_date}
           onChange={handleChange}
           placeholder="Data fine"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-white text-white rounded"
         />
 
         {/* voto generale */}
@@ -106,14 +106,14 @@ function EditTravel() {
           onChange={handleChange}
           min="1"
           max="5"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-white text-white rounded"
         />
 
         {/* voti */}
         <div>
-          <h3 className="font-semibold mb-2">Voti</h3>
+          <h3 className="font-semibold mb-2 text-white">Voti</h3>
           {Object.entries(travel.votes).map(([key, value]) => (
-            <div key={key} className="flex justify-between mb-2">
+            <div key={key} className="flex justify-between mb-2 text-white">
               <label className="capitalize">{key}</label>
               <input
                 type="number"
@@ -122,7 +122,7 @@ function EditTravel() {
                 onChange={handleVoteChange}
                 min="1"
                 max="5"
-                className="w-20 p-1 border rounded"
+                className="w-20 p-1 border border-white text-white rounded"
               />
             </div>
           ))}
@@ -130,7 +130,7 @@ function EditTravel() {
 
         <button
           type="submit"
-          className="w-full bg-yellow-600 hover:bg-yellow-500 p-2 rounded-lg"
+          className="w-full bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg cursor-pointer"
         >
           💾 Salva modifiche
         </button>

@@ -77,13 +77,13 @@ function AddTravel() {
     <div className="min-h-screen flex items-center justify-center bg-transparent p-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-transparent shadow-lg rounded-2xl p-6 w-full max-w-lg border"
+        className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-lg border"
       >
         <h2 className="text-2xl font-bold mb-4">➕ Aggiungi un nuovo viaggio</h2>
         {/* Paese e Città */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-gray-700">Paese</label>
+            <label className="block text-black">Paese</label>
             <input
               type="text"
               name="town"
@@ -94,7 +94,7 @@ function AddTravel() {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Città</label>
+            <label className="block text-black">Città</label>
             <input
               type="text"
               name="city"
@@ -109,7 +109,7 @@ function AddTravel() {
         {/* Anno e Voto generale */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-gray-700">Anno</label>
+            <label className="block text-black">Anno</label>
             <input
               type="number"
               name="year"
@@ -120,7 +120,7 @@ function AddTravel() {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Voto generale (1-5)</label>
+            <label className="block text-black">Voto generale (1-5)</label>
             <input
               type="number"
               name="general_vote"
@@ -136,7 +136,7 @@ function AddTravel() {
         {/* Date */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-gray-700">Data inizio</label>
+            <label className="block text-black">Data inizio</label>
             <input
               type="date"
               name="start_date"
@@ -147,7 +147,7 @@ function AddTravel() {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Data fine</label>
+            <label className="block text-black">Data fine</label>
             <input
               type="date"
               name="end_date"
@@ -160,11 +160,11 @@ function AddTravel() {
         </div>
 
         {/* Voti dettagliati */}
-        <h3 className="font-semibold text-lg mt-6 mb-2">Voti dettagliati</h3>
+        <h3 className="font-semibold text-lg mt-6 mb-2">Voti</h3>
         <div className="grid grid-cols-2 gap-4">
           {["cibo", "paesaggio", "attività", "svago", "relax"].map((field) => (
             <div key={field}>
-              <label className="block text-gray-700 capitalize">
+              <label className="block text-black capitalize">
                 {field} (1-5)
               </label>
               <input
@@ -183,7 +183,7 @@ function AddTravel() {
         {/* Pulsante */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 mt-4"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 mt-4 cursor-pointer"
         >
           Aggiungi viaggio
         </button>
