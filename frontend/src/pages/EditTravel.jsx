@@ -48,93 +48,100 @@ function EditTravel() {
   if (!travel) return <p className="text-center">Caricamento...</p>;
 
   return (
-    <div className="min-h-screen bg-transparent p-8">
-      <h1 className="text-2xl font-bold text-center mb-6">
-        ✏️ Modifica Viaggio
-      </h1>
+    <div className="min-h-screen bg-transparent p-4 flex justify-center items-center">
+      <div className="w-full max-w-xl max-h-screen overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
+        <h1 className="text-2xl font-bold text-center mb-6">
+          ✏️ Modifica Viaggio
+        </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-xl mx-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white"
-      >
-        <input
-          type="text"
-          name="town"
-          value={travel.town}
-          onChange={handleChange}
-          placeholder="Nazione"
-          className="w-full p-2 border border-white rounded text-white"
-        />
-        <input
-          type="text"
-          name="city"
-          value={travel.city}
-          onChange={handleChange}
-          placeholder="Città"
-          className="w-full p-2 border border-white text-white rounded"
-        />
-        <input
-          type="number"
-          name="year"
-          value={travel.year}
-          onChange={handleChange}
-          placeholder="Anno"
-          className="w-full p-2 border border-white text-white rounded"
-        />
-        <input
-          type="text"
-          name="start_date"
-          value={travel.start_date}
-          onChange={handleChange}
-          placeholder="Data inizio"
-          className="w-full p-2 border border-white text-white rounded"
-        />
-        <input
-          type="text"
-          name="end_date"
-          value={travel.end_date}
-          onChange={handleChange}
-          placeholder="Data fine"
-          className="w-full p-2 border border-white text-white rounded"
-        />
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-        {/* voto generale */}
-        <input
-          type="number"
-          name="general_vote"
-          value={travel.general_vote}
-          onChange={handleChange}
-          min="1"
-          max="5"
-          className="w-full p-2 border border-white text-white rounded"
-        />
+          <div className="flex flex-col sm:flex-row gap-4">
+            <input
+              type="text"
+              name="town"
+              value={travel.town}
+              onChange={handleChange}
+              placeholder="Nazione"
+              className="flex-1 p-2 border border-white rounded text-white"
+            />
+            <input
+              type="text"
+              name="city"
+              value={travel.city}
+              onChange={handleChange}
+              placeholder="Città"
+              className="flex-1 p-2 border border-white rounded text-white"
+            />
+          </div>
 
-        {/* voti */}
-        <div>
-          <h3 className="font-semibold mb-2 text-white">Voti</h3>
-          {Object.entries(travel.votes).map(([key, value]) => (
-            <div key={key} className="flex justify-between mb-2 text-white">
-              <label className="capitalize">{key}</label>
-              <input
-                type="number"
-                name={key}
-                value={value}
-                onChange={handleVoteChange}
-                min="1"
-                max="5"
-                className="w-20 p-1 border border-white text-white rounded"
-              />
-            </div>
-          ))}
-        </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <input
+              type="number"
+              name="year"
+              value={travel.year}
+              onChange={handleChange}
+              placeholder="Anno"
+              className="w-full p-2 border border-white text-white rounded"
+            />
+            <input
+              type="text"
+              name="start_date"
+              value={travel.start_date}
+              onChange={handleChange}
+              placeholder="Data inizio"
+              className="w-full p-2 border border-white text-white rounded"
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg cursor-pointer"
-        >
-          💾 Salva modifiche
-        </button>
-      </form>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <input
+            type="text"
+            name="end_date"
+            value={travel.end_date}
+            onChange={handleChange}
+            placeholder="Data fine"
+            className="w-full p-2 border border-white text-white rounded"
+          />
+
+          <input
+            type="number"
+            name="general_vote"
+            value={travel.general_vote}
+            onChange={handleChange}
+            min="1"
+            max="5"
+            className="w-full p-2 border border-white text-white rounded"
+          />
+          </div>
+
+          {/* Voti dettagliati */}
+          <div>
+            <h3 className="font-semibold mb-2 text-white">Voti</h3>
+            {Object.entries(travel.votes).map(([key, value]) => (
+              <div key={key} className="flex justify-between mb-2 text-white">
+                <label className="capitalize">{key}</label>
+                <input
+                  type="number"
+                  name={key}
+                  value={value}
+                  onChange={handleVoteChange}
+                  min="1"
+                  max="5"
+                  className="w-20 p-1 border border-white text-white rounded"
+                />
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg cursor-pointer"
+          >
+            💾 Salva modifiche
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

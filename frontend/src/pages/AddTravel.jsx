@@ -74,12 +74,13 @@ function AddTravel() {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent p-6">
+    <div className="fixed inset-0 flex items-center justify-center bg-transparent p-6 overflow-hidden">
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-lg border"
       >
         <h2 className="text-2xl font-bold mb-4">➕ Aggiungi un nuovo viaggio</h2>
+
         {/* Paese e Città */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
@@ -164,9 +165,7 @@ function AddTravel() {
         <div className="grid grid-cols-2 gap-4">
           {["cibo", "paesaggio", "attività", "svago", "relax"].map((field) => (
             <div key={field}>
-              <label className="block text-black capitalize">
-                {field} (1-5)
-              </label>
+              <label className="block text-black capitalize">{field} (1-5)</label>
               <input
                 type="number"
                 name={field}
@@ -192,6 +191,7 @@ function AddTravel() {
       </form>
     </div>
   );
+
 }
 
 export default AddTravel;
