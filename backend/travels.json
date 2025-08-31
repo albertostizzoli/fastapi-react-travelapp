@@ -6,13 +6,13 @@
         "year": 2024,
         "start_date": "08-10-2024",
         "end_date": "20-10-2024",
-        "general_vote": 3,
+        "general_vote": 2.8,
         "votes": {
             "cibo": 4,
-            "paesaggio": 3,
-            "attività": 2,
-            "svago": 2,
-            "relax": 2
+            "paesaggio": 1,
+            "attività": 3,
+            "svago": 3,
+            "relax": 3
         },
         "days": [
             {
@@ -23,6 +23,15 @@
                 "photo": [
                     "https://tse1.mm.bing.net/th/id/OIP.TwMOfIWvMw181O0K2ICJRgHaE4?pid=Api&P=0&h=180",
                     "https://tse2.mm.bing.net/th/id/OIP.HJSMGrp5DdH1oeYDhGrvHwHaGG?pid=Api&P=0&h=180"
+                ]
+            },
+            {
+                "id": 2,
+                "date": "11-08-2024",
+                "notes": "Vaticano",
+                "description": "che bello visitare il vaticano",
+                "photo": [
+                    "https://tse2.mm.bing.net/th/id/OIP.TDlZjeWsIVZxjQmM5eJqJgHaE8?pid=Api&P=0&h=180"
                 ]
             }
         ]

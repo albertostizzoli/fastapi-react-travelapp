@@ -58,7 +58,6 @@ function EditTravel() {
     axios
       .put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel)
       .then(() => {
-        alert("Viaggio aggiornato con successo!");
         navigate("/"); // torna alla home
       })
       .catch((err) => console.error(err));
@@ -162,7 +161,6 @@ function EditTravel() {
                   onChange={handleVoteChange}
                   min="1"
                   max="5"
-                  step="0.1"
                   className="w-20 p-1 border border-white text-white rounded"
                 />
               </div>

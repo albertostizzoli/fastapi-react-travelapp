@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AddDay() {
   const location = useLocation();
+  const navigate = useNavigate(); 
   const travelIdFromState = location.state?.travelId || ""; // id passato da TravelDays per avere il viaggio già selezionato
 
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
@@ -77,6 +78,10 @@ function AddDay() {
 
       setMessage("✅ Giorno aggiunto con successo!");
       setForm({ date: "", notes: "", description: "", photo: [""] });
+
+      // <-- reindirizzo alla pagina dei giorni del viaggio selezionato
+      navigate(`/travels/${selectedTravel}/days`);
+
     } catch (err) {
       console.error(err);
       setMessage("❌ Errore durante l'aggiunta del giorno.");
@@ -132,7 +137,7 @@ function AddDay() {
             name="notes"
             value={form.notes}
             onChange={handleChange}
-            className="w-full p-2 border border-white rounded-lg"
+            className="w-full p-2 border border-white text-white rounded-lg"
           />
         </div>
 
@@ -143,7 +148,7 @@ function AddDay() {
             name="description"
             value={form.description}
             onChange={handleChange}
-            className="w-full p-2 border border-white rounded-lg"
+            className="w-full p-2 border border-white text-white rounded-lg"
             rows="3"
           />
         </div>

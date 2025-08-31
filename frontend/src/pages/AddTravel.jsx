@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AddTravel() {
+
+  const navigate = useNavigate();
+
   // stato del form con tutti i campi del viaggio
   const [form, setForm] = useState({
     town: "",
@@ -82,6 +86,10 @@ function AddTravel() {
         svago: "",
         relax: "",
       });
+
+      // <-- qui reindirizziamo alla Home
+      navigate("/");
+
     } catch (err) {
       console.error(err);
       setMessage("❌ Errore durante l'aggiunta del viaggio.");
@@ -184,7 +192,6 @@ function AddTravel() {
                 name={field}
                 min="1"
                 max="5"
-                step="0.1"
                 value={form[field]}
                 onChange={handleChange}
                 className="w-full p-2 border rounded-lg"
