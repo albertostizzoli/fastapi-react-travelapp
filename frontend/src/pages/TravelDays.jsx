@@ -45,7 +45,8 @@ function TravelDays() {
           <Link
             to="/addDay"
             state={{ travelId: id }}
-            className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+            className="px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+            <i className="fa-solid fa-plus"></i>
             Aggiungi Giorno
           </Link>
         </div>
@@ -87,8 +88,8 @@ function TravelDays() {
               </div>
               <button
                 onClick={() => setDeleteDayId(d.id)}
-                className="mt-4 md:mt-0 px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer"
-              >
+                className="mt-4 md:mt-0 px-4 py-2 flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-trash"></i>
                 Elimina Giorno
               </button>
             </div>
@@ -106,14 +107,14 @@ function TravelDays() {
             <div className="flex justify-center gap-4">
               <button
                 onClick={handleDeleteDay}
-                className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer"
-              >
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-check"></i>
                 Sì
               </button>
               <button
                 onClick={() => setDeleteDayId(null)}
-                className="bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer"
-              >
+                className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-xmark"></i>
                 No
               </button>
             </div>

@@ -85,7 +85,7 @@ function Home() {
                 <h2 className="text-lg font-semibold text-white">
                   {v.town} - {v.city}
                 </h2>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   📅 {v.start_date} → {v.end_date}
                 </p>
               </div>
@@ -98,7 +98,9 @@ function Home() {
             {openTravel === v.id && (
               <div className="px-4 pb-4 border-t border-gray-700">
                 <p className="text-white font-medium mt-3 mb-4 flex items-center gap-2">
-                  Anno: {v.year} | Media Voto:{" "}
+                  Anno: {v.year}
+                </p>
+                <p className="text-white font-medium mt-2 mb-3 flex items-center gap-2">Media Voto:{" "}
                   <StarRating rating={v.general_vote ?? 0} /> {/* chiamo la funzione StarRating per il numero delle stelle*/}
                 </p>
 
@@ -121,19 +123,22 @@ function Home() {
                 <div className="flex flex-col sm:flex-row gap-3 mt-4">
                   <Link
                     to={`/travels/${v.id}/days`}
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                    className="px-4 py-2 flex items-center gap-2  bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                    <i className="fa-solid fa-calendar-day"></i>
                     Dettagli Viaggio
                   </Link>
 
                   <Link
                     to={`/travels/${v.id}/edit`}
-                    className="px-4 py-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                    className="px-4 py-2 flex items-center gap-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                    <i className="fa-solid fa-edit"></i>
                     Modifica Viaggio
                   </Link>
 
                   <button
                     onClick={() => setDeleteId(v.id)}
-                    className="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer">
+                    className="px-4 py-2 flex items-center gap-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer">
+                    <i className="fa-solid fa-trash"></i>
                     Elimina Viaggio
                   </button>
                 </div>
@@ -153,14 +158,14 @@ function Home() {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={handleDelete}
-                className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer"
-              >
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-check"></i>
                 Sì
               </button>
               <button
                 onClick={() => setDeleteId(null)}
-                className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer"
-              >
+                className="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-xmark"></i>
                 No
               </button>
             </div>

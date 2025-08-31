@@ -196,9 +196,9 @@ function AddTravel() {
         {/* Pulsante */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 mt-4 cursor-pointer transition hover:scale-105"
-        >
-          Aggiungi viaggio
+          className="w-full px-4 py-2 mt-4 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+          <i className="fa-solid fa-plus"></i>
+          Aggiungi Viaggio
         </button>
 
         {message && <p className="mt-4 text-center">{message}</p>}

@@ -30,18 +30,18 @@ function Layout({ children }) {
     <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: bgImage }}>
       {/* Navbar */}
       <nav className="p-4 bg-transparent text-white flex gap-4 justify-between items-center">
-        <h1 className="text-white font-bold text-3xl">Travel App</h1>
+        <h1 className="font-bold text-3xl underline">Travel App</h1>
         <div className="flex gap-3">
           <Link
             to="/"
-            className="px-4 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
-            <i className="fa-solid fa-globe"></i>
+            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            <span><i className="fa-solid fa-globe"></i></span>
             I miei viaggi
           </Link>
           <Link
             to="/add"
-            className="px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
-            <i className="fa-solid fa-plus"></i>
+            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            <span><i className="fa-solid fa-plus"></i></span>
             Aggiungi Viaggio
           </Link>
         </div>

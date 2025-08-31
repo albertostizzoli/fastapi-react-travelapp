@@ -164,8 +164,7 @@ function AddDay() {
           <button
             type="button"
             onClick={addPhotoField}
-            className="text-white text-sm hover:underline"
-          >
+            className="text-white text-sm hover:underline">
             Aggiungi un'altra foto
           </button>
         </div>
@@ -173,9 +172,9 @@ function AddDay() {
         {/* Pulsante */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105"
-        >
-          Aggiungi giorno
+          className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+          <i className="fa-solid fa-plus"></i>
+          Aggiungi Giorno
         </button>
 
         {message && <p className="mt-4 text-center">{message}</p>}

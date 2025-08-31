@@ -168,12 +168,11 @@ function EditTravel() {
               </div>
             ))}
           </div>
-
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg cursor-pointer transition hover:scale-105"
-          >
-            Salva modifiche
+            className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+            <i className="fa-solid fa-edit"></i>
+            Salva Modifiche
           </button>
         </form>
       </div>
