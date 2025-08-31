@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+// funzione per ottenere le stelle 
 function StarRating({ rating = 0, max = 5 }) {
   const safe = Math.max(0, Math.min(rating, max)); // clamp 0..5
 
