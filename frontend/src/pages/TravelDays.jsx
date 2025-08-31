@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function TravelDays() {
   const { id } = useParams(); // id del viaggio dall’URL
@@ -34,14 +35,66 @@ function TravelDays() {
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
+  // Animazione
+  const travelZoom = {
+    initial: {
+      scale: 0.9, // leggermente più piccolo
+      opacity: 0, // invisibile
+    },
+    animate: {
+      scale: 1,   // zoom fino alla dimensione reale
+      opacity: 1, // visibile
+      transition: {
+        duration: 1.5,
+        ease: "easeInOut",
+        staggerChildren: 0.1, // opzionale se hai figli animati
+      },
+    },
+    exit: {
+      scale: 0.9, // quando esce torna piccolo
+      opacity: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+  };
+
+  const text = {
+    initial: {
+      x: -100, // Il testo parte da 100px a sinistra
+      opacity: 0 // Il testo parte con opacità 0 (invisibile)
+    },
+    animate: {
+      x: 0, // Il testo si sposta nella posizione originale
+      opacity: 1, // Il testo diventa completamente visibile
+      transition: {
+        duration: 1.5, // Durata dell'animazione in secondi
+        staggerChildren: 0.1 // Ritardo di 0.1 secondi tra l'animazione di ciascun figlio
+      }
+    }
+  };
+
+  const textRight = {
+    initial: {
+      x: 100, // Il testo parte da 100px a destra
+      opacity: 0 // Il testo parte con opacità 0 (invisibile)
+    },
+    animate: {
+      x: 0, // Il testo si sposta nella posizione originale
+      opacity: 1, // Il testo diventa completamente visibile
+      transition: {
+        duration: 1.5, // Durata dell'animazione in secondi
+        staggerChildren: 0.1 // Ritardo di 0.1 secondi tra l'animazione di ciascun figlio
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-transparent p-6 md:p-12">
       {/* Header: Titolo + Pulsanti */}
       <div className="flex flex-wrap justify-between items-center mb-8 max-w-4xl mx-auto gap-4">
-        <h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]">
+        <motion.h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]" variants={text} initial="initial" whileInView="animate">
           🗓️ Giorni del viaggio
-        </h1>
-        <div className="flex gap-4 flex-wrap mt-2 sm:mt-0">
+        </motion.h1>
+        <motion.div className="flex gap-4 flex-wrap mt-2 sm:mt-0" variants={textRight} initial="initial" whileInView="animate">
           <Link
             to="/addDay"
             state={{ travelId: id }}
@@ -49,20 +102,20 @@ function TravelDays() {
             <i className="fa-solid fa-plus"></i>
             Aggiungi Giorno
           </Link>
-        </div>
+        </motion.div>
       </div>
 
       {/* Info Viaggio */}
-      <div className="max-w-4xl mx-auto mb-8 p-6 bg-transparent rounded-xl">
+      <motion.div className="max-w-4xl mx-auto mb-8 p-6 bg-transparent rounded-xl" variants={text} initial="initial" whileInView="animate">
         <h2 className="text-xl font-semibold text-white mb-2">
           📍 {travel.town} - {travel.city}
         </h2>
         <p className="text-white mb-4">📅 {travel.start_date} → {travel.end_date}</p>
         {travel.notes && <p className="text-gray-200 italic">{travel.notes}</p>}
-      </div>
+      </motion.div>
 
       {/* Lista Giorni */}
-      <div className="max-w-4xl mx-auto space-y-6">
+      <motion.div className="max-w-4xl mx-auto space-y-6" variants={travelZoom} initial="initial" animate="animate" exit="exit">
         {travel.days.map((d) => (
           <li
             key={d.id}
@@ -95,7 +148,7 @@ function TravelDays() {
             </div>
           </li>
         ))}
-      </div>
+      </motion.div>
 
       {/* Modale di conferma eliminazione giorno */}
       {deleteDayId && (

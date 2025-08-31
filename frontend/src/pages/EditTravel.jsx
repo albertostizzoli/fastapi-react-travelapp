@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function EditTravel() {
   const { id } = useParams(); // recupero l'ID del viaggio dall'URL
@@ -65,8 +66,30 @@ function EditTravel() {
 
   if (!travel) return <p className="text-center">Caricamento...</p>;
 
+  // Animazione
+  const editTravel = {
+    initial: {
+      scale: 0.9, // leggermente più piccolo
+      opacity: 0, // invisibile
+    },
+    animate: {
+      scale: 1,   // zoom fino alla dimensione reale
+      opacity: 1, // visibile
+      transition: {
+        duration: 1.5,
+        ease: "easeInOut",
+        staggerChildren: 0.1, // opzionale se hai figli animati
+      },
+    },
+    exit: {
+      scale: 0.9, // quando esce torna piccolo
+      opacity: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-transparent p-4 flex justify-center items-center overflow-hidden">
+    <motion.div className="min-h-screen bg-transparent p-4 flex justify-center items-center overflow-hidden" variants={editTravel} initial="initial" animate="animate" exit="exit">
       <div className="w-full max-w-xl sm:max-h-screen sm:overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
         <h1 className="text-2xl font-bold text-center mb-6">
           ✏️ Modifica Viaggio
@@ -174,7 +197,7 @@ function EditTravel() {
           </button>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

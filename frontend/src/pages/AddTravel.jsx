@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // use Navigate serve per il reindirizzamento fra le pagine
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function AddTravel() {
 
@@ -96,8 +97,31 @@ function AddTravel() {
     }
   };
 
+  // Animazione
+  const formTravel = {
+    initial: {
+      scale: 0.9, // leggermente più piccolo
+      opacity: 0, // invisibile
+    },
+    animate: {
+      scale: 1,   // zoom fino alla dimensione reale
+      opacity: 1, // visibile
+      transition: {
+        duration: 1.5,
+        ease: "easeInOut",
+        staggerChildren: 0.1, // opzionale se hai figli animati
+      },
+    },
+    exit: {
+      scale: 0.9, // quando esce torna piccolo
+      opacity: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+  };
+
+
   return (
-    <div className=" flex items-center justify-center bg-transparent p-6 overflow-hidden">
+    <motion.div className=" flex items-center justify-center bg-transparent p-6 overflow-hidden" variants={formTravel} initial="initial" animate="animate" exit="exit">
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-lg border"
@@ -210,7 +234,7 @@ function AddTravel() {
 
         {message && <p className="mt-4 text-center">{message}</p>}
       </form>
-    </div>
+    </motion.div>
   );
 }
 
