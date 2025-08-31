@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header"; // componente Header
+import Sidebar from "./components/Sidebar"; // componente Sidebar
 import Home from "./pages/Home";       // pagina Home Principale
 import AddTravel from "./pages/AddTravel"; //  pagina Aggiungi Viaggio
 import AddDay from "./pages/AddDay"; // pagina Aggiungi Giorno
@@ -29,6 +30,7 @@ function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: bgImage }}>
+       <Sidebar />
       <Header />
       {/* Contenuto pagina */}
       <div className="p-8">{children}</div>
