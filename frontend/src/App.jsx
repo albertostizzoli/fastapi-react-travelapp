@@ -29,19 +29,22 @@ function Layout({ children }) {
   return (
     <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: bgImage }}>
       {/* Navbar */}
-      <nav className="p-4 backdrop-blur-xl text-white flex gap-4 justify-between">
+      <nav className="p-4 bg-transparent text-white flex gap-4 justify-between items-center">
         <h1 className="text-white font-bold text-3xl">Travel App</h1>
-        <div>
-          <Link to="/add"
-            className="px-4 py-3 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+        <div className="flex gap-3">
+          <Link
+            to="/"
+            className="px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
             Home
           </Link>
-          <Link to="/add"
+          <Link
+            to="/add"
             className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
             Aggiungi Viaggio
           </Link>
         </div>
       </nav>
+
 
       {/* Contenuto pagina */}
       <div className="p-8">{children}</div>

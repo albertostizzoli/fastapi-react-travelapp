@@ -45,15 +45,8 @@ function TravelDays() {
           <Link
             to="/addDay"
             state={{ travelId: id }}
-            className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105"
-          >
+            className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
             Aggiungi Giorno
-          </Link>
-          <Link
-            to="/"
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105"
-          >
-            Torna ai viaggi
           </Link>
         </div>
       </div>
@@ -63,7 +56,7 @@ function TravelDays() {
         <h2 className="text-xl font-semibold text-white mb-2">
           📍 {travel.town} - {travel.city}
         </h2>
-        <p className="text-gray-300 mb-4">📅 {travel.start_date} → {travel.end_date}</p>
+        <p className="text-white mb-4">📅 {travel.start_date} → {travel.end_date}</p>
         {travel.notes && <p className="text-gray-200 italic">{travel.notes}</p>}
       </div>
 
@@ -72,7 +65,7 @@ function TravelDays() {
         {travel.days.map((d) => (
           <li
             key={d.id}
-            className="backdrop-blur-xl p-4 md:p-6 rounded-xl shadow-md border border-gray-700 list-none transition hover:scale-105"
+            className="backdrop-blur-xl p-4 md:p-6 rounded-xl shadow-md border border-gray-700 list-none"
           >
             <div className="flex flex-col md:flex-row justify-between items-start gap-4">
               <div className="flex-1">

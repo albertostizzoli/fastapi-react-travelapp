@@ -19,7 +19,7 @@ function StarRating({ rating = 0, max = 5 }) {
             aria-hidden="true"
           >
             {/* stella vuota */}
-            <span className="absolute inset-0 text-gray-500/60 text-lg leading-5 select-none">☆</span>
+            <span className="absolute inset-0 text-white text-lg leading-5 select-none flex items-center gap-2 mt-0.5">☆</span>
 
             {/* porzione riempita (da 0% a 100%) */}
             <span className="absolute inset-0 overflow-hidden" style={{ width }}>
@@ -74,7 +74,7 @@ function Home() {
         {travels.map((v) => (
           <div
             key={v.id}
-            className="backdrop-blur-xl bg-gray-800/30 shadow-lg rounded-2xl border border-gray-700 transition hover:scale-105"
+            className="backdrop-blur-xl bg-gray-800/30 shadow-lg rounded-2xl border border-gray-700"
           >
             {/* intestazione accordion */}
             <button
@@ -97,8 +97,8 @@ function Home() {
             {/* contenuto accordion */}
             {openTravel === v.id && (
               <div className="px-4 pb-4 border-t border-gray-700">
-                <p className="text-white font-medium mt-3 mb-4">
-                  Anno: {v.year} | Voto generale:{" "}
+                <p className="text-white font-medium mt-3 mb-4 flex items-center gap-2">
+                  Anno: {v.year} | Media Voto:{" "}
                   <StarRating rating={v.general_vote ?? 0} /> {/* chiamo la funzione StarRating per il numero delle stelle*/}
                 </p>
 
@@ -121,22 +121,19 @@ function Home() {
                 <div className="flex flex-col sm:flex-row gap-3 mt-4">
                   <Link
                     to={`/travels/${v.id}/days`}
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center"
-                  >
+                    className="px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
                     Dettagli Viaggio
                   </Link>
 
                   <Link
                     to={`/travels/${v.id}/edit`}
-                    className="px-4 py-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center"
-                  >
+                    className="px-4 py-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
                     Modifica Viaggio
                   </Link>
 
                   <button
                     onClick={() => setDeleteId(v.id)}
-                    className="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer"
-                  >
+                    className="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer">
                     Elimina Viaggio
                   </button>
                 </div>
