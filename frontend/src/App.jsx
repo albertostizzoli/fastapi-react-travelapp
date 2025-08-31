@@ -34,12 +34,14 @@ function Layout({ children }) {
         <div className="flex gap-3">
           <Link
             to="/"
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
-            Home
+            className="px-4 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+            <i className="fa-solid fa-globe"></i>
+            I miei viaggi
           </Link>
           <Link
             to="/add"
-            className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+            className="px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+            <i className="fa-solid fa-plus"></i>
             Aggiungi Viaggio
           </Link>
         </div>
