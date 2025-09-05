@@ -107,9 +107,9 @@ function TravelDays() {
 
       {/* Info Viaggio */}
       <motion.div className="max-w-4xl mx-auto mb-8 p-6 bg-transparent rounded-xl" variants={text} initial="initial" whileInView="animate">
-        <h2 className="text-xl font-semibold text-white mb-2">
-          📍 {travel.town} - {travel.city}
-        </h2>
+        {/* Paese e Città */}
+        <h2 className="text-xl font-semibold text-white mb-2">📍 {travel.town} - {travel.city}</h2>
+        {/* Date e Titolo */}
         <p className="text-white mb-4">📅 {travel.start_date} → {travel.end_date}</p>
         {travel.notes && <p className="text-gray-200 italic">{travel.notes}</p>}
       </motion.div>
@@ -119,12 +119,14 @@ function TravelDays() {
         {travel.days.map((d) => (
           <li
             key={d.id}
-            className="backdrop-blur-xl p-4 md:p-6 rounded-xl shadow-md border border-gray-700 list-none"
-          >
+            className="backdrop-blur-xl p-4 md:p-6 rounded-xl shadow-md border border-gray-700 list-none">
             <div className="flex flex-col md:flex-row justify-between items-start gap-4">
               <div className="flex-1">
+                {/* Data Giornata */}
                 <p className="text-white text-sm mb-1">{d.date}</p>
+                {/* Titolo Giornata */}
                 <p className="text-white font-medium mb-2">{d.notes}</p>
+                {/* Foto */}
                 {d.photo.length > 0 && (
                   <div className="flex gap-2 mt-2 flex-wrap">
                     {d.photo.map((p, i) => (
@@ -132,11 +134,11 @@ function TravelDays() {
                         key={i}
                         src={p}
                         alt="foto viaggio"
-                        className="w-24 h-24 object-cover rounded-lg border border-gray-600 shadow-sm"
-                      />
+                        className="w-24 h-24 object-cover rounded-lg border border-gray-600 shadow-sm"/>
                     ))}
                   </div>
                 )}
+                {/* Descrizione Giornata */}
                 <p className="text-white mt-2">{d.description}</p>
               </div>
               <button
@@ -154,9 +156,7 @@ function TravelDays() {
       {deleteDayId && (
         <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
           <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
-            <h2 className="text-xl font-bold mb-4 text-white">
-              Vuoi davvero eliminare questo giorno?
-            </h2>
+            <h2 className="text-xl font-bold mb-4 text-white"> Vuoi davvero eliminare questo giorno? </h2>
             <div className="flex justify-center gap-4">
               <button
                 onClick={handleDeleteDay}

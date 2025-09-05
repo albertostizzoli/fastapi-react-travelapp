@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 function AddDay() {
   const location = useLocation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const travelIdFromState = location.state?.travelId || ""; // id passato da TravelDays per avere il viaggio già selezionato
 
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
@@ -113,22 +113,22 @@ function AddDay() {
 
 
   return (
-    <motion.div className="min-h-screen flex items-center justify-center bg-transparent p-6" variants={addDay} initial="initial" animate="animate" exit="exit">
+    <motion.div className="flex items-center justify-center bg-transparent" variants={addDay} initial="initial" animate="animate" exit="exit">
       <form
         onSubmit={handleSubmit}
-        className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-lg border border-white"
-      >
-        <h2 className="text-2xl font-bold mb-4 text-white">➕ Aggiungi un giorno al viaggio</h2>
+        className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <h2 className="text-2xl font-bold mb-4 text-white col-span-1 md:col-span-2"> ➕ Aggiungi un giorno al viaggio</h2>
 
         {/* Selezione viaggio */}
-        <div className="mb-4">
+        <div>
           <label className="block text-white">Seleziona viaggio</label>
           <select
             value={selectedTravel}
             onChange={(e) => setSelectedTravel(e.target.value)}
             className="w-full p-2 border border-white rounded-lg bg-transparent text-white"
-            required
-          >
+            required>
+
             <option value="" className="bg-black text-white">-- Seleziona --</option>
             {travels.map((t) => (
               <option key={t.id} value={t.id} className="bg-black text-white">
@@ -139,7 +139,7 @@ function AddDay() {
         </div>
 
         {/* Data */}
-        <div className="mb-4">
+        <div>
           <label className="block text-white">Data</label>
           <input
             type="date"
@@ -147,37 +147,32 @@ function AddDay() {
             value={form.date}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-white rounded-lg text-white bg-transparent 
-               [color-scheme:dark]"
-          />
+            className="w-full p-2 border border-white rounded-lg text-white bg-transparent [color-scheme:dark]"/>
         </div>
 
-
         {/* Titolo */}
-        <div className="mb-4">
+        <div className="md:col-span-2">
           <label className="block text-white">Titolo</label>
           <input
             name="notes"
             value={form.notes}
             onChange={handleChange}
-            className="w-full p-2 border border-white text-white rounded-lg"
-          />
+            className="w-full p-2 border border-white text-white rounded-lg"/>
         </div>
 
         {/* Descrizione */}
-        <div className="mb-4">
+        <div className="md:col-span-2">
           <label className="block text-white">Riassunto della giornata</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
             className="w-full p-2 border border-white text-white rounded-lg"
-            rows="3"
-          />
+            rows="3"/>
         </div>
 
         {/* Foto */}
-        <div className="mb-4">
+        <div className="md:col-span-2">
           <label className="block text-white">Foto (URL)</label>
           {form.photo.map((p, index) => (
             <input
@@ -186,8 +181,7 @@ function AddDay() {
               value={p}
               onChange={(e) => handlePhotoChange(index, e.target.value)}
               placeholder="Inserisci URL immagine"
-              className="w-full p-2 border border-white text-white rounded-lg mb-2"
-            />
+              className="w-full p-2 border border-white text-white rounded-lg mb-2"/>
           ))}
           <button
             type="button"
@@ -198,14 +192,16 @@ function AddDay() {
         </div>
 
         {/* Pulsante */}
-        <button
-          type="submit"
-          className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
-          <i className="fa-solid fa-plus"></i>
-          Aggiungi Giorno
-        </button>
+        <div className="md:col-span-2">
+          <button
+            type="submit"
+            className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+            <i className="fa-solid fa-plus"></i>
+            Aggiungi Giorno
+          </button>
+        </div>
 
-        {message && <p className="mt-4 text-center">{message}</p>}
+        {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
       </form>
     </motion.div>
   );

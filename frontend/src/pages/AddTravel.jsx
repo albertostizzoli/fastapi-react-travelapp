@@ -121,119 +121,116 @@ function AddTravel() {
 
 
   return (
-    <motion.div className=" flex items-center justify-center bg-transparent p-6 overflow-hidden" variants={formTravel} initial="initial" animate="animate" exit="exit">
-      <form
-        onSubmit={handleSubmit}
-        className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-lg border"
-      >
-        <h2 className="text-2xl font-bold mb-4">➕ Aggiungi un nuovo viaggio</h2>
+    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden" variants={formTravel} initial="initial" animate="animate" exit="exit">
+      {/* Container del form */}
+      <div className="w-full max-w-4xl h-full sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 border">
 
-        {/* Paese e Città */}
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-black">Paese</label>
+        <h2 className="text-2xl font-bold mb-4 text-center">➕ Aggiungi un nuovo viaggio</h2>
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          {/* Paese */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-black">Paese</label>
             <input
               type="text"
               name="town"
               value={form.town}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg"
-            />
+              className="w-full p-2 border rounded-lg"/>
           </div>
-          <div>
-            <label className="block text-black">Città</label>
+
+          {/* Città */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-black">Città</label>
             <input
               type="text"
               name="city"
               value={form.city}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg"
-            />
+              className="w-full p-2 border rounded-lg"/>
           </div>
-        </div>
 
-        {/* Anno */}
-        <div className="mb-4">
-          <label className="block text-black">Anno</label>
-          <input
-            type="number"
-            name="year"
-            value={form.year}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded-lg"
-          />
-        </div>
+          {/* Anno */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-black">Anno</label>
+            <input
+              type="number"
+              name="year"
+              value={form.year}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border rounded-lg"/>
+          </div>
 
-        {/* Media Voto */}
-        <div className="mb-4">
-          <label className="mb-1 text-black">Media Voto</label>
-          <input
-            type="text"
-            value={calculateGeneralVote() ?? "-"}
-            readOnly
-            className="w-full p-2 border font-semibold rounded "
-          />
-        </div>
+          {/* Media Voto */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-black">Media Voto</label>
+            <input
+              type="text"
+              value={calculateGeneralVote() ?? "-"}
+              readOnly
+              className="w-full p-2 border font-semibold rounded"/>
+          </div>
 
-
-        {/* Date */}
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-black">Data inizio</label>
+          {/* Date */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-black">Data inizio</label>
             <input
               type="date"
               name="start_date"
               value={form.start_date}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg"
-            />
+              className="w-full p-2 border rounded-lg"/>
           </div>
-          <div>
-            <label className="block text-black">Data fine</label>
+
+          <div className="flex flex-col">
+            <label className="mb-1 text-black">Data fine</label>
             <input
               type="date"
               name="end_date"
               value={form.end_date}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg"
-            />
+              className="w-full p-2 border rounded-lg"/>
           </div>
-        </div>
 
-        {/* Voti dettagliati */}
-        <h3 className="font-semibold text-lg mt-6 mb-2">Voti</h3>
-        <div className="grid grid-cols-2 gap-4">
-          {["cibo", "paesaggio", "attività", "svago", "relax"].map((field) => (
-            <div key={field}>
-              <label className="block text-black capitalize">{field}</label>
-              <input
-                type="number"
-                name={field}
-                min="1"
-                max="5"
-                value={form[field]}
-                onChange={handleChange}
-                className="w-full p-2 border rounded-lg"
-              />
+          {/* Voti dettagliati con flex-wrap */}
+          <div className="md:col-span-2">
+            <h3 className="font-semibold text-lg mt-6 mb-2">Voti</h3>
+            <div className="flex flex-wrap gap-4">
+              {["cibo", "paesaggio", "attività", "svago", "relax"].map((field) => (
+                <div key={field} className="flex flex-col w-28">
+                  <label className="mb-1 text-black capitalize">{field}</label>
+                  <input
+                    type="number"
+                    name={field}
+                    min="1"
+                    max="5"
+                    value={form[field]}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-lg"/>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* Pulsante */}
-        <button
-          type="submit"
-          className="w-full px-4 py-2 mt-4 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
-          <i className="fa-solid fa-plus"></i>
-          Aggiungi Viaggio
-        </button>
+          {/* Pulsante */}
+          <div className="md:col-span-2">
+            <button
+              type="submit"
+              className="w-full px-4 py-2 mt-4 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+              <i className="fa-solid fa-plus"></i>
+              Aggiungi Viaggio
+            </button>
+          </div>
 
-        {message && <p className="mt-4 text-center">{message}</p>}
-      </form>
+          {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
+        </form>
+      </div>
     </motion.div>
   );
 }

@@ -89,112 +89,113 @@ function EditTravel() {
   };
 
   return (
-    <motion.div className="min-h-screen bg-transparent p-4 flex justify-center items-center overflow-hidden" variants={editTravel} initial="initial" animate="animate" exit="exit">
-      <div className="w-full max-w-xl sm:max-h-screen sm:overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
-        <h1 className="text-2xl font-bold text-center mb-6">
-          ✏️ Modifica Viaggio
-        </h1>
+    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden" variants={editTravel} initial="initial" animate="animate" exit="exit">
+      {/* Container del form */}
+      <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 flex flex-col">
-              <label className="mb-1 text-white font-semibold">Paese</label>
-              <input
-                id="town"
-                type="text"
-                name="town"
-                value={travel.town}
-                onChange={handleChange}
-                placeholder="Nazione"
-                className="p-2 border border-white rounded text-white"
-              />
-            </div>
+        <h1 className="text-2xl font-bold text-center mb-6">✏️ Modifica Viaggio</h1>
 
-            <div className="flex-1 flex flex-col">
-              <label className="mb-1 text-white font-semibold">Città</label>
-              <input
-                id="city"
-                type="text"
-                name="city"
-                value={travel.city}
-                onChange={handleChange}
-                placeholder="Città"
-                className="p-2 border border-white rounded text-white"
-              />
-            </div>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          {/* Paese */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-white font-semibold">Paese</label>
+            <input
+              id="town"
+              type="text"
+              name="town"
+              value={travel.town}
+              onChange={handleChange}
+              placeholder="Nazione"
+              className="p-2 border border-white rounded text-white" />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 flex flex-col">
-              <label className="mb-1 text-white font-semibold">Anno</label>
-              <input
-                type="number"
-                name="year"
-                value={travel.year}
-                onChange={handleChange}
-                placeholder="Anno"
-                className="w-full p-2 border border-white text-white rounded"
-              />
-            </div>
-
-            <div className="flex-1 flex flex-col">
-              <label className="mb-1 text-white font-semibold">Data Inizio</label>
-              <input
-                type="text"
-                name="start_date"
-                value={travel.start_date}
-                onChange={handleChange}
-                placeholder="Data inizio"
-                className="w-full p-2 border border-white text-white rounded"
-              />
-            </div>
+          {/* Città */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-white font-semibold">Città</label>
+            <input
+              id="city"
+              type="text"
+              name="city"
+              value={travel.city}
+              onChange={handleChange}
+              placeholder="Città"
+              className="p-2 border border-white rounded text-white" />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 flex flex-col">
-              <label className="mb-1 text-white font-semibold">Data Fine</label>
-              <input
-                type="text"
-                name="end_date"
-                value={travel.end_date}
-                onChange={handleChange}
-                placeholder="Data fine"
-                className="w-full p-2 border border-white text-white rounded"
-              />
-            </div>
-
-            <div className="flex-1 flex flex-col">
-              <label className="mb-1 text-white font-semibold">Voto Generale</label>
-              <p className="p-2 border border-white text-blue-400 rounded bg-black/20">
-                {calculateGeneralVote() ?? "-"}
-              </p>
-            </div>
+          {/* Anno */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-white font-semibold">Anno</label>
+            <input
+              type="number"
+              name="year"
+              value={travel.year}
+              onChange={handleChange}
+              placeholder="Anno"
+              className="p-2 border border-white text-white rounded" />
           </div>
 
-          {/* Voti dettagliati */}
-          <div>
+          {/* Data inizio */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-white font-semibold">Data Inizio</label>
+            <input
+              type="text"
+              name="start_date"
+              value={travel.start_date}
+              onChange={handleChange}
+              placeholder="Data inizio"
+              className="p-2 border border-white text-white rounded" />
+          </div>
+
+          {/* Data fine */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-white font-semibold">Data Fine</label>
+            <input
+              type="text"
+              name="end_date"
+              value={travel.end_date}
+              onChange={handleChange}
+              placeholder="Data fine"
+              className="p-2 border border-white text-white rounded" />
+          </div>
+
+          {/* Voto Generale */}
+          <div className="flex flex-col">
+            <label className="mb-1 text-white font-semibold">Voto Generale</label>
+            <p className="p-2 border border-white text-blue-400 rounded bg-black/20">
+              {calculateGeneralVote() ?? "-"}
+            </p>
+          </div>
+
+          {/* Voti dettagliati (span 2 colonne) */}
+          <div className="md:col-span-2">
             <h3 className="font-semibold mb-2 text-white">Voti</h3>
-            {Object.entries(travel.votes).map(([key, value]) => (
-              <div key={key} className="flex justify-between mb-2 text-white">
-                <label className="capitalize">{key}</label>
-                <input
-                  type="number"
-                  name={key}
-                  value={value}
-                  onChange={handleVoteChange}
-                  min="1"
-                  max="5"
-                  className="w-20 p-1 border border-white text-white rounded"
-                />
-              </div>
-            ))}
+            <div className="flex flex-wrap gap-4">
+              {Object.entries(travel.votes).map(([key, value]) => (
+                <div key={key} className="flex flex-col w-28 text-white">
+                  <label className="capitalize mb-1">{key}</label>
+                  <input
+                    type="number"
+                    name={key}
+                    value={value}
+                    onChange={handleVoteChange}
+                    min="1"
+                    max="5"
+                    className=" p-1 border border-white text-white rounded" />
+                </div>
+              ))}
+            </div>
           </div>
-          <button
-            type="submit"
-            className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
-            <i className="fa-solid fa-edit"></i>
-            Salva Modifiche
-          </button>
+
+          {/* Pulsante (span 2 colonne) */}
+          <div className="md:col-span-2">
+            <button
+              type="submit"
+              className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+              <i className="fa-solid fa-edit"></i>
+              Salva Modifiche
+            </button>
+          </div>
         </form>
       </div>
     </motion.div>

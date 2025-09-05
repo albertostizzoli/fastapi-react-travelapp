@@ -30,7 +30,7 @@ function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: bgImage }}>
-       <Sidebar />
+      <Sidebar />
       <Header />
       {/* Contenuto pagina */}
       <div className="p-8">{children}</div>
