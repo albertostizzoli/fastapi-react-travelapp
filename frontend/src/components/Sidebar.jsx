@@ -32,7 +32,7 @@ function Sidebar() {
                     animate={{ x: 0 }}
                     exit={{ x: "-100%" }}
                     transition={{ type: "spring", stiffness: 140, damping: 30 }}
-                    className="fixed top-0 left-0 w-64 h-full backdrop-blur-xl p-6 z-50 flex flex-col gap-6">
+                    className="fixed top-0 left-0 w-64 h-full backdrop-blur-xl p-6 z-[9999] flex flex-col gap-6">
                     <button
                         onClick={toggleSidebar}
                         aria-label="Chiudi il menu"

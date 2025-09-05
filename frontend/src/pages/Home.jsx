@@ -139,21 +139,21 @@ function Home() {
                         <div className="flex flex-col sm:flex-row gap-3 mt-4">
                           <Link
                             to={`/travels/${v.id}/days`}
-                            className="px-4 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                            className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
                             <i className="fa-solid fa-calendar-day"></i>
-                            Dettagli
+                            Dettagli Viaggio
                           </Link>
                           <Link
                             to={`/travels/${v.id}/edit`}
-                            className="px-4 py-2 flex items-center gap-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                            className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
                             <i className="fa-solid fa-edit"></i>
-                            Modifica
+                            Modifica Viaggio
                           </Link>
                           <button
                             onClick={() => setDeleteId(v.id)}
-                            className="px-4 py-2 flex items-center gap-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer">
+                            className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer text-center">
                             <i className="fa-solid fa-trash"></i>
-                            Elimina
+                            Elimina Viaggio
                           </button>
                         </div>
                       </motion.div>
