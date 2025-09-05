@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import WorldMap from "../components/WorldMap";
 
 // funzione per ottenere le stelle 
 function StarRating({ rating = 0, max = 5 }) {
@@ -71,6 +72,11 @@ function Home() {
       <h1 className="text-3xl font-bold text-center text-white mb-8">
         🌍 I miei viaggi
       </h1>
+
+      {/* Mappa */}
+      <div className="mb-12">
+        <WorldMap />
+      </div>
 
       <AnimatePresence> { /* produrrà un effetto zoom su tutto l'accordion */}
         <motion.div
