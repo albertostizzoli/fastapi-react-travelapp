@@ -20,14 +20,14 @@ function WorldMap() {
                 minZoom={2}
                 style={{ height: "100%", width: "100%", backgroundColor: "#AAD3DF" }}
                 worldCopyJump={false}  //  evita che la mappa si ripeta
-                maxBounds={[[-90, -180], [90, 180]]} // 🔹 blocca ai limiti del globo
+                maxBounds={[[-90, -180], [90, 180]]} //  blocca ai limiti del globo
                 maxBoundsViscosity={1.0}              //  rende i bordi "rigidi"
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&copy; OpenStreetMap contributors"
-                    noWrap={true}   // 🔹 disattiva il wrapping
-                    bounds={[[-90, -180], [90, 180]]} // 🔹 limiti precisi
+                    noWrap={true}   //  disattiva il wrapping
+                    bounds={[[-90, -180], [90, 180]]} //  limiti precisi
                 />
 
                 {geoData && (
