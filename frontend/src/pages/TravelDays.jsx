@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
+import WorldMap from "../components/WorldMap";
 
 function TravelDays() {
   const { id } = useParams(); // id del viaggio dall’URL
@@ -151,6 +152,11 @@ function TravelDays() {
           </li>
         ))}
       </motion.div>
+
+      {/* Mappa a destra */}
+        <div className="lg:w-2/5">
+          <WorldMap />
+        </div>
 
       {/* Modale di conferma eliminazione giorno */}
       {deleteDayId && (

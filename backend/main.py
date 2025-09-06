@@ -4,6 +4,7 @@ from typing import List, Optional  # Importo i tipi List e Optional per annotare
 import json # per gestire i dati in formato json
 import os # per gestire i percorsi dei file
 from datetime import datetime # importo datetime per formattare le date
+import requests # per fare richieste HTTP
 
 from fastapi.middleware.cors import CORSMiddleware # importo e configuro il middleware CORS
 
@@ -36,7 +37,10 @@ class Travel(BaseModel):
     end_date: str  # data fine
     general_vote: Optional[float] = None # voto generale
     votes: Optional[dict] = None # voti
+    lat: Optional[float] = None  # latitiudine
+    lng: Optional[float] = None  # longitudine
     days: List[Day] = [] # giorni
+
 
 TRAVELS_FILE = "travels.json" # file dove verrano salvati i dati
 
@@ -91,6 +95,13 @@ def add_travel(travel: Travel):
 
     for i, day in enumerate(travel.days, start=1): # assegno id progressivi ai giorni
         day.id = i
+    
+    # Recupero coordinate 
+    lat, lng = get_coordinates(travel.town, travel.city)
+    if lat and lng:
+        travel.lat = lat
+        travel.lng = lng
+
     travels.append(travel.dict()) # converto in dict e salvo
     write_data(travels)
     return travel
@@ -165,6 +176,19 @@ def delete_day_travel(travel_id: int, day_id: int):
             
             raise HTTPException(status_code=404, detail="Giorno non trovato")
     raise HTTPException(status_code=404, detail="Viaggio non trovato")
+
+
+# creo una funzione per ottenere latitudine e longitudine di una città
+def get_coordinates(city: str, country: str):
+    """Usa Nominatim per ottenere coordinate (lat, lng) da città e nazione."""
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {"q": f"{city}, {country}", "format": "json", "limit": 1}
+    headers = {"User-Agent": "travel-app"}  # Nominatim richiede un user-agent
+    res = requests.get(url, params=params, headers=headers)
+    if res.status_code == 200 and res.json():
+        data = res.json()[0]
+        return float(data["lat"]), float(data["lon"])
+    return None, None
 
 
     

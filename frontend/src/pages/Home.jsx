@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import WorldMap from "../components/WorldMap";
+
 
 // funzione per ottenere le stelle 
 function StarRating({ rating = 0, max = 5 }) {
@@ -67,101 +67,95 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent p-4 overflow-visible">
+    <div className=" bg-transparent p-4 overflow-visible">
       {/* Titolo */}
       <h1 className="text-3xl font-bold text-center text-white mb-8"> 🌍 I miei viaggi</h1>
 
       {/* Container flex per accordion + mappa */}
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-2">
         {/* Accordion a sinistra */}
-        <div className="lg:w-3/5">
-          <div className="space-y-6">
-            {travels.map((v) => (
-              <div
-                key={v.id}
-                className="backdrop-blur-xl bg-gray-800/30 shadow-lg rounded-2xl border border-gray-700">
-                {/* intestazione accordion */}
-                <button
-                  onClick={() => toggleAccordion(v.id)}
-                  className="w-full flex flex-wrap sm:flex-nowrap justify-between items-center p-4 text-left gap-2 cursor-pointer">
-                  <div className="flex-1 min-w-[200px]">
-                    <h2 className="text-lg font-semibold text-white">
-                      {v.town} - {v.city}
-                    </h2>
-                    <p className="text-white text-sm">
-                      📅 {v.start_date} → {v.end_date}
+        <div className="space-y-6">
+          {travels.map((v) => (
+            <div
+              key={v.id}
+              className="backdrop-blur-xl bg-gray-800/30 shadow-lg rounded-2xl border border-gray-700">
+              {/* intestazione accordion */}
+              <button
+                onClick={() => toggleAccordion(v.id)}
+                className="w-full flex flex-wrap sm:flex-nowrap justify-between items-center p-4 text-left gap-2 cursor-pointer">
+                <div className="flex-1 min-w-[200px]">
+                  <h2 className="text-lg font-semibold text-white">
+                    {v.town} - {v.city}
+                  </h2>
+                  <p className="text-white text-sm">
+                    📅 {v.start_date} → {v.end_date}
+                  </p>
+                </div>
+                <span className="text-gray-300 text-xl">
+                  {openTravel === v.id ? "▲" : "▼"}
+                </span>
+              </button>
+
+              {/* contenuto accordion */}
+              <AnimatePresence>
+                {openTravel === v.id && (
+                  <motion.div
+                    key="accordion-content"
+                    initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, height: "auto", scale: 1 }}
+                    exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="px-4 pb-4 border-t border-gray-700">
+
+                    {/* Contenuto interno */}
+                    <p className="text-white font-medium mt-3 mb-4 flex items-center gap-2">
+                      Anno: {v.year}
                     </p>
-                  </div>
-                  <span className="text-gray-300 text-xl">
-                    {openTravel === v.id ? "▲" : "▼"}
-                  </span>
-                </button>
-
-                {/* contenuto accordion */}
-                <AnimatePresence>
-                  {openTravel === v.id && (
-                    <motion.div
-                      key="accordion-content"
-                      initial={{ opacity: 0, height: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, height: "auto", scale: 1 }}
-                      exit={{ opacity: 0, height: 0, scale: 0.95 }}
-                      transition={{ duration: 0.5, ease: "easeInOut" }}
-                      className="px-4 pb-4 border-t border-gray-700">
-
-                      {/* Contenuto interno */}
-                      <p className="text-white font-medium mt-3 mb-4 flex items-center gap-2">
-                        Anno: {v.year}
-                      </p>
-                      <p className="text-white font-medium mt-2 mb-3 flex items-center gap-2">
-                        Media Voto: <StarRating rating={v.general_vote ?? 0} />
-                      </p>
-                      {v.votes && (
-                        <div className="mb-4">
-                          <h3 className="font-semibold text-white mb-2">Voti:</h3>
-                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white">
-                            {Object.entries(v.votes).map(([key, value]) => (
-                              <li key={key} className="flex justify-between items-center">
-                                <span className="capitalize">{key}:</span>
-                                <StarRating rating={value} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {/* Pulsanti sotto l'accordion */}
-                      <div className="flex flex-col sm:flex-row gap-3 mt-4">
-                        <Link
-                          to={`/travels/${v.id}/days`}
-                          className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
-                          <i className="fa-solid fa-calendar-day"></i>
-                          Dettagli Viaggio
-                        </Link>
-                        <Link
-                          to={`/travels/${v.id}/edit`}
-                          className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
-                          <i className="fa-solid fa-edit"></i>
-                          Modifica Viaggio
-                        </Link>
-                        <button
-                          onClick={() => setDeleteId(v.id)}
-                          className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer text-center">
-                          <i className="fa-solid fa-trash"></i>
-                          Elimina Viaggio
-                        </button>
+                    <p className="text-white font-medium mt-2 mb-3 flex items-center gap-2">
+                      Media Voto: <StarRating rating={v.general_vote ?? 0} />
+                    </p>
+                    {v.votes && (
+                      <div className="mb-4">
+                        <h3 className="font-semibold text-white mb-2">Voti:</h3>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white">
+                          {Object.entries(v.votes).map(([key, value]) => (
+                            <li key={key} className="flex justify-between items-center">
+                              <span className="capitalize">{key}:</span>
+                              <StarRating rating={value} />
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mappa a destra */}
-        <div className="lg:w-2/5">
-          <WorldMap />
+                    )}
+                    {/* Pulsanti sotto l'accordion */}
+                    <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                      <Link
+                        to={`/travels/${v.id}/days`}
+                        className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                        <i className="fa-solid fa-calendar-day"></i>
+                        Dettagli Viaggio
+                      </Link>
+                      <Link
+                        to={`/travels/${v.id}/edit`}
+                        className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105 text-center">
+                        <i className="fa-solid fa-edit"></i>
+                        Modifica Viaggio
+                      </Link>
+                      <button
+                        onClick={() => setDeleteId(v.id)}
+                        className="w-full sm:w-auto px-2 py-2 flex justify-center items-center gap-2 bg-red-600 hover:bg-red-500 rounded-lg text-white font-medium shadow-md transition hover:scale-105 cursor-pointer text-center">
+                        <i className="fa-solid fa-trash"></i>
+                        Elimina Viaggio
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
         </div>
       </div>
+
 
       {/* Modale di conferma eliminazione */}
       {deleteId && (
