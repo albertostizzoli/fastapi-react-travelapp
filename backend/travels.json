@@ -28,5 +28,34 @@
                 ]
             }
         ]
+    },
+    {
+        "id": 2,
+        "town": "Giappone",
+        "city": "Tokyo",
+        "year": 2025,
+        "start_date": "06-09-2025",
+        "end_date": "17-09-2025",
+        "general_vote": 4.0,
+        "votes": {
+            "cibo": 5,
+            "paesaggio": 5,
+            "attività": 3,
+            "svago": 3,
+            "relax": 4
+        },
+        "lat": 35.6768601,
+        "lng": 139.7638947,
+        "days": [
+            {
+                "id": 1,
+                "date": "08-09-2025",
+                "title": "Visita alla Tokyo Tower",
+                "description": "La vista dalla cima della Tokyo Tower è immensa!!!!!",
+                "photo": [
+                    "https://images.pexels.com/photos/3375997/pexels-photo-3375997.jpeg"
+                ]
+            }
+        ]
     }
 ]
