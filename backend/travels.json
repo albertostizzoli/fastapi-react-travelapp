@@ -4,57 +4,52 @@
         "town": "Italia",
         "city": "Roma",
         "year": 2025,
-        "start_date": "06-08-2025",
-        "end_date": "21-08-2025",
-        "general_vote": 2.8,
+        "start_date": "05-09-2025",
+        "end_date": "16-09-2025",
+        "general_vote": 2.6,
         "votes": {
             "cibo": 4,
-            "paesaggio": 4,
+            "paesaggio": 3,
             "attività": 2,
             "svago": 2,
             "relax": 2
         },
-        "lat": 41.8933203,
-        "lng": 12.4829321,
         "days": [
             {
                 "id": 1,
-                "date": "08-08-2025",
-                "title": "Visita al Colosseo",
-                "description": "Che bello visitare il Colosseo",
+                "date": "07-09-2025",
+                "title": "Colosseo",
+                "address": "Piazza del Colosseo, 1",
+                "description": "che spettacolo il Colosseo",
                 "photo": [
-                    "https://tse1.mm.bing.net/th/id/OIP.ykWyU6rm2huT6xCRQSt0_AHaE8?pid=Api&P=0&h=180",
-                    "https://tse1.mm.bing.net/th/id/OIP.0Z-a2Gb4MFpZeTMVRW7uQQHaDt?pid=Api&P=0&h=180"
-                ]
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "town": "Giappone",
-        "city": "Tokyo",
-        "year": 2025,
-        "start_date": "06-09-2025",
-        "end_date": "17-09-2025",
-        "general_vote": 4.0,
-        "votes": {
-            "cibo": 5,
-            "paesaggio": 5,
-            "attività": 3,
-            "svago": 3,
-            "relax": 4
-        },
-        "lat": 35.6768601,
-        "lng": 139.7638947,
-        "days": [
+                    "https://tse3.mm.bing.net/th/id/OIP.ihBtvAMf9rtPE_5IdtEIWwHaED?pid=Api&P=0&h=180"
+                ],
+                "lat": 41.8909421,
+                "lng": 12.491903
+            },
             {
-                "id": 1,
+                "id": 2,
                 "date": "08-09-2025",
-                "title": "Visita alla Tokyo Tower",
-                "description": "La vista dalla cima della Tokyo Tower è immensa!!!!!",
+                "title": "Piazza Navona",
+                "address": "Piazza Navona",
+                "description": "che spettacolo la Piazza Navona",
                 "photo": [
-                    "https://images.pexels.com/photos/3375997/pexels-photo-3375997.jpeg"
-                ]
+                    "https://tse2.mm.bing.net/th/id/OIP.8FWIxsUkFWBXy-wlr__OFgHaE8?pid=Api&P=0&h=180"
+                ],
+                "lat": 41.8989282,
+                "lng": 12.4731178
+            },
+            {
+                "id": 3,
+                "date": "08-09-2025",
+                "title": "Basilica di San Pietro",
+                "address": "Piazza San Pietro, 00120 Città del Vaticano, Vatican",
+                "description": "che spettacolo la basilica",
+                "photo": [
+                    "https://tse3.mm.bing.net/th/id/OIP.j9KgdLZt7UwmTbvRNOWkYQHaE8?pid=Api&P=0&h=180"
+                ],
+                "lat": 41.893851,
+                "lng": 12.4931577
             }
         ]
     }

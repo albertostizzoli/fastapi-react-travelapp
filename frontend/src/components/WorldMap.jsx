@@ -12,7 +12,7 @@ const customIcon = new L.Icon({
     shadowSize: [41, 41],
 });
 
-function WorldMap({ lat = 41.8933, lng = 12.4829, label = "Roma" }) {
+function WorldMap({ days = [] }) {
     const [geoData, setGeoData] = useState(null);
 
     useEffect(() => {
@@ -22,10 +22,15 @@ function WorldMap({ lat = 41.8933, lng = 12.4829, label = "Roma" }) {
             .catch((err) => console.error("Errore nel caricamento:", err));
     }, []);
 
+    // centro iniziale (se ci sono giorni prendi il primo, altrimenti Roma)
+    const center = days.length > 0
+        ? [days[0].lat, days[0].lng]
+        : [41.8933, 12.4829];
+
     return (
         <div className="w-full h-[500px] rounded-xl overflow-hidden shadow-lg">
             <MapContainer
-                center={[lat, lng]} // centriamo sulla città
+                center={center}
                 zoom={5}
                 minZoom={2}
                 style={{ height: "100%", width: "100%", backgroundColor: "#AAD3DF" }}
@@ -40,7 +45,6 @@ function WorldMap({ lat = 41.8933, lng = 12.4829, label = "Roma" }) {
                     bounds={[[-90, -180], [90, 180]]}
                 />
 
-                {/* Confini paesi */}
                 {geoData && (
                     <GeoJSON
                         data={geoData}
@@ -53,15 +57,21 @@ function WorldMap({ lat = 41.8933, lng = 12.4829, label = "Roma" }) {
                     />
                 )}
 
-                {/* Marker del viaggio */}
-                <Marker position={[lat, lng]} icon={customIcon}>
-                    <Popup>
-                        📍 {label}
-                    </Popup>
-                </Marker>
+                {/* Marker per ogni giorno */}
+                {days.map((day) => (
+                    <Marker
+                        key={day.id}
+                        position={[Number(day.lat), Number(day.lng)]}
+                        icon={customIcon}
+                    >
+                        <Popup>📍 {day.title}</Popup>
+                    </Marker>
+
+                ))}
             </MapContainer>
         </div>
     );
 }
+
 
 export default WorldMap;

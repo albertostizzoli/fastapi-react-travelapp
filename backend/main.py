@@ -24,8 +24,11 @@ class Day(BaseModel):
     id: Optional[int] = None
     date: str  # data
     title: str # titolo giornata
+    address: str # indirizzo 
     description: str # descrizione giornata
     photo: List[str] = [] # foto
+    lat: Optional[float] = None  # latitiudine
+    lng: Optional[float] = None  # longitudine
 
 # creo una classe Travel per rappresentare i dati dei dettagli del viaggio
 class Travel(BaseModel):
@@ -37,8 +40,6 @@ class Travel(BaseModel):
     end_date: str  # data fine
     general_vote: Optional[float] = None # voto generale
     votes: Optional[dict] = None # voti
-    lat: Optional[float] = None  # latitiudine
-    lng: Optional[float] = None  # longitudine
     days: List[Day] = [] # giorni
 
 
@@ -95,12 +96,6 @@ def add_travel(travel: Travel):
 
     for i, day in enumerate(travel.days, start=1): # assegno id progressivi ai giorni
         day.id = i
-    
-    # Recupero coordinate 
-    lat, lng = get_coordinates(travel.town, travel.city)
-    if lat and lng:
-        travel.lat = lat
-        travel.lng = lng
 
     travels.append(travel.dict()) # converto in dict e salvo
     write_data(travels)
@@ -146,14 +141,21 @@ def add_day_travel(travel_id: int, day: Day):
 
     for travel in travels:
         if travel["id"] == travel_id:
-            new_day_id = max([d["id"] for d in travel["days"]], default=0) + 1 # calcolo nuovo id per il giorno
+            new_day_id = max([d["id"] for d in travel["days"]], default=0) + 1
             day.id = new_day_id
 
             # formatto la data del giorno
             day.date = format_date(day.date)
 
-            travel["days"].append(day.dict()) # aggiungo il giorno
-            write_data(travels) # salvo i dati aggiornati
+            # Recupero coordinate dal titolo della giornata
+            lat, lng = get_coordinates(day.title, travel["city"], travel["town"])
+            if lat and lng:
+               day.lat = lat
+               day.lng = lng
+
+            # Aggiungo il giorno al viaggio
+            travel["days"].append(day.dict())
+            write_data(travels)
 
             return {"messaggio": f"Giorno aggiunto al viaggio", "day": day}
 
@@ -179,12 +181,20 @@ def delete_day_travel(travel_id: int, day_id: int):
 
 
 # creo una funzione per ottenere latitudine e longitudine di una città
-def get_coordinates(city: str, country: str):
-    """Usa Nominatim per ottenere coordinate (lat, lng) da città e nazione."""
+def get_coordinates(place: str, city: str, country: str):
+    """
+    Usa Nominatim per ottenere coordinate (lat, lng) da:
+    - titolo del giorno (luogo specifico)
+    - città del viaggio
+    - paese del viaggio
+    """
+    query = f"{place}, {city}, {country}"
     url = "https://nominatim.openstreetmap.org/search"
-    params = {"q": f"{city}, {country}", "format": "json", "limit": 1}
+    params = {"q": query, "format": "json", "limit": 1}
     headers = {"User-Agent": "travel-app"}  # Nominatim richiede un user-agent
+
     res = requests.get(url, params=params, headers=headers)
+
     if res.status_code == 200 and res.json():
         data = res.json()[0]
         return float(data["lat"]), float(data["lon"])

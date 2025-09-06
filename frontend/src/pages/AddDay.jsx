@@ -13,6 +13,7 @@ function AddDay() {
   const [form, setForm] = useState({
     date: "",
     title: "",
+    address: "",
     description: "",
     photo: [""], // inizialmente una foto vuota
   });
@@ -68,6 +69,7 @@ function AddDay() {
       const newDay = {
         date: form.date,
         title: form.title,
+        address: form.address,
         description: form.description,
         photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
       };
@@ -78,7 +80,7 @@ function AddDay() {
       );
 
       setMessage("✅ Giorno aggiunto con successo!");
-      setForm({ date: "", notes: "", description: "", photo: [""] });
+      setForm({ date: "", title: "", address:"", description: "", photo: [""] });
 
       // <-- reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -156,6 +158,16 @@ function AddDay() {
           <input
             name="title"
             value={form.title}
+            onChange={handleChange}
+            className="w-full p-2 border border-white text-white rounded-lg"/>
+        </div>
+
+        {/* Indirizzo */}
+        <div className="md:col-span-2">
+          <label className="block text-white">Indirizzo</label>
+          <input
+            name="address"
+            value={form.address}
             onChange={handleChange}
             className="w-full p-2 border border-white text-white rounded-lg"/>
         </div>

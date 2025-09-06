@@ -110,11 +110,7 @@ function TravelDays() {
 
         {/* Colonna destra: Mappa */}
         <div className="lg:w-2/5">
-          <WorldMap
-            lat={travel.lat}
-            lng={travel.lng}
-            label={`${travel.town} - ${travel.city}`}
-          />
+          <WorldMap days={travel.days} />
         </div>
       </div>
 
