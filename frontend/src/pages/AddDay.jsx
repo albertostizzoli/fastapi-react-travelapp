@@ -12,7 +12,7 @@ function AddDay() {
   const [selectedTravel, setSelectedTravel] = useState("");
   const [form, setForm] = useState({
     date: "",
-    notes: "",
+    title: "",
     description: "",
     photo: [""], // inizialmente una foto vuota
   });
@@ -67,7 +67,7 @@ function AddDay() {
     try {
       const newDay = {
         date: form.date,
-        notes: form.notes,
+        title: form.title,
         description: form.description,
         photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
       };
@@ -154,8 +154,8 @@ function AddDay() {
         <div className="md:col-span-2">
           <label className="block text-white">Titolo</label>
           <input
-            name="notes"
-            value={form.notes}
+            name="title"
+            value={form.title}
             onChange={handleChange}
             className="w-full p-2 border border-white text-white rounded-lg"/>
         </div>

@@ -1,1 +1,32 @@
-[]
+[
+    {
+        "id": 1,
+        "town": "Italia",
+        "city": "Roma",
+        "year": 2025,
+        "start_date": "06-08-2025",
+        "end_date": "21-08-2025",
+        "general_vote": 2.8,
+        "votes": {
+            "cibo": 4,
+            "paesaggio": 4,
+            "attività": 2,
+            "svago": 2,
+            "relax": 2
+        },
+        "lat": 41.8933203,
+        "lng": 12.4829321,
+        "days": [
+            {
+                "id": 1,
+                "date": "08-08-2025",
+                "title": "Visita al Colosseo",
+                "description": "Che bello visitare il Colosseo",
+                "photo": [
+                    "https://tse1.mm.bing.net/th/id/OIP.ykWyU6rm2huT6xCRQSt0_AHaE8?pid=Api&P=0&h=180",
+                    "https://tse1.mm.bing.net/th/id/OIP.0Z-a2Gb4MFpZeTMVRW7uQQHaDt?pid=Api&P=0&h=180"
+                ]
+            }
+        ]
+    }
+]

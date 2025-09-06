@@ -23,7 +23,7 @@ app.add_middleware(
 class Day(BaseModel):
     id: Optional[int] = None
     date: str  # data
-    notes: str # titolo giornata
+    title: str # titolo giornata
     description: str # descrizione giornata
     photo: List[str] = [] # foto
 
