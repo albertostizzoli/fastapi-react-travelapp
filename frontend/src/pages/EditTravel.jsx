@@ -93,26 +93,30 @@ function EditTravel() {
       {/* Container del form */}
       <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
 
-        <h1 className="text-2xl font-bold text-center mb-6">✏️ Modifica Viaggio</h1>
+        {/* Titolo + nota obbligatorio */}
+        <div className="flex items-center justify-between md:col-span-2 mb-4">
+            <h2 className="text-2xl font-bold">✏️ Modifica Viaggio</h2>
+          <p className="text-sm italic">* Il campo è obbligatorio</p>
+        </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* Paese */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Paese</label>
+            <label className="mb-1 text-white font-semibold">Paese *</label>
             <input
               id="town"
               type="text"
               name="town"
               value={travel.town}
               onChange={handleChange}
-              placeholder="Nazione"
+              placeholder="Paese"
               className="p-2 border border-white rounded text-white" />
           </div>
 
           {/* Città */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Città</label>
+            <label className="mb-1 text-white font-semibold">Città *</label>
             <input
               id="city"
               type="text"
@@ -125,7 +129,7 @@ function EditTravel() {
 
           {/* Anno */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Anno</label>
+            <label className="mb-1 text-white font-semibold">Anno *</label>
             <input
               type="number"
               name="year"
@@ -137,7 +141,7 @@ function EditTravel() {
 
           {/* Data inizio */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Data Inizio</label>
+            <label className="mb-1 text-white font-semibold">Data Inizio *</label>
             <input
               type="text"
               name="start_date"
@@ -149,7 +153,7 @@ function EditTravel() {
 
           {/* Data fine */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Data Fine</label>
+            <label className="mb-1 text-white font-semibold">Data Fine *</label>
             <input
               type="text"
               name="end_date"
@@ -159,9 +163,9 @@ function EditTravel() {
               className="p-2 border border-white text-white rounded" />
           </div>
 
-          {/* Voto Generale */}
+          {/* Media Voto */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Voto Generale</label>
+            <label className="mb-1 text-white font-semibold">Media Voto</label>
             <p className="p-2 border border-white text-blue-400 rounded bg-black/20">
               {calculateGeneralVote() ?? "-"}
             </p>
@@ -169,7 +173,7 @@ function EditTravel() {
 
           {/* Voti dettagliati (span 2 colonne) */}
           <div className="md:col-span-2">
-            <h3 className="font-semibold mb-2 text-white">Voti</h3>
+            <h3 className="font-semibold mb-2 text-white">Voti *</h3>
             <div className="flex flex-wrap gap-4">
               {Object.entries(travel.votes).map(([key, value]) => (
                 <div key={key} className="flex flex-col w-28 text-white">

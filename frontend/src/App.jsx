@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header"; // componente Header
 import Sidebar from "./components/Sidebar"; // componente Sidebar
-import Home from "./pages/Home";       // pagina Home Principale
+import Travels from "./pages/Travels";       // pagina Viaggi
 import AddTravel from "./pages/AddTravel"; //  pagina Aggiungi Viaggio
 import AddDay from "./pages/AddDay"; // pagina Aggiungi Giorno
 import TravelDays from "./pages/TravelDays"; // pagina Dettagli Viaggio
@@ -44,7 +44,7 @@ function App() {
       <Layout>
         {/* Rotte */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Travels />} />
           <Route path="/add" element={<AddTravel />} />
           <Route path="/addDay" element={<AddDay />} />
           <Route path="/travels/:id/days" element={<TravelDays />} />

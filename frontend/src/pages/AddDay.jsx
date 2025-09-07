@@ -80,7 +80,7 @@ function AddDay() {
       );
 
       setMessage("✅ Giorno aggiunto con successo!");
-      setForm({ date: "", title: "", address:"", description: "", photo: [""] });
+      setForm({ date: "", title: "", address: "", description: "", photo: [""] });
 
       // <-- reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -120,11 +120,17 @@ function AddDay() {
         onSubmit={handleSubmit}
         className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <h2 className="text-2xl font-bold mb-4 text-white col-span-1 md:col-span-2"> ➕ Aggiungi un giorno al viaggio</h2>
+        {/* Titolo + nota obbligatorio */}
+        <div className="flex items-center justify-between md:col-span-2 mb-4">
+          <h2 className="text-2xl font-bold text-white">
+            ➕ Aggiungi un giorno al viaggio
+          </h2>
+          <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
+        </div>
 
         {/* Selezione viaggio */}
         <div>
-          <label className="block text-white">Seleziona viaggio</label>
+          <label className="block text-white">Viaggio *</label>
           <select
             value={selectedTravel}
             onChange={(e) => setSelectedTravel(e.target.value)}
@@ -142,50 +148,53 @@ function AddDay() {
 
         {/* Data */}
         <div>
-          <label className="block text-white">Data</label>
+          <label className="block text-white">Data *</label>
           <input
             type="date"
             name="date"
             value={form.date}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-white rounded-lg text-white bg-transparent [color-scheme:dark]"/>
+            className="w-full p-2 border border-white rounded-lg text-white bg-transparent [color-scheme:dark]" />
         </div>
 
         {/* Titolo */}
-        <div className="md:col-span-2">
-          <label className="block text-white">Titolo</label>
+        <div className="md:col-span-1">
+          <label className="block text-white">Titolo *</label>
           <input
             name="title"
             value={form.title}
             onChange={handleChange}
-            className="w-full p-2 border border-white text-white rounded-lg"/>
+            required
+            className="w-full p-2 border border-white text-white rounded-lg" />
         </div>
 
         {/* Indirizzo */}
-        <div className="md:col-span-2">
-          <label className="block text-white">Indirizzo</label>
+        <div className="md:col-span-1">
+          <label className="block text-white">Indirizzo *</label>
           <input
             name="address"
             value={form.address}
             onChange={handleChange}
-            className="w-full p-2 border border-white text-white rounded-lg"/>
+            required
+            className="w-full p-2 border border-white text-white rounded-lg" />
         </div>
 
         {/* Descrizione */}
         <div className="md:col-span-2">
-          <label className="block text-white">Riassunto della giornata</label>
+          <label className="block text-white">Riassunto della giornata *</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
+            required
             className="w-full p-2 border border-white text-white rounded-lg"
-            rows="3"/>
+            rows="3" />
         </div>
 
         {/* Foto */}
         <div className="md:col-span-2">
-          <label className="block text-white">Foto (URL)</label>
+          <label className="block text-white">Foto (URL) *</label>
           {form.photo.map((p, index) => (
             <input
               key={index}
@@ -193,7 +202,8 @@ function AddDay() {
               value={p}
               onChange={(e) => handlePhotoChange(index, e.target.value)}
               placeholder="Inserisci URL immagine"
-              className="w-full p-2 border border-white text-white rounded-lg mb-2"/>
+              required
+              className="w-full p-2 border border-white text-white rounded-lg mb-2" />
           ))}
           <button
             type="button"

@@ -36,7 +36,7 @@ function StarRating({ rating = 0, max = 5 }) {
 }
 
 
-function Home() {
+function Travels() {
   const [travels, setTravels] = useState([]);
   const [deleteId, setDeleteId] = useState(null); // id viaggio da eliminare
 
@@ -160,4 +160,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Travels;
