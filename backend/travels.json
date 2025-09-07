@@ -17,39 +17,16 @@
         "days": [
             {
                 "id": 1,
-                "date": "07-09-2025",
+                "date": "05-09-2025",
                 "title": "Colosseo",
-                "address": "Piazza del Colosseo, 1",
-                "description": "che spettacolo il Colosseo",
+                "address": "Piazza del Colosseo",
+                "description": "Appena entri nel Colosseo, sei travolto dalla maestosità dell’antica arena: le gradinate concentriche, i corridoi pieni di storia e i resti dell’hypogeum evocano il fragore dei gladiatori e della folla. La luce filtra tra gli archi, illuminando pietre cariche di secoli, mentre il panorama di Roma alle spalle rende l’esperienza indimenticabile, un viaggio nel cuore dell’Impero Romano.",
                 "photo": [
-                    "https://tse3.mm.bing.net/th/id/OIP.ihBtvAMf9rtPE_5IdtEIWwHaED?pid=Api&P=0&h=180"
+                    "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg",
+                    "https://images.pexels.com/photos/532263/pexels-photo-532263.jpeg"
                 ],
                 "lat": 41.8909421,
                 "lng": 12.491903
-            },
-            {
-                "id": 2,
-                "date": "08-09-2025",
-                "title": "Piazza Navona",
-                "address": "Piazza Navona",
-                "description": "che spettacolo la Piazza Navona",
-                "photo": [
-                    "https://tse2.mm.bing.net/th/id/OIP.8FWIxsUkFWBXy-wlr__OFgHaE8?pid=Api&P=0&h=180"
-                ],
-                "lat": 41.8989282,
-                "lng": 12.4731178
-            },
-            {
-                "id": 3,
-                "date": "08-09-2025",
-                "title": "Basilica di San Pietro",
-                "address": "Piazza San Pietro, 00120 Città del Vaticano, Vatican",
-                "description": "che spettacolo la basilica",
-                "photo": [
-                    "https://tse3.mm.bing.net/th/id/OIP.j9KgdLZt7UwmTbvRNOWkYQHaE8?pid=Api&P=0&h=180"
-                ],
-                "lat": 41.893851,
-                "lng": 12.4931577
             }
         ]
     }
