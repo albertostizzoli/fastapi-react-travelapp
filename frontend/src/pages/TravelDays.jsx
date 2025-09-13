@@ -4,33 +4,37 @@ import axios from "axios";
 import WorldMap from "../components/WorldMap";
 
 function TravelDays() {
-  const { id } = useParams();
-  const [travel, setTravel] = useState(null);
-  const [deleteDayId, setDeleteDayId] = useState(null);
-  const [selectedDay, setSelectedDay] = useState(null); // nuovo stato per il modale Leggi Tutto
+  const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
+  const [travel, setTravel] = useState(null); // stato per i dati del viaggio
+  const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno
+  const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto
+  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita
 
+  // Fetch dati viaggio all'inizio e quando cambia l'id
   useEffect(() => {
-    fetchTravel();
-  }, [id]);
+    fetchTravel(); // chiamo la funzione per caricare i dati del viaggio
+  }, [id]); // dipendenza sull'id
 
+  // Funzione per caricare i dati del viaggio
   const fetchTravel = () => {
     axios
-      .get(`http://127.0.0.1:8000/travels/${id}`)
-      .then((res) => setTravel(res.data))
-      .catch((err) => console.error(err));
+      .get(`http://127.0.0.1:8000/travels/${id}`) // Chiamata API per ottenere i dati del viaggio
+      .then((res) => setTravel(res.data)) // Aggiorno lo stato con i dati ricevuti
+      .catch((err) => console.error(err)); // Gestione eventuali errori
   };
 
+  // Funzione per eliminare un giorno
   const handleDeleteDay = () => {
     axios
-      .delete(`http://127.0.0.1:8000/travels/${id}/days/${deleteDayId}`)
-      .then(() => {
-        setTravel({
-          ...travel,
-          days: travel.days.filter((d) => d.id !== deleteDayId),
+      .delete(`http://127.0.0.1:8000/travels/${id}/days/${deleteDayId}`) // Chiamata API per eliminare il giorno
+      .then(() => { // Se l'eliminazione ha successo
+        setTravel({ // aggiorno lo stato del viaggio rimuovendo il giorno eliminato
+          ...travel, // mantengo gli altri dati del viaggio
+          days: travel.days.filter((d) => d.id !== deleteDayId), // filtro il giorno eliminato
         });
-        setDeleteDayId(null);
+        setDeleteDayId(null); // chiudo il modale di conferma eliminazione
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err)); // Gestione eventuali errori
   };
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -66,20 +70,20 @@ function TravelDays() {
           </div>
 
           {/* Lista Giorni in griglia */}
-          {travel.days?.length > 0 ? (
+          {travel.days?.length > 0 ? ( // controllo se ci sono giorni
             <div className="flex flex-wrap gap-4">
-              {travel.days.map((d) => (
+              {travel.days.map((d) => ( // mappo ogni giorno
                 <div
                   key={d.id}
                   className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-64">
                   <div className="mb-4">
-                    <p className="text-gray-300 text-sm">{d.date}</p>
-                    <p className="text-white font-semibold text-lg">{d.title}</p>
+                    <p className="text-gray-300 text-lg">{d.date}</p>
+                    <p className="text-white font-semibold text-xl">{d.title}</p>
                   </div>
 
-                  {d.photo.length > 0 && (
+                  {d.photo.length > 0 && ( // controllo se ci sono foto
                     <div className="flex gap-2 flex-wrap mb-4">
-                      {d.photo.slice(0, 2).map((p, i) => (
+                      {d.photo.slice(0, 2).map((p, i) => ( // mostro solo le prime 2 foto
                         <img
                           key={i}
                           src={p}
@@ -87,7 +91,7 @@ function TravelDays() {
                           className="w-20 h-20 object-cover rounded-lg border border-gray-600 shadow-sm"
                         />
                       ))}
-                      {d.photo.length > 2 && (
+                      {d.photo.length > 2 && ( // se ci sono più di 2 foto, mostro solo le prime 2
                         <span className="text-gray-400 text-sm mt-2">
                           +{d.photo.length - 2} altre foto
                         </span>
@@ -97,13 +101,13 @@ function TravelDays() {
 
                   <div className="flex flex-col gap-2">
                     <button
-                      onClick={() => setSelectedDay(d)}
+                      onClick={() => setSelectedDay(d)} // apro il modale Leggi Tutto
                       className="px-4 py-2 flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
                       <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
                     </button>
 
                     <button
-                      onClick={() => setDeleteDayId(d.id)}
+                      onClick={() => setDeleteDayId(d.id)} // apro il modale di conferma eliminazione
                       className="px-4 py-2 flex items-center justify-center bg-red-600 hover:bg-red-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
                       <i className="fa-solid fa-trash mr-2"></i> Elimina Giorno
                     </button>
@@ -117,7 +121,7 @@ function TravelDays() {
 
           {/* Mappa sotto le card */}
           <div className="mt-8 w-full">
-            <WorldMap days={travel.days} />
+            <WorldMap days={travel.days} /> {/* Passo i giorni alla mappa */}
           </div>
         </div>
       </div>
@@ -127,30 +131,52 @@ function TravelDays() {
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 overflow-auto z-[9999]">
           <div className="bg-gray-800 rounded-xl p-4 sm:p-6 w-full max-w-full sm:max-w-5xl max-h-[90vh] overflow-y-auto shadow-lg">
 
-            {/* Titolo + Pulsante Chiudi */}
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-white">{selectedDay.title}</h2>
-              <button
-                onClick={() => setSelectedDay(null)}
-                className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                <i className="fa-solid fa-arrow-left"></i> Chiudi
-              </button>
+            {/* Bottone Chiudi */}
+            <button
+              onClick={() => setSelectedDay(null)} // chiudo il modale
+              className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+              <i className="fa-solid fa-arrow-left"></i> Chiudi
+            </button>
+
+            {/* Titolo */}
+            <div className="flex justify-between items-start mb-4 mt-4">
+              <h1 className="text-2xl sm:text-2xl font-bold text-white">{selectedDay.title}</h1>
+            </div>
+
+            {/* Data */}  
+            <div className="flex justify-between items-start mb-4 mt-4">
+              <p className="text-xl sm:text-xl font-bold text-white">{selectedDay.date}</p>
             </div>
 
             {/* Descrizione */}
             <p className="text-white mb-4">{selectedDay.description}</p>
 
             {/* Foto */}
-            {selectedDay.photo.length > 0 && (
+            {selectedDay.photo.length > 0 && ( // controllo se ci sono foto
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {selectedDay.photo.map((p, i) => (
                   <img
-                    key={i}
-                    src={p}
+                    key={i} // uso l'indice come chiave perché le URL delle foto potrebbero non essere uniche
+                    src={p} // URL della foto
                     alt="foto viaggio"
-                    className="w-full h-40 sm:h-40 object-cover rounded-lg border border-gray-600 shadow-sm"
+                    onClick={() => setOpenImage(p)} // apro il modale immagine ingrandita
+                    className="w-full h-40 sm:h-40 object-cover rounded-lg border border-gray-600 shadow-sm cursor-pointer"
                   />
                 ))}
+              </div>
+            )}
+
+            {/* Modale Foto */}
+            {openImage && ( // se openImage non è null, mostro il modale
+              <div
+                className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999]"
+                onClick={() => setOpenImage(null)}
+              >
+                <img
+                  src={openImage}
+                  alt="foto ingrandita"
+                  className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
+                />
               </div>
             )}
           </div>
@@ -158,7 +184,7 @@ function TravelDays() {
       )}
 
       {/* Modale di conferma eliminazione giorno */}
-      {deleteDayId && (
+      {deleteDayId && ( // se deleteDayId non è null, mostro il modale
         <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
           <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
             <h2 className="text-xl font-bold mb-4 text-white">

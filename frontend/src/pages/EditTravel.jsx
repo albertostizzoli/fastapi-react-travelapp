@@ -13,51 +13,51 @@ function EditTravel() {
     axios
       .get(`http://127.0.0.1:8000/travels`)
       .then((res) => {
-        const t = res.data.find((tr) => tr.id === parseInt(id));
-        setTravel(t);
+        const t = res.data.find((tr) => tr.id === parseInt(id)); // trova il viaggio con l'ID corrispondente
+        setTravel(t); // salva il viaggio nello stato
       })
       .catch((err) => console.error(err));
   }, [id]);
 
   // gestisce il cambiamento dei campi principali ( town, city...)
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTravel({ ...travel, [name]: value });
+    const { name, value } = e.target; // recupera il nome e il valore del campo modificato
+    setTravel({ ...travel, [name]: value }); // aggiorna lo stato del viaggio
   };
 
   // gestisce il cambiamento dei voti (paesaggio, relax...)
   const handleVoteChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // recupera il nome e il valore del voto modificato
     setTravel({
-      ...travel,
-      votes: { ...travel.votes, [name]: parseFloat(value) || 0 },
+      ...travel, // mantiene gli altri dati del viaggio
+      votes: { ...travel.votes, [name]: parseFloat(value) || 0 }, // aggiorna il voto specifico
     });
   };
 
   // calcola la media dei voti
   const calculateGeneralVote = () => {
-    if (!travel || !travel.votes) return null;
+    if (!travel || !travel.votes) return null; // se non ci sono voti, ritorna null
 
-    const votes = Object.values(travel.votes).filter((v) => v > 0);
-    if (votes.length === 0) return null;
+    const votes = Object.values(travel.votes).filter((v) => v > 0); // filtra i voti validi (maggiore di 0)
+    if (votes.length === 0) return null; // se non ci sono voti validi, ritorna null
 
-    const avg = votes.reduce((a, b) => a + b, 0) / votes.length;
+    const avg = votes.reduce((a, b) => a + b, 0) / votes.length; // calcola la media
     return avg.toFixed(1); // media con 1 decimale
   };
 
   // invio dal form e aggiorna il backend
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // previene il comportamento di default del form
 
     const updatedTravel = {
-      ...travel,
-      general_vote: calculateGeneralVote()
-        ? parseFloat(calculateGeneralVote())
-        : null,
+      ...travel, // mantiene gli altri dati del viaggio
+      general_vote: calculateGeneralVote() // aggiorna la media dei voti
+        ? parseFloat(calculateGeneralVote()) // converte in numero
+        : null, // se non c'è media, mette null
     };
 
     axios
-      .put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel)
+      .put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel) // invia la richiesta PUT al backend
       .then(() => {
         navigate("/"); // torna alla home
       })
@@ -109,7 +109,7 @@ function EditTravel() {
               type="text"
               name="town"
               value={travel.town}
-              onChange={handleChange}
+              onChange={handleChange} // aggiorna lo stato al cambiamento
               placeholder="Paese"
               className="p-2 border border-white rounded text-white" />
           </div>
@@ -167,7 +167,7 @@ function EditTravel() {
           <div className="flex flex-col">
             <label className="mb-1 text-white font-semibold">Media Voto</label>
             <p className="p-2 border border-white text-blue-400 rounded bg-black/20">
-              {calculateGeneralVote() ?? "-"}
+              {calculateGeneralVote() ?? "-"} {/* mostra la media o "-" se non c'è */}
             </p>
           </div>
 
@@ -175,7 +175,7 @@ function EditTravel() {
           <div className="md:col-span-2">
             <h3 className="font-semibold mb-2 text-white">Voti *</h3>
             <div className="flex flex-wrap gap-4">
-              {Object.entries(travel.votes).map(([key, value]) => (
+              {Object.entries(travel.votes).map(([key, value]) => ( // itera su ogni voto */}
                 <div key={key} className="flex flex-col w-28 text-white">
                   <label className="capitalize mb-1">{key}</label>
                   <input

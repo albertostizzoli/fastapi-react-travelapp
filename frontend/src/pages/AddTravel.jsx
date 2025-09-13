@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 function AddTravel() {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // inizializzo useNavigate
 
   // stato del form con tutti i campi del viaggio
   const [form, setForm] = useState({
@@ -17,8 +17,8 @@ function AddTravel() {
     cibo: "",
     paesaggio: "",
     attività: "",
-    svago: "",
     relax: "",
+    prezzo: "",
   });
 
   // stato per mostrare messaggi di conferma/errore
@@ -26,37 +26,37 @@ function AddTravel() {
 
   // gestisce il cambiamento dei campi input del form
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value }); // aggiorna il campo specifico
   };
 
   // calcolo la media dei voti 
   const calculateGeneralVote = () => {
-    const votes = ["cibo", "paesaggio", "attività", "svago", "relax"]
-      .map((field) => parseFloat(form[field]))
-      .filter((v) => !isNaN(v));
+    const votes = ["cibo", "paesaggio", "attività", "relax", "prezzo"] // campi da considerare
+      .map((field) => parseFloat(form[field])) // converto in numeri
+      .filter((v) => !isNaN(v)); // filtro quelli validi
 
-    if (votes.length === 0) return null;
+    if (votes.length === 0) return null; // nessun voto valido
 
-    const avg = votes.reduce((a, b) => a + b, 0) / votes.length;
+    const avg = votes.reduce((a, b) => a + b, 0) / votes.length; // calcolo la media
     return avg.toFixed(1); // restituisce una stringa con 1 decimale, es. "3.6"
   };
 
 
   // gestisce l’invio del form e salva un nuovo viaggio nel backend
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // previene il comportamento di default del form
 
     try {
       // calcolo il voto generale come media
-      const general_vote = calculateGeneralVote()
-        ? parseFloat(calculateGeneralVote())
-        : null;
+      const general_vote = calculateGeneralVote() // se c’è almeno un voto
+        ? parseFloat(calculateGeneralVote()) // lo converto in numero
+        : null; // altrimenti null
 
-      // creo l'oggetto viaggio da inviare all’API
+      // creo l'oggetto viaggio da inviare al backend
       const newTravel = {
         town: form.town,
         city: form.city,
-        year: parseInt(form.year),
+        year: parseInt(form.year), // converto in numero
         start_date: form.start_date,
         end_date: form.end_date,
         general_vote: general_vote, // calcolato
@@ -65,8 +65,8 @@ function AddTravel() {
           cibo: form.cibo ? parseInt(form.cibo) : null,
           paesaggio: form.paesaggio ? parseInt(form.paesaggio) : null,
           attività: form.attività ? parseInt(form.attività) : null,
-          svago: form.svago ? parseInt(form.svago) : null,
           relax: form.relax ? parseInt(form.relax) : null,
+          prezzo: form.prezzo ? parseInt(form.prezzo) : null,
         },
       };
 
@@ -84,11 +84,11 @@ function AddTravel() {
         cibo: "",
         paesaggio: "",
         attività: "",
-        svago: "",
         relax: "",
+        prezzo: "",
       });
 
-      // <-- qui reindirizziamo alla Home
+      // reindirizzo alla Home
       navigate("/");
 
     } catch (err) {
@@ -206,7 +206,7 @@ function AddTravel() {
           <div className="md:col-span-2">
             <h3 className="font-semibold text-lg mt-6 mb-2">Voti *</h3>
             <div className="flex flex-wrap gap-4">
-              {["cibo", "paesaggio", "attività", "svago", "relax"].map((field) => (
+              {["cibo", "paesaggio", "attività", "relax", "prezzo"].map((field) => ( // mappa i campi dei voti
                 <div key={field} className="flex flex-col w-28">
                   <label className="mb-1 text-black capitalize">{field}</label>
                   <input

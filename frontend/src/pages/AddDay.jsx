@@ -4,61 +4,61 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 function AddDay() {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useLocation(); // per ottenere lo stato passato da TravelDays
+  const navigate = useNavigate(); // per reindirizzare dopo l'aggiunta del giorno
   const travelIdFromState = location.state?.travelId || ""; // id passato da TravelDays per avere il viaggio già selezionato
 
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
-  const [selectedTravel, setSelectedTravel] = useState("");
-  const [form, setForm] = useState({
+  const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
+  const [form, setForm] = useState({ // stato del form
     date: "",
     title: "",
     address: "",
     description: "",
     photo: [""], // inizialmente una foto vuota
   });
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(""); // messaggio di successo o errore
 
   // carico i viaggi dal backend
   useEffect(() => {
-    const fetchTravels = async () => {
+    const fetchTravels = async () => { // funzione asincrona per fetch
       try {
-        const res = await axios.get("http://127.0.0.1:8000/travels");
-        setTravels(res.data);
+        const res = await axios.get("http://127.0.0.1:8000/travels"); // richiesta GET
+        setTravels(res.data); // aggiorno lo stato con i viaggi ricevuti
       } catch (err) {
-        console.error(err);
+        console.error(err); // log dell'errore
       }
     };
-    fetchTravels();
+    fetchTravels(); // chiamo la funzione
   }, []);
 
   // per ottenre l'id del viaggio
   useEffect(() => {
-    if (travelIdFromState) {
-      setSelectedTravel(travelIdFromState);
+    if (travelIdFromState) { // se c'è un id passato dallo stato
+      setSelectedTravel(travelIdFromState); // lo imposto come viaggio selezionato
     }
-  }, [travelIdFromState]);
+  }, [travelIdFromState]); // dipende da travelIdFromState
 
   // gestisce il cambiamento di input generico (date, notes, ecc.)
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value }); // aggiorno il campo specifico
   };
 
   // gestisce il cambiamento di un campo foto specifico
   const handlePhotoChange = (index, value) => {
-    const newPhotos = [...form.photo];
-    newPhotos[index] = value;
-    setForm({ ...form, photo: newPhotos });
+    const newPhotos = [...form.photo]; // creo una copia dell'array foto
+    newPhotos[index] = value; // aggiorno la foto specifica
+    setForm({ ...form, photo: newPhotos }); // aggiorno lo stato del form
   };
 
   // aggiunge un nuovo campo foto vuoto al form
   const addPhotoField = () => {
-    setForm({ ...form, photo: [...form.photo, ""] });
+    setForm({ ...form, photo: [...form.photo, ""] }); // aggiungo una nuova stringa vuota all'array foto
   };
 
   // gestisce l'invio del form e salva il nuovo giorno nel backend
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // previene il comportamento di default del form
 
     if (!selectedTravel) {
       setMessage("❌ Devi selezionare un viaggio!");
@@ -66,7 +66,7 @@ function AddDay() {
     }
 
     try {
-      const newDay = {
+      const newDay = { // creo l'oggetto del nuovo giorno
         date: form.date,
         title: form.title,
         address: form.address,
@@ -75,14 +75,14 @@ function AddDay() {
       };
 
       await axios.post(
-        `http://127.0.0.1:8000/travels/${selectedTravel}/days`,
+        `http://127.0.0.1:8000/travels/${selectedTravel}/days`, // endpoint per aggiungere un giorno a un viaggio specifico
         newDay
       );
 
       setMessage("✅ Giorno aggiunto con successo!");
-      setForm({ date: "", title: "", address: "", description: "", photo: [""] });
+      setForm({ date: "", title: "", address: "", description: "", photo: [""] }); // resetto il form
 
-      // <-- reindirizzo alla pagina dei giorni del viaggio selezionato
+      // reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
 
     } catch (err) {
@@ -133,13 +133,13 @@ function AddDay() {
           <label className="block text-white">Viaggio *</label>
           <select
             value={selectedTravel}
-            onChange={(e) => setSelectedTravel(e.target.value)}
+            onChange={(e) => setSelectedTravel(e.target.value)} // aggiorno il viaggio selezionato
             className="w-full p-2 border border-white rounded-lg bg-transparent text-white"
             required>
 
             <option value="" className="bg-black text-white">-- Seleziona --</option>
             {travels.map((t) => (
-              <option key={t.id} value={t.id} className="bg-black text-white">
+              <option key={t.id} value={t.id} className="bg-black text-white"> {/* opzione per ogni viaggio */}
                 {t.city} ({t.year})
               </option>
             ))}

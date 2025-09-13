@@ -5,31 +5,30 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // funzione per ottenere le stelle 
 function StarRating({ rating = 0, max = 5 }) {
-  const safe = Math.max(0, Math.min(rating, max)); // clamp 0..5
+  const safe = Math.max(0, Math.min(rating, max)); // assicura che il voto sia tra 0 e max
 
   return (
     <span className="inline-flex items-center">
-      {Array.from({ length: max }).map((_, i) => {
-        // quanto di questa stella va riempito (0..1)
-        const fill = Math.max(0, Math.min(1, safe - i));
-        const width = `${fill * 100}%`; // es. 50% per mezza stella
+      {Array.from({ length: max }).map((_, i) => { // per ogni stella
+        const fill = Math.max(0, Math.min(1, safe - i)); // calcola la porzione da riempire (0, 0.5, 1)
+        const width = `${fill * 100}%`; // converte in percentuale
 
         return (
           <span
             key={i}
             className="relative inline-block w-5 h-5 mr-0.5 align-middle"
             aria-hidden="true">
-            {/* stella vuota */}
+            {/* porzione vuota (sempre visibile) */}
             <span className="absolute inset-0 text-white text-lg leading-5 select-none flex items-center gap-2 mt-0.5">☆</span>
 
-            {/* porzione riempita (da 0% a 100%) */}
+            {/* porzione piena (larghezza variabile) */}
             <span className="absolute inset-0 overflow-hidden" style={{ width }}>
               <span className="text-yellow-400 text-lg leading-5 select-none">★</span>
             </span>
           </span>
         );
       })}
-      {/* per accessibilità: testo nascosto con il valore numerico */}
+      {/* Testo nascosto per screen reader */}
       <span className="sr-only">{safe} su {max}</span>
     </span>
   );
@@ -37,21 +36,21 @@ function StarRating({ rating = 0, max = 5 }) {
 
 
 function Travels() {
-  const [travels, setTravels] = useState([]);
-  const [deleteId, setDeleteId] = useState(null); // id viaggio da eliminare
+  const [travels, setTravels] = useState([]); // stato per i viaggi
+  const [deleteId, setDeleteId] = useState(null); // stato per l'id del viaggio da eliminare
 
   // uso lo useEffect per ottenere i dati dei viaggi
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/travels")
-      .then((res) => setTravels(res.data))
-      .catch((err) => console.error(err));
+      .then((res) => setTravels(res.data)) // aggiorna lo stato con i dati ricevuti
+      .catch((err) => console.error(err)); // gestisce errori
   }, []);
 
   // con questa cancello tutti i dati del viaggio
   const handleDelete = () => {
     axios
-      .delete(`http://127.0.0.1:8000/travels/${deleteId}`)
+      .delete(`http://127.0.0.1:8000/travels/${deleteId}`) // elimina il viaggio
       .then(() => {
         setTravels(travels.filter((t) => t.id !== deleteId)); // aggiorna lista
         setDeleteId(null); // chiudi modale
@@ -70,15 +69,15 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              initial={{ opacity: 0, height: 0, scale: 0.95 }}
-              animate={{ opacity: 1, height: "auto", scale: 1 }}
-              exit={{ opacity: 0, height: 0, scale: 0.95 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
+              initial={{ opacity: 0, height: 0, scale: 0.95 }} // animazione di entrata
+              animate={{ opacity: 1, height: "auto", scale: 1 }} // animazione di stato
+              exit={{ opacity: 0, height: 0, scale: 0.95 }} // animazione di uscita
+              transition={{ duration: 1, ease: "easeInOut" }} // durata e tipo di transizione
               className="backdrop-blur-xl bg-gray-800/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden">
               {/* Immagine */}
-              {v.days && v.days[0]?.photo?.[0] && (
+              {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
                 <img
-                  src={v.days[0].photo[0]}
+                  src={v.days[0].photo[0]} // usa la prima foto del primo giorno
                   alt={`Foto di ${v.town}`}
                   className="w-full h-48 object-cover" />
               )}
@@ -89,16 +88,16 @@ function Travels() {
                 <p className="text-gray-300 text-sm">📅 {v.start_date} → {v.end_date}</p>
                 <p className="text-white font-medium mt-1">Anno: {v.year}</p>
                 <p className="text-white font-medium flex items-center gap-2">
-                  Media Voto: <StarRating rating={v.general_vote ?? 0} />
+                  Media Voto: <StarRating rating={v.general_vote ?? 0} /> {/* mostra la media voto o 0 se non definito */}
                 </p>
 
                 {/* Voti dettagliati */}
                 {v.votes && (
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
-                    {Object.entries(v.votes).map(([key, value]) => (
-                      <li key={key} className="flex justify-between">
-                        <span className="capitalize">{key}:</span>
-                        <StarRating rating={value} />
+                    {Object.entries(v.votes).map(([key, value]) => ( // itera sulle coppie chiave-valore dei voti
+                      <li key={key} className="flex justify-between"> {/* mostra il nome del voto e la stella corrispondente */}
+                        <span className="capitalize">{key}:</span> 
+                        <StarRating rating={value} /> {/* mostra il voto con le stelle */}
                       </li>
                     ))}
                   </ul>

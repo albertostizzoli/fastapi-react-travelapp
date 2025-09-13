@@ -4,60 +4,29 @@
         "town": "Italia",
         "city": "Roma",
         "year": 2025,
-        "start_date": "05-09-2025",
-        "end_date": "16-09-2025",
-        "general_vote": 2.6,
+        "start_date": "13-09-2025",
+        "end_date": "20-09-2025",
+        "general_vote": 3.0,
         "votes": {
             "cibo": 4,
-            "paesaggio": 3,
-            "attività": 2,
-            "svago": 2,
-            "relax": 2
-        },
-        "days": [
-            {
-                "id": 1,
-                "date": "05-09-2025",
-                "title": "Colosseo",
-                "address": "Piazza del Colosseo",
-                "description": "Appena entri nel Colosseo, sei travolto dalla maestosità dell’antica arena: le gradinate concentriche, i corridoi pieni di storia e i resti dell’hypogeum evocano il fragore dei gladiatori e della folla. La luce filtra tra gli archi, illuminando pietre cariche di secoli, mentre il panorama di Roma alle spalle rende l’esperienza indimenticabile, un viaggio nel cuore dell’Impero Romano.",
-                "photo": [
-                    "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg",
-                    "https://images.pexels.com/photos/532263/pexels-photo-532263.jpeg"
-                ],
-                "lat": 41.8909421,
-                "lng": 12.491903
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "town": "Giappone",
-        "city": "Tokyo",
-        "year": 2025,
-        "start_date": "13-09-2025",
-        "end_date": "24-09-2025",
-        "general_vote": 4.0,
-        "votes": {
-            "cibo": 5,
-            "paesaggio": 5,
-            "attività": 4,
-            "svago": 3,
-            "relax": 3
+            "paesaggio": 4,
+            "attività": 3,
+            "relax": 3,
+            "prezzo": 1
         },
         "days": [
             {
                 "id": 1,
                 "date": "13-09-2025",
-                "title": "Tokyo Tower",
-                "address": "東京都港区芝公園4-2-8",
-                "description": "La visita alla Tokyo Tower offre una vista spettacolare di Tokyo dai suoi osservatori. Tra luci, panorama sul Monte Fuji nelle giornate limpide e l’atmosfera vibrante della città, si vive un’esperienza unica che unisce modernità e tradizione in uno dei simboli più iconici del Giappone.",
+                "title": "Colosseo",
+                "address": "Piazza del Colosseo, 1",
+                "description": "Vedere il Colosseo dall'interno è qualcosa di inimmaginabile, vedere dove i Gladiatori un tempo si scontravano ti lascia senza fiato",
                 "photo": [
-                    "https://images.pexels.com/photos/3375997/pexels-photo-3375997.jpeg",
-                    "https://images.pexels.com/photos/161309/traditional-and-technology-zojoji-temple-tokyo-culture-161309.jpeg"
+                    "https://images.pexels.com/photos/33845904/pexels-photo-33845904.jpeg",
+                    "https://images.pexels.com/photos/33845900/pexels-photo-33845900.jpeg"
                 ],
-                "lat": 35.6584491,
-                "lng": 139.745536
+                "lat": 41.8909421,
+                "lng": 12.491903
             }
         ]
     }
