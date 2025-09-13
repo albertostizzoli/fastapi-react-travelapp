@@ -29,5 +29,36 @@
                 "lng": 12.491903
             }
         ]
+    },
+    {
+        "id": 2,
+        "town": "Giappone",
+        "city": "Tokyo",
+        "year": 2025,
+        "start_date": "13-09-2025",
+        "end_date": "24-09-2025",
+        "general_vote": 4.0,
+        "votes": {
+            "cibo": 5,
+            "paesaggio": 5,
+            "attività": 4,
+            "svago": 3,
+            "relax": 3
+        },
+        "days": [
+            {
+                "id": 1,
+                "date": "13-09-2025",
+                "title": "Tokyo Tower",
+                "address": "東京都港区芝公園4-2-8",
+                "description": "La visita alla Tokyo Tower offre una vista spettacolare di Tokyo dai suoi osservatori. Tra luci, panorama sul Monte Fuji nelle giornate limpide e l’atmosfera vibrante della città, si vive un’esperienza unica che unisce modernità e tradizione in uno dei simboli più iconici del Giappone.",
+                "photo": [
+                    "https://images.pexels.com/photos/3375997/pexels-photo-3375997.jpeg",
+                    "https://images.pexels.com/photos/161309/traditional-and-technology-zojoji-temple-tokyo-culture-161309.jpeg"
+                ],
+                "lat": 35.6584491,
+                "lng": 139.745536
+            }
+        ]
     }
 ]
