@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from app.models import Travel, Day
-from app.utils import load_travels, write_data, format_date, get_coordinates
+from app.models.travels import Travel
+from app.utils.travels import load_travels, write_data, format_date
 
 router = APIRouter(prefix="/travels", tags=["travels"])
 
@@ -68,50 +68,4 @@ def delete_travel(travel_id: int):
             write_data(travels)  # salvo i viaggi aggiornati
             return {"messaggio": f"Viaggio eliminato con successo"}
 
-    raise HTTPException(status_code=404, detail="Viaggio non trovato")
-
-
-# creo una funzione per poter aggiungere un giorno ad un viaggio
-@router.post("/{travel_id}/days")
-def add_day_travel(travel_id: int, day: Day):
-    travels = load_travels()
-
-    for travel in travels:
-        if travel["id"] == travel_id:
-            new_day_id = max([d["id"] for d in travel["days"]], default=0) + 1
-            day.id = new_day_id
-
-            # formatto la data del giorno
-            day.date = format_date(day.date)
-
-            # Recupero coordinate dal titolo della giornata
-            lat, lng = get_coordinates(day.title, travel["city"], travel["town"])
-            if lat and lng:
-               day.lat = lat
-               day.lng = lng
-
-            # Aggiungo il giorno al viaggio
-            travel["days"].append(day.dict())
-            write_data(travels)
-
-            return {"messaggio": f"Giorno aggiunto al viaggio", "day": day}
-
-    raise HTTPException(status_code=404, detail="Viaggio non trovato")
-
-
-# creo una funzione per poter cancellare un giorno dal viaggio
-@router.delete("/{travel_id}/days/{day_id}")
-def delete_day_travel(travel_id: int, day_id: int):
-    travels = load_travels()
-
-    for travel in travels:
-        if travel["id"] == travel_id:
-            
-            for day in travel["days"]: # cerco il giorno da cancellare
-                if day["id"] == day_id: # se l'id del giorno corrisponde
-                    travel["days"].remove(day) # viene rimosso
-                    write_data(travels) # e i dati vengpno aggiornati
-                    return {"messaggio": f"Giorno {day_id} eliminato dal viaggio {travel_id}"}
-            
-            raise HTTPException(status_code=404, detail="Giorno non trovato")
     raise HTTPException(status_code=404, detail="Viaggio non trovato")

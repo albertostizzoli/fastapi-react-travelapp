@@ -101,6 +101,13 @@ function TravelDays() {
                       <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
                     </button>
 
+                    <Link
+                      to={`/days/${d.id}/edit`}
+                      className="px-4 py-2 flex items-center justify-center bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                      <i className="fa-solid fa-edit mr-2"></i>
+                      Modifica Giorno
+                    </Link>
+
                     <button
                       onClick={() => setDeleteDayId(d.id)} // apro il modale di conferma eliminazione
                       className="px-4 py-2 flex items-center justify-center bg-red-600 hover:bg-red-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
@@ -138,7 +145,7 @@ function TravelDays() {
               <h1 className="text-2xl sm:text-2xl font-bold text-white">{selectedDay.title}</h1>
             </div>
 
-            {/* Data */}  
+            {/* Data */}
             <div className="flex justify-between items-start mb-4 mt-4">
               <p className="sm:text-xl text-white">{selectedDay.date}</p>
             </div>

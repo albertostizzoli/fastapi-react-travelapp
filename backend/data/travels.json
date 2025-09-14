@@ -1,1 +1,32 @@
-[]
+[
+    {
+        "id": 1,
+        "town": "Italia",
+        "city": "Roma",
+        "year": 2025,
+        "start_date": "14-09-2025",
+        "end_date": "24-09-2025",
+        "general_vote": 3.2,
+        "votes": {
+            "cibo": 5,
+            "paesaggio": 4,
+            "attività": 3,
+            "relax": 3,
+            "prezzo": 1
+        },
+        "days": [
+            {
+                "id": 1,
+                "date": "14-09-2025",
+                "title": "Colosseo",
+                "description": "che bello visitare il Colosseo",
+                "photo": [
+                    "https://images.pexels.com/photos/33845902/pexels-photo-33845902.jpeg",
+                    "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg"
+                ],
+                "lat": 41.8902572,
+                "lng": 12.49238408348642
+            }
+        ]
+    }
+]

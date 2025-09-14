@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header"; // componente Header
 import Sidebar from "./components/Sidebar"; // componente Sidebar
@@ -7,6 +6,7 @@ import AddTravel from "./pages/AddTravel"; //  pagina Aggiungi Viaggio
 import AddDay from "./pages/AddDay"; // pagina Aggiungi Giorno
 import TravelDays from "./pages/TravelDays"; // pagina Dettagli Viaggio
 import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
+import EditDay from "./pages/EditDay"; // pagina Modifica Giorno
 
 function Layout({ children }) {
   const location = useLocation();
@@ -24,6 +24,9 @@ function Layout({ children }) {
   }
   if (location.pathname.includes("/travels") && location.pathname.includes("/edit")) {
     backgrounds[location.pathname] = "url('/images/london.jpg')";
+  }
+  if (location.pathname.includes("/days") && location.pathname.includes("/edit")) {
+    backgrounds[location.pathname] = "url('/images/hollywood.jpg')";
   }
 
   const bgImage = backgrounds[location.pathname];
@@ -49,6 +52,7 @@ function App() {
           <Route path="/addDay" element={<AddDay />} />
           <Route path="/travels/:id/days" element={<TravelDays />} />
           <Route path="/travels/:id/edit" element={<EditTravel />} />
+          <Route path="/days/:id/edit" element={<EditDay />} />
         </Routes>
       </Layout>
     </BrowserRouter>
