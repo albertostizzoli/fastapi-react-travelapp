@@ -13,7 +13,6 @@ function AddDay() {
   const [form, setForm] = useState({ // stato del form
     date: "",
     title: "",
-    address: "",
     description: "",
     photo: [""], // inizialmente una foto vuota
   });
@@ -69,7 +68,6 @@ function AddDay() {
       const newDay = { // creo l'oggetto del nuovo giorno
         date: form.date,
         title: form.title,
-        address: form.address,
         description: form.description,
         photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
       };
@@ -80,7 +78,7 @@ function AddDay() {
       );
 
       setMessage("✅ Giorno aggiunto con successo!");
-      setForm({ date: "", title: "", address: "", description: "", photo: [""] }); // resetto il form
+      setForm({ date: "", title: "", description: "", photo: [""] }); // resetto il form
 
       // reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -164,17 +162,6 @@ function AddDay() {
           <input
             name="title"
             value={form.title}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border border-white text-white rounded-lg" />
-        </div>
-
-        {/* Indirizzo */}
-        <div className="md:col-span-1">
-          <label className="block text-white">Indirizzo *</label>
-          <input
-            name="address"
-            value={form.address}
             onChange={handleChange}
             required
             className="w-full p-2 border border-white text-white rounded-lg" />

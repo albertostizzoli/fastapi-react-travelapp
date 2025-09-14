@@ -91,11 +91,6 @@ function TravelDays() {
                           className="w-20 h-20 object-cover rounded-lg border border-gray-600 shadow-sm"
                         />
                       ))}
-                      {d.photo.length > 2 && ( // se ci sono più di 2 foto, mostro solo le prime 2
-                        <span className="text-gray-400 text-sm mt-2">
-                          +{d.photo.length - 2} altre foto
-                        </span>
-                      )}
                     </div>
                   )}
 
@@ -145,7 +140,7 @@ function TravelDays() {
 
             {/* Data */}  
             <div className="flex justify-between items-start mb-4 mt-4">
-              <p className="text-xl sm:text-xl font-bold text-white">{selectedDay.date}</p>
+              <p className="sm:text-xl text-white">{selectedDay.date}</p>
             </div>
 
             {/* Descrizione */}
@@ -185,7 +180,7 @@ function TravelDays() {
 
       {/* Modale di conferma eliminazione giorno */}
       {deleteDayId && ( // se deleteDayId non è null, mostro il modale
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
           <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
             <h2 className="text-xl font-bold mb-4 text-white">
               Vuoi davvero eliminare questo giorno?

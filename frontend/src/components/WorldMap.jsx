@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, GeoJSON, Marker, Popup } from "react-leaflet";
+import { useEffect, useState, useMemo } from "react";
+import { MapContainer, TileLayer, GeoJSON, Marker, Popup, Polyline } from "react-leaflet";
 import L from "leaflet";
 
 // icona personalizzata (altrimenti Leaflet non mostra bene il marker)
@@ -21,6 +21,18 @@ function WorldMap({ days = [] }) {
             .then((data) => setGeoData(data))
             .catch((err) => console.error("Errore nel caricamento:", err));
     }, []);
+
+    // ordino i giorni per data (gg-mm-aaaa -> aaaa-mm-gg per ordinamento)
+    const sortedDays = useMemo(() => {
+        return [...days].sort((a, b) => {
+            const [da, ma, ya] = a.date.split("-").map(Number);
+            const [db, mb, yb] = b.date.split("-").map(Number);
+            return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
+        });
+    }, [days]);
+
+    // creo le coordinate per la polyline
+    const polylineCoords = sortedDays.map((d) => [d.lat, d.lng]);
 
     // centro iniziale (se ci sono giorni prendi il primo, altrimenti Roma)
     const center = days.length > 0
@@ -57,17 +69,27 @@ function WorldMap({ days = [] }) {
                     />
                 )}
 
-                {/* Marker per ogni giorno */}
-                {days.map((day) => (
+                {/* Marker */}
+                {sortedDays.map((day) => (
                     <Marker
                         key={day.id}
                         position={[Number(day.lat), Number(day.lng)]}
                         icon={customIcon}
                     >
-                        <Popup>📍 {day.title}</Popup>
+                        <Popup>
+                            📍 {day.title} <br />
+                            {day.date}
+                        </Popup>
                     </Marker>
-
                 ))}
+
+                {/* Polyline per unire i punti */}
+                {polylineCoords.length > 1 && (
+                    <Polyline
+                        positions={polylineCoords}
+                        pathOptions={{ color: "red", weight: 3 }}
+                    />
+                )}
             </MapContainer>
         </div>
     );

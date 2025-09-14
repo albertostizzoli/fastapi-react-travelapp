@@ -6,7 +6,6 @@ class Day(BaseModel):
     id: Optional[int] = None
     date: str  # data
     title: str # titolo giornata
-    address: str # indirizzo 
     description: str # descrizione giornata
     photo: List[str] = [] # foto
     lat: Optional[float] = None  # latitiudine
