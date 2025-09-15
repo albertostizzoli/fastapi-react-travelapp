@@ -18,14 +18,14 @@
             {
                 "id": 1,
                 "date": "14-09-2025",
-                "title": "Colosseo",
-                "description": "che bello visitare il Colosseo",
+                "title": "Piazza Navona ",
+                "description": "che bello visitare la Piazza Navona",
                 "photo": [
-                    "https://images.pexels.com/photos/33845902/pexels-photo-33845902.jpeg",
-                    "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg"
+                    "https://images.pexels.com/photos/3044807/pexels-photo-3044807.jpeg",
+                    "https://images.pexels.com/photos/2844469/pexels-photo-2844469.jpeg"
                 ],
-                "lat": 41.8902572,
-                "lng": 12.49238408348642
+                "lat": 41.89892815,
+                "lng": 12.473117842274796
             }
         ]
     }

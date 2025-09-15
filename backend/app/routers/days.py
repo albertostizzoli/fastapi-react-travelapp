@@ -34,29 +34,28 @@ def add_day_travel(travel_id: int, day: Day):
 
 
 # creo una funzione per poter modificare un giorno del viaggio
-@router.put("/{travel_id}")
-def update_day(travel_id: int, updated_day: Day):
+@router.put("/{travel_id}/days/{day_id}")
+def update_day(travel_id: int, day_id: int, updated_day: Day):
     travels = load_travels()
 
-    for i, travel in enumerate(travels):
+    for travel in travels:
         if travel["id"] == travel_id:
-            updated_day.id = travel_id #
+            for i, day in enumerate(travel["days"]):  # supponendo che i giorni siano in travel["days"]
+                if day["id"] == day_id:
+                    # aggiorno i dati del giorno
+                    updated_day.id = day_id
 
-            for j, day in enumerate(updated_day.travels, start=1): # aggiorno id dei giorni
-                day.id = j
+                    # ottengo coordinate aggiornate
+                    lat, lng = get_coordinates(updated_day.title, travel["city"], travel["town"])
+                    if lat and lng:
+                        updated_day.lat = lat
+                        updated_day.lng = lng
 
-            # Recupero coordinate dal titolo della giornata
-            lat, lng = get_coordinates(day.title, travel["city"], travel["town"])
-            if lat and lng:
-               day.lat = lat
-               day.lng = lng
+                    travel["days"][i] = updated_day.dict()
+                    write_data(travels)
+                    return updated_day
 
-            travels[i] = updated_day.dict()
-            write_data(travels)
-            return updated_day
-        
-    raise HTTPException(status_code=404, detail="Viaggio non trovato")
-
+    raise HTTPException(status_code=404, detail="Giorno o viaggio non trovato")
 
 
 # creo una funzione per poter cancellare un giorno dal viaggio
