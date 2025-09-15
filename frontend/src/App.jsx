@@ -26,7 +26,7 @@ function Layout({ children }) {
     backgrounds[location.pathname] = "url('/images/london.jpg')";
   }
   if (location.pathname.includes("/days") && location.pathname.includes("/edit")) {
-    backgrounds[location.pathname] = "url('/images/hollywood.jpg')";
+    backgrounds[location.pathname] = "url('/images/losangeles.jpg')";
   }
 
   const bgImage = backgrounds[location.pathname];
