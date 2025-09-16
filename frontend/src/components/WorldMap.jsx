@@ -40,7 +40,7 @@ function WorldMap({ days = [] }) {
         : [41.8933, 12.4829];
 
     return (
-        <div className="w-full h-[500px] rounded-xl overflow-hidden shadow-lg">
+        <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-lg">
             <MapContainer
                 center={center}
                 zoom={5}
@@ -77,8 +77,10 @@ function WorldMap({ days = [] }) {
                         icon={customIcon}
                     >
                         <Popup>
-                            📍 {day.title} <br />
-                            {day.date}
+                            <div style={{ minWidth: "200px" }}>
+                                <h3 className="font-bold text-lg">{day.title}</h3>
+                                <p className="text-sm text-gray-600">📅 {day.date}</p>
+                            </div>
                         </Popup>
                     </Marker>
                 ))}

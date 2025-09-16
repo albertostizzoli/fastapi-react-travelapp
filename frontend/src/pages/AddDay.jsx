@@ -121,7 +121,7 @@ function AddDay() {
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
           <h2 className="text-2xl font-bold text-white">
-            ➕ Aggiungi un giorno al viaggio
+            ➕ Aggiungi una tappa al viaggio
           </h2>
           <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
         </div>
@@ -206,7 +206,7 @@ function AddDay() {
             type="submit"
             className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-plus"></i>
-            Aggiungi Giorno
+            Aggiungi Tappa
           </button>
         </div>
 

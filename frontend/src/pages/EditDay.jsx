@@ -64,7 +64,7 @@ function EditDay() {
   };
 
   if (loading) return <p>Caricamento...</p>;
-  if (!day) return <p>Giorno non trovato</p>;
+  if (!day) return <p>Tappa non trovata</p>;
 
   // Animazione
   const editDay = {
@@ -94,7 +94,7 @@ function EditDay() {
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-bold text-white">✏️ Modifica Giorno</h2>
+          <h2 className="text-2xl font-bold text-white">✏️ Modifica Tappa</h2>
           <p className="text-sm italic text-white">* Il campo è obbligatorio</p>
         </div>
 

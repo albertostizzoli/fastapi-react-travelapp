@@ -44,20 +44,20 @@ function TravelDays() {
       {/* Header */}
       <div className="flex flex-wrap justify-between items-center mb-8 max-w-6xl mx-auto gap-4">
         <h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]">
-          🗓️ Giorni del viaggio
+          🗓️ Tappe del viaggio
         </h1>
         <Link
           to="/addDay"
           state={{ travelId: id }}
           className="px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105" >
-          <i className="fa-solid fa-plus"></i> Aggiungi Giorno
+          <i className="fa-solid fa-plus"></i> Aggiungi Tappa
         </Link>
       </div>
 
       {/* Layout principale */}
-      <div className="flex flex-col lg:flex-row max-w-6xl mx-auto gap-8">
-        {/* Colonna sinistra */}
-        <div className="flex-1 space-y-6">
+      <div className="flex flex-col lg:flex-row max-w-6xl mx-auto gap-8 h-[75vh]">
+        {/* Colonna sinistra - Info Viaggio + Giorni */}
+        <div className="flex-1 flex flex-col">
           {/* Info Viaggio */}
           <div className="p-6 bg-transparent rounded-xl">
             <h2 className="text-xl font-semibold text-white mb-2">
@@ -69,62 +69,65 @@ function TravelDays() {
             {travel.title && <p className="text-gray-200 italic">{travel.title}</p>}
           </div>
 
-          {/* Lista Giorni in griglia */}
-          {travel.days?.length > 0 ? ( // controllo se ci sono giorni
-            <div className="flex flex-wrap gap-4">
-              {travel.days.map((d) => ( // mappo ogni giorno
-                <div
-                  key={d.id}
-                  className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-64">
-                  <div className="mb-4">
-                    <p className="text-gray-300 text-lg">{d.date}</p>
-                    <p className="text-white font-semibold text-xl">{d.title}</p>
-                  </div>
-
-                  {d.photo.length > 0 && ( // controllo se ci sono foto
-                    <div className="flex gap-2 flex-wrap mb-4">
-                      {d.photo.slice(0, 2).map((p, i) => ( // mostro solo le prime 2 foto
-                        <img
-                          key={i}
-                          src={p}
-                          alt="foto viaggio"
-                          className="w-20 h-20 object-cover rounded-lg border border-gray-600 shadow-sm"
-                        />
-                      ))}
+          {/* Lista Giorni in griglia scrollabile */}
+          <div className="flex-1 overflow-y-auto pr-2">
+            {travel.days?.length > 0 ? (
+              <div className="flex flex-wrap gap-4">
+                {travel.days.map((d) => (
+                  <div
+                    key={d.id}
+                    className="bg-gray-800/30 backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-64">
+                    <div className="mb-4">
+                      <p className="text-gray-300 text-lg">{d.date}</p>
+                      <p className="text-white font-semibold text-xl">{d.title}</p>
                     </div>
-                  )}
 
-                  <div className="flex flex-col gap-2">
-                    <button
-                      onClick={() => setSelectedDay(d)} // apro il modale Leggi Tutto
-                      className="px-4 py-2 flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                      <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
-                    </button>
+                    {d.photo.length > 0 && (
+                      <div className="flex gap-2 flex-wrap mb-4">
+                        {d.photo.slice(0, 2).map((p, i) => (
+                          <img
+                            key={i}
+                            src={p}
+                            alt="foto viaggio"
+                            className="w-20 h-20 object-cover rounded-lg border border-gray-600 shadow-sm"
+                          />
+                        ))}
+                      </div>
+                    )}
 
-                    <Link
-                      to={`/days/${d.id}/edit`}
-                      className="px-4 py-2 flex items-center justify-center bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                      <i className="fa-solid fa-edit mr-2"></i>
-                      Modifica Giorno
-                    </Link>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => setSelectedDay(d)}
+                        className="px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                        <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
+                      </button>
 
-                    <button
-                      onClick={() => setDeleteDayId(d.id)} // apro il modale di conferma eliminazione
-                      className="px-4 py-2 flex items-center justify-center bg-red-600 hover:bg-red-500 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                      <i className="fa-solid fa-trash mr-2"></i> Elimina Giorno
-                    </button>
+                      <Link
+                        to={`/days/${d.id}/edit`}
+                        className="px-4 py-2 flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                        <i className="fa-solid fa-edit mr-2"></i>
+                        Modifica Tappa
+                      </Link>
+
+                      <button
+                        onClick={() => setDeleteDayId(d.id)}
+                        className="px-4 py-2 flex items-center justify-center bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                        <i className="fa-solid fa-trash mr-2"></i> Elimina Tappa
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-white text-center mt-4">Nessun giorno presente</p>
-          )}
-
-          {/* Mappa sotto le card */}
-          <div className="mt-8 w-full">
-            <WorldMap days={travel.days} /> {/* Passo i giorni alla mappa */}
+                ))}
+              </div>
+            ) : (
+              <p className="text-white text-center mt-4">Nessuna Tappa Presente</p>
+            )}
           </div>
+        </div>
+
+
+        {/* Colonna destra - Mappa */}
+        <div className="flex-1">
+          <WorldMap days={travel.days} className="w-full h-full rounded-xl" />
         </div>
       </div>
 
@@ -190,7 +193,7 @@ function TravelDays() {
         <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
           <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
             <h2 className="text-xl font-bold mb-4 text-white">
-              Vuoi davvero eliminare questo giorno?
+              Sei sicuro di voler eliminare la tappa?
             </h2>
             <div className="flex justify-center gap-4">
               <button
