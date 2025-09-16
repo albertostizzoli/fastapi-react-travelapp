@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
 
-
 function TravelDays() {
   const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
   const [travel, setTravel] = useState(null); // stato per i dati del viaggio
@@ -77,7 +76,7 @@ function TravelDays() {
                 {travel.days.map((d) => (
                   <div
                     key={d.id}
-                    className="bg-gray-800/30 backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64">
+                    className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64">
                     <div className="mb-4">
                       <p className="text-gray-300 text-lg">{d.date}</p>
                       <p className="text-white font-semibold text-xl">{d.title}</p>
@@ -174,8 +173,7 @@ function TravelDays() {
             {openImage && ( // se openImage non è null, mostro il modale
               <div
                 className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999]"
-                onClick={() => setOpenImage(null)}
-              >
+                onClick={() => setOpenImage(null)}>
                 <img
                   src={openImage}
                   alt="foto ingrandita"
