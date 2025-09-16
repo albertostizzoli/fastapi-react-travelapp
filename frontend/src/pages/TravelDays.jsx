@@ -3,49 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
 
-// Componente DayCard riutilizzabile
-const DayCard = ({ day, onRead, onDelete }) => (
-  <div className="bg-gray-800/30 backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64">
-    <div className="mb-4">
-      <p className="text-gray-300 text-lg">{day.date}</p>
-      <p className="text-white font-semibold text-xl">{day.title}</p>
-    </div>
-
-    {day.photo.length > 0 && (
-      <div className="flex gap-2 flex-wrap mb-4">
-        {day.photo.slice(0, 2).map((p, i) => (
-          <img
-            key={i}
-            src={p}
-            alt="foto viaggio"
-            className="w-20 h-20 object-cover rounded-lg border border-gray-600 shadow-sm"
-          />
-        ))}
-      </div>
-    )}
-
-    <div className="flex flex-col gap-2">
-      <button
-        onClick={() => onRead(day)}
-        className="px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-        <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
-      </button>
-
-      <Link
-        to={`/days/${day.id}/edit`}
-        className="px-4 py-2 flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-        <i className="fa-solid fa-edit mr-2"></i> Modifica Tappa
-      </Link>
-
-      <button
-        onClick={() => onDelete(day.id)}
-        className="px-4 py-2 flex items-center justify-center bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-        <i className="fa-solid fa-trash mr-2"></i> Elimina Tappa
-      </button>
-    </div>
-  </div>
-);
-
 
 function TravelDays() {
   const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
