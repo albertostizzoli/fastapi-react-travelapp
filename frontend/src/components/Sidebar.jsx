@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 
 function Sidebar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation(); // Ottengo il percorso corrente
+  const location = useLocation();
+  const isHome = location.pathname === "/"; // controlla se siamo nella Home
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -13,7 +14,9 @@ function Sidebar() {
   return (
     <div className="sm:hidden">
       {/* Navbar mobile */}
-      <nav className="p-4 bg-red-600 text-white flex justify-between items-center">
+      <nav
+        className={`p-4 flex justify-between items-center 
+          ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
         <button
           onClick={toggleSidebar}
           aria-label="Apri il menu"
@@ -31,7 +34,9 @@ function Sidebar() {
           animate={{ x: 0 }}
           exit={{ x: "-100%" }}
           transition={{ type: "spring", stiffness: 140, damping: 30 }}
-          className="fixed top-0 left-0 w-64 h-full backdrop-blur-xl p-6 z-[9999] flex flex-col gap-6">
+          className={`fixed top-0 left-0 w-64 h-full p-6 z-[9999] flex flex-col gap-6 
+            ${isHome ? "bg-blue-400" : "backdrop-blur-xl bg-transparent"}`}>
+
           <button
             onClick={toggleSidebar}
             aria-label="Chiudi il menu"
@@ -39,7 +44,7 @@ function Sidebar() {
             <i className="fa-solid fa-xmark"></i>
           </button>
 
-          {/* Link condizionati in base al percorso */}
+          {/* Link condizionati */}
           {location.pathname !== "/" && (
             <Link
               to="/"

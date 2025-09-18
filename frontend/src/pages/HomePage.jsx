@@ -1,9 +1,8 @@
-import React from "react";
 import { motion } from "framer-motion";
 
 function HomePage() {
     return (
-        <div className="bg-gradient-to-b from-blue-200 via-white to-orange-200 font-sans">
+        <div className="bg-gradient-to-b from-blue-400 via-white to-orange-400 font-sans">
             {/* Section 1 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
                 <div>
@@ -27,7 +26,7 @@ function HomePage() {
             </section>
 
             {/* Section 2 */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center bg-blue-50">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
                 <img
                     src="/images/street.jpg"
                     alt="Strada nel deserto"
@@ -68,8 +67,8 @@ function HomePage() {
                 />
             </section>
 
-            {/* Section 4 - AI Travel Suggestion */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center bg-orange-50">
+            {/* Section 4 */}
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
                 <img
                     src="/images/wood.jpg"
                     alt="Foresta"
