@@ -89,7 +89,7 @@ function AddTravel() {
       });
 
       // reindirizzo alla Home
-      navigate("/");
+      navigate("/travels");
 
     } catch (err) {
       console.error(err);

@@ -13,7 +13,7 @@ function Sidebar() {
   return (
     <div className="sm:hidden">
       {/* Navbar mobile */}
-      <nav className="p-4 bg-transparent text-white flex justify-between items-center">
+      <nav className="p-4 bg-red-600 text-white flex justify-between items-center">
         <button
           onClick={toggleSidebar}
           aria-label="Apri il menu"
@@ -43,6 +43,16 @@ function Sidebar() {
           {location.pathname !== "/" && (
             <Link
               to="/"
+              onClick={toggleSidebar}
+              className="text-white text-lg font-medium hover:underline">
+              <i className="fa-solid fa-home mr-2"></i>
+              Home
+            </Link>
+          )}
+
+          {location.pathname !== "/travels" && (
+            <Link
+              to="/travels"
               onClick={toggleSidebar}
               className="text-white text-lg font-medium hover:underline">
               <i className="fa-solid fa-globe mr-2"></i>

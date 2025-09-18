@@ -7,13 +7,14 @@ import AddDay from "./pages/AddDay"; // pagina Aggiungi Giorno
 import TravelDays from "./pages/TravelDays"; // pagina Dettagli Viaggio
 import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
 import EditDay from "./pages/EditDay"; // pagina Modifica Giorno
+import HomePage from "./pages/HomePage"; // pagina Home
 
 function Layout({ children }) {
   const location = useLocation();
 
   // immagini diverse per ogni rotta
   const backgrounds = {
-    "/": "url('/images/colosseo.jpg')",
+    "/travels": "url('/images/colosseo.jpg')",
     "/add": "url('/images/giappone.jpg')",
     "/addDay": "url('/images/newyork.jpg')",
   };
@@ -32,11 +33,11 @@ function Layout({ children }) {
   const bgImage = backgrounds[location.pathname];
 
   return (
-    <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: bgImage }}>
+    <div className=" bg-cover bg-center" style={{ backgroundImage: bgImage }}>
       <Sidebar />
       <Header />
       {/* Contenuto pagina */}
-      <div className="p-8">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }
@@ -47,7 +48,8 @@ function App() {
       <Layout>
         {/* Rotte */}
         <Routes>
-          <Route path="/" element={<Travels />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/travels" element={<Travels />} />
           <Route path="/add" element={<AddTravel />} />
           <Route path="/addDay" element={<AddDay />} />
           <Route path="/travels/:id/days" element={<TravelDays />} />
