@@ -9,18 +9,18 @@ function HomePage() {
                     <h2 className="text-4xl font-bold mb-4 text-gray-900">
                         Conserva i tuoi ricordi di viaggio
                     </h2>
-                    <p className="text-gray-700 mb-4 leading-relaxed">
-                        Un viaggio non è solo una serie di tappe, ma un insieme di emozioni e
+                    <p className="text-gray-700 mb-4 text-justify">
+                        Un viaggio non è solo una serie di <strong>tappe</strong>, ma un insieme di emozioni e
                         momenti unici che meritano di essere custoditi. Con la nostra app,
-                        puoi creare un vero e proprio diario digitale in cui ogni tappa
-                        diventa un capitolo della tua storia. Fotografie, descrizioni,
-                        sensazioni: tutto viene raccolto in un luogo speciale, sempre
-                        accessibile e pronto a farti rivivere i tuoi ricordi.
+                        puoi creare un vero e proprio <strong>diario digitale</strong> in cui ogni tappa
+                        diventa un <strong>capitolo</strong> della tua storia. <strong>Fotografie, descrizioni,
+                        sensazioni</strong>: tutto viene raccolto in un luogo speciale, sempre <strong>accessibile</strong> e
+                        pronto a farti rivivere i tuoi ricordi.
                     </p>
                 </div>
                 <img
-                    src="/images/beach.jpg"
-                    alt="Spiaggia tropicale"
+                    src="/images/monte_fuji.jpg"
+                    alt="Monte Fuji"
                     className="rounded-2xl shadow-lg"
                 />
             </section>
@@ -28,20 +28,20 @@ function HomePage() {
             {/* Section 2 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
                 <img
-                    src="/images/street.jpg"
-                    alt="Strada nel deserto"
+                    src="/images/amalfi.jpg"
+                    alt="Costiera Amalfitana"
                     className="rounded-2xl shadow-lg"
                 />
                 <div>
                     <h2 className="text-3xl font-bold mb-4 text-gray-900">
                         Aggiungi le tue tappe
                     </h2>
-                    <p className="text-gray-700 mb-4 leading-relaxed">
+                    <p className="text-gray-700 mb-4 text-justify">
                         Ogni viaggio può essere suddiviso in tappe, così da ricordare in modo
-                        dettagliato ogni singolo momento. Puoi annotare i luoghi visitati,
-                        inserire pensieri personali, arricchire le tue pagine con foto e
-                        creare un racconto autentico e vivido. In questo modo il tuo diario
-                        diventa una mappa emotiva che ti accompagnerà per sempre.
+                        <strong> dettagliato</strong> ogni singolo momento. Puoi <strong>annotare</strong> i luoghi visitati,
+                        <strong> inserire</strong> pensieri personali, <strong>arricchire</strong> le tue pagine con foto e
+                        <strong> creare</strong> un racconto autentico e vivido. In questo modo il tuo diario
+                        diventa una <strong>mappa emotiva</strong> che ti accompagnerà per sempre.
                     </p>
                 </div>
             </section>
@@ -52,17 +52,17 @@ function HomePage() {
                     <h2 className="text-3xl font-bold mb-4 text-gray-900">
                         Un diario solo per te
                     </h2>
-                    <p className="text-gray-700 mb-4 leading-relaxed">
-                        Questo non è un semplice elenco di luoghi, ma uno spazio intimo in cui
-                        custodire emozioni e pensieri personali. Ogni tappa racconta una
-                        parte di te: i sorrisi, le sfide, le scoperte. Il diario diventa così
-                        un compagno di viaggio che ti permette di fermare il tempo e di
-                        rileggere le tue esperienze con occhi nuovi.
+                    <p className="text-gray-700 mb-4 text-justify">
+                        Questo non è un semplice elenco di luoghi, ma uno <strong>spazio</strong> intimo in cui
+                        custodire <strong>emozioni</strong> e <strong>pensieri</strong> personali. Ogni tappa racconta una
+                        parte di te: i <strong>sorrisi</strong>, le <strong>sfide</strong>, le <strong>scoperte</strong>. 
+                        Il diario diventa così un compagno di viaggio che ti permette di fermare il <strong>tempo</strong> e di
+                        rileggere le tue <strong>esperienze</strong> con occhi nuovi.
                     </p>
                 </div>
                 <img
-                    src="/images/mountain.jpg"
-                    alt="Montagna con diario di viaggio"
+                    src="/images/tempio_agrigento.jpg"
+                    alt="Tempio di Agrigento"
                     className="rounded-2xl shadow-lg"
                 />
             </section>
@@ -70,21 +70,20 @@ function HomePage() {
             {/* Section 4 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
                 <img
-                    src="/images/wood.jpg"
-                    alt="Foresta"
+                    src="/images/hollywood.jpg"
+                    alt="Hollywood"
                     className="rounded-2xl shadow-lg"
                 />
                 <div>
                     <h2 className="text-3xl font-bold mb-4 text-gray-900">
                         Il prossimo viaggio scelto per te
                     </h2>
-                    <p className="text-gray-700 mb-4 leading-relaxed">
-                        Grazie all’intelligenza artificiale, l’app può suggerirti la prossima
-                        destinazione ideale in base ai tuoi viaggi passati, preferenze e
-                        interessi. Immagina di scoprire luoghi nuovi e sorprendenti, personalizzati
+                    <p className="text-gray-700 mb-4 text-justify">
+                        Grazie all’<strong>intelligenza artificiale</strong>, l’app può suggerirti la prossima
+                        <strong> destinazione</strong> ideale in base ai tuoi viaggi passati, preferenze e interessi.
+                         Immagina di scoprire luoghi nuovi e sorprendenti, personalizzati
                         per te, senza dover fare ricerche infinite. Il consiglio dell’AI
-                        trasforma la tua esperienza di viaggio in un’avventura sempre unica e
-                        stimolante.
+                        trasforma la tua esperienza di viaggio in un’avventura sempre <strong>unica e stimolante.</strong>
                     </p>
                 </div>
             </section>

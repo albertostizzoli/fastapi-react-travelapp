@@ -123,92 +123,92 @@ function AddTravel() {
   return (
     <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8" variants={formTravel} initial="initial" animate="animate" exit="exit">
       {/* Container del form */}
-      <div className="w-full max-w-4xl h-full sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 border">
+      <div className="w-full max-w-4xl h-full sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 border border-white">
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-bold">➕ Aggiungi un nuovo viaggio</h2>
-          <p className="text-sm italic">* Il campo è obbligatorio</p>
+          <h2 className="text-2xl font-bold text-white">➕ Aggiungi un nuovo viaggio</h2>
+          <p className="text-sm italic text-white">* Il campo è obbligatorio</p>
         </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* Paese */}
           <div className="flex flex-col">
-            <label className="mb-1 text-black">Paese *</label>
+            <label className="mb-1 text-white">Paese *</label>
             <input
               type="text"
               name="town"
               value={form.town}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg" />
+              className="w-full p-2 border border-white rounded-lg" />
           </div>
 
           {/* Città */}
           <div className="flex flex-col">
-            <label className="mb-1 text-black">Città *</label>
+            <label className="mb-1 text-white">Città *</label>
             <input
               type="text"
               name="city"
               value={form.city}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg" />
+              className="w-full p-2 border border-white rounded-lg" />
           </div>
 
           {/* Anno */}
           <div className="flex flex-col">
-            <label className="mb-1 text-black">Anno *</label>
+            <label className="mb-1 text-white">Anno *</label>
             <input
               type="number"
               name="year"
               value={form.year}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg" />
+              className="w-full p-2 border border-white rounded-lg" />
           </div>
 
           {/* Media Voto */}
           <div className="flex flex-col">
-            <label className="mb-1 text-black">Media Voto</label>
+            <label className="mb-1 text-white">Media Voto</label>
             <input
               type="text"
               value={calculateGeneralVote() ?? "-"}
               readOnly
-              className="w-full p-2 border font-semibold rounded" />
+              className="w-full p-2 border border-white font-semibold rounded" />
           </div>
 
           {/* Date */}
           <div className="flex flex-col">
-            <label className="mb-1 text-black">Data Inizio *</label>
+            <label className="mb-1 text-white">Data Inizio *</label>
             <input
               type="date"
               name="start_date"
               value={form.start_date}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg" />
+              className="w-full p-2 border border-white text-white rounded-lg [color-scheme:dark]" />
           </div>
 
           <div className="flex flex-col">
-            <label className="mb-1 text-black">Data Fine *</label>
+            <label className="mb-1 text-white">Data Fine *</label>
             <input
               type="date"
               name="end_date"
               value={form.end_date}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded-lg" />
+              className="w-full p-2 border border-white text-white rounded-lg [color-scheme:dark]" />
           </div>
 
           {/* Voti dettagliati con flex-wrap */}
           <div className="md:col-span-2">
-            <h3 className="font-semibold text-lg mt-6 mb-2">Voti *</h3>
+            <h3 className="font-semibold text-lg mt-6 mb-2 text-white">Voti *</h3>
             <div className="flex flex-wrap gap-4">
               {["cibo", "paesaggio", "attività", "relax", "prezzo"].map((field) => ( // mappa i campi dei voti
                 <div key={field} className="flex flex-col w-28">
-                  <label className="mb-1 text-black capitalize">{field}</label>
+                  <label className="mb-1 text-white capitalize">{field}</label>
                   <input
                     type="number"
                     name={field}
@@ -216,7 +216,7 @@ function AddTravel() {
                     max="5"
                     value={form[field]}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded-lg" />
+                    className="w-full p-2 border border-white rounded-lg" />
                 </div>
               ))}
             </div>
