@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 
 function HomePage() {
     return (
-        <div className="bg-gradient-to-b from-blue-100 via-white to-orange-100 min-h-screen font-sans">
-            {/* Hero Section */}
+        <div className="bg-gradient-to-b from-blue-200 via-white to-orange-200 font-sans">
+            {/* Section 1 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
                 <div>
                     <h2 className="text-4xl font-bold mb-4 text-gray-900">

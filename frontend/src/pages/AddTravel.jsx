@@ -121,7 +121,7 @@ function AddTravel() {
 
 
   return (
-    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden" variants={formTravel} initial="initial" animate="animate" exit="exit">
+    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8" variants={formTravel} initial="initial" animate="animate" exit="exit">
       {/* Container del form */}
       <div className="w-full max-w-4xl h-full sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 border">
 

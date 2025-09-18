@@ -59,7 +59,7 @@ function Travels() {
   };
 
   return (
-    <div className="bg-transparent p-4 overflow-visible">
+    <div className="bg-transparent p-8 overflow-visible min-h-screen">
       {/* Titolo */}
       <h1 className="text-3xl font-bold text-center text-white mb-8"> 🌍 I miei viaggi</h1>
 

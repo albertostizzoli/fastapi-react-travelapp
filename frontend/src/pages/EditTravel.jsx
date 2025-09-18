@@ -89,7 +89,7 @@ function EditTravel() {
   };
 
   return (
-    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden" variants={editTravel} initial="initial" animate="animate" exit="exit">
+    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8" variants={editTravel} initial="initial" animate="animate" exit="exit">
       {/* Container del form */}
       <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
 
