@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
@@ -9,13 +10,14 @@ function TravelDays() {
   const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno
   const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita
+  const MemoWorldMap = React.memo(WorldMap); // memorizzo la mappa
 
   // Fetch dati viaggio all'inizio e quando cambia l'id
   useEffect(() => {
     fetchTravel(); // chiamo la funzione per caricare i dati del viaggio
   }, [id]); // dipendenza sull'id
 
-  // Quando è aperto un modale la barra di scorrimento verticale principale viene disattivata
+  // Quando è aperto il modale per leggere le informazioni delle tappe la barra di scorrimento verticale principale viene disattivata
   useEffect(() => {
     if (selectedDay) {
       document.body.style.overflow = 'hidden';
@@ -51,14 +53,14 @@ function TravelDays() {
   return (
     <div className="min-h-screen bg-transparent md:p-12">
       {/* Header */}
-      <div className="flex flex-wrap justify-between items-center mb-8 max-w-6xl mx-auto gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
         <h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]">
           🗓️ Tappe del viaggio
         </h1>
         <Link
           to="/addDay"
           state={{ travelId: id }}
-          className="px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105" >
+          className="mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
           <i className="fa-solid fa-plus"></i> Aggiungi Tappa
         </Link>
       </div>
@@ -182,7 +184,7 @@ function TravelDays() {
 
             {/* Colonna destra: mappa */}
             <div className="flex justify-center items-center p-10">
-              <WorldMap days={travel.days} selectedDay={selectedDay} />
+              <MemoWorldMap days={travel.days} selectedDay={selectedDay} />
             </div>
 
             {/* Modale Foto */}
