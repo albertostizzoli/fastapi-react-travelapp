@@ -53,35 +53,57 @@ function TravelDays() {
 
   // Animazione con framer-motion
   const infoAnimate = {
-        initial: {
-            x: -100, // parte da 100px a sinistra
-            opacity: 0
-        },
-        animate: {
-            x: 0, // si sposta nella posizione originale
-            opacity: 1,
-            transition: {
-                duration: 0.6,
-                staggerChildren: 0.1,
-            }
-        }
-    };
+    initial: {
+      x: -100, // parte da 100px a sinistra
+      opacity: 0
+    },
+    animate: {
+      x: 0, // si sposta nella posizione originale
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1,
+      }
+    }
+  };
 
-    const buttonAnimate = {
-        initial: {
-            x: 100, // parte da 100px a destra
-            opacity: 0
-        },
-        animate: {
-            x: 0, // si sposta nella posizione originale
-            opacity: 1,
-            transition: {
-                duration: 0.6,
-                staggerChildren: 0.1
-            }
-        }
-    };
-    const MotionLink = motion(Link); // creo un Motion per i Link
+  const buttonAnimate = {
+    initial: {
+      x: 100, // parte da 100px a destra
+      opacity: 0
+    },
+    animate: {
+      x: 0, // si sposta nella posizione originale
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1
+      }
+    }
+  };
+  const MotionLink = motion(Link); // creo un Motion per i Link
+
+  // animazione per effettoo zoom
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.92, y: 8 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.9, ease: "easeOut" }
+    }
+  };
 
 
   return (
@@ -118,10 +140,11 @@ function TravelDays() {
           {/* Lista Giorni in griglia */}
           <div className="flex-1 overflow-y-auto pr-2">
             {travel.days?.length > 0 ? (
-              <div className="flex flex-wrap gap-4">
+              <motion.div className="flex flex-wrap gap-4" variants={containerVariants} initial="hidden" animate="show">
                 {travel.days.map((d) => (
-                  <div
+                  <motion.div
                     key={d.id}
+                    variants={cardVariants} style={{ willChange: "transform, opacity" }} // migliora la resa
                     className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64">
                     <div className="mb-4">
                       <p className="text-gray-300 text-lg">{d.date}</p>
@@ -162,9 +185,9 @@ function TravelDays() {
                         <i className="fa-solid fa-trash mr-2"></i> Elimina Tappa
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
               <p className="text-white text-center mt-4">Nessuna Tappa Presente</p>
             )}
