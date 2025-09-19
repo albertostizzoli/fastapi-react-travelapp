@@ -128,7 +128,7 @@ function EditDay() {
             value={day.description}
             onChange={handleChange}
             className="w-full border border-white text-white rounded-lg p-2"
-            rows="3" />
+            rows="4" />
         </div>
 
         {/* Foto */}

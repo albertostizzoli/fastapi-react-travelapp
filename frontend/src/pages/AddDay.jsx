@@ -176,7 +176,7 @@ function AddDay() {
             onChange={handleChange}
             required
             className="w-full p-2 border border-white text-white rounded-lg"
-            rows="3" />
+            rows="4" />
         </div>
 
         {/* Foto */}

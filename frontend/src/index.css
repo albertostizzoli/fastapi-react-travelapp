@@ -2,3 +2,25 @@
 
 @import "leaflet/dist/leaflet.css"; 
 
+/* index.css */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px; /* larghezza della barra */
+  will-change: scroll;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #1f2937;     /* colore dello sfondo della barra */
+  border-radius: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #3b82f6; /* colore del "thumb" */
+  border-radius: 8px;
+  border: 2px solid #1f2937; /* bordo per staccarlo dal track */
+}
+
+/* scrool per browser Firefox */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 #1f2937;
+}

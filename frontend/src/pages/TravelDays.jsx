@@ -15,6 +15,15 @@ function TravelDays() {
     fetchTravel(); // chiamo la funzione per caricare i dati del viaggio
   }, [id]); // dipendenza sull'id
 
+  // Quando è aperto un modale la barra di scorrimento verticale principale viene disattivata
+  useEffect(() => {
+    if (selectedDay) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [selectedDay]);
+
   // Funzione per caricare i dati del viaggio
   const fetchTravel = () => {
     axios
@@ -89,6 +98,7 @@ function TravelDays() {
                             key={i}
                             src={p}
                             alt="foto viaggio"
+                            loading="lazy"
                             className="w-20 h-20 object-cover rounded-lg border border-gray-600 shadow-sm"
                           />
                         ))}
@@ -131,7 +141,7 @@ function TravelDays() {
           <div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden">
 
             {/* Colonna sinistra: contenuti scrollabili */}
-            <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
+            <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
               {/* Bottone Chiudi */}
               <button
                 onClick={() => setSelectedDay(null)}
@@ -140,19 +150,19 @@ function TravelDays() {
               </button>
 
               {/* Titolo */}
-              <div className="flex justify-between items-start mb-4 mt-4">
+              <div className="flex justify-between items-start mb-3 mt-3">
                 <h1 className="text-2xl sm:text-2xl font-bold text-white">
                   {selectedDay.title}
                 </h1>
               </div>
 
               {/* Data */}
-              <div className="flex justify-between items-start mb-4 mt-4">
+              <div className="flex justify-between items-start mb-3 mt-3">
                 <p className="sm:text-xl text-white">{selectedDay.date}</p>
               </div>
 
               {/* Descrizione */}
-              <p className="text-white mb-4">{selectedDay.description}</p>
+              <p className="text-white text-justify mb-3">{selectedDay.description}</p>
 
               {/* Foto */}
               {selectedDay.photo.length > 0 && (
@@ -162,15 +172,16 @@ function TravelDays() {
                       key={i}
                       src={p}
                       alt="foto viaggio"
+                      loading="lazy"
                       onClick={() => setOpenImage(p)}
-                      className="w-full h-40 sm:h-40 object-cover rounded-lg border border-gray-600 shadow-sm cursor-pointer" />
+                      className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-600 shadow-sm cursor-pointer hover:border-white" />
                   ))}
                 </div>
               )}
             </div>
 
             {/* Colonna destra: mappa */}
-            <div className="flex justify-center items-center p-4">
+            <div className="flex justify-center items-center p-10">
               <WorldMap days={travel.days} selectedDay={selectedDay} />
             </div>
 
@@ -182,6 +193,7 @@ function TravelDays() {
                 <img
                   src={openImage}
                   alt="foto ingrandita"
+                  loading="lazy"
                   className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg" />
               </div>
             )}

@@ -56,7 +56,7 @@ function WorldMap({ days = [], selectedDay = null }) {
             : [41.8933, 12.4829]; // Roma default
 
     return (
-        <div className="w-full max-w-[300px] h-64 sm:h-80 md:h-96 lg:w-[400px] lg:h-[400px] rounded-xl overflow-hidden shadow-lg">
+        <div className="w-full max-w-[300px] h-64 sm:h-80 md:h-96 lg:w-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-lg">
             <MapContainer
                 center={center}
                 zoom={selectedDay ? 10 : 5}

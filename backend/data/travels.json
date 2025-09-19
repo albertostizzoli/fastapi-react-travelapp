@@ -19,10 +19,16 @@
                 "id": 1,
                 "date": "14-09-2025",
                 "title": "Piazza Navona ",
-                "description": "che bello visitare la Piazza Navona",
+                "description": "Oggi, passeggiando per Piazza Navona, mi sono lasciato avvolgere da un vero tripudio barocco. La Fontana dei Quattro Fiumi mi ha catturato subito, imponente e maestosa al centro della piazza. Mi sono fermato ad ascoltare gli artisti di strada e i musicisti: la loro energia rendeva l’aria frizzante, quasi vibrante. Ho scelto un piccolo caffè all’aperto e, sorseggiando il mio espresso, ho ammirato i palazzi storici e quei dettagli architettonici che sembrano nascere da un altro tempo. Ogni angolo della piazza mi sembrava un piccolo capolavoro da scoprire, e io ero lì, pronto a perdermi in ogni scorcio.",
                 "photo": [
                     "https://images.pexels.com/photos/3044807/pexels-photo-3044807.jpeg",
-                    "https://images.pexels.com/photos/2844469/pexels-photo-2844469.jpeg"
+                    "https://images.pexels.com/photos/2844469/pexels-photo-2844469.jpeg",
+                    "https://images.pexels.com/photos/27080795/pexels-photo-27080795.jpeg",
+                    "https://images.pexels.com/photos/20659048/pexels-photo-20659048.jpeg",
+                    "https://images.pexels.com/photos/32489797/pexels-photo-32489797.jpeg",
+                    "https://images.pexels.com/photos/7473034/pexels-photo-7473034.jpeg",
+                    "https://images.pexels.com/photos/7947010/pexels-photo-7947010.jpeg",
+                    "https://images.pexels.com/photos/14064474/pexels-photo-14064474.jpeg"
                 ],
                 "lat": 41.89892815,
                 "lng": 12.473117842274796
