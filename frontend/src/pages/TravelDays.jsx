@@ -125,9 +125,10 @@ function TravelDays() {
         </div>
       </div>
 
+      {/* Modale Leggi Tutto */}
       {selectedDay && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]">
-          <div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex overflow-hidden">
+          <div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden">
 
             {/* Colonna sinistra: contenuti scrollabili */}
             <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
@@ -162,15 +163,15 @@ function TravelDays() {
                       src={p}
                       alt="foto viaggio"
                       onClick={() => setOpenImage(p)}
-                      className="w-full h-40 sm:h-40 object-cover rounded-lg border border-gray-600 shadow-sm cursor-pointer"/>
+                      className="w-full h-40 sm:h-40 object-cover rounded-lg border border-gray-600 shadow-sm cursor-pointer" />
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Colonna destra: mappa fissa */}
-            <div className="hidden lg:flex w-1/2 items-center justify-center">
-              <WorldMap days={travel.days} />
+            {/* Colonna destra: mappa */}
+            <div className="flex justify-center items-center p-4">
+              <WorldMap days={travel.days} selectedDay={selectedDay} />
             </div>
 
             {/* Modale Foto */}
@@ -181,7 +182,7 @@ function TravelDays() {
                 <img
                   src={openImage}
                   alt="foto ingrandita"
-                  className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"/>
+                  className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg" />
               </div>
             )}
           </div>

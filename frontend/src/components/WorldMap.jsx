@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { MapContainer, TileLayer, GeoJSON, Marker, Popup, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 
 // icona personalizzata (altrimenti Leaflet non mostra bene il marker)
@@ -12,7 +12,19 @@ const customIcon = new L.Icon({
     shadowSize: [41, 41],
 });
 
-function WorldMap({ days = [] }) {
+function FlyToSelected({ selectedDay }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (selectedDay) {
+            map.flyTo([selectedDay.lat, selectedDay.lng], 15, { duration: 1.5 });
+        }
+    }, [selectedDay, map]);
+
+    return null;
+}
+
+function WorldMap({ days = [], selectedDay = null }) {
     const [geoData, setGeoData] = useState(null);
 
     useEffect(() => {
@@ -22,7 +34,7 @@ function WorldMap({ days = [] }) {
             .catch((err) => console.error("Errore nel caricamento:", err));
     }, []);
 
-    // ordino i giorni per data (gg-mm-aaaa -> aaaa-mm-gg per ordinamento)
+    // ordino i giorni
     const sortedDays = useMemo(() => {
         return [...days].sort((a, b) => {
             const [da, ma, ya] = a.date.split("-").map(Number);
@@ -31,19 +43,23 @@ function WorldMap({ days = [] }) {
         });
     }, [days]);
 
-    // creo le coordinate per la polyline
-    const polylineCoords = sortedDays.map((d) => [d.lat, d.lng]);
+    // polyline (solo se non è selezionato un giorno specifico)
+    const polylineCoords = !selectedDay
+        ? sortedDays.map((d) => [d.lat, d.lng])
+        : [];
 
-    // centro iniziale (se ci sono giorni prendi il primo, altrimenti Roma)
-    const center = days.length > 0
-        ? [days[0].lat, days[0].lng]
-        : [41.8933, 12.4829];
+    // centro mappa
+    const center = selectedDay
+        ? [selectedDay.lat, selectedDay.lng]
+        : days.length > 0
+            ? [days[0].lat, days[0].lng]
+            : [41.8933, 12.4829]; // Roma default
 
     return (
-        <div className="w-[400px] h-[400px] rounded-xl overflow-hidden shadow-lg">
+        <div className="w-full max-w-[300px] h-64 sm:h-80 md:h-96 lg:w-[400px] lg:h-[400px] rounded-xl overflow-hidden shadow-lg">
             <MapContainer
                 center={center}
-                zoom={5}
+                zoom={selectedDay ? 10 : 5}
                 minZoom={2}
                 style={{ height: "100%", width: "100%", backgroundColor: "#AAD3DF" }}
                 worldCopyJump={false}
@@ -69,29 +85,47 @@ function WorldMap({ days = [] }) {
                     />
                 )}
 
-                {/* Marker */}
-                {sortedDays.map((day) => (
+                {/* Se ho un giorno selezionato mostro solo lui, altrimenti tutti */}
+                {selectedDay ? (
                     <Marker
-                        key={day.id}
-                        position={[Number(day.lat), Number(day.lng)]}
+                        key={selectedDay.id}
+                        position={[Number(selectedDay.lat), Number(selectedDay.lng)]}
                         icon={customIcon}
                     >
                         <Popup>
                             <div style={{ minWidth: "200px" }}>
-                                <h3 className="font-bold text-lg">{day.title}</h3>
-                                <p className="text-sm text-gray-600">📅 {day.date}</p>
+                                <h3 className="font-bold text-lg">{selectedDay.title}</h3>
+                                <p className="text-sm text-gray-600">📅 {selectedDay.date}</p>
                             </div>
                         </Popup>
                     </Marker>
-                ))}
+                ) : (
+                    sortedDays.map((day) => (
+                        <Marker
+                            key={day.id}
+                            position={[Number(day.lat), Number(day.lng)]}
+                            icon={customIcon}
+                        >
+                            <Popup>
+                                <div style={{ minWidth: "200px" }}>
+                                    <h3 className="font-bold text-lg">{day.title}</h3>
+                                    <p className="text-sm text-gray-600">📅 {day.date}</p>
+                                </div>
+                            </Popup>
+                        </Marker>
+                    ))
+                )}
 
-                {/* Polyline per unire i punti */}
+                {/* Polyline solo se NON ho un giorno selezionato */}
                 {polylineCoords.length > 1 && (
                     <Polyline
                         positions={polylineCoords}
                         pathOptions={{ color: "red", weight: 3 }}
                     />
                 )}
+
+                {/* 👇 qui aggancio l’effetto zoom sul selectedDay */}
+                {selectedDay && <FlyToSelected selectedDay={selectedDay} />}
             </MapContainer>
         </div>
     );
