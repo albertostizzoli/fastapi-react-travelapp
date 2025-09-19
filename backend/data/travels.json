@@ -21,14 +21,14 @@
                 "title": "Piazza Navona ",
                 "description": "Oggi, passeggiando per Piazza Navona, mi sono lasciato avvolgere da un vero tripudio barocco. La Fontana dei Quattro Fiumi mi ha catturato subito, imponente e maestosa al centro della piazza. Mi sono fermato ad ascoltare gli artisti di strada e i musicisti: la loro energia rendeva l’aria frizzante, quasi vibrante. Ho scelto un piccolo caffè all’aperto e, sorseggiando il mio espresso, ho ammirato i palazzi storici e quei dettagli architettonici che sembrano nascere da un altro tempo. Ogni angolo della piazza mi sembrava un piccolo capolavoro da scoprire, e io ero lì, pronto a perdermi in ogni scorcio.",
                 "photo": [
-                    "https://images.pexels.com/photos/3044807/pexels-photo-3044807.jpeg",
-                    "https://images.pexels.com/photos/2844469/pexels-photo-2844469.jpeg",
-                    "https://images.pexels.com/photos/27080795/pexels-photo-27080795.jpeg",
-                    "https://images.pexels.com/photos/20659048/pexels-photo-20659048.jpeg",
-                    "https://images.pexels.com/photos/32489797/pexels-photo-32489797.jpeg",
-                    "https://images.pexels.com/photos/7473034/pexels-photo-7473034.jpeg",
-                    "https://images.pexels.com/photos/7947010/pexels-photo-7947010.jpeg",
-                    "https://images.pexels.com/photos/14064474/pexels-photo-14064474.jpeg"
+                    "https://images.pexels.com/photos/3044807/pexels-photo-3044807.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/2844469/pexels-photo-2844469.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/27080795/pexels-photo-27080795.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/20659048/pexels-photo-20659048.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/32489797/pexels-photo-32489797.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/7473034/pexels-photo-7473034.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/7947010/pexels-photo-7947010.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/14064474/pexels-photo-14064474.jpeg?auto=compress&cs=tinysrgb&w=400"
                 ],
                 "lat": 41.89892815,
                 "lng": 12.473117842274796
@@ -39,8 +39,8 @@
                 "title": "Colosseo",
                 "description": "Che bello visitare il colosseo",
                 "photo": [
-                    "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg",
-                    "https://images.pexels.com/photos/2676642/pexels-photo-2676642.jpeg"
+                    "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/2676642/pexels-photo-2676642.jpeg?auto=compress&cs=tinysrgb&w=400"
                 ],
                 "lat": 41.8902572,
                 "lng": 12.49238408348642
@@ -51,8 +51,8 @@
                 "title": "Fori Imperiali",
                 "description": "Che bello visitare i Fori Romani",
                 "photo": [
-                    "https://images.pexels.com/photos/5067077/pexels-photo-5067077.jpeg",
-                    "https://images.pexels.com/photos/7245237/pexels-photo-7245237.jpeg"
+                    "https://images.pexels.com/photos/5067077/pexels-photo-5067077.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/7245237/pexels-photo-7245237.jpeg?auto=compress&cs=tinysrgb&w=400"
                 ],
                 "lat": 41.8938092,
                 "lng": 12.4862348
@@ -63,7 +63,7 @@
                 "title": "Isola Tiberina",
                 "description": " che bello visitare l'isola tiberina",
                 "photo": [
-                    "https://images.pexels.com/photos/157229/pexels-photo-157229.jpeg"
+                    "https://images.pexels.com/photos/157229/pexels-photo-157229.jpeg?auto=compress&cs=tinysrgb&w=400"
                 ],
                 "lat": 41.8904701,
                 "lng": 12.477764715973754
@@ -74,8 +74,8 @@
                 "title": "Villa Borghese",
                 "description": "Che bello visitare la Villa Borghese",
                 "photo": [
-                    "https://images.pexels.com/photos/14892768/pexels-photo-14892768.jpeg",
-                    "https://images.pexels.com/photos/5705835/pexels-photo-5705835.jpeg"
+                    "https://images.pexels.com/photos/14892768/pexels-photo-14892768.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/5705835/pexels-photo-5705835.jpeg?auto=compress&cs=tinysrgb&w=400"
                 ],
                 "lat": 41.914411099999995,
                 "lng": 12.484843942580198
