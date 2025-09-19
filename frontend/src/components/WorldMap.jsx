@@ -40,7 +40,7 @@ function WorldMap({ days = [] }) {
         : [41.8933, 12.4829];
 
     return (
-        <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-lg">
+        <div className="w-[400px] h-[400px] rounded-xl overflow-hidden shadow-lg">
             <MapContainer
                 center={center}
                 zoom={5}

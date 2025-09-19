@@ -122,68 +122,72 @@ function TravelDays() {
               <p className="text-white text-center mt-4">Nessuna Tappa Presente</p>
             )}
           </div>
-          {/* Colonna destra - Mappa */}
-          <div className="flex-1 flex mt-5">
-            <WorldMap days={travel.days} />
-          </div>
         </div>
       </div>
 
-      {/* Modale Leggi Tutto */}
       {selectedDay && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 overflow-auto z-[9999]">
-          <div className="bg-gray-800 rounded-xl p-4 sm:p-6 w-full max-w-full sm:max-w-5xl max-h-[90vh] overflow-y-auto shadow-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]">
+          <div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex overflow-hidden">
 
-            {/* Bottone Chiudi */}
-            <button
-              onClick={() => setSelectedDay(null)} // chiudo il modale
-              className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-              <i className="fa-solid fa-arrow-left"></i> Chiudi
-            </button>
+            {/* Colonna sinistra: contenuti scrollabili */}
+            <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
+              {/* Bottone Chiudi */}
+              <button
+                onClick={() => setSelectedDay(null)}
+                className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-arrow-left"></i> Chiudi
+              </button>
 
-            {/* Titolo */}
-            <div className="flex justify-between items-start mb-4 mt-4">
-              <h1 className="text-2xl sm:text-2xl font-bold text-white">{selectedDay.title}</h1>
-            </div>
-
-            {/* Data */}
-            <div className="flex justify-between items-start mb-4 mt-4">
-              <p className="sm:text-xl text-white">{selectedDay.date}</p>
-            </div>
-
-            {/* Descrizione */}
-            <p className="text-white mb-4">{selectedDay.description}</p>
-
-            {/* Foto */}
-            {selectedDay.photo.length > 0 && ( // controllo se ci sono foto
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {selectedDay.photo.map((p, i) => (
-                  <img
-                    key={i} // uso l'indice come chiave perché le URL delle foto potrebbero non essere uniche
-                    src={p} // URL della foto
-                    alt="foto viaggio"
-                    onClick={() => setOpenImage(p)} // apro il modale immagine ingrandita
-                    className="w-full h-40 sm:h-40 object-cover rounded-lg border border-gray-600 shadow-sm cursor-pointer"
-                  />
-                ))}
+              {/* Titolo */}
+              <div className="flex justify-between items-start mb-4 mt-4">
+                <h1 className="text-2xl sm:text-2xl font-bold text-white">
+                  {selectedDay.title}
+                </h1>
               </div>
-            )}
+
+              {/* Data */}
+              <div className="flex justify-between items-start mb-4 mt-4">
+                <p className="sm:text-xl text-white">{selectedDay.date}</p>
+              </div>
+
+              {/* Descrizione */}
+              <p className="text-white mb-4">{selectedDay.description}</p>
+
+              {/* Foto */}
+              {selectedDay.photo.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {selectedDay.photo.map((p, i) => (
+                    <img
+                      key={i}
+                      src={p}
+                      alt="foto viaggio"
+                      onClick={() => setOpenImage(p)}
+                      className="w-full h-40 sm:h-40 object-cover rounded-lg border border-gray-600 shadow-sm cursor-pointer"/>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Colonna destra: mappa fissa */}
+            <div className="hidden lg:flex w-1/2 items-center justify-center">
+              <WorldMap days={travel.days} />
+            </div>
 
             {/* Modale Foto */}
-            {openImage && ( // se openImage non è null, mostro il modale
+            {openImage && (
               <div
-                className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999]"
+                className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
                 onClick={() => setOpenImage(null)}>
                 <img
                   src={openImage}
                   alt="foto ingrandita"
-                  className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
-                />
+                  className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"/>
               </div>
             )}
           </div>
         </div>
       )}
+
 
       {/* Modale di conferma eliminazione giorno */}
       {deleteDayId && ( // se deleteDayId non è null, mostro il modale
