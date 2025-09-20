@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
@@ -11,7 +10,7 @@ function TravelDays() {
   const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno
   const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita
-  const MemoWorldMap = React.memo(WorldMap); // memorizzo la mappa
+  const [hasAnimated, setHasAnimated] = useState(false); // stato per l'animazione 
 
   // Fetch dati viaggio all'inizio e quando cambia l'id
   useEffect(() => {
@@ -83,7 +82,7 @@ function TravelDays() {
   };
   const MotionLink = motion(Link); // creo un Motion per i Link
 
-  // animazione per effettoo zoom
+  // animazione per effetto zoom
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -110,14 +109,21 @@ function TravelDays() {
     <div className="min-h-screen bg-transparent md:p-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
-        <motion.h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]" variants={infoAnimate} initial="initial" animate="animate">
+        <motion.h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]"
+          variants={infoAnimate}
+          initial={hasAnimated ? false : "initial"}
+          animate="animate"
+          onAnimationComplete={() => setHasAnimated(true)}>
           🗓️ Tappe del viaggio
         </motion.h1>
         <MotionLink
           to="/addDay"
           state={{ travelId: id }}
           className="mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105"
-          variants={buttonAnimate} initial="initial" animate="animate">
+          variants={buttonAnimate}
+          initial={hasAnimated ? false : "initial"}
+          animate="animate"
+          onAnimationComplete={() => setHasAnimated(true)}>
           <i className="fa-solid fa-plus"></i> Aggiungi Tappa
         </MotionLink>
       </div>
@@ -127,7 +133,11 @@ function TravelDays() {
         {/* Colonna sinistra - Info Viaggio + Giorni */}
         <div className="flex-1 flex flex-col h-full">
           {/* Info Viaggio */}
-          <motion.div className="p-6 bg-transparent rounded-xl" variants={infoAnimate} initial="initial" animate="animate">
+          <motion.div className="p-6 bg-transparent rounded-xl"
+            variants={infoAnimate}
+            initial={hasAnimated ? false : "initial"}
+            animate="animate"
+            onAnimationComplete={() => setHasAnimated(true)}>
             <h2 className="text-xl font-semibold text-white mb-2">
               📍 {travel.town} - {travel.city}
             </h2>
@@ -242,7 +252,7 @@ function TravelDays() {
 
             {/* Colonna destra: mappa */}
             <div className="flex justify-center items-center p-10">
-              <MemoWorldMap days={travel.days} selectedDay={selectedDay} />
+              <WorldMap days={travel.days} selectedDay={selectedDay} />
             </div>
 
             {/* Modale Foto */}
@@ -251,10 +261,10 @@ function TravelDays() {
                 className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
                 onClick={() => setOpenImage(null)}>
                 <img
-                  src={openImage}
+                  src={openImage.replace("w=400", "w=1600")}
                   alt="foto ingrandita"
                   loading="lazy"
-                  className="max-h-[90%] max-w-[90%] rounded-lg shadow-lg" />
+                  className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain" />
               </div>
             )}
           </div>
