@@ -40,7 +40,8 @@
                 "description": "Che bello visitare il colosseo",
                 "photo": [
                     "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg?auto=compress&cs=tinysrgb&w=400",
-                    "https://images.pexels.com/photos/2676642/pexels-photo-2676642.jpeg?auto=compress&cs=tinysrgb&w=400"
+                    "https://images.pexels.com/photos/2676642/pexels-photo-2676642.jpeg?auto=compress&cs=tinysrgb&w=400",
+                    "https://images.pexels.com/photos/30056973/pexels-photo-30056973.jpeg?auto=compress&cs=tinysrgb&w=400"
                 ],
                 "lat": 41.8902572,
                 "lng": 12.49238408348642
@@ -70,9 +71,9 @@
             },
             {
                 "id": 5,
-                "date": "18-09-2025",
+                "date": "17-09-2025",
                 "title": "Villa Borghese",
-                "description": "Che bello visitare la Villa Borghese",
+                "description": "Che bello visitare Villa Borghese",
                 "photo": [
                     "https://images.pexels.com/photos/14892768/pexels-photo-14892768.jpeg?auto=compress&cs=tinysrgb&w=400",
                     "https://images.pexels.com/photos/5705835/pexels-photo-5705835.jpeg?auto=compress&cs=tinysrgb&w=400"

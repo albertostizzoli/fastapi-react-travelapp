@@ -36,10 +36,18 @@ function EditDay() {
 
   // gestione cambio delle foto
   const handlePhotoChange = (index, value) => {
-    const newPhotos = [...day.photo]; // creo una copia dell'array delle foto
-    newPhotos[index] = value; // aggiorno la foto all'indice specificato
-    setDay({ ...day, photo: newPhotos }); // aggiorno lo stato del giorno
+    let finalUrl = value.trim();
+
+    // se l'URL non ha già parametri, aggiungo i parametri Pexels
+    if (finalUrl && !finalUrl.includes("?")) {
+      finalUrl += "?auto=compress&cs=tinysrgb&w=400";
+    }
+
+    const newPhotos = [...day.photo];
+    newPhotos[index] = finalUrl;
+    setDay({ ...day, photo: newPhotos });
   };
+
 
   // aggiungi nuova foto
   const addPhoto = () => {
