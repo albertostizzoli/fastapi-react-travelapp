@@ -1,22 +1,26 @@
-from fastapi import FastAPI # importo FastAPI 
-from fastapi.middleware.cors import CORSMiddleware # importo e configuro il middleware CORS
-from app.routers import travels  # importo il router dei viaggi
-from app.routers import days  # importo il router dei giorni
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI() # creo l'istanza di FastAPI
+from app.routers import travels, days
+from app.database import Base, engine
+from app.models import travel_db, day_db 
 
-# Abilito CORS
+app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Includo il router dei viaggi e dei giorni
+# crea tabelle se non esistono
+Base.metadata.create_all(bind=engine)
+
 app.include_router(travels.router)
 app.include_router(days.router)
+
 
 
     

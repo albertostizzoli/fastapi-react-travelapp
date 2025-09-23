@@ -142,7 +142,7 @@ function AddTravel() {
               value={form.town}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white rounded-lg" />
+              className="w-full p-2 border border-white text-white rounded-lg" />
           </div>
 
           {/* Città */}
@@ -154,7 +154,7 @@ function AddTravel() {
               value={form.city}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white rounded-lg" />
+              className="w-full p-2 border border-white text-white rounded-lg" />
           </div>
 
           {/* Anno */}
@@ -166,7 +166,7 @@ function AddTravel() {
               value={form.year}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white rounded-lg" />
+              className="w-full p-2 border border-white text-white rounded-lg" />
           </div>
 
           {/* Media Voto */}
@@ -176,7 +176,7 @@ function AddTravel() {
               type="text"
               value={calculateGeneralVote() ?? "-"}
               readOnly
-              className="w-full p-2 border border-white font-semibold rounded" />
+              className="w-full p-2 border border-white text-white font-semibold rounded" />
           </div>
 
           {/* Date */}
@@ -216,7 +216,7 @@ function AddTravel() {
                     max="5"
                     value={form[field]}
                     onChange={handleChange}
-                    className="w-full p-2 border border-white rounded-lg" />
+                    className="w-full p-2 border border-white text-white rounded-lg" />
                 </div>
               ))}
             </div>
@@ -226,7 +226,7 @@ function AddTravel() {
           <div className="md:col-span-2">
             <button
               type="submit"
-              className="w-full px-4 py-2 mt-4 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+              className="w-full px-4 py-2 mt-4 flex items-center justify-center gap-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-plus"></i>
               Aggiungi Viaggio
             </button>
