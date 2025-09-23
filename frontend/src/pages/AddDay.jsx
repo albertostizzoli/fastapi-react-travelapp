@@ -202,8 +202,9 @@ function AddDay() {
           <button
             type="button"
             onClick={addPhotoField}
-            className="text-white text-sm hover:underline">
-            Aggiungi un'altra foto
+            className="px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-lg hover:bg-green-400 cursor-pointer transition hover:scale-105">
+            <i className="fa-solid fa-plus"></i>
+            Aggiungi Foto
           </button>
         </div>
 
@@ -211,7 +212,7 @@ function AddDay() {
         <div className="md:col-span-2">
           <button
             type="submit"
-            className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+            className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa
           </button>

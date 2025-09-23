@@ -58,6 +58,28 @@ function Travels() {
       .catch((err) => console.error(err));
   };
 
+  // animazione per effetto zoom
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.92, y: 8 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.9, ease: "easeOut" }
+    }
+  };
+
   return (
     <div className="bg-transparent p-8 overflow-visible min-h-screen">
       {/* Titolo */}
@@ -96,7 +118,7 @@ function Travels() {
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
                     {Object.entries(v.votes).map(([key, value]) => ( // itera sulle coppie chiave-valore dei voti
                       <li key={key} className="flex justify-between"> {/* mostra il nome del voto e la stella corrispondente */}
-                        <span className="capitalize">{key}:</span> 
+                        <span className="capitalize">{key}:</span>
                         <StarRating rating={value} /> {/* mostra il voto con le stelle */}
                       </li>
                     ))}
@@ -133,27 +155,27 @@ function Travels() {
 
       {/* Modale di conferma eliminazione */}
       {deleteId && (
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
-          <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-11/12 max-w-md text-center">
+        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]" variants={containerVariants} initial="hidden" animate="show">
+          <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-11/12 max-w-md text-center" variants={cardVariants} style={{ willChange: "transform, opacity" }}>
             <h2 className="text-xl font-bold mb-4 text-white">
               Sei sicuro di voler cancellare il viaggio?
             </h2>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={handleDelete}
-                className="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-check"></i>
                 Sì
               </button>
               <button
                 onClick={() => setDeleteId(null)}
-                className="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
+                className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-xmark"></i>
                 No
               </button>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
     </div>
   );

@@ -88,7 +88,7 @@ function AddTravel() {
         prezzo: "",
       });
 
-      // reindirizzo alla Home
+      // reindirizzo alla pagina dei viaggi
       navigate("/travels");
 
     } catch (err) {

@@ -59,7 +59,7 @@ function EditTravel() {
     axios
       .put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel) // invia la richiesta PUT al backend
       .then(() => {
-        navigate("/"); // torna alla home
+        navigate("/travels"); // torna alla pagina dei viaggi
       })
       .catch((err) => console.error(err));
   };
@@ -195,7 +195,7 @@ function EditTravel() {
           <div className="md:col-span-2">
             <button
               type="submit"
-              className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition hover:scale-105">
+              className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-edit"></i>
               Salva Modifiche
             </button>

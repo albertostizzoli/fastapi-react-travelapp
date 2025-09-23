@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 function TravelDays() {
   const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
@@ -206,83 +206,107 @@ function TravelDays() {
       </div>
 
       {/* Modale Leggi Tutto */}
-      {selectedDay && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]">
-          <div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden">
+      <AnimatePresence>
+        {selectedDay && (
+          <motion.div
+            key="modal-overlay"
+            className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}>
+            <motion.div
+              key="modal-content"
+              className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden"
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}>
+              {/* Colonna sinistra: contenuti scrollabili */}
+              <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
+                <button
+                  onClick={() => setSelectedDay(null)}
+                  className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  <i className="fa-solid fa-arrow-left"></i> Chiudi
+                </button>
 
-            {/* Colonna sinistra: contenuti scrollabili */}
-            <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
-              {/* Bottone Chiudi */}
-              <button
-                onClick={() => setSelectedDay(null)}
-                className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                <i className="fa-solid fa-arrow-left"></i> Chiudi
-              </button>
-
-              {/* Titolo */}
-              <div className="flex justify-between items-start mb-3 mt-3">
-                <h1 className="text-2xl sm:text-2xl font-bold text-white">
-                  {selectedDay.title}
-                </h1>
-              </div>
-
-              {/* Data */}
-              <div className="flex justify-between items-start mb-3 mt-3">
-                <p className="sm:text-xl text-white">{selectedDay.date}</p>
-              </div>
-
-              {/* Descrizione */}
-              <p className="text-white text-justify mb-3">{selectedDay.description}</p>
-
-              {/* Foto */}
-              {selectedDay.photo.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {selectedDay.photo.map((p, i) => (
-                    <img
-                      key={i}
-                      src={p}
-                      alt="foto viaggio"
-                      loading="lazy"
-                      onClick={() => setOpenImage(p)}
-                      className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-600 shadow-sm cursor-pointer hover:border-white" />
-                  ))}
+                <div className="flex justify-between items-start mb-3 mt-3">
+                  <h1 className="text-2xl sm:text-2xl font-bold text-white">
+                    {selectedDay.title}
+                  </h1>
                 </div>
-              )}
-            </div>
 
-            {/* Colonna destra: mappa */}
-            <div className="flex justify-center items-center p-10">
-              <WorldMap days={travel.days} selectedDay={selectedDay} />
-            </div>
+                <div className="flex justify-between items-start mb-3 mt-3">
+                  <p className="sm:text-xl text-white">{selectedDay.date}</p>
+                </div>
+
+                <p className="text-white text-justify mb-3">{selectedDay.description}</p>
+
+                {selectedDay.photo.length > 0 && (
+                  <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="show">
+                    {selectedDay.photo.map((p, i) => (
+                      <motion.img
+                        key={i}
+                        src={p}
+                        alt="foto viaggio"
+                        loading="lazy"
+                        onClick={() => setOpenImage(p)}
+                        variants={cardVariants}
+                        className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
+                      />
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Colonna destra: mappa */}
+              <div className="flex justify-center items-center p-10">
+                <WorldMap days={travel.days} selectedDay={selectedDay} />
+              </div>
+            </motion.div>
 
             {/* Modale Foto */}
-            {openImage && (
-              <div
-                className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
-                onClick={() => setOpenImage(null)}>
-                <img
-                  src={openImage.replace("w=400", "w=1600")}
-                  alt="foto ingrandita"
-                  loading="lazy"
-                  className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain" />
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+            <AnimatePresence>
+              {openImage && (
+                <motion.div
+                  className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
+                  onClick={() => setOpenImage(null)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}>
+                  <motion.img
+                    src={openImage.replace("w=400", "w=1600")}
+                    alt="foto ingrandita"
+                    loading="lazy"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
 
       {/* Modale di conferma eliminazione giorno */}
       {deleteDayId && ( // se deleteDayId non è null, mostro il modale
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
-          <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
+        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]" variants={containerVariants} initial="hidden" animate="show">
+          <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center" variants={cardVariants} style={{ willChange: "transform, opacity" }}>
             <h2 className="text-xl font-bold mb-4 text-white">
               Sei sicuro di voler eliminare la tappa?
             </h2>
             <div className="flex justify-center gap-4">
               <button
                 onClick={handleDeleteDay}
-                className="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-check"></i> Sì
               </button>
               <button
@@ -291,8 +315,8 @@ function TravelDays() {
                 <i className="fa-solid fa-xmark"></i> No
               </button>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
     </div>
   );
