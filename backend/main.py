@@ -1,26 +1,30 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI # importo FastAPI
+from fastapi.middleware.cors import CORSMiddleware # importo CORS
 
+# importo i router delle API
 from app.routers import travels, days
-from app.database import Base, engine
-from app.models import travel_db, day_db 
 
+# importo la configurazione del database
+from app.database import Base, engine
+
+# creo l'istanza principale di FastAPI
 app = FastAPI()
 
+# configuro il middleware CORS per permettere richieste da qualsiasi origine
+# utile quando il frontend è su un dominio diverso dal backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],       # permette richieste da tutti i domini
+    allow_credentials=True,    # permette l'invio di cookie e credenziali
+    allow_methods=["*"],       # permette tutti i metodi HTTP (GET, POST, PUT, DELETE...)
+    allow_headers=["*"],       # permette tutti gli header personalizzati
 )
 
-# crea tabelle se non esistono
+# creo tutte le tabelle nel database se non esistono già
+# "Base" contiene tutti i modelli SQLAlchemy registrati
 Base.metadata.create_all(bind=engine)
 
+# includo il router dei viaggi e dei giorni nell'app FastAPI
+# ogni router aggiunge le proprie rotte al server
 app.include_router(travels.router)
 app.include_router(days.router)
-
-
-
-    

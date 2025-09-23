@@ -6,9 +6,10 @@ from app.models.day_db import DayDB
 from app.schemas.travels import Travel, TravelCreate
 from app.utils.travels import format_date
 
+# Creo il router per il modulo "travels"
 router = APIRouter(prefix="/travels", tags=["travels"])
 
-# Dependency per avere una sessione DB
+#  Dependency: crea una sessione DB per ogni richiesta e la chiude alla fine
 def get_db():
     db = SessionLocal()
     try:
@@ -17,24 +18,25 @@ def get_db():
         db.close()
 
 
-# 📌 GET tutti i viaggi
+# GET: ottiene tutti i viaggi
 @router.get("/", response_model=list[Travel])
 def get_travels(db: Session = Depends(get_db)):
     return db.query(TravelDB).all()
 
 
-# 📌 GET viaggio singolo
+#  GET: ottiene un viaggio singolo tramite ID
 @router.get("/{travel_id}", response_model=Travel)
 def get_travel(travel_id: int, db: Session = Depends(get_db)):
-    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first()
+    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first() # ottengo il viaggio
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
     return travel
 
 
-# 📌 POST nuovo viaggio
+#  POST: aggiunge un nuovo viaggio con eventuali giorni
 @router.post("/", response_model=Travel)
 def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
+    # Creo il record del viaggio
     db_travel = TravelDB(
         town=travel.town,
         city=travel.city,
@@ -48,7 +50,7 @@ def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_travel)
 
-    # aggiungo i giorni
+    # Aggiungo i giorni associati al viaggio
     for i, day in enumerate(travel.days, start=1):
         db_day = DayDB(
             date=format_date(day.date),
@@ -66,14 +68,14 @@ def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
     return db_travel
 
 
-# 📌 PUT modifica viaggio
+# PUT: modifica un viaggio esistente e i suoi giorni
 @router.put("/{travel_id}", response_model=Travel)
 def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = Depends(get_db)):
-    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first()
+    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first() # Modifica l'id del viaggio selezionato
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
-    # aggiorno campi viaggio
+    # Aggiorno i campi del viaggio
     travel.town = updated_travel.town
     travel.city = updated_travel.city
     travel.year = updated_travel.year
@@ -82,7 +84,7 @@ def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = De
     travel.general_vote = updated_travel.general_vote
     travel.votes = updated_travel.votes
 
-    # elimino giorni vecchi e inserisco i nuovi
+    # Rimuovo i vecchi giorni e inserisco quelli nuovi
     db.query(DayDB).filter(DayDB.travel_id == travel_id).delete()
     for i, day in enumerate(updated_travel.days, start=1):
         db_day = DayDB(
@@ -101,14 +103,13 @@ def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = De
     return travel
 
 
-# 📌 DELETE elimina viaggio
+# 📌 DELETE: elimina un viaggio e tutti i giorni associati
 @router.delete("/{travel_id}")
 def delete_travel(travel_id: int, db: Session = Depends(get_db)):
     travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first()
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
-    db.delete(travel)
-    db.commit()
+    db.delete(travel)  # elimina il viaggio
+    db.commit()         # conferma le modifiche nel DB
     return {"messaggio": f"Viaggio {travel_id} eliminato con successo"}
-
