@@ -1,26 +1,26 @@
-from pydantic import BaseModel
-from typing import List, Optional
+from pydantic import BaseModel # definire schemi di dati con controlli di validazione
+from typing import List, Optional # tipi generici: List per array tipizzati, Optional per valori facoltativi
 
-# Classe base per il modello Day
-# Serve a definire i campi comuni a tutti i modelli Pydantic relativi ai giorni
+# classe base per il modello Day
+# serve a definire i campi comuni a tutti i modelli Pydantic relativi ai giorni
 class DayBase(BaseModel):
-    date: str               # Data del giorno
-    title: str              # Titolo della giornata
-    description: str        # Descrizione del giorno
-    photo: List[str] = []   # Lista di foto, default vuota
-    lat: Optional[float] = None  # Latitudine, opzionale
-    lng: Optional[float] = None  # Longitudine, opzionale
+    date: str               # data
+    title: str              # titolo
+    description: str        # descrizione
+    photo: List[str] = []   # foto
+    lat: Optional[float] = None  # latitudine
+    lng: Optional[float] = None  # longitudine
 
-# Modello per creare un nuovo giorno
-# Eredita da DayBase, nessuna modifica aggiuntiva
+# modello per creare un nuovo giorno
+# eredita da DayBase, nessuna modifica aggiuntiva
 class DayCreate(DayBase):
     pass
 
-# Modello per leggere un giorno già presente nel database
-# Aggiunge il campo 'id' che viene generato automaticamente dal DB
+# modello per leggere un giorno già presente nel database
+# aggiunge il campo 'id' che viene generato automaticamente dal DB
 class Day(DayBase):
     id: int
 
     class Config:
-        # Configurazione per abilitare Pydantic a leggere dati da oggetti ORM
+        # permette a Pydantic di leggere dati direttamente da oggetti SQLAlchemy
         from_attributes = True

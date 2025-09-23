@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, JSON
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Float, JSON  # definisco le colonne e tipi di dato per i modelli ORM
+from sqlalchemy.orm import relationship # per poter gestire la relazione ORM bidirezionale
 from app.database import Base  # Importa la base ORM da cui derivano tutti i modelli
 
 # Modello per la tabella "travels" (viaggi)
@@ -8,13 +8,13 @@ class TravelDB(Base):
 
     # Colonne della tabella
     id = Column(Integer, primary_key=True, index=True)  # ID univoco del viaggio
-    town = Column(String, nullable=False)              # Paese del viaggio
-    city = Column(String, nullable=False)              # Città del viaggio
-    year = Column(Integer, nullable=False)             # Anno del viaggio
-    start_date = Column(String, nullable=False)        # Data di inizio del viaggio
-    end_date = Column(String, nullable=False)          # Data di fine del viaggio
-    general_vote = Column(Float, nullable=True)        # Voto generale del viaggio, opzionale
-    votes = Column(JSON, nullable=True)                # Dettaglio voti o valutazioni, opzionale
+    town = Column(String, nullable=False)              # paese
+    city = Column(String, nullable=False)              # città 
+    year = Column(Integer, nullable=False)             # anno 
+    start_date = Column(String, nullable=False)        # data inizio
+    end_date = Column(String, nullable=False)          # data fine
+    general_vote = Column(Float, nullable=True)        # media dei voti
+    votes = Column(JSON, nullable=True)                # # voti (giorno, paesaggio, attività relax, prezzo)
 
     # Relazione ORM con la tabella "days"
     # back_populates="travel" crea una relazione bidirezionale con DayDB

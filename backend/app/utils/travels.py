@@ -18,16 +18,20 @@ def get_coordinates(place: str, city: str, country: str):
     - città del viaggio
     - paese del viaggio
     """
+    # Costruisce la query combinando luogo, città e paese
     query = f"{place}, {city}, {country}"
     url = "https://photon.komoot.io/api/"
     params = {"q": query, "limit": 1}
 
+    # Richiesta HTTP GET all'API Photon
     res = requests.get(url, params=params)
 
     if res.status_code == 200:
         data = res.json()
+        # Se ci sono risultati, prende le coordinate dal primo feature
         if data.get("features"):
             coords = data["features"][0]["geometry"]["coordinates"]
             lng, lat = coords  # Photon restituisce [lon, lat]
             return lat, lng
+        # Se non trova nulla o c'è un errore, restituisce valori nulli
     return None, None

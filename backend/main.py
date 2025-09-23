@@ -24,7 +24,6 @@ app.add_middleware(
 # "Base" contiene tutti i modelli SQLAlchemy registrati
 Base.metadata.create_all(bind=engine)
 
-# includo il router dei viaggi e dei giorni nell'app FastAPI
-# ogni router aggiunge le proprie rotte al server
-app.include_router(travels.router)
-app.include_router(days.router)
+# includo il router per ogni rotta al server
+app.include_router(travels.router) # viaggi
+app.include_router(days.router) # tappe
