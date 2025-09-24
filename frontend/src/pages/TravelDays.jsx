@@ -209,19 +209,11 @@ function TravelDays() {
       <AnimatePresence>
         {selectedDay && (
           <motion.div
-            key="modal-overlay"
             className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}>
+            variants={containerVariants} initial="hidden" animate="show">
             <motion.div
-              key="modal-content"
               className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden"
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}>
+              variants={cardVariants} style={{ willChange: "transform, opacity" }}>
               {/* Colonna sinistra: contenuti scrollabili */}
               <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
                 <button
@@ -243,11 +235,8 @@ function TravelDays() {
                 <p className="text-white text-justify mb-3">{selectedDay.description}</p>
 
                 {selectedDay.photo.length > 0 && (
-                  <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="show">
+                  <div
+                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {selectedDay.photo.map((p, i) => (
                       <motion.img
                         key={i}
@@ -259,7 +248,7 @@ function TravelDays() {
                         className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
                       />
                     ))}
-                  </motion.div>
+                  </div>
                 )}
               </div>
 
@@ -270,27 +259,18 @@ function TravelDays() {
             </motion.div>
 
             {/* Modale Foto */}
-            <AnimatePresence>
               {openImage && (
-                <motion.div
+                <div
                   className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
-                  onClick={() => setOpenImage(null)}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}>
-                  <motion.img
+                  onClick={() => setOpenImage(null)}>
+                  <img
                     src={openImage.replace("w=400", "w=1600")}
                     alt="foto ingrandita"
                     loading="lazy"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.8, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
                     className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
                   />
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
