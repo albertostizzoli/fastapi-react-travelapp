@@ -238,13 +238,12 @@ function TravelDays() {
                   <div
                     className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {selectedDay.photo.map((p, i) => (
-                      <motion.img
+                      <img
                         key={i}
                         src={p}
                         alt="foto viaggio"
                         loading="lazy"
                         onClick={() => setOpenImage(p)}
-                        variants={cardVariants}
                         className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
                       />
                     ))}
