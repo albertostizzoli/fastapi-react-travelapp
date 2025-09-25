@@ -12,7 +12,7 @@ function TravelDays() {
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
   const [hasAnimated, setHasAnimated] = useState(false); // stato per l'animazione della pagina
   const [showContent, setShowContent] = useState(false); // stato per l'interno del modale Leggi Tutto ( Ritarda la visualizzazione del contenuto interno)
-  
+
 
   // Fetch dati viaggio all'inizio e quando cambia l'id
   useEffect(() => {
@@ -296,9 +296,11 @@ function TravelDays() {
                 </div>
 
                 {/* Colonna destra: mappa */}
-                <div className="flex justify-center items-center p-10">
+                <motion.div className="flex justify-center items-center p-10" initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.45, duration: 0.5 }}>
                   <WorldMap days={travel.days} selectedDay={selectedDay} />
-                </div>
+                </motion.div>
               </>
             )}
           </motion.div>
