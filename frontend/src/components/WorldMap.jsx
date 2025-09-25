@@ -22,8 +22,8 @@ function FlyToSelected({ selectedDay, lastFlyRef }) {
         // protezione: non ripetere lo zoom se già fatto per questo giorno
         if (lastFlyRef.current === selectedDay.id) return;
 
-        // effettua lo zoom sul marker selezionato
-        map.flyTo([Number(selectedDay.lat), Number(selectedDay.lng)], 15, { duration: 2, easeLinearity: 0.25 });
+        // centra subito la mappa senza animazione
+        map.setView([Number(selectedDay.lat), Number(selectedDay.lng)], 15);
         lastFlyRef.current = selectedDay.id; // aggiorna il riferimento all'ultimo zoom
     }, [selectedDay, map, lastFlyRef]);
 
