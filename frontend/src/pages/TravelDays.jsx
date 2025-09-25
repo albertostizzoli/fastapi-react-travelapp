@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 function TravelDays() {
   const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
-  const [travel, setTravel] = useState(null); // stato per i dati del viaggio
-  const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno
-  const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto
-  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita
-  const [hasAnimated, setHasAnimated] = useState(false); // stato per l'animazione 
+  const [travel, setTravel] = useState(null); // stato per ottenere i dati del viaggio
+  const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno (Apri / Chiudi)
+  const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto (Apri / Chiudi)
+  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
+  const [hasAnimated, setHasAnimated] = useState(false); // stato per l'animazione della pagina
+  const [showContent, setShowContent] = useState(false); // stato per l'interno del modale Leggi Tutto ( Ritarda la visualizzazione del contenuto interno)
+  
 
   // Fetch dati viaggio all'inizio e quando cambia l'id
   useEffect(() => {
@@ -50,7 +52,13 @@ function TravelDays() {
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
-  // Animazione con framer-motion
+  // Funzione per quando il modale Leggi Tutto si chiude il contenuto viene resettato
+  const handleClose = () => {
+    setShowContent(false);
+    setSelectedDay(null);
+  };
+
+  // Animazione con framer-motion per Titoli e Link
   const infoAnimate = {
     initial: {
       x: -100, // parte da 100px a sinistra
@@ -82,7 +90,7 @@ function TravelDays() {
   };
   const MotionLink = motion(Link); // creo un Motion per i Link
 
-  // animazione per effetto zoom
+  // animazione per effetto zoom per le card dei giorni
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -104,11 +112,42 @@ function TravelDays() {
     }
   };
 
+  // animazione per effetto zoom per il modale Leggi Tutto
+  const modal = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { duration: 0.2, ease: "easeOut" }
+    }
+  };
+
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.92, y: 8 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: "easeOut" }
+    }
+  };
+
+  // animazione per effetto zoom per le foto
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.92, y: 8 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: "easeOut" }
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-transparent md:p-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
+        { /* Titolo */}
         <motion.h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]"
           variants={infoAnimate}
           initial={hasAnimated ? false : "initial"}
@@ -116,6 +155,7 @@ function TravelDays() {
           onAnimationComplete={() => setHasAnimated(true)}>
           🗓️ Tappe del viaggio
         </motion.h1>
+        { /* Link Aggiungi Tappa */}
         <MotionLink
           to="/addDay"
           state={{ travelId: id }}
@@ -130,7 +170,7 @@ function TravelDays() {
 
       {/* Layout principale */}
       <div className="flex flex-col lg:flex-row max-w-6xl mx-auto gap-8">
-        {/* Colonna sinistra - Info Viaggio + Giorni */}
+        {/* Info Viaggio + Giorni */}
         <div className="flex-1 flex flex-col h-full">
           {/* Info Viaggio */}
           <motion.div className="p-6 bg-transparent rounded-xl"
@@ -206,73 +246,80 @@ function TravelDays() {
       </div>
 
       {/* Modale Leggi Tutto */}
-      <AnimatePresence>
-        {selectedDay && (
+      {selectedDay && (
+        <motion.div
+          className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]"
+          variants={modal} initial="hidden" animate="show">
           <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]"
-            variants={containerVariants} initial="hidden" animate="show">
-            <motion.div
-              className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden"
-              variants={cardVariants} style={{ willChange: "transform, opacity" }}>
-              {/* Colonna sinistra: contenuti scrollabili */}
-              <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
-                <button
-                  onClick={() => setSelectedDay(null)}
-                  className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-arrow-left"></i> Chiudi
-                </button>
+            className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden"
+            variants={modalVariants}
+            style={{ willChange: "transform, opacity" }}
+            onAnimationComplete={() => setShowContent(true)} //  quando l'animazione finisce, monto i contenuti
+          >
+            {showContent && (
+              <>
+                {/* Colonna sinistra: contenuti scrollabili */}
+                <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
+                  <button
+                    onClick={handleClose}
+                    className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                    <i className="fa-solid fa-arrow-left"></i> Chiudi
+                  </button>
 
-                <div className="flex justify-between items-start mb-3 mt-3">
-                  <h1 className="text-2xl sm:text-2xl font-bold text-white">
-                    {selectedDay.title}
-                  </h1>
-                </div>
-
-                <div className="flex justify-between items-start mb-3 mt-3">
-                  <p className="sm:text-xl text-white">{selectedDay.date}</p>
-                </div>
-
-                <p className="text-white text-justify mb-3">{selectedDay.description}</p>
-
-                {selectedDay.photo.length > 0 && (
-                  <div
-                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {selectedDay.photo.map((p, i) => (
-                      <img
-                        key={i}
-                        src={p}
-                        alt="foto viaggio"
-                        loading="lazy"
-                        onClick={() => setOpenImage(p)}
-                        className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
-                      />
-                    ))}
+                  <div className="flex justify-between items-start mb-3 mt-3">
+                    <h1 className="text-2xl sm:text-2xl font-bold text-white">
+                      {selectedDay.title}
+                    </h1>
                   </div>
-                )}
-              </div>
 
-              {/* Colonna destra: mappa */}
-              <div className="flex justify-center items-center p-10">
-                <WorldMap days={travel.days} selectedDay={selectedDay} />
-              </div>
-            </motion.div>
+                  <div className="flex justify-between items-start mb-3 mt-3">
+                    <p className="sm:text-xl text-white">{selectedDay.date}</p>
+                  </div>
 
-            {/* Modale Foto */}
-              {openImage && (
-                <div
-                  className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
-                  onClick={() => setOpenImage(null)}>
-                  <img
-                    src={openImage.replace("w=400", "w=1600")}
-                    alt="foto ingrandita"
-                    loading="lazy"
-                    className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
-                  />
+                  <p className="text-white text-justify mb-3">{selectedDay.description}</p>
+
+                  {selectedDay.photo.length > 0 && (
+                    <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" variants={containerVariants} initial="hidden" animate="show">
+                      {selectedDay.photo.map((p, i) => (
+                        <motion.img
+                          key={i}
+                          src={p}
+                          alt="foto viaggio"
+                          loading="lazy"
+                          onClick={() => setOpenImage(p)}
+                          className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
+                          variants={imageVariants}
+                        />
+                      ))}
+                    </motion.div>
+                  )}
                 </div>
-              )}
+
+                {/* Colonna destra: mappa */}
+                <div className="flex justify-center items-center p-10">
+                  <WorldMap days={travel.days} selectedDay={selectedDay} />
+                </div>
+              </>
+            )}
           </motion.div>
-        )}
-      </AnimatePresence>
+
+          {/* Modale Foto */}
+          {openImage && (
+            <motion.div
+              className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
+              variants={containerVariants} initial="hidden" animate="show"
+              onClick={() => setOpenImage(null)}>
+              <motion.img
+                src={openImage.replace("w=400", "w=1600")}
+                alt="foto ingrandita"
+                loading="lazy"
+                className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
+                variants={imageVariants}
+              />
+            </motion.div>
+          )}
+        </motion.div>
+      )}
 
 
       {/* Modale di conferma eliminazione giorno */}
