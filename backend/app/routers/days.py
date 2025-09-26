@@ -1,11 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException  # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
+from fastapi import APIRouter, Form, UploadFile, Depends, HTTPException  # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
 from sqlalchemy.orm import Session  # sessione ORM per interagire con il database
+from typing import List
+import cloudinary.uploader
+
 from app.database import SessionLocal  # connessione locale al DB (crea le sessioni)
 from app.models.travel_db import TravelDB  # modello ORM per la tabella dei viaggi
 from app.models.day_db import DayDB  # modello ORM per la tabella dei giorni
 from app.schemas.days import Day, DayCreate  # schemi Pydantic per validare input/output
 from app.utils.travels import format_date, get_coordinates  # funzioni di utilità per formattare date e ottenere coordinate
-
+from app.config import cloudinary 
 
 # creo il router per i giorni, con prefisso e tag
 router = APIRouter(prefix="/travels", tags=["days"])
@@ -21,24 +24,37 @@ def get_db():
         db.close()  # chiude la sessione per evitare memory leak
 
 
-
 #  POST: aggiunge un giorno a un viaggio esistente
 @router.post("/{travel_id}/days", response_model=Day)
-def add_day_travel(travel_id: int, day: DayCreate, db: Session = Depends(get_db)): # ID del viaggio a cui aggiungere il giorno, dati del nuovo giorno (DayCreate), Sessione DB iniettata come dipendenza (Depends)
+async def add_day_travel(
+    travel_id: int,
+    date: str = Form(...),
+    title: str = Form(...),
+    description: str = Form(...),
+    photos: List[UploadFile] = None,
+    db: Session = Depends(get_db)
+):
     # controllo che il viaggio esista
     travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first()
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
     # ottengo le coordinate geografiche per il giorno
-    lat, lng = get_coordinates(day.title, travel.city, travel.town)
+    lat, lng = get_coordinates(title, travel.city, travel.town)
+
+    # carico le foto su Cloudinary
+    photo_urls = []
+    if photos:
+        for photo in photos:
+            result = cloudinary.uploader.upload(photo.file)
+            photo_urls.append(result["secure_url"])
 
     # creo il giorno nel DB
     db_day = DayDB(
-        date=format_date(day.date),
-        title=day.title,
-        description=day.description,
-        photo=day.photo,
+        date=format_date(date),
+        title=title,
+        description=description,
+        photo=photo_urls,
         lat=lat,
         lng=lng,
         travel_id=travel_id

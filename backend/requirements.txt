@@ -1,8 +1,11 @@
 aiosqlite==0.21.0
+cloudinary==1.44.1
 fastapi==0.116.1
 pip==25.2
 pipreqs==0.4.13
 pydantic==2.11.9
+python-dotenv==1.1.1
+python-multipart==0.0.20
 requests==2.32.4
 SQLAlchemy==2.0.43
 typing_extensions==4.14.1

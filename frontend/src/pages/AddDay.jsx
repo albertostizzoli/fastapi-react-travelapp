@@ -43,18 +43,11 @@ function AddDay() {
     setForm({ ...form, [e.target.name]: e.target.value }); // aggiorno il campo specifico
   };
 
-  // gestisce il cambiamento di un campo foto specifico
-  const handlePhotoChange = (index, value) => {
-    let finalUrl = value.trim();
-
-    // se l'URL non ha già parametri, aggiungo i parametri Pexels
-    if (finalUrl && !finalUrl.includes("?")) {
-      finalUrl += "?auto=compress&cs=tinysrgb&w=400";
-    }
-
-    const newPhotos = [...form.photo]; // creo una copia dell'array foto
-    newPhotos[index] = finalUrl; // aggiorno la foto specifica
-    setForm({ ...form, photo: newPhotos }); // aggiorno lo stato del form
+  // gestisce cambio file locale
+  const handlePhotoFileChange = (index, file) => {
+    const newPhotos = [...form.photo];
+    newPhotos[index] = file; // salvo l'oggetto File
+    setForm({ ...form, photo: newPhotos });
   };
 
   // aggiunge un nuovo campo foto vuoto al form
@@ -72,20 +65,24 @@ function AddDay() {
     }
 
     try {
-      const newDay = { // creo l'oggetto del nuovo giorno
-        date: form.date,
-        title: form.title,
-        description: form.description,
-        photo: form.photo.filter((p) => p.trim() !== ""), // tolgo vuoti
-      };
+      const formData = new FormData();
+      formData.append("date", form.date);
+      formData.append("title", form.title);
+      formData.append("description", form.description);
+
+      // aggiungo tutti i file
+      form.photo.forEach((file) => {
+        formData.append("photos", file);
+      });
 
       await axios.post(
         `http://127.0.0.1:8000/travels/${selectedTravel}/days`, // endpoint per aggiungere un giorno a un viaggio specifico
-        newDay
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       setMessage("✅ Giorno aggiunto con successo!");
-      setForm({ date: "", title: "", description: "", photo: [""] }); // resetto il form
+      setForm({ date: "", title: "", description: "", photo: [] }); // resetto il form
 
       // reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -188,16 +185,17 @@ function AddDay() {
 
         {/* Foto */}
         <div className="md:col-span-2">
-          <label className="block text-white">Foto (URL) *</label>
+          <label className="block text-white">Foto *</label>
           {form.photo.map((p, index) => (
-            <input
-              key={index}
-              type="text"
-              value={p}
-              onChange={(e) => handlePhotoChange(index, e.target.value)}
-              placeholder="Inserisci URL immagine"
-              required
-              className="w-full p-2 border border-white text-white rounded-lg mb-2" />
+            <div key={index} className="flex flex-col gap-2 mb-2">
+              {/* Upload da PC */}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handlePhotoFileChange(index, e.target.files[0])}
+                className="w-full p-2 border border-white text-white rounded-lg"
+              />
+            </div>
           ))}
           <button
             type="button"

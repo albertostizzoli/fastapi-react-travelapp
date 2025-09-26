@@ -7,7 +7,6 @@ class DayBase(BaseModel):
     date: str               # data
     title: str              # titolo
     description: str        # descrizione
-    photo: List[str] = []   # foto
     lat: Optional[float] = None  # latitudine
     lng: Optional[float] = None  # longitudine
 
@@ -20,6 +19,7 @@ class DayCreate(DayBase):
 # aggiunge il campo 'id' che viene generato automaticamente dal DB
 class Day(DayBase):
     id: int
+    photo: List[str] = []   # foto
 
     class Config:
         # permette a Pydantic di leggere dati direttamente da oggetti SQLAlchemy
