@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
@@ -11,8 +11,9 @@ function TravelDays() {
   const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto (Apri / Chiudi)
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
   const [hasAnimated, setHasAnimated] = useState(false); // stato per l'animazione della pagina
-  const [showContent, setShowContent] = useState(false); // stato per l'interno del modale Leggi Tutto ( Ritarda la visualizzazione del contenuto interno)
-
+  const [showContent, setShowContent] = useState(false); // stato per l'interno del modale Leggi Tutto ( Ritarda la visualizzazione del contenuto interno)  
+  const [isOpen, setIsOpen] = useState(false); // stato per ingrandire e ridurre la mappa 
+  const mapRef = useRef(null); // per ridisegnare la mappa quando è ingrandita
 
   // Fetch dati viaggio all'inizio e quando cambia l'id
   useEffect(() => {
@@ -27,6 +28,15 @@ function TravelDays() {
       document.body.style.overflow = '';
     }
   }, [selectedDay]);
+
+  // Quando la modale si apre, forziamo Leaflet a ridisegnarsi
+  useEffect(() => {
+    if (isOpen && mapRef.current) {
+      setTimeout(() => {
+        mapRef.current.invalidateSize();
+      }, 300); // piccolo delay per dare tempo all'animazione
+    }
+  }, [isOpen]);
 
   // Funzione per caricare i dati del viaggio
   const fetchTravel = () => {
@@ -299,7 +309,44 @@ function TravelDays() {
                 <motion.div className="flex justify-center items-center p-10" initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.45, duration: 0.5 }}>
-                  <WorldMap days={travel.days} selectedDay={selectedDay} />
+
+                  {/* Mappa in versione compatta */}
+                  {!isOpen && (
+                    <WorldMap
+                      days={travel.days}
+                      selectedDay={selectedDay} // vedo il solo il Pin del giorno selezionato
+                      mapRef={mapRef} // passo la ref al MapContainer
+                      onExpand={() => setIsOpen(true)}  // mi permette di poter ingrandire la mappa
+                    />
+                  )}
+
+                  {/* Modale Mappa  */}
+                  {isOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-[9999]">
+                      <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        transition={{ duration: 0.45 }}
+                        className="relative bg-gray-800 rounded-2xl overflow-hidden shadow-2xl"
+                        style={{ width: "90vw", height: "90vh" }}>
+
+                        {/* Bottone chiudi */}
+                        <button
+                          onClick={() => setIsOpen(false)} // per rimettere la mappa in versione compatta
+                          className="absolute top-4 right-4 z-[9999] bg-white px-3 py-1 rounded-md shadow hover:bg-gray-100 transition cursor-pointer">
+                          <i className="fa-solid fa-xmark"></i>
+                        </button>
+
+                        <WorldMap
+                          days={travel.days}
+                          selectedDay={selectedDay} // vedo solo il Pin del giorno selezionato
+                          mapRef={mapRef} // passo la ref al MapContainer
+                          isModal={true} // prendo is Modal dal componente WorldMap
+                        />
+                      </motion.div>
+                    </div>
+                  )}
                 </motion.div>
               </>
             )}
@@ -310,9 +357,9 @@ function TravelDays() {
             <motion.div
               className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
               variants={containerVariants} initial="hidden" animate="show"
-              onClick={() => setOpenImage(null)}>
+              onClick={() => setOpenImage(null)}> { /* Per poter ridurre l'immagine */ }
               <motion.img
-                src={openImage.replace("w=400", "w=1600")}
+                src={openImage.replace("w=400", "w=1600")} // quando clicco l'immagine si ingrandisce a 1600px
                 alt="foto ingrandita"
                 loading="lazy"
                 className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
@@ -329,7 +376,7 @@ function TravelDays() {
         <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]" variants={containerVariants} initial="hidden" animate="show">
           <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center" variants={cardVariants} style={{ willChange: "transform, opacity" }}>
             <h2 className="text-xl font-bold mb-4 text-white">
-              Sei sicuro di voler eliminare la tappa?
+              Sei sicuro di voler cancellare la tappa?
             </h2>
             <div className="flex justify-center gap-4">
               <button

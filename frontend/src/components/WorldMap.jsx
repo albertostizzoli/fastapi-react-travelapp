@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 
@@ -30,8 +30,56 @@ function FlyToSelected({ selectedDay, lastFlyRef }) {
     return null; // componente non renderizza nulla sulla mappa
 }
 
+// funzione che crea un pulsante per ingrandire la mappa
+function ExpandControl({ onExpand }) {
+    // ottengo l'istanza della mappa Leaflet tramite l'hook di react-leaflet
+    const map = useMap();
+
+    useEffect(() => {
+        // il pulsante è posizionato in alto a destra della mappa
+        const customControl = L.control({ position: "topright" });
+
+        // metodo onAdd richiesto da Leaflet: definisce l'elemento DOM del controllo
+        customControl.onAdd = () => {
+            // creo un div HTML con le classi standard di Leaflet per i controlli
+            const div = L.DomUtil.create("div", "leaflet-bar leaflet-control");
+
+            // stile CSS del pulsante
+            div.style.background = "white";        
+            div.style.cursor = "pointer";               
+            div.style.width = "34px";                   
+            div.style.height = "34px";                  
+            div.style.display = "flex";                 
+            div.style.alignItems = "center";            
+            div.style.justifyContent = "center";        
+            div.title = "Ingrandisci mappa";            
+
+            // chiamo la funzione onExpand passata come prop al click
+            div.onclick = () => onExpand();
+
+            // inserisco un'icona all'interno del pulsante
+            div.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i>`;
+
+            // ritorna l'elemento DOM da aggiungere alla mappa
+            return div;
+        };
+
+        // aggiunge il controllo personalizzato alla mappa
+        customControl.addTo(map);
+
+        // cleanup: rimuove il controllo quando il componente viene smontato o aggiorna la dipendenza
+        return () => {
+            customControl.remove();
+        };
+    }, [map, onExpand]); // l'effetto viene rieseguito solo se cambiano `map` o `onExpand`
+
+    // questo componente React non renderizza nulla in JSX, tutto è gestito da Leaflet
+    return null;
+}
+
+
 // componente principale della mappa 
-function WorldMap({ days = [], selectedDay = null }) {
+function WorldMap({ days = [], selectedDay = null, mapRef, isModal = false, onExpand }) {
     const [geoData, setGeoData] = useState(null); // stato per i dati GeoJSON dei paesi
     const lastFlyRef = useRef(null); // mantiene l'ultimo id su cui viene effetuato lo zoom
 
@@ -55,10 +103,19 @@ function WorldMap({ days = [], selectedDay = null }) {
             : [41.8933, 12.4829]; // Roma di default
 
     return (
-        <div className="w-full max-w-[300px] h-64 sm:h-80 md:h-96 lg:w-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-lg">
+        <div
+            className={`rounded-xl overflow-hidden shadow-lg ${isModal
+                ? "w-[1600px] h-screen" // dimensioni in modal
+                : "w-full max-w-[300px] h-64 sm:h-80 md:h-96 lg:w-[400px] lg:h-[500px]" // compatto
+                }`} >
 
             {/* Componente principale della mappa di react-leaflet */}
             <MapContainer
+                whenCreated={(mapInstance) => {
+                    if (mapRef) {
+                        mapRef.current = mapInstance; // assegna l'istanza Leaflet
+                    }
+                }}
                 center={center} // Coordinate iniziali del centro della mappa
                 zoom={selectedDay ? 10 : 5} // Zoom dinamico: più vicino se è selezionato un giorno
                 minZoom={2} // Zoom minimo consentito
@@ -67,6 +124,8 @@ function WorldMap({ days = [], selectedDay = null }) {
                 maxBounds={[[-90, -180], [90, 180]]} // Limiti massimi di navigazione sulla mappa
                 maxBoundsViscosity={1.0} // Impedisce completamente lo spostamento oltre i limiti
             >
+                {!isModal && <ExpandControl onExpand={onExpand} />}
+
 
                 {/* Layer base della mappa utilizzando OpenStreetMap */}
                 <TileLayer
