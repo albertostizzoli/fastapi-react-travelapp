@@ -188,13 +188,33 @@ function AddDay() {
           <label className="block text-white">Foto *</label>
           {form.photo.map((p, index) => (
             <div key={index} className="flex flex-col gap-2 mb-2">
-              {/* Upload da PC */}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handlePhotoFileChange(index, e.target.files[0])}
-                className="w-full p-2 border border-white text-white rounded-lg"
-              />
+              {/* Contenitore con input di testo + pulsante */}
+              <div className="relative w-full">
+                {/* Input file nascosto */}
+                <input
+                  id={`fileUpload-${index}`}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handlePhotoFileChange(index, e.target.files[0])}
+                  className="hidden"
+                />
+
+                {/* Campo di testo che mostra il nome del file selezionato */}
+                <input
+                  type="text"
+                  readOnly
+                  value={p instanceof File ? p.name : ""}
+                  placeholder="Nessun file selezionato"
+                  className="w-full p-2 border border-white text-white rounded-lg bg-transparent"
+                />
+
+                {/* Bottone personalizzato */}
+                <label
+                  htmlFor={`fileUpload-${index}`}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 hover:bg-green-400 text-white px-3 py-1 rounded-lg cursor-pointer">
+                  Carica Foto
+                </label>
+              </div>
             </div>
           ))}
           <button

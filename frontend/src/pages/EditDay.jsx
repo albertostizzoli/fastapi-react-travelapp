@@ -37,16 +37,13 @@ function EditDay() {
 
   // gestione cambio delle foto
   const handlePhotoChange = (index, value) => {
-    let finalUrl = value.trim();
+    const finalUrl = value.trim(); // rimuovo eventuali spazi vuoti all'inizio/fine dell'URL inserito
 
-    // se l'URL non ha già parametri, aggiungo i parametri Pexels
-    if (finalUrl && !finalUrl.includes("?")) {
-      finalUrl += "?auto=compress&cs=tinysrgb&w=400";
-    }
+    const newPhotos = [...day.photo]; // creo una copia dell'array delle foto (immutabilità in React)
 
-    const newPhotos = [...day.photo];
-    newPhotos[index] = finalUrl;
-    setDay({ ...day, photo: newPhotos });
+    newPhotos[index] = finalUrl;  // aggiorno l'URL della foto corrispondente all'indice passato
+
+    setDay({ ...day, photo: newPhotos }); // aggiorno lo stato "day" con il nuovo array di foto
   };
 
 
@@ -66,7 +63,7 @@ function EditDay() {
     formData.append("title", day.title);
     formData.append("description", day.description);
 
-    // foto già esistenti (quelle che non hai eliminato)
+    // foto già esistenti
     day.photo.forEach((url) => {
       formData.append("existing_photos", url);
     });
@@ -79,10 +76,10 @@ function EditDay() {
     try {
       await axios.put(
         `http://127.0.0.1:8000/travels/${day.travelId}/days/${id}`,
+
         formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        { headers: { "Content-Type": "multipart/form-data" }, }
+
       );
       navigate(`/travels/${day.travelId}/days`);
     } catch (error) {
@@ -179,17 +176,37 @@ function EditDay() {
               </button>
             </div>
           ))}
-          
-          {/* Input nuova foto */ }
+
+          {/* Input nuova foto */}
           <div className="mt-4">
             <label className="block font-medium text-white">Carica nuove foto</label>
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={(e) => setNewPhotos([...newPhotos, ...Array.from(e.target.files)])}
-              className="w-full p-2 border border-white text-white rounded-lg"
-            />
+            <div className="relative w-full">
+              {/* Input file nascosto */}
+              <input
+                id="fileUpload"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={(e) => setNewPhotos([...newPhotos, ...Array.from(e.target.files)])}
+                className="hidden"
+              />
+
+              {/* Campo di testo che simula l'input */}
+              <input
+                type="text"
+                readOnly
+                value={newPhotos.map(file => file.name).join(", ")}
+                placeholder="Nessun file selezionato"
+                className="w-full p-2 border border-white text-white rounded-lg bg-transparent"
+              />
+
+              {/* Bottone Carica Foto */}
+              <label
+                htmlFor="fileUpload"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 hover:bg-green-400 text-white px-3 py-1 rounded-lg cursor-pointer">
+                Carica Foto
+              </label>
+            </div>
           </div>
         </div>
 
