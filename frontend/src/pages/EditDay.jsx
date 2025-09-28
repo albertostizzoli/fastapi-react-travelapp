@@ -7,6 +7,7 @@ function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
   const navigate = useNavigate(); // hook per navigare fra le pagine
   const [day, setDay] = useState(null); // per salvare i dati del giorno
+  const [newPhotos, setNewPhotos] = useState([]); // per i file caricati
   const [loading, setLoading] = useState(true); // stato di caricamento
 
   // recupero i dati del giorno dal backend
@@ -49,11 +50,6 @@ function EditDay() {
   };
 
 
-  // aggiungi nuova foto
-  const addPhoto = () => {
-    setDay({ ...day, photo: [...day.photo, ""] }); // aggiungo una nuova foto vuota
-  };
-
   // rimuovi foto
   const removePhoto = (index) => {
     const newPhotos = day.photo.filter((_, i) => i !== index); // filtro l'array delle foto per rimuovere quella all'indice specificato
@@ -62,14 +58,38 @@ function EditDay() {
 
   // invio al backend
   const handleSubmit = async (e) => {
-    e.preventDefault(); // prevengo il comportamento di default del form
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("date", day.date);
+    formData.append("title", day.title);
+    formData.append("description", day.description);
+
+    // foto già esistenti (quelle che non hai eliminato)
+    day.photo.forEach((url) => {
+      formData.append("existing_photos", url);
+    });
+
+    // nuove foto (file upload)
+    newPhotos.forEach((file) => {
+      formData.append("photos", file);
+    });
+
     try {
-      await axios.put(`http://127.0.0.1:8000/travels/${day.travelId}/days/${id}`, day); // invio i dati aggiornati al backend
-      navigate(`/travels/${day.travelId}/days`); // torna alla lista
+      await axios.put(
+        `http://127.0.0.1:8000/travels/${day.travelId}/days/${id}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      navigate(`/travels/${day.travelId}/days`);
     } catch (error) {
-      console.error("Errore nell'aggiornamento:", error); // gestisco gli errori
+      console.error("Errore nell'aggiornamento:", error);
     }
   };
+
 
   if (loading) return <p>Caricamento...</p>;
   if (!day) return <p>Tappa non trovata</p>;
@@ -159,15 +179,18 @@ function EditDay() {
               </button>
             </div>
           ))}
-
-          {/*Pulsante aggiungi foto */}
-          <button
-            type="button"
-            onClick={addPhoto}
-            className="px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-lg hover:bg-green-400 cursor-pointer transition hover:scale-105">
-            <i className="fa-solid fa-plus"></i>
-            Aggiungi Foto
-          </button>
+          
+          {/* Input nuova foto */ }
+          <div className="mt-4">
+            <label className="block font-medium text-white">Carica nuove foto</label>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={(e) => setNewPhotos([...newPhotos, ...Array.from(e.target.files)])}
+              className="w-full p-2 border border-white text-white rounded-lg"
+            />
+          </div>
         </div>
 
         {/* Pulsante di salvataggio */}

@@ -67,26 +67,46 @@ async def add_day_travel(
 
 #  PUT: modifica un giorno esistente
 @router.put("/{travel_id}/days/{day_id}", response_model=Day)
-def update_day(travel_id: int, day_id: int, updated_day: DayCreate, db: Session = Depends(get_db)):
-    # trovo il giorno da aggiornare
+async def update_day(
+    travel_id: int, 
+    day_id: int,
+    date: str = Form(...),
+    title: str = Form(...),
+    description: str = Form(...),
+    existing_photos: List[str] = Form([]),   # URL delle foto da mantenere
+    photos: List[UploadFile] = None,         # nuove foto caricate
+    db: Session = Depends(get_db)
+):
     day = db.query(DayDB).filter(DayDB.id == day_id, DayDB.travel_id == travel_id).first()
     if not day:
         raise HTTPException(status_code=404, detail="Giorno non trovato")
 
-    # aggiorna i campi del giorno
-    day.date = format_date(updated_day.date)
-    day.title = updated_day.title
-    day.description = updated_day.description
-    day.photo = updated_day.photo
+    # aggiorna i campi base
+    day.date = format_date(date)
+    day.title = title
+    day.description = description
 
-    # aggiorna le coordinate se disponibili
-    lat, lng = get_coordinates(updated_day.title, day.travel.city, day.travel.town)
+    # inizializza l'elenco con quelle già esistenti
+    final_photos = existing_photos.copy()
+
+    # carico nuove foto su Cloudinary
+    if photos:
+        for photo in photos:
+            result = cloudinary.uploader.upload(photo.file)
+            final_photos.append(result["secure_url"])
+
+    # salvo nel DB
+    day.photo = final_photos
+
+    # aggiorna coordinate
+    lat, lng = get_coordinates(title, day.travel.city, day.travel.town)
     if lat and lng:
         day.lat, day.lng = lat, lng
 
-    db.commit()        # salva le modifiche
-    db.refresh(day)    # database aggiornato
+    db.commit()
+    db.refresh(day)
     return day
+
 
 
 #  DELETE: elimina un giorno da un viaggio
