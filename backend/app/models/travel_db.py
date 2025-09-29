@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, JSON  # definisco le colonne e tipi di dato per i modelli ORM
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, JSON  # definisco le colonne e tipi di dato per i modelli ORM
 from sqlalchemy.orm import relationship # per poter gestire la relazione ORM bidirezionale
 from app.database import Base  # Importa la base ORM da cui derivano tutti i modelli
 
@@ -20,3 +20,8 @@ class TravelDB(Base):
     # back_populates="travel" crea una relazione bidirezionale con DayDB
     # cascade="all, delete" fa sì che se un viaggio viene cancellato, anche i giorni associati vengano rimossi
     days = relationship("DayDB", back_populates="travel", cascade="all, delete")
+
+    user_id = Column(Integer, ForeignKey("users.id")) # Chiave esterna
+
+    # faccio in modo che se utente viene cancellato anche i viaggi dell'utente vengpno cancellati
+    user = relationship("UserDB", back_populates="travels", cascade="all, delete")
