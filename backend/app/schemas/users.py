@@ -14,7 +14,7 @@ class UserBase(BaseModel):
 # modello per creare un nuovo utente
 # eredita da UserBase, nessuna modifica aggiuntiva
 class UserCreate(UserBase):
-    pass
+    password: str
 
 # modello per leggere un'utente già presente nel database
 # aggiunge il campo 'id' che viene generato automaticamente dal DB

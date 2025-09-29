@@ -12,4 +12,4 @@ class UserDB(Base):
     email = Column(String, nullable=False)              # email
     password = Column(String, nullable=False)           # password
 
-    travels = relationship("TravelDB", back_populates="users")  # Relazione con la classe TravelDB che si trova nel file travel_db.py
+    travels = relationship("TravelDB", back_populates="user")  # Relazione con la classe TravelDB che si trova nel file travel_db.py
