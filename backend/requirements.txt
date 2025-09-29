@@ -1,5 +1,6 @@
 aiosqlite==0.21.0
-bcrypt==5.0.0
+argon2-cffi==25.1.0     
+argon2-cffi-bindings==25.1.0   
 cloudinary==1.44.1
 fastapi==0.116.1
 passlib==1.7.4

@@ -1,7 +1,7 @@
 from passlib.context import CryptContext  # per hash password
 
 # configurazione per hashing password
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 # funzione per hashare la password nel database
 def get_password_hash(password: str):
