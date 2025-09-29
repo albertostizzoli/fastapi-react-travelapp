@@ -8,7 +8,6 @@ class UserBase(BaseModel):
     name: str             # nome
     surname: str          # cognome
     email: str            # email
-    password: str         # password
 
 
 # modello per creare un nuovo utente
