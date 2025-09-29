@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
 from app.schemas.users import User, UserCreate # schemi Pydantic per validare input/output
-from app.utils.users import get_password_hash, verify_password 
+from app.utils.users import get_password_hash, verify_password # importo le funzioni per hashare e verificare la password
 
 # creo il router per il modulo "users"
 router = APIRouter(prefix="/users", tags=["users"])
@@ -18,6 +18,7 @@ def get_db():
     finally:
         db.close()  # chiude la sessione per evitare memory leak
 
+
 # Rotta di registrazione per aggiungere un nuovo utente
 @router.post("/", response_model=User)
 def add_user(user: UserCreate,  db: Session = Depends(get_db)):
@@ -31,13 +32,14 @@ def add_user(user: UserCreate,  db: Session = Depends(get_db)):
         name = user.name,
         surname = user.surname,
         email = user.email,
-        password=get_password_hash(user.password)  # salvo hash, non password in chiaro
+        password=get_password_hash(user.password)  # salvo password hashata
     )
     db.add(db_user)      # l'utente viene salvato
     db.commit()          # modifiche salvate
     db.refresh(db_user)  # database aggiornato
 
     return db_user       # mi restituisce l'utente creato
+
 
 # Rotta del login
 @router.post("/login")
