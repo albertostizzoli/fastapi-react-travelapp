@@ -22,6 +22,4 @@ class TravelDB(Base):
     days = relationship("DayDB", back_populates="travel", cascade="all, delete")
 
     user_id = Column(Integer, ForeignKey("users.id")) # Chiave esterna
-
-    # faccio in modo che se utente viene cancellato anche i viaggi dell'utente vengpno cancellati
-    user = relationship("UserDB", back_populates="travels", cascade="all, delete")
+    user = relationship("UserDB", back_populates="travels") # Relazione con la tabella users

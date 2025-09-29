@@ -22,8 +22,9 @@ def get_db():
 
 # GET: per ottenere tutti i viaggi
 @router.get("/", response_model=list[Travel])
-def get_travels(db: Session = Depends(get_db)):
-    return db.query(TravelDB).all()
+def get_travels(user_id: int, db: Session = Depends(get_db)):
+    # restituisce solo i viaggi dell'utente loggato
+    return db.query(TravelDB).filter(TravelDB.user_id == user_id).all()
 
 
 #  GET: per ottenere un viaggio singolo tramite ID
@@ -37,7 +38,7 @@ def get_travel(travel_id: int, db: Session = Depends(get_db)): # ID del nuovo vi
 
 #  POST: per aggiungere un nuovo viaggio con eventuali giorni
 @router.post("/", response_model=Travel)
-def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
+def add_travel(travel: TravelCreate, user_id: int, db: Session = Depends(get_db)):
     # creo il record del viaggio
     db_travel = TravelDB(
         town=travel.town,
@@ -46,34 +47,25 @@ def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
         start_date=format_date(travel.start_date),
         end_date=format_date(travel.end_date),
         general_vote=travel.general_vote,
-        votes=travel.votes
+        votes=travel.votes,
+        user_id=user_id
     )
     db.add(db_travel)     # il viaggio viene salvato
     db.commit()           # salva le modifiche
     db.refresh(db_travel) # database aggiornato
 
-    # aggiungo i giorni associati al viaggio
-    for i, day in enumerate(travel.days, start=1):
-        db_day = DayDB(
-            date=format_date(day.date),
-            title=day.title,
-            description=day.description,
-            photo=day.photo,
-            lat=day.lat,
-            lng=day.lng,
-            travel_id=db_travel.id
-        )
-        db.add(db_day)  # giorno salvato
-
-    db.commit() # modifiche salvate
-    db.refresh(db_travel) # database aggiornato
     return db_travel
 
 
 # PUT: modifica un viaggio esistente e i suoi giorni
 @router.put("/{travel_id}", response_model=Travel)
-def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = Depends(get_db)):
-    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first() # Modifica l'id del viaggio selezionato
+def update_travel(travel_id: int, updated_travel: TravelCreate, user_id: int, db: Session = Depends(get_db)):
+    # cerca il viaggio solo se appartiene all'utente
+    travel = db.query(TravelDB).filter(
+        TravelDB.id == travel_id,
+        TravelDB.user_id == user_id
+    ).first()
+
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
@@ -86,20 +78,6 @@ def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = De
     travel.general_vote = updated_travel.general_vote
     travel.votes = updated_travel.votes
 
-    # rimuovo i vecchi giorni e inserisco quelli nuovi
-    db.query(DayDB).filter(DayDB.travel_id == travel_id).delete()
-    for i, day in enumerate(updated_travel.days, start=1):
-        db_day = DayDB(
-            date=format_date(day.date),
-            title=day.title,
-            description=day.description,
-            photo=day.photo,
-            lat=day.lat,
-            lng=day.lng,
-            travel_id=travel_id
-        )
-        db.add(db_day)
-
     db.commit()
     db.refresh(travel)
     return travel
@@ -107,8 +85,13 @@ def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = De
 
 # DELETE: elimina un viaggio e tutti i giorni associati
 @router.delete("/{travel_id}")
-def delete_travel(travel_id: int, db: Session = Depends(get_db)):
-    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first()
+def delete_travel(travel_id: int, user_id: int, db: Session = Depends(get_db)):
+    # cerco il viaggio filtrando anche per user_id
+    travel = db.query(TravelDB).filter(
+        TravelDB.id == travel_id,
+        TravelDB.user_id == user_id
+    ).first()
+    
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 

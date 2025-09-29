@@ -19,7 +19,22 @@ def get_db():
         db.close()  # chiude la sessione per evitare memory leak
 
 
-# Rotta di registrazione per aggiungere un nuovo utente
+# GET: Funzione per ottenere tutti gli utenti
+@router.get("/", response_model=list[User])
+def get_users(db: Session = Depends(get_db)):
+    return db.query(UserDB).all()  # mi restituisce tuti gli utenti
+
+
+#  GET: Funzione per ottenere un utente singolo tramite ID
+@router.get("/{user_id}", response_model=User)
+def get_user(user_id: int, db: Session = Depends(get_db)): # ID dell'utente, , Sessione DB iniettata come dipendenza (Depends)
+    user = db.query(UserDB).filter(UserDB.id == user_id).first() # ottengo l'utente
+    if not user:
+        raise HTTPException(status_code=404, detail="Utente non trovato")
+    return user
+
+
+# POST: Funzione per aggiungere un nuovo utente
 @router.post("/", response_model=User)
 def add_user(user: UserCreate,  db: Session = Depends(get_db)):
     # controllo se email già esiste
@@ -41,7 +56,37 @@ def add_user(user: UserCreate,  db: Session = Depends(get_db)):
     return db_user       # mi restituisce l'utente creato
 
 
-# Rotta del login
+# PUT: Funzione per modificare un utente  
+@router.put("/{user_id}", response_model=User)
+def update_user(user_id: int, updated_user: UserCreate, db: Session = Depends(get_db)):
+    user = db.query(UserDB).filter(UserDB.id == user_id).first() # Modifica l'id dell'utente selezionato
+    if not user:
+        raise HTTPException(status_code=404, detail="Utente non trovato")
+
+    # aggiorno i campi dell'utente
+    user.name = updated_user.name
+    user.surname = updated_user.surname
+    user.email = updated_user.email
+    user.password = get_password_hash(updated_user.password)
+
+    db.commit()        # modifiche salvate
+    db.refresh(user)   # database aggiornato
+    return user        # utente modificato
+
+
+# DELETE: Funzione per cancellare un utente
+@router.delete("/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(UserDB).filter(UserDB.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Utente non trovato")
+
+    db.delete(user)     # elimina l'utente
+    db.commit()         # conferma le modifiche nel DB
+    return {"messaggio": f"Utente {user_id} eliminato con successo"}
+
+
+# POST: Rotta del login
 @router.post("/login")
 def login(email: str, password: str, db: Session = Depends(get_db)):
     user = db.query(UserDB).filter(UserDB.email == email).first()
