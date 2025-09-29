@@ -76,7 +76,7 @@ function HomePage() {
                         momenti unici che meritano di essere custoditi. Con la nostra app,
                         puoi creare un vero e proprio <strong>diario digitale</strong> in cui ogni tappa
                         diventa un <strong>capitolo</strong> della tua storia. <strong>Fotografie, descrizioni,
-                            sensazioni</strong>: tutto viene raccolto in un luogo speciale, sempre <strong>accessibile</strong> e
+                        sensazioni</strong>: tutto viene raccolto in un luogo speciale, sempre <strong>accessibile</strong> e
                         pronto a farti rivivere i tuoi ricordi.
                     </motion.p>
                 </div>

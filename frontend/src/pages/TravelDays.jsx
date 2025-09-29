@@ -141,7 +141,7 @@ function TravelDays() {
                       <button
                         onClick={() => setDeleteDayId(d.id)}
                         className="px-4 py-2 flex items-center justify-center bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                        <i className="fa-solid fa-trash mr-2"></i> Elimina Tappa
+                        <i className="fa-solid fa-trash mr-2"></i> Cancella Tappa
                       </button>
                     </div>
                   </div>

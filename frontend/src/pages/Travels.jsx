@@ -67,7 +67,7 @@ function Travels() {
         {travels.map((v) => (
           <div
             key={v.id}
-            className="backdrop-blur-xl bg-gray-800/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden">
+            className="backdrop-blur-xl bg-gray-700/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden">
             {/* Immagine */}
             {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
               <img
@@ -115,7 +115,7 @@ function Travels() {
                   onClick={() => setDeleteId(v.id)}
                   className="px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
                   <i className="fa-solid fa-trash"></i>
-                  Elimina Viaggio
+                  Cancella Viaggio
                 </button>
               </div>
 
