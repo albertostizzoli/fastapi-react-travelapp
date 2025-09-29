@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 function AddDay() {
   const location = useLocation(); // per ottenere lo stato passato da TravelDays
@@ -93,31 +92,8 @@ function AddDay() {
     }
   };
 
-  // Animazione
-  const addDay = {
-    initial: {
-      scale: 0.9, // leggermente più piccolo
-      opacity: 0, // invisibile
-    },
-    animate: {
-      scale: 1,   // zoom fino alla dimensione reale
-      opacity: 1, // visibile
-      transition: {
-        duration: 1.5,
-        ease: "easeInOut",
-        staggerChildren: 0.1, // opzionale se hai figli animati
-      },
-    },
-    exit: {
-      scale: 0.9, // quando esce torna piccolo
-      opacity: 0,
-      transition: { duration: 0.5, ease: "easeInOut" },
-    },
-  };
-
-
   return (
-    <motion.div className="flex items-center justify-center bg-transparent min-h-screen p-8" variants={addDay} initial="initial" animate="animate" exit="exit">
+    <div className="flex items-center justify-center bg-transparent min-h-screen p-8">
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -238,7 +214,7 @@ function AddDay() {
 
         {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
       </form>
-    </motion.div>
+    </div>
   );
 }
 

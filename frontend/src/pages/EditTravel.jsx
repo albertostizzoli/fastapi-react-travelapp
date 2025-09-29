@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion";
 
 function EditTravel() {
   const { id } = useParams(); // recupero l'ID del viaggio dall'URL
@@ -66,36 +65,15 @@ function EditTravel() {
 
   if (!travel) return <p className="text-center">Caricamento...</p>;
 
-  // Animazione
-  const editTravel = {
-    initial: {
-      scale: 0.9, // leggermente più piccolo
-      opacity: 0, // invisibile
-    },
-    animate: {
-      scale: 1,   // zoom fino alla dimensione reale
-      opacity: 1, // visibile
-      transition: {
-        duration: 1.5,
-        ease: "easeInOut",
-        staggerChildren: 0.1, // opzionale se hai figli animati
-      },
-    },
-    exit: {
-      scale: 0.9, // quando esce torna piccolo
-      opacity: 0,
-      transition: { duration: 0.5, ease: "easeInOut" },
-    },
-  };
 
   return (
-    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8" variants={editTravel} initial="initial" animate="animate" exit="exit">
+    <div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8">
       {/* Container del form */}
       <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-            <h2 className="text-2xl font-bold">✏️ Modifica Viaggio</h2>
+          <h2 className="text-2xl font-bold">✏️ Modifica Viaggio</h2>
           <p className="text-sm italic">* Il campo è obbligatorio</p>
         </div>
 
@@ -202,7 +180,7 @@ function EditTravel() {
           </div>
         </form>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

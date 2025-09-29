@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
 
 // funzione per ottenere le stelle 
 function StarRating({ rating = 0, max = 5 }) {
@@ -58,27 +57,6 @@ function Travels() {
       .catch((err) => console.error(err));
   };
 
-  // animazione per effetto zoom
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.92, y: 8 },
-    show: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { duration: 0.9, ease: "easeOut" }
-    }
-  };
 
   return (
     <div className="bg-transparent p-8 overflow-visible min-h-screen">
@@ -86,77 +64,70 @@ function Travels() {
       <h1 className="text-3xl font-bold text-center text-white mb-8"> 🌍 I miei viaggi</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <AnimatePresence>
-          {travels.map((v) => (
-            <motion.div
-              key={v.id}
-              layout
-              initial={{ opacity: 0, height: 0, scale: 0.95 }} // animazione di entrata
-              animate={{ opacity: 1, height: "auto", scale: 1 }} // animazione di stato
-              exit={{ opacity: 0, height: 0, scale: 0.95 }} // animazione di uscita
-              transition={{ duration: 1, ease: "easeInOut" }} // durata e tipo di transizione
-              className="backdrop-blur-xl bg-gray-800/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden">
-              {/* Immagine */}
-              {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
-                <img
-                  src={v.days[0].photo[0]} // usa la prima foto del primo giorno
-                  alt={`Foto di ${v.town}`}
-                  className="w-full h-48 object-cover" />
+        {travels.map((v) => (
+          <div
+            key={v.id}
+            className="backdrop-blur-xl bg-gray-800/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden">
+            {/* Immagine */}
+            {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
+              <img
+                src={v.days[0].photo[0]} // usa la prima foto del primo giorno
+                alt={`Foto di ${v.town}`}
+                className="w-full h-48 object-cover" />
+            )}
+
+            {/* Contenuto */}
+            <div className="p-4 flex flex-col gap-2">
+              <h2 className="text-lg font-semibold text-white">{v.town} - {v.city}</h2>
+              <p className="text-gray-300 text-sm">📅 {v.start_date} → {v.end_date}</p>
+              <p className="text-white font-medium mt-1">Anno: {v.year}</p>
+              <p className="text-white font-medium flex items-center gap-2">
+                Media Voto: <StarRating rating={v.general_vote ?? 0} /> {/* mostra la media voto o 0 se non definito */}
+              </p>
+
+              {/* Voti dettagliati */}
+              {v.votes && (
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
+                  {Object.entries(v.votes).map(([key, value]) => ( // itera sulle coppie chiave-valore dei voti
+                    <li key={key} className="flex justify-between"> {/* mostra il nome del voto e la stella corrispondente */}
+                      <span className="capitalize">{key}:</span>
+                      <StarRating rating={value} /> {/* mostra il voto con le stelle */}
+                    </li>
+                  ))}
+                </ul>
               )}
 
-              {/* Contenuto */}
-              <div className="p-4 flex flex-col gap-2">
-                <h2 className="text-lg font-semibold text-white">{v.town} - {v.city}</h2>
-                <p className="text-gray-300 text-sm">📅 {v.start_date} → {v.end_date}</p>
-                <p className="text-white font-medium mt-1">Anno: {v.year}</p>
-                <p className="text-white font-medium flex items-center gap-2">
-                  Media Voto: <StarRating rating={v.general_vote ?? 0} /> {/* mostra la media voto o 0 se non definito */}
-                </p>
-
-                {/* Voti dettagliati */}
-                {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
-                    {Object.entries(v.votes).map(([key, value]) => ( // itera sulle coppie chiave-valore dei voti
-                      <li key={key} className="flex justify-between"> {/* mostra il nome del voto e la stella corrispondente */}
-                        <span className="capitalize">{key}:</span>
-                        <StarRating rating={value} /> {/* mostra il voto con le stelle */}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* Pulsanti */}
-                <div className="flex flex-col sm:flex-row gap-2 mt-4">
-                  <Link
-                    to={`/travels/${v.id}/days`}
-                    className="px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap">
-                    <i className="fa-solid fa-calendar-day"></i>
-                    Dettagli Viaggio
-                  </Link>
-                  <Link
-                    to={`/travels/${v.id}/edit`}
-                    className="px-2 py-2 flex justify-center items-center gap-1 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap">
-                    <i className="fa-solid fa-edit"></i>
-                    Modifica Viaggio
-                  </Link>
-                  <button
-                    onClick={() => setDeleteId(v.id)}
-                    className="px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
-                    <i className="fa-solid fa-trash"></i>
-                    Elimina Viaggio
-                  </button>
-                </div>
-
+              {/* Pulsanti */}
+              <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                <Link
+                  to={`/travels/${v.id}/days`}
+                  className="px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap">
+                  <i className="fa-solid fa-calendar-day"></i>
+                  Dettagli Viaggio
+                </Link>
+                <Link
+                  to={`/travels/${v.id}/edit`}
+                  className="px-2 py-2 flex justify-center items-center gap-1 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap">
+                  <i className="fa-solid fa-edit"></i>
+                  Modifica Viaggio
+                </Link>
+                <button
+                  onClick={() => setDeleteId(v.id)}
+                  className="px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
+                  <i className="fa-solid fa-trash"></i>
+                  Elimina Viaggio
+                </button>
               </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Modale di conferma eliminazione */}
       {deleteId && (
-        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]" variants={containerVariants} initial="hidden" animate="show">
-          <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-11/12 max-w-md text-center" variants={cardVariants} style={{ willChange: "transform, opacity" }}>
+        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
+          <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-11/12 max-w-md text-center">
             <h2 className="text-xl font-bold mb-4 text-white">
               Sei sicuro di voler cancellare il viaggio?
             </h2>
@@ -174,8 +145,8 @@ function Travels() {
                 No
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       )}
     </div>
   );

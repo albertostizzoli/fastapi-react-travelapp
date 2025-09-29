@@ -2,16 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
-import { motion } from "framer-motion";
 
 function TravelDays() {
   const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
   const [travel, setTravel] = useState(null); // stato per ottenere i dati del viaggio
   const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno (Apri / Chiudi)
   const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto (Apri / Chiudi)
-  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
-  const [hasAnimated, setHasAnimated] = useState(false); // stato per l'animazione della pagina
-  const [showContent, setShowContent] = useState(false); // stato per l'interno del modale Leggi Tutto ( Ritarda la visualizzazione del contenuto interno)  
+  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi) 
   const [isOpen, setIsOpen] = useState(false); // stato per ingrandire e ridurre la mappa 
   const mapRef = useRef(null); // per ridisegnare la mappa quando è ingrandita
 
@@ -62,120 +59,22 @@ function TravelDays() {
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
-  // Funzione per quando il modale Leggi Tutto si chiude il contenuto viene resettato
-  const handleClose = () => {
-    setShowContent(false);
-    setSelectedDay(null);
-  };
-
-  // Animazione con framer-motion per Titoli e Link
-  const infoAnimate = {
-    initial: {
-      x: -100, // parte da 100px a sinistra
-      opacity: 0
-    },
-    animate: {
-      x: 0, // si sposta nella posizione originale
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1,
-      }
-    }
-  };
-
-  const buttonAnimate = {
-    initial: {
-      x: 100, // parte da 100px a destra
-      opacity: 0
-    },
-    animate: {
-      x: 0, // si sposta nella posizione originale
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1
-      }
-    }
-  };
-  const MotionLink = motion(Link); // creo un Motion per i Link
-
-  // animazione per effetto zoom per le card dei giorni
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.92, y: 8 },
-    show: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { duration: 0.9, ease: "easeOut" }
-    }
-  };
-
-  // animazione per effetto zoom per il modale Leggi Tutto
-  const modal = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { duration: 0.2, ease: "easeOut" }
-    }
-  };
-
-  const modalVariants = {
-    hidden: { opacity: 0, scale: 0.92, y: 8 },
-    show: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { duration: 0.45, ease: "easeOut" }
-    }
-  };
-
-  // animazione per effetto zoom per le foto
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.92, y: 8 },
-    show: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { duration: 0.45, ease: "easeOut" }
-    }
-  };
-
 
   return (
     <div className="min-h-screen bg-transparent md:p-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
         { /* Titolo */}
-        <motion.h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]"
-          variants={infoAnimate}
-          initial={hasAnimated ? false : "initial"}
-          animate="animate"
-          onAnimationComplete={() => setHasAnimated(true)}>
+        <h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]">
           🗓️ Tappe del viaggio
-        </motion.h1>
+        </h1>
         { /* Link Aggiungi Tappa */}
-        <MotionLink
+        <Link
           to="/addDay"
           state={{ travelId: id }}
-          className="mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105"
-          variants={buttonAnimate}
-          initial={hasAnimated ? false : "initial"}
-          animate="animate"
-          onAnimationComplete={() => setHasAnimated(true)}>
+          className="mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
           <i className="fa-solid fa-plus"></i> Aggiungi Tappa
-        </MotionLink>
+        </Link>
       </div>
 
       {/* Layout principale */}
@@ -183,37 +82,33 @@ function TravelDays() {
         {/* Info Viaggio + Giorni */}
         <div className="flex-1 flex flex-col h-full">
           {/* Info Viaggio */}
-          <motion.div className="p-6 bg-transparent rounded-xl"
-            variants={infoAnimate}
-            initial={hasAnimated ? false : "initial"}
-            animate="animate"
-            onAnimationComplete={() => setHasAnimated(true)}>
+          <div className="p-6 bg-transparent rounded-xl">
             <h2 className="text-xl font-semibold text-white mb-2">
-              📍 {travel.town} - {travel.city}
+              📍 {travel.town} - {travel.city} {/* Paese e Città */}
             </h2>
             <p className="text-white mb-4">
-              📅 {travel.start_date} → {travel.end_date}
+              📅 {travel.start_date} → {travel.end_date} { /* Data Inizio e Data Fine */}
             </p>
-            {travel.title && <p className="text-gray-200 italic">{travel.title}</p>}
-          </motion.div>
+            {travel.title && <p className="text-gray-200 italic">{travel.title}</p>} { /* Titolo */}
+          </div>
 
           {/* Lista Giorni in griglia */}
           <div className="flex-1 overflow-y-auto pr-2">
             {travel.days?.length > 0 ? (
-              <motion.div className="flex flex-wrap gap-4" variants={containerVariants} initial="hidden" animate="show">
+              <div className="flex flex-wrap gap-4">
                 {travel.days.map((d) => (
-                  <motion.div
+                  <div
                     key={d.id}
-                    variants={cardVariants} style={{ willChange: "transform, opacity" }} // migliora la resa
                     className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64">
                     <div className="mb-4">
-                      <p className="text-gray-300 text-lg">{d.date}</p>
-                      <p className="text-white font-semibold text-xl">{d.title}</p>
+                      <p className="text-gray-300 text-lg">{d.date}</p> { /* Data */}
+                      <p className="text-white font-semibold text-xl">{d.title}</p> { /* Titolo */}
                     </div>
 
+                    { /* Foto */}
                     {d.photo.length > 0 && (
                       <div className="flex gap-2 flex-wrap mb-4">
-                        {d.photo.slice(0, 2).map((p, i) => (
+                        {d.photo.slice(0, 2).map((p, i) => ( // mostro solo le prime 2 foto come anteprima
                           <img
                             key={i}
                             src={p}
@@ -225,13 +120,16 @@ function TravelDays() {
                       </div>
                     )}
 
+                    { /* Bottoni Card */}
                     <div className="flex flex-col gap-2">
+                      {/* Mostra il resto delle informazioni della tappa */}
                       <button
                         onClick={() => setSelectedDay(d)}
                         className="px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
                         <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
                       </button>
 
+                      { /* Va nella pagina Modifica Tappa */}
                       <Link
                         to={`/days/${d.id}/edit`}
                         className="px-4 py-2 flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
@@ -239,16 +137,18 @@ function TravelDays() {
                         Modifica Tappa
                       </Link>
 
+                      { /* Cancella la Tappa */}
                       <button
                         onClick={() => setDeleteDayId(d.id)}
                         className="px-4 py-2 flex items-center justify-center bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
                         <i className="fa-solid fa-trash mr-2"></i> Elimina Tappa
                       </button>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             ) : (
+              // se non ci sono giorni del viaggio mostra questo messaggio
               <p className="text-white text-center mt-4">Nessuna Tappa Presente</p>
             )}
           </div>
@@ -257,124 +157,105 @@ function TravelDays() {
 
       {/* Modale Leggi Tutto */}
       {selectedDay && (
-        <motion.div
-          className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]"
-          variants={modal} initial="hidden" animate="show">
-          <motion.div
-            className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden"
-            variants={modalVariants}
-            style={{ willChange: "transform, opacity" }}
-            onAnimationComplete={() => setShowContent(true)} //  quando l'animazione finisce, monto i contenuti
-          >
-            {showContent && (
-              <>
-                {/* Colonna sinistra: contenuti scrollabili */}
-                <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
-                  <button
-                    onClick={handleClose}
-                    className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                    <i className="fa-solid fa-arrow-left"></i> Chiudi
-                  </button>
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]">
+          <div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden">
+            {/* Colonna sinistra: contenuti scrollabili */}
+            <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
+              <button
+                onClick={() => setSelectedDay(null)}
+                className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-arrow-left"></i> Chiudi
+              </button>
 
-                  <div className="flex justify-between items-start mb-3 mt-3">
-                    <h1 className="text-2xl sm:text-2xl font-bold text-white">
-                      {selectedDay.title}
-                    </h1>
-                  </div>
+              { /* Titolo */}
+              <div className="flex justify-between items-start mb-3 mt-3">
+                <h1 className="text-2xl sm:text-2xl font-bold text-white">
+                  {selectedDay.title}
+                </h1>
+              </div>
 
-                  <div className="flex justify-between items-start mb-3 mt-3">
-                    <p className="sm:text-xl text-white">{selectedDay.date}</p>
-                  </div>
+              { /* Data */}
+              <div className="flex justify-between items-start mb-3 mt-3">
+                <p className="sm:text-xl text-white">{selectedDay.date}</p>
+              </div>
 
-                  <p className="text-white text-justify mb-3">{selectedDay.description}</p>
+              { /* Descrizione */}
+              <p className="text-white text-justify mb-3">{selectedDay.description}</p>
 
-                  {selectedDay.photo.length > 0 && (
-                    <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" variants={containerVariants} initial="hidden" animate="show">
-                      {selectedDay.photo.map((p, i) => (
-                        <motion.img
-                          key={i}
-                          src={p}
-                          alt="foto viaggio"
-                          loading="lazy"
-                          onClick={() => setOpenImage(p)}
-                          className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
-                          variants={imageVariants}
-                        />
-                      ))}
-                    </motion.div>
-                  )}
+              { /* Foto */}
+              {selectedDay.photo.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {selectedDay.photo.map((p, i) => (
+                    <img
+                      key={i}
+                      src={p}
+                      alt="foto viaggio"
+                      loading="lazy"
+                      onClick={() => setOpenImage(p)}
+                      className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white" />
+                  ))}
                 </div>
+              )}
+            </div>
 
-                {/* Colonna destra: mappa */}
-                <motion.div className="flex justify-center items-center p-10" initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.45, duration: 0.5 }}>
+            {/* Colonna destra: mappa */}
+            <div className="flex justify-center items-center p-10">
 
-                  {/* Mappa in versione compatta */}
-                  {!isOpen && (
+              {/* Mappa in versione compatta */}
+              {!isOpen && (
+                <WorldMap
+                  days={travel.days}
+                  selectedDay={selectedDay} // vedo il solo il Pin del giorno selezionato
+                  mapRef={mapRef} // passo la ref al MapContainer
+                  onExpand={() => setIsOpen(true)}  // mi permette di poter ingrandire la mappa
+                />
+              )}
+
+              {/* Modale Mappa  */}
+              {isOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-[9999]">
+                  <div className="relative bg-gray-800 rounded-2xl overflow-hidden shadow-2xl"
+                    style={{ width: "90vw", height: "90vh" }}>
+
+                    {/* Bottone chiudi */}
+                    <button
+                      onClick={() => setIsOpen(false)} // per rimettere la mappa in versione compatta
+                      className="absolute top-4 right-4 z-[9999] bg-white px-3 py-1 rounded-md shadow hover:bg-gray-100 transition cursor-pointer">
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+
                     <WorldMap
                       days={travel.days}
-                      selectedDay={selectedDay} // vedo il solo il Pin del giorno selezionato
+                      selectedDay={selectedDay} // vedo solo il Pin del giorno selezionato
                       mapRef={mapRef} // passo la ref al MapContainer
-                      onExpand={() => setIsOpen(true)}  // mi permette di poter ingrandire la mappa
+                      isModal={true} // prendo is Modal dal componente WorldMap
                     />
-                  )}
-
-                  {/* Modale Mappa  */}
-                  {isOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-[9999]">
-                      <motion.div
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
-                        transition={{ duration: 0.45 }}
-                        className="relative bg-gray-800 rounded-2xl overflow-hidden shadow-2xl"
-                        style={{ width: "90vw", height: "90vh" }}>
-
-                        {/* Bottone chiudi */}
-                        <button
-                          onClick={() => setIsOpen(false)} // per rimettere la mappa in versione compatta
-                          className="absolute top-4 right-4 z-[9999] bg-white px-3 py-1 rounded-md shadow hover:bg-gray-100 transition cursor-pointer">
-                          <i className="fa-solid fa-xmark"></i>
-                        </button>
-
-                        <WorldMap
-                          days={travel.days}
-                          selectedDay={selectedDay} // vedo solo il Pin del giorno selezionato
-                          mapRef={mapRef} // passo la ref al MapContainer
-                          isModal={true} // prendo is Modal dal componente WorldMap
-                        />
-                      </motion.div>
-                    </div>
-                  )}
-                </motion.div>
-              </>
-            )}
-          </motion.div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
 
           {/* Modale Foto */}
           {openImage && (
-            <motion.div
+            <div
               className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
-              variants={containerVariants} initial="hidden" animate="show"
-              onClick={() => setOpenImage(null)}> { /* Per poter ridurre l'immagine */ }
-              <motion.img
+              onClick={() => setOpenImage(null)}> { /* Per poter ridurre l'immagine */}
+              <img
                 src={openImage.replace("w=400", "w=1600")} // quando clicco l'immagine si ingrandisce a 1600px
                 alt="foto ingrandita"
                 loading="lazy"
-                className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
-                variants={imageVariants}
-              />
-            </motion.div>
+                className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain" />
+            </div>
           )}
-        </motion.div>
+        </div>
       )}
 
 
       {/* Modale di conferma eliminazione giorno */}
       {deleteDayId && ( // se deleteDayId non è null, mostro il modale
-        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]" variants={containerVariants} initial="hidden" animate="show">
-          <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center" variants={cardVariants} style={{ willChange: "transform, opacity" }}>
+        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
+          <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
             <h2 className="text-xl font-bold mb-4 text-white">
               Sei sicuro di voler cancellare la tappa?
             </h2>
@@ -390,8 +271,8 @@ function TravelDays() {
                 <i className="fa-solid fa-xmark"></i> No
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       )}
     </div>
   );

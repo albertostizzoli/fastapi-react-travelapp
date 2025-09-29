@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion";
 
 function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
@@ -91,30 +90,9 @@ function EditDay() {
   if (loading) return <p>Caricamento...</p>;
   if (!day) return <p>Tappa non trovata</p>;
 
-  // Animazione
-  const editDay = {
-    initial: {
-      scale: 0.9, // leggermente più piccolo
-      opacity: 0, // invisibile
-    },
-    animate: {
-      scale: 1,   // zoom fino alla dimensione reale
-      opacity: 1, // visibile
-      transition: {
-        duration: 1.5,
-        ease: "easeInOut",
-        staggerChildren: 0.1, // opzionale se hai figli animati
-      },
-    },
-    exit: {
-      scale: 0.9, // quando esce torna piccolo
-      opacity: 0,
-      transition: { duration: 0.5, ease: "easeInOut" },
-    },
-  };
 
   return (
-    <motion.div className="flex items-center justify-center bg-transparent p-8 min-h-screen" variants={editDay} initial="initial" animate="animate" exit="exit">
+    <div className="flex items-center justify-center bg-transparent p-8 min-h-screen">
       <form onSubmit={handleSubmit} className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
 
         {/* Titolo + nota obbligatorio */}
@@ -220,7 +198,7 @@ function EditDay() {
           </button>
         </div>
       </form>
-    </motion.div>
+    </div>
   );
 }
 

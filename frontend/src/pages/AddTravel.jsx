@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // use Navigate serve per il reindirizzamento fra le pagine
 import axios from "axios";
-import { motion } from "framer-motion";
 
 function AddTravel() {
 
@@ -97,31 +96,8 @@ function AddTravel() {
     }
   };
 
-  // Animazione
-  const formTravel = {
-    initial: {
-      scale: 0.9, // leggermente più piccolo
-      opacity: 0, // invisibile
-    },
-    animate: {
-      scale: 1,   // zoom fino alla dimensione reale
-      opacity: 1, // visibile
-      transition: {
-        duration: 1.5,
-        ease: "easeInOut",
-        staggerChildren: 0.1, // opzionale se hai figli animati
-      },
-    },
-    exit: {
-      scale: 0.9, // quando esce torna piccolo
-      opacity: 0,
-      transition: { duration: 0.5, ease: "easeInOut" },
-    },
-  };
-
-
   return (
-    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8" variants={formTravel} initial="initial" animate="animate" exit="exit">
+    <div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8">
       {/* Container del form */}
       <div className="w-full max-w-4xl h-full sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 border border-white">
 
@@ -235,7 +211,7 @@ function AddTravel() {
           {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
         </form>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
