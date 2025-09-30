@@ -54,6 +54,15 @@ function Sidebar() {
               Home
             </Link>
           )}
+          {/* Mostra il link solo se NON siamo già su "/" */}
+          {location.pathname !== "/user" && (
+            <Link
+              to="/user"
+              className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+              <span><i className="fa-solid fa-user"></i></span>
+              Area Personale
+            </Link>
+          )}
 
           {location.pathname !== "/travels" && (
             <Link

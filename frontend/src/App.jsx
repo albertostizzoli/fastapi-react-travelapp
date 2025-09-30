@@ -8,6 +8,7 @@ import TravelDays from "./pages/TravelDays"; // pagina Dettagli Viaggio
 import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
 import EditDay from "./pages/EditDay"; // pagina Modifica Giorno
 import HomePage from "./pages/HomePage"; // pagina Home
+import User from "./pages/User"; // pagina di Login e Registrazione
 
 function Layout({ children }) {
   const location = useLocation();
@@ -49,6 +50,7 @@ function App() {
         {/* Rotte */}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/user" element={<User />} />
           <Route path="/travels" element={<Travels />} />
           <Route path="/add" element={<AddTravel />} />
           <Route path="/addDay" element={<AddDay />} />

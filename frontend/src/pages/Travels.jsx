@@ -40,8 +40,11 @@ function Travels() {
 
   // uso lo useEffect per ottenere i dati dei viaggi
   useEffect(() => {
+    const userId = localStorage.getItem("userId"); // recupero id utente
+    if (!userId) return; // se non c'è, non faccio nulla
+
     axios
-      .get("http://127.0.0.1:8000/travels")
+      .get(`http://127.0.0.1:8000/travels?user_id=${userId}`) // recupera i viaggi dell'utente dal backend
       .then((res) => setTravels(res.data)) // aggiorna lo stato con i dati ricevuti
       .catch((err) => console.error(err)); // gestisce errori
   }, []);
