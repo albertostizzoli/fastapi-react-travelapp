@@ -2,13 +2,11 @@ from sqlalchemy import create_engine # per gestire la connessione con il databas
 from sqlalchemy.ext.declarative import declarative_base # per poter creare la base per i modelli ORM
 from sqlalchemy.orm import sessionmaker # per generare sessioni per interagire con il DB
 
-# URL del database SQLite
-SQLALCHEMY_DATABASE_URL = "sqlite:///./travelapp.db"
+# URL del database MySQL
+SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:root@localhost:8889/travelapp_db" 
 
-# connect_args={"check_same_thread": False} è necessario per SQLite quando si usano più thread (come con FastAPI)
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+# engine serve per gestire la connessione con il database
+engine = create_engine(SQLALCHEMY_DATABASE_URL) 
 
 # autocommit=False → le modifiche devono essere confermate con commit()
 # autoflush=False → le modifiche non vengono inviate automaticamente al DB finché non fai commit()

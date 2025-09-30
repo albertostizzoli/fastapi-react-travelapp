@@ -36,7 +36,7 @@ def get_travel(travel_id: int, db: Session = Depends(get_db)): # ID del nuovo vi
     return travel
 
 
-#  POST: per aggiungere un nuovo viaggio con eventuali giorni
+#  POST: per aggiungere un nuovo viaggio 
 @router.post("/", response_model=Travel)
 def add_travel(travel: TravelCreate, user_id: int, db: Session = Depends(get_db)):
     # creo il record del viaggio
@@ -57,7 +57,7 @@ def add_travel(travel: TravelCreate, user_id: int, db: Session = Depends(get_db)
     return db_travel
 
 
-# PUT: modifica un viaggio esistente e i suoi giorni
+# PUT: modifica un viaggio esistente 
 @router.put("/{travel_id}", response_model=Travel)
 def update_travel(travel_id: int, updated_travel: TravelCreate, user_id: int, db: Session = Depends(get_db)):
     # cerca il viaggio solo se appartiene all'utente
@@ -83,7 +83,7 @@ def update_travel(travel_id: int, updated_travel: TravelCreate, user_id: int, db
     return travel
 
 
-# DELETE: elimina un viaggio e tutti i giorni associati
+# DELETE: elimina un viaggio 
 @router.delete("/{travel_id}")
 def delete_travel(travel_id: int, user_id: int, db: Session = Depends(get_db)):
     # cerco il viaggio filtrando anche per user_id
