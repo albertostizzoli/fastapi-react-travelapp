@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import WorldMap from "../components/WorldMap";
+import { motion } from "framer-motion";
 
 function TravelDays() {
   const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
@@ -184,17 +185,26 @@ function TravelDays() {
 
               { /* Foto */}
               {selectedDay.photo.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    hidden: {},
+                    visible: { transition: { staggerChildren: 0.1 } }
+                  }}>
                   {selectedDay.photo.map((p, i) => (
-                    <img
+                    <motion.img
                       key={i}
                       src={p}
                       alt="foto viaggio"
                       loading="lazy"
                       onClick={() => setOpenImage(p)}
-                      className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white" />
+                      className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 1, ease: "easeOut" }} />
                   ))}
-                </div>
+                </motion.div>
               )}
             </div>
 
@@ -241,11 +251,14 @@ function TravelDays() {
             <div
               className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
               onClick={() => setOpenImage(null)}> { /* Per poter ridurre l'immagine */}
-              <img
+              <motion.img
                 src={openImage.replace("w=400", "w=1600")} // quando clicco l'immagine si ingrandisce a 1600px
                 alt="foto ingrandita"
                 loading="lazy"
-                className="w-auto h-auto max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain" />
+                className="w-auto h-full max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.3 }} />
             </div>
           )}
         </div>
@@ -254,7 +267,10 @@ function TravelDays() {
 
       {/* Modale di conferma eliminazione giorno */}
       {deleteDayId && ( // se deleteDayId non è null, mostro il modale
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
+        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3 }}>
           <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
             <h2 className="text-xl font-bold mb-4 text-white">
               Sei sicuro di voler cancellare la tappa?
@@ -272,7 +288,7 @@ function TravelDays() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 // funzione per ottenere le stelle 
 function StarRating({ rating = 0, max = 5 }) {
@@ -132,7 +133,10 @@ function Travels() {
 
       {/* Modale di conferma eliminazione */}
       {deleteId && (
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]">
+        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3 }}>
           <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-11/12 max-w-md text-center">
             <h2 className="text-xl font-bold mb-4 text-white">
               Sei sicuro di voler cancellare il viaggio?
@@ -152,7 +156,7 @@ function Travels() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

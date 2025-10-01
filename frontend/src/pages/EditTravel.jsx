@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function EditTravel() {
   const { id } = useParams(); // recupero l'ID del viaggio dall'URL
@@ -11,7 +12,7 @@ function EditTravel() {
   useEffect(() => {
     const userId = localStorage.getItem("userId"); // recupero id utente
     if (!userId) return; // se non c'è, non faccio nulla
-    
+
     axios
       .get(`http://127.0.0.1:8000/travels?user_id=${userId}`)
       .then((res) => {
@@ -70,7 +71,10 @@ function EditTravel() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8">
+    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 1.5 }}>
       {/* Container del form */}
       <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
 
@@ -183,7 +187,7 @@ function EditTravel() {
           </div>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

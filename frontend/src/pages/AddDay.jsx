@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function AddDay() {
   const location = useLocation(); // per ottenere lo stato passato da TravelDays
@@ -95,7 +96,10 @@ function AddDay() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-transparent min-h-screen p-8">
+    <motion.div className="flex items-center justify-center bg-transparent min-h-screen p-8"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 1.5 }}>
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -216,7 +220,7 @@ function AddDay() {
 
         {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
       </form>
-    </div>
+    </motion.div>
   );
 }
 

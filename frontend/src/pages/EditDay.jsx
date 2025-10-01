@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
@@ -94,7 +95,10 @@ function EditDay() {
 
 
   return (
-    <div className="flex items-center justify-center bg-transparent p-8 min-h-screen">
+    <motion.div className="flex items-center justify-center bg-transparent p-8 min-h-screen"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 1.5 }}>
       <form onSubmit={handleSubmit} className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
 
         {/* Titolo + nota obbligatorio */}
@@ -200,7 +204,7 @@ function EditDay() {
           </button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }
 
