@@ -51,6 +51,8 @@ function AddTravel() {
         ? parseFloat(calculateGeneralVote()) // lo converto in numero
         : null; // altrimenti null
 
+      const userId = localStorage.getItem("userId");  // recupero l’id salvato
+
       // creo l'oggetto viaggio da inviare al backend
       const newTravel = {
         town: form.town,
@@ -67,6 +69,7 @@ function AddTravel() {
           relax: form.relax ? parseInt(form.relax) : null,
           prezzo: form.prezzo ? parseInt(form.prezzo) : null,
         },
+        user_id: parseInt(userId), 
       };
 
       // invio al backend

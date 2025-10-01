@@ -11,15 +11,6 @@ function Header() {
       <h1 className="font-bold text-3xl underline">Travel App</h1>
       <div className="flex gap-3">
         {/* Mostra il link solo se NON siamo già su "/" */}
-        {location.pathname !== "/" && (
-          <Link
-            to="/"
-            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
-            <span><i className="fa-solid fa-home"></i></span>
-            Home
-          </Link>
-        )}
-        {/* Mostra il link solo se NON siamo già su "/" */}
         {location.pathname !== "/user" && (
           <Link
             to="/user"

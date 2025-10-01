@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; 
 
-export default function Login() {
+function User() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -37,8 +37,7 @@ export default function Login() {
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-2xl p-8 w-96"
-      >
+        className="bg-white shadow-lg rounded-2xl p-8 w-96">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
         <div className="mb-4">
@@ -48,8 +47,7 @@ export default function Login() {
             className="w-full border rounded-lg px-3 py-2"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+            required/>
         </div>
 
         <div className="mb-6">
@@ -59,14 +57,12 @@ export default function Login() {
             className="w-full border rounded-lg px-3 py-2"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+            required/>
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-        >
+          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
           Accedi
         </button>
 
@@ -77,3 +73,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default User

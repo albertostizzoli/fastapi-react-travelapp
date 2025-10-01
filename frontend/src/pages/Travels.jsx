@@ -51,8 +51,11 @@ function Travels() {
 
   // con questa cancello tutti i dati del viaggio
   const handleDelete = () => {
+    const userId = localStorage.getItem("userId"); // recupero id utente
+    if (!userId) return; // se non c'è, non faccio nulla
+
     axios
-      .delete(`http://127.0.0.1:8000/travels/${deleteId}`) // elimina il viaggio
+      .delete(`http://127.0.0.1:8000/travels/${deleteId}?user_id=${userId}`) // elimina il viaggio
       .then(() => {
         setTravels(travels.filter((t) => t.id !== deleteId)); // aggiorna lista
         setDeleteId(null); // chiudi modale

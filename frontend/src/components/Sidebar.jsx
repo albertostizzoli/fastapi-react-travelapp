@@ -43,17 +43,6 @@ function Sidebar() {
             className="text-white text-2xl self-end cursor-pointer">
             <i className="fa-solid fa-xmark"></i>
           </button>
-
-          {/* Link condizionati */}
-          {location.pathname !== "/" && (
-            <Link
-              to="/"
-              onClick={toggleSidebar}
-              className="text-white text-lg font-medium hover:underline">
-              <i className="fa-solid fa-home mr-2"></i>
-              Home
-            </Link>
-          )}
           {/* Mostra il link solo se NON siamo già su "/" */}
           {location.pathname !== "/user" && (
             <Link

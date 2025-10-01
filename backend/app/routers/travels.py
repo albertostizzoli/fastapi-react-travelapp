@@ -38,7 +38,7 @@ def get_travel(travel_id: int, db: Session = Depends(get_db)): # ID del nuovo vi
 
 #  POST: per aggiungere un nuovo viaggio 
 @router.post("/", response_model=Travel)
-def add_travel(travel: TravelCreate, user_id: int, db: Session = Depends(get_db)):
+def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
     # creo il record del viaggio
     db_travel = TravelDB(
         town=travel.town,
@@ -48,7 +48,7 @@ def add_travel(travel: TravelCreate, user_id: int, db: Session = Depends(get_db)
         end_date=format_date(travel.end_date),
         general_vote=travel.general_vote,
         votes=travel.votes,
-        user_id=user_id
+        user_id=travel.user_id
     )
     db.add(db_travel)     # il viaggio viene salvato
     db.commit()           # salva le modifiche
@@ -59,11 +59,11 @@ def add_travel(travel: TravelCreate, user_id: int, db: Session = Depends(get_db)
 
 # PUT: modifica un viaggio esistente 
 @router.put("/{travel_id}", response_model=Travel)
-def update_travel(travel_id: int, updated_travel: TravelCreate, user_id: int, db: Session = Depends(get_db)):
+def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = Depends(get_db)):
     # cerca il viaggio solo se appartiene all'utente
     travel = db.query(TravelDB).filter(
         TravelDB.id == travel_id,
-        TravelDB.user_id == user_id
+        TravelDB.user_id == updated_travel.user_id
     ).first()
 
     if not travel:

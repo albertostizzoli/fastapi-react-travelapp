@@ -9,8 +9,11 @@ function EditTravel() {
 
   // recupero i viaggi dal backend
   useEffect(() => {
+    const userId = localStorage.getItem("userId"); // recupero id utente
+    if (!userId) return; // se non c'è, non faccio nulla
+    
     axios
-      .get(`http://127.0.0.1:8000/travels`)
+      .get(`http://127.0.0.1:8000/travels?user_id=${userId}`)
       .then((res) => {
         const t = res.data.find((tr) => tr.id === parseInt(id)); // trova il viaggio con l'ID corrispondente
         setTravel(t); // salva il viaggio nello stato
