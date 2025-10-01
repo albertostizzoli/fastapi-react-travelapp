@@ -5,7 +5,11 @@ import { motion } from "framer-motion";
 function Sidebar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === "/"; // controlla se siamo nella Home
+  const path = location.pathname;
+
+  const isHome = path === "/";
+  const isTravels = path === "/travels";
+  const isAdd = path === "/add";
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -36,39 +40,42 @@ function Sidebar() {
           transition={{ type: "spring", stiffness: 140, damping: 30 }}
           className={`fixed top-0 left-0 w-64 h-full p-6 z-[9999] flex flex-col gap-6 
             ${isHome ? "bg-blue-400" : "backdrop-blur-xl bg-transparent"}`}>
-
           <button
             onClick={toggleSidebar}
             aria-label="Chiudi il menu"
             className="text-white text-2xl self-end cursor-pointer">
             <i className="fa-solid fa-xmark"></i>
           </button>
-          {/* Mostra il link solo se NON siamo già su "/" */}
-          {location.pathname !== "/user" && (
+
+          {/* Area Personale solo in Home */}
+          {isHome && (
             <Link
               to="/user"
-              className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+              onClick={toggleSidebar}
+              className="text-white px-4 py-2 flex items-center gap-2 font-medium hover:underline">
               <span><i className="fa-solid fa-user"></i></span>
               Area Personale
             </Link>
           )}
 
-          {location.pathname !== "/travels" && (
+          {/* I miei viaggi ovunque tranne in Home e /travels */}
+          {!isHome && !isTravels && (
             <Link
               to="/travels"
               onClick={toggleSidebar}
-              className="text-white text-lg font-medium hover:underline">
-              <i className="fa-solid fa-globe mr-2"></i>
+              className="text-white text-lg font-medium hover:underline flex items-center gap-2">
+              <i className="fa-solid fa-globe"></i>
               I miei viaggi
             </Link>
           )}
 
-          {location.pathname !== "/add" && (
+          {/* Aggiungi Viaggio ovunque tranne in Home e /add */}
+          {!isHome && !isAdd && (
             <Link
               to="/add"
               onClick={toggleSidebar}
-              className="text-white text-lg font-medium hover:underline">
-              <i className="fa-solid fa-plus mr-2"></i>
+              className="text-white text-lg font-medium hover:underline flex items-center gap-2">
+              <i className="fa-solid fa-plus"></i>
               Aggiungi Viaggio
             </Link>
           )}

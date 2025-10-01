@@ -1,8 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 
 function Header() {
-  const location = useLocation(); // hook per ottenere il percorso corrente
-  const isHome = location.pathname === "/"; // controlla se siamo nella Home
+  const location = useLocation();
+  const path = location.pathname;
+
+  const isHome = path === "/";
+  const isTravels = path === "/travels";
+  const isAdd = path === "/add";
 
   return (
     <nav
@@ -10,8 +14,8 @@ function Header() {
         ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
       <h1 className="font-bold text-3xl underline">Travel App</h1>
       <div className="flex gap-3">
-        {/* Mostra il link solo se NON siamo già su "/" */}
-        {location.pathname !== "/user" && (
+        {/* Area Personale solo in Home */}
+        {isHome && (
           <Link
             to="/user"
             className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
@@ -19,8 +23,9 @@ function Header() {
             Area Personale
           </Link>
         )}
-        {/* Mostra il link solo se NON siamo già su "/travels" */}
-        {location.pathname !== "/travels" && (
+
+        {/* I miei viaggi ovunque tranne in Home e in /travels */}
+        {!isHome && !isTravels && (
           <Link
             to="/travels"
             className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
@@ -28,8 +33,9 @@ function Header() {
             I miei viaggi
           </Link>
         )}
-        {/* Mostra il link solo se NON siamo già su "/add" */}
-        {location.pathname !== "/add" && (
+
+        {/* Aggiungi Viaggio ovunque tranne in Home e in /add */}
+        {!isHome && !isAdd && (
           <Link
             to="/add"
             className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
@@ -43,4 +49,3 @@ function Header() {
 }
 
 export default Header;
-
