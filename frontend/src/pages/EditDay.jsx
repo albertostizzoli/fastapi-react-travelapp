@@ -11,8 +11,10 @@ function EditDay() {
 
   // recupero i dati del giorno dal backend
   useEffect(() => {
+    const userId = localStorage.getItem("userId"); // recupero id utente
+    if (!userId) return; // se non c'è, non faccio nulla
     axios
-      .get(`http://127.0.0.1:8000/travels`) // recupero tutti i viaggi
+      .get(`http://127.0.0.1:8000/travels?user_id=${userId}`) // recupero tutti i viaggi
       .then((res) => { // cerco il giorno con l'ID specificato
         let dayFound = null; // inizializzo la variabile per il giorno trovato
         res.data.forEach((travel) => {

@@ -20,8 +20,10 @@ function AddDay() {
   // carico i viaggi dal backend
   useEffect(() => {
     const fetchTravels = async () => { // funzione asincrona per fetch
+      const userId = localStorage.getItem("userId"); // recupero id utente
+      if (!userId) return; // se non c'è, non faccio nulla
       try {
-        const res = await axios.get("http://127.0.0.1:8000/travels"); // richiesta GET
+        const res = await axios.get(`http://127.0.0.1:8000/travels?user_id=${userId}`); // richiesta GET
         setTravels(res.data); // aggiorno lo stato con i viaggi ricevuti
       } catch (err) {
         console.error(err); // log dell'errore
