@@ -70,11 +70,22 @@ function Travels() {
       {/* Titolo */}
       <h1 className="text-3xl font-bold text-center text-white mb-8"> 🌍 I miei viaggi</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.2 } }
+        }}>
         {travels.map((v) => (
-          <div
+          <motion.div
             key={v.id}
-            className="backdrop-blur-xl bg-gray-700/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden">
+            className="backdrop-blur-xl bg-gray-700/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden"
+            variants={{
+              hidden: { scaleY: 0, opacity: 0, originY: 0 },
+              visible: { scaleY: 1, opacity: 1 }
+            }}
+            transition={{ duration: 1, ease: "easeOut" }}>
             {/* Immagine */}
             {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
               <img
@@ -127,9 +138,9 @@ function Travels() {
               </div>
 
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Modale di conferma eliminazione */}
       {deleteId && (

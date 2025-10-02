@@ -34,9 +34,13 @@ function Layout({ children }) {
   const bgImage = backgrounds[location.pathname];
 
   return (
-    <div className=" bg-cover bg-center" style={{ backgroundImage: bgImage }}>
-      <Sidebar />
-      <Header />
+    <div className="bg-cover bg-center" style={{ backgroundImage: bgImage }}>
+      {/* Sidebar sempre visibile */}
+      {location.pathname !== "/user" && <Sidebar />}
+
+      {/* Header visibile solo se NON sono nella rotta /user */}
+      {location.pathname !== "/user" && <Header />}
+
       {/* Contenuto pagina */}
       <div>{children}</div>
     </div>

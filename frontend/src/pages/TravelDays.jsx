@@ -65,17 +65,27 @@ function TravelDays() {
     <div className="min-h-screen bg-transparent md:p-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
+
         { /* Titolo */}
-        <h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]">
+        <motion.h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]"
+          initial={{ x: -100, opacity: 0 }} // animazione parte da sinistra
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}>
           🗓️ Tappe del viaggio
-        </h1>
+        </motion.h1>
+
         { /* Link Aggiungi Tappa */}
-        <Link
-          to="/addDay"
-          state={{ travelId: id }}
-          className="mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
-          <i className="fa-solid fa-plus"></i> Aggiungi Tappa
-        </Link>
+        <motion.div
+          initial={{ x: 100, opacity: 0 }} // animazione parte da destra
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}>
+          <Link
+            to="/addDay"
+            state={{ travelId: id }}
+            className="mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+            <i className="fa-solid fa-plus"></i> Aggiungi Tappa
+          </Link>
+        </motion.div>
       </div>
 
       {/* Layout principale */}
@@ -83,7 +93,10 @@ function TravelDays() {
         {/* Info Viaggio + Giorni */}
         <div className="flex-1 flex flex-col h-full">
           {/* Info Viaggio */}
-          <div className="p-6 bg-transparent rounded-xl">
+          <motion.div className="p-6 bg-transparent rounded-xl"
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}>
             <h2 className="text-xl font-semibold text-white mb-2">
               📍 {travel.town} - {travel.city} {/* Paese e Città */}
             </h2>
@@ -91,16 +104,30 @@ function TravelDays() {
               📅 {travel.start_date} → {travel.end_date} { /* Data Inizio e Data Fine */}
             </p>
             {travel.title && <p className="text-gray-200 italic">{travel.title}</p>} { /* Titolo */}
-          </div>
+          </motion.div>
 
           {/* Lista Giorni in griglia */}
           <div className="flex-1 overflow-y-auto pr-2">
             {travel.days?.length > 0 ? (
-              <div className="flex flex-wrap gap-4">
+              <motion.div className="flex flex-wrap gap-4"
+                variants={{
+                  hidden: { opacity: 1 },
+                  visible: { opacity: 1, transition: { staggerChildren: 0.5 } },
+                }}
+                initial="hidden"
+                animate="visible">
                 {travel.days.map((d) => (
-                  <div
+                  <motion.div
                     key={d.id}
-                    className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64">
+                    className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64"
+                    variants={{
+                      hidden: { scale: 0, opacity: 0 },
+                      visible: {
+                        scale: 1,
+                        opacity: 1,
+                        transition: { duration: 0.8, ease: "easeOut" }
+                      }
+                    }}>
                     <div className="mb-4">
                       <p className="text-gray-300 text-lg">{d.date}</p> { /* Data */}
                       <p className="text-white font-semibold text-xl">{d.title}</p> { /* Titolo */}
@@ -145,9 +172,9 @@ function TravelDays() {
                         <i className="fa-solid fa-trash mr-2"></i> Cancella Tappa
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
               // se non ci sono giorni del viaggio mostra questo messaggio
               <p className="text-white text-center mt-4">Nessuna Tappa Presente</p>
@@ -186,12 +213,12 @@ function TravelDays() {
               { /* Foto */}
               {selectedDay.photo.length > 0 && (
                 <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-                  initial="hidden"
-                  animate="visible"
                   variants={{
-                    hidden: {},
-                    visible: { transition: { staggerChildren: 0.1 } }
-                  }}>
+                    hidden: { opacity: 1 },
+                    visible: { opacity: 1, transition: { staggerChildren: 0.5 } },
+                  }}
+                  initial="hidden"
+                  animate="visible">
                   {selectedDay.photo.map((p, i) => (
                     <motion.img
                       key={i}
@@ -200,9 +227,14 @@ function TravelDays() {
                       loading="lazy"
                       onClick={() => setOpenImage(p)}
                       className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 1, ease: "easeOut" }} />
+                      variants={{
+                        hidden: { scale: 0, opacity: 0 },
+                        visible: {
+                          scale: 1,
+                          opacity: 1,
+                          transition: { duration: 0.8, ease: "easeOut" }
+                        }
+                      }} />
                   ))}
                 </motion.div>
               )}
@@ -258,7 +290,7 @@ function TravelDays() {
                 className="w-auto h-full max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.3 }} />
+                transition={{ duration: 0.5 }} />
             </div>
           )}
         </div>
