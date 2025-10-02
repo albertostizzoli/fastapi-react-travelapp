@@ -79,17 +79,13 @@ function User() {
         </h1>
 
         {/*  Toggle Login/Registrati */}
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setIsLogin(true)}
-            className={`cursor-pointer px-4 py-2 rounded-lg font-semibold transition ${isLogin ? "bg-blue-500 text-white" : "bg-orange-500 text-white"
-              }`}>
+        <div className="flex mb-6 bg-blue-400 rounded-full p-1 w-64">
+          <button onClick={() => setIsLogin(true)}
+            className={`cursor-pointer flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "bg-orange-400 text-gray-800" : "text-white"}`}>
             Login
           </button>
-          <button
-            onClick={() => setIsLogin(false)}
-            className={`cursor-pointer px-4 py-2 rounded-lg font-semibold transition ${!isLogin ? "bg-blue-500 text-white" : "bg-orange-500 text-white"
-              }`}>
+          <button onClick={() => setIsLogin(false)}
+            className={`cursor-pointer flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "bg-orange-400 text-gray-800" : "text-white"}`}>
             Registrati
           </button>
         </div>
