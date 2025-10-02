@@ -91,7 +91,7 @@ function HomePage() {
             {/* Section 2 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
                 <motion.img
-                    src="/images/amalfi.jpg"
+                    src="/images/amalfi_2.jpg"
                     alt="Costiera Amalfitana"
                     className="rounded-2xl shadow-lg"
                     variants={firstBlock} initial="initial" whileInView="animate"
