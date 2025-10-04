@@ -1,5 +1,5 @@
 from pydantic import BaseModel # definire schemi di dati con controlli di validazione
-from typing import List # tipi generici: List per array tipizzati
+from typing import List, Optional # tipi generici: List per array tipizzati, Optional per valori facoltativi
 from app.schemas.travels import Travel
 
 # classe base per il modello User
@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     name: str             # nome
     surname: str          # cognome
     email: str            # email
-
+    interests: Optional[List[str]] = None  # interessi 
 
 # modello per creare un nuovo utente
 # eredita da UserBase, nessuna modifica aggiuntiva

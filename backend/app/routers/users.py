@@ -47,7 +47,8 @@ def add_user(user: UserCreate,  db: Session = Depends(get_db)):
         name = user.name,
         surname = user.surname,
         email = user.email,
-        password=get_password_hash(user.password)  # salvo password hashata
+        password=get_password_hash(user.password),  # salvo password hashata
+        interests = user.interests
     )
     db.add(db_user)      # l'utente viene salvato
     db.commit()          # modifiche salvate
@@ -68,6 +69,7 @@ def update_user(user_id: int, updated_user: UserCreate, db: Session = Depends(ge
     user.surname = updated_user.surname
     user.email = updated_user.email
     user.password = get_password_hash(updated_user.password)
+    user.interests = updated_user.interests
 
     db.commit()        # modifiche salvate
     db.refresh(user)   # database aggiornato
