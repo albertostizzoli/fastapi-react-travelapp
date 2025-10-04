@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import interests from "../store/interests";
+import { motion, AnimatePresence } from "framer-motion";
 
 function User() {
   const [isLogin, setIsLogin] = useState(true); //  stato per il toggle login/registrazione
@@ -92,88 +93,40 @@ function User() {
         </h1>
 
         {/*  Toggle Login/Registrati */}
-        <div className="flex mb-6 bg-blue-400 rounded-full p-1 w-64">
-          <button onClick={() => setIsLogin(true)} // indica che sono in login
-            className={`cursor-pointer flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "bg-orange-400 text-gray-800" : "text-white"}`}>
+        <div className="relative flex mb-6 bg-blue-400 p-1 rounded-full w-64">
+          <motion.div
+            layout
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className={`absolute top-1 bottom-1 w-1/2 rounded-full bg-orange-400 ${isLogin ? "left-1" : "right-1"}`}
+          />
+
+          <button
+            onClick={() => setIsLogin(true)}
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "text-gray-800" : "text-white"}`}>
             Login
           </button>
-          <button onClick={() => setIsLogin(false)} // indica che sono in registrazione
-            className={`cursor-pointer flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "bg-orange-400 text-gray-800" : "text-white"}`}>
+          <button
+            onClick={() => setIsLogin(false)}
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "text-gray-800" : "text-white"}`}>
             Registrati
           </button>
         </div>
 
+
         {/*  FORM LOGIN */}
-        {isLogin ? (
-          <form
-            onSubmit={handleSubmit}
-            className="backdrop-blur-xl shadow-lg rounded-2xl p-8 w-11/12 sm:w-96 border sm:border-black">
-            <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">Login</h2>
+        <AnimatePresence mode="wait">
+          {isLogin ? (
+            <motion.form
+              key="login"
+              onSubmit={handleSubmit}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.4 }}
+              className="backdrop-blur-xl shadow-lg rounded-2xl p-8 w-11/12 sm:w-96 border sm:border-black">
+              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">Login</h2>
 
-            <div className="mb-4">
-              <label className="block sm:text-black mb-1 text-white">Email</label>
-              <input
-                type="email"
-                className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="block sm:text-black mb-1 text-white">Password</label>
-              <input
-                type="password"
-                className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
-              <i className="fa-solid fa-user mr-2"></i>
-              Accedi
-            </button>
-          </form>
-        ) : (
-
-          /*  FORM REGISTRAZIONE */
-          <form
-            onSubmit={handleRegister}
-            className="backdrop-blur-xl shadow-lg rounded-2xl p-8 w-11/12 sm:w-[600px] border sm:border-black">
-            <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">
-              Registrati
-            </h2>
-
-            {/* Campi in 2 colonne */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block sm:text-black mb-1 text-white">Nome</label>
-                <input
-                  type="text"
-                  className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block sm:text-black mb-1 text-white">Cognome</label>
-                <input
-                  type="text"
-                  className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
-                  value={surname}
-                  onChange={(e) => setSurname(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div>
+              <div className="mb-4">
                 <label className="block sm:text-black mb-1 text-white">Email</label>
                 <input
                   type="email"
@@ -184,7 +137,7 @@ function User() {
                 />
               </div>
 
-              <div>
+              <div className="mb-6">
                 <label className="block sm:text-black mb-1 text-white">Password</label>
                 <input
                   type="password"
@@ -194,28 +147,96 @@ function User() {
                   required
                 />
               </div>
-            </div>
 
-            {/* Interessi  */}
-            <div className="mt-6">
               <button
-                type="button"
-                onClick={() => setIsModalOpen(true)}
-                className="w-full px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                <i className="fa-solid fa-globe mr-2"></i> Scegli i tuoi interessi
+                type="submit"
+                className="px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-user mr-2"></i>
+                Accedi
               </button>
-            </div>
+            </motion.form>
+          ) : (
 
-            {/* Submit */}
-            <button
-              type="submit"
-              className="mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
-              <i className="fa-solid fa-user mr-2"></i>
-              Registrati
-            </button>
-          </form>
+            /*  FORM REGISTRAZIONE */
+            <motion.form
+              key="register"
+              onSubmit={handleRegister}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4 }}
+              className="backdrop-blur-xl shadow-lg rounded-2xl p-8 w-11/12 sm:w-[600px] border sm:border-black">
+              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">
+                Registrati
+              </h2>
 
-        )}
+              {/* Campi in 2 colonne */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block sm:text-black mb-1 text-white">Nome</label>
+                  <input
+                    type="text"
+                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block sm:text-black mb-1 text-white">Cognome</label>
+                  <input
+                    type="text"
+                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    value={surname}
+                    onChange={(e) => setSurname(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block sm:text-black mb-1 text-white">Email</label>
+                  <input
+                    type="email"
+                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block sm:text-black mb-1 text-white">Password</label>
+                  <input
+                    type="password"
+                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Interessi  */}
+              <div className="mt-6">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(true)}
+                  className="w-full px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  <i className="fa-solid fa-globe mr-2"></i> Scegli i tuoi interessi
+                </button>
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                className="mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-user mr-2"></i>
+                Registrati
+              </button>
+            </motion.form>
+          )}
+        </AnimatePresence>
 
         { /* Modale Interessi */}
         {isModalOpen && (
