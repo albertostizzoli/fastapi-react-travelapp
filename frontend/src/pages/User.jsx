@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import interests from "../store/interests";
 
 function User() {
   const [isLogin, setIsLogin] = useState(true); //  toggle login/registrazione
@@ -10,9 +11,19 @@ function User() {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [selectedInterests, setSelectedInterests] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  const toggleInterest = (tag) => {
+    if (selectedInterests.includes(tag)) {
+      setSelectedInterests(selectedInterests.filter((t) => t !== tag));
+    } else {
+      setSelectedInterests([...selectedInterests, tag]);
+    }
+  };
+
 
   //  LOGIN
   const handleSubmit = async (e) => {
@@ -43,6 +54,7 @@ function User() {
         surname,
         email,
         password,
+        interests: selectedInterests,
       });
 
       setMessage("✅ Registrazione avvenuta con successo! Ora effettua il login.");
@@ -178,6 +190,69 @@ function User() {
               />
             </div>
 
+            <div className="mb-6">
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className="px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-globe mr-2"></i> Scegli i tuoi interessi
+              </button>
+            </div>
+
+            { /* Modale Interessi */}
+            {isModalOpen && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]">
+                <div className="bg-gray-800 rounded-xl w-full max-w-5xl h-[90vh] shadow-lg flex flex-col overflow-hidden">
+                  <div className="flex-1 p-6 overflow-y-auto">
+                    <h2 className="text-2xl font-semibold text-white mb-4">
+                      Seleziona i tuoi interessi
+                    </h2>
+
+                    {interests.map((category) => (
+                      <div key={category.category} className="mb-6">
+                        <h3 className="text-lg font-bold text-blue-400 mb-2">
+                          {category.category}
+                        </h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                          {category.tags.map((tag) => (
+                            <button
+                            type="button"
+                              key={tag}
+                              onClick={() => toggleInterest(tag)}
+                              className={`px-3 py-2 rounded-lg border transition cursor-pointer ${selectedInterests.includes(tag)
+                                ? "bg-green-500 text-white border-green-400"
+                                : "bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600"
+                                }`}
+                            >
+                              {tag}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Azioni */}
+                  <div className="p-4 flex justify-end gap-3 border-t border-gray-700">
+                    <button
+                      onClick={() => {
+                        // TODO: chiamata API al server per salvare in users.interests
+                        console.log("Interessi scelti:", selectedInterests);
+                        setIsModalOpen(false);
+                      }}
+                      className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-400 transition">
+                      <i className="fa-solid fa-check mr-2"></i> Salva Preferenze
+                    </button>
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">
+                      <i className="fa-solid fa-xmark mr-2"></i> Annulla
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <button
               type="submit"
               className="px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
@@ -192,7 +267,7 @@ function User() {
           <p className="mt-4 text-center text-sm text-gray-700">{message}</p>
         )}
       </div>
-    </div>
+    </div >
   );
 }
 
