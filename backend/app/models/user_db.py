@@ -12,5 +12,6 @@ class UserDB(Base):
     email = Column(String, nullable=False)              # email
     password = Column(String, nullable=False)           # password
     interests = Column(JSON, nullable=True)             # interessi
+    photo = Column(String, nullable=True)               # foto profilo
 
     travels = relationship("TravelDB", back_populates="user")  # Relazione con la classe TravelDB che si trova nel file travel_db.py

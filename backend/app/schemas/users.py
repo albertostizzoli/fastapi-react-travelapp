@@ -5,10 +5,11 @@ from app.schemas.travels import Travel
 # classe base per il modello User
 # serve a definire i campi comuni a tutti i modelli Pydantic relativi agli utenti
 class UserBase(BaseModel):
-    name: str             # nome
-    surname: str          # cognome
-    email: str            # email
+    name: str                              # nome
+    surname: str                           # cognome
+    email: str                             # email
     interests: Optional[List[str]] = None  # interessi 
+    photo: Optional[str] = None            # foto profilo
 
 # modello per creare un nuovo utente
 # eredita da UserBase, nessuna modifica aggiuntiva

@@ -1,9 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori, caricamento file, gestione form
 from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
 from app.schemas.users import User, UserCreate # schemi Pydantic per validare input/output
 from app.utils.users import get_password_hash, verify_password # importo le funzioni per hashare e verificare la password
+from app.config import cloudinary  # importo la configurazione di Cloudinary
+import cloudinary.uploader  # per caricare immagini su Cloudinary
+import json
 
 # creo il router per il modulo "users"
 router = APIRouter(prefix="/users", tags=["users"])
@@ -36,19 +39,42 @@ def get_user(user_id: int, db: Session = Depends(get_db)): # ID dell'utente, , S
 
 # POST: Funzione per aggiungere un nuovo utente
 @router.post("/", response_model=User)
-def add_user(user: UserCreate,  db: Session = Depends(get_db)):
-    # controllo se email già esiste
-    existing_user = db.query(UserDB).filter(UserDB.email == user.email).first()
+async def add_user(
+    name: str = Form(...),
+    surname: str = Form(...),
+    email: str = Form(...), 
+    password: str = Form(...),
+    interests: str = Form(None),  # ricevo gli interessi come stringa JSON
+    photo: UploadFile = File(None),  # ricevo la foto come file
+    db: Session = Depends(get_db)
+):
+    # controllo se l'utente già esiste
+    existing_user = db.query(UserDB).filter(UserDB.email == email).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Email già registrata")
+    
+     # decodifica la stringa JSON in lista Python
+    interests_list = []
+    if interests:
+        try:
+            interests_list = json.loads(interests) # converto la stringa JSON in lista Python
+        except Exception:
+            interests_list = [interests] 
+    
+    # carico la foto su Cloudinary se presente
+    photo_url = None 
+    if photo:
+        upload_result = cloudinary.uploader.upload(photo.file) 
+        photo_url = upload_result.get("secure_url")  # ottengo l'URL sicuro della foto caricata
 
     # creo il record dell'utente
     db_user = UserDB(
-        name = user.name,
-        surname = user.surname,
-        email = user.email,
-        password=get_password_hash(user.password),  # salvo password hashata
-        interests = user.interests
+        name = name,
+        surname = surname,
+        email = email,
+        password=get_password_hash(password),  # salvo password hashata
+        interests = interests_list,  # salvo la lista degli interessi
+        photo = photo_url # salvo l'URL della foto 
     )
     db.add(db_user)      # l'utente viene salvato
     db.commit()          # modifiche salvate
@@ -70,6 +96,7 @@ def update_user(user_id: int, updated_user: UserCreate, db: Session = Depends(ge
     user.email = updated_user.email
     user.password = get_password_hash(updated_user.password)
     user.interests = updated_user.interests
+    user.photo = updated_user.photo
 
     db.commit()        # modifiche salvate
     db.refresh(user)   # database aggiornato

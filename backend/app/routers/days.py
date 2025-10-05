@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Form, UploadFile, Depends, HTTPException  # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
 from sqlalchemy.orm import Session  # sessione ORM per interagire con il database
 from typing import List
-import cloudinary.uploader
 
 from app.database import SessionLocal  # connessione locale al DB (crea le sessioni)
 from app.models.travel_db import TravelDB  # modello ORM per la tabella dei viaggi
 from app.models.day_db import DayDB  # modello ORM per la tabella dei giorni
-from app.schemas.days import Day, DayCreate  # schemi Pydantic per validare input/output
+from app.schemas.days import Day # schema Pydantic per validare input/output
 from app.utils.travels import format_date, get_coordinates  # funzioni di utilità per formattare date e ottenere coordinate
-from app.config import cloudinary 
+from app.config import cloudinary   # importo la configurazione di Cloudinary
+import cloudinary.uploader  # per caricare immagini su Cloudinary
 
 # creo il router per i giorni, con prefisso e tag
 router = APIRouter(prefix="/travels", tags=["days"])

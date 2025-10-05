@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import interests from "../store/interests";
@@ -6,14 +6,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 function User() {
   const [isLogin, setIsLogin] = useState(true); //  stato per il toggle login/registrazione
-
-  // Campi login/registrazione
   const [name, setName] = useState(""); // stato per il nome
   const [surname, setSurname] = useState(""); // stato per il cognome
   const [email, setEmail] = useState(""); // stato per l'email
   const [password, setPassword] = useState(""); // stato per la password 
   const [selectedInterests, setSelectedInterests] = useState([]); // stato per gli interessi selezionati
   const [isModalOpen, setIsModalOpen] = useState(false); // stato per il modale interessi
+  const [photo, setPhoto] = useState(null); // stato per la foto profilo
+  const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [message, setMessage] = useState(""); // stato per i messaggi di errore/successo
   const navigate = useNavigate(); // hook per la navigazione
 
@@ -23,6 +23,20 @@ function User() {
       setSelectedInterests(selectedInterests.filter((t) => t !== tag)); // filtro l'array rimuovendo il tag
     } else {
       setSelectedInterests([...selectedInterests, tag]); // altrimenti lo aggiungo
+    }
+  };
+
+  // Funzione per gestire la selezione della foto
+  const handlePhotoSelect = () => {
+    fileInputRef.current.click(); // simula il click sull’input file nascosto
+  };
+
+  // Funzione per gestire il cambiamento del file selezionato
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+      setMessage(` Foto selezionata: ${file.name}`);
     }
   };
 
@@ -51,16 +65,20 @@ function User() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://127.0.0.1:8000/users/", { // invio i dati come corpo della richiesta
-        name,
-        surname,
-        email,
-        password,
-        interests: selectedInterests, // invio gli interessi selezionati
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("surname", surname);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("interests", JSON.stringify(selectedInterests));
+      if (photo) formData.append("photo", photo);
+
+      await axios.post("http://127.0.0.1:8000/users/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       setMessage("✅ Registrazione avvenuta con successo! Ora effettua il login.");
-      setIsLogin(true); // dopo la registrazione torno al login
+      setIsLogin(true);
     } catch (err) {
       if (err.response) {
         setMessage(`❌ Errore: ${err.response.data.detail}`);
@@ -217,14 +235,31 @@ function User() {
                 </div>
               </div>
 
-              {/* Interessi  */}
-              <div className="mt-6">
+              {/* Interessi e Foto Profilo  */}
+              <div className="mt-6 flex items-center gap-4">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  className="w-full px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-globe mr-2"></i> Scegli i tuoi interessi
                 </button>
+
+                {/*  Bottone per caricare la foto */}
+                <button
+                  type="button"
+                  onClick={handlePhotoSelect}
+                  className="w-full px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  <i className="fa-solid fa-camera mr-2"></i> Carica foto
+                </button>
+
+                {/* Input file nascosto */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  style={{ display: "none" }}
+                />
               </div>
 
               {/* Submit */}
