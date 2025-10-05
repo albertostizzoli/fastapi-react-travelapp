@@ -241,7 +241,7 @@ function User() {
                   type="button"
                   onClick={() => setIsModalOpen(true)}
                   className="w-full px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-globe mr-2"></i> Scegli i tuoi interessi
+                  <i className="fa-solid fa-plane mr-2"></i> Che tipo di viaggiatore sei?
                 </button>
 
                 {/*  Bottone per caricare la foto */}
@@ -280,23 +280,30 @@ function User() {
               {/* Contenuto scrollabile */}
               <div className="flex-1 p-6 overflow-y-auto scrollbar-custom">
                 <h2 className="text-2xl font-semibold text-white mb-4">
-                  Seleziona i tuoi interessi
+                  Che tipo di viaggiatore sei?
                 </h2>
 
                 {interests.map((category) => ( // ciclo sulle categorie di interessi
                   <div key={category.category} className="mb-6">
-                    <h3 className="text-lg font-bold text-white mb-2">
+                    <h3 className="text-lg font-bold text-white mb-1">
                       {category.category}
                     </h3>
+                    {/* Descrizione della categoria */}
+                    {category.description && (
+                      <p className="text-sm text-white mb-3 italic">
+                        {category.description}
+                      </p>
+                    )}
+
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                       {category.tags.map((tag) => ( // ciclo sui tag di ogni categoria
                         <button
                           type="button"
                           key={tag}
-                          onClick={() => toggleInterest(tag)} // seleziono/deseleziono l'interesse
-                          className={`px-3 py-2 rounded-lg border transition cursor-pointer ${selectedInterests.includes(tag)
-                            ? "bg-yellow-300 text-black border-yellow-600"
-                            : "bg-orange-400 text-black border-orange-400 hover:bg-orange-300"
+                          onClick={() => toggleInterest(tag)} // seleziono/deseleziono il tag
+                          className={`px-3 py-2 rounded-lg border text-sm transition cursor-pointer ${selectedInterests.includes(tag)
+                              ? "bg-yellow-300 text-black border-yellow-600"
+                              : "bg-orange-400 text-black border-orange-400 hover:bg-orange-300"
                             }`}>
                           {tag}
                         </button>
