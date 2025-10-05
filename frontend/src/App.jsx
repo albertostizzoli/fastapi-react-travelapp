@@ -9,12 +9,14 @@ import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
 import EditDay from "./pages/EditDay"; // pagina Modifica Giorno
 import HomePage from "./pages/HomePage"; // pagina Home
 import User from "./pages/User"; // pagina di Login e Registrazione
+import ProfilePage from "./pages/ProfilePage"; // pagina Profilo Utente
 
 function Layout({ children }) {
   const location = useLocation();
 
   // immagini diverse per ogni rotta
   const backgrounds = {
+    "/profile": "url('/images/golden_gate.jpg')",
     "/travels": "url('/images/colosseo.jpg')",
     "/add": "url('/images/giappone.jpg')",
     "/addDay": "url('/images/newyork.jpg')",
@@ -56,6 +58,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/user" element={<User />} />
           <Route path="/travels" element={<Travels />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/add" element={<AddTravel />} />
           <Route path="/addDay" element={<AddDay />} />
           <Route path="/travels/:id/days" element={<TravelDays />} />

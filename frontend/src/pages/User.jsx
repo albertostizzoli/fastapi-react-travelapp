@@ -51,7 +51,7 @@ function User() {
 
       localStorage.setItem("userId", res.data.user_id); // salvo l'id utente nel localStorage
       setMessage("✅ Login effettuato con successo!");
-      navigate("/travels");
+      navigate("/profile");
     } catch (err) {
       if (err.response) {
         setMessage(`❌ Errore: ${err.response.data.detail}`);
