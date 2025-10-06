@@ -283,14 +283,23 @@ function TravelDays() {
             <div
               className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
               onClick={() => setOpenImage(null)}> { /* Per poter ridurre l'immagine */}
-              <motion.img
-                src={openImage.replace("w=400", "w=1600")} // quando clicco l'immagine si ingrandisce a 1600px
-                alt="foto ingrandita"
-                loading="lazy"
-                className="w-auto h-full max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }} />
+              {/* Prevengo la chiusura quando clicco sull'immagine */}
+              <div onClick={(e) => e.stopPropagation()} className="relative">
+                {/* Bottone X */}
+                <button
+                  onClick={() => setOpenImage(null)}
+                  className="absolute -top-4 -right-4 bg-red-500 text-white rounded-full p-2 shadow-lg cursor-pointer">
+                  <i className="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <motion.img
+                  src={openImage.replace("w=400", "w=1600")} // quando clicco l'immagine si ingrandisce a 1600px
+                  alt="foto ingrandita"
+                  loading="lazy"
+                  className="w-auto h-full max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }} />
+              </div>
             </div>
           )}
         </div>

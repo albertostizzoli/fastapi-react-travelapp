@@ -10,6 +10,7 @@ function AddDay() {
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
   const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
   const fileInputRef = useRef(null); // riferimento all’input nascosto
+  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi) 
 
   const [form, setForm] = useState({ // stato del form
     date: "",
@@ -194,9 +195,10 @@ function AddDay() {
               return (
                 <div key={index} className="relative group">
                   <img
+                    onClick={() => setOpenImage(src)} // apri immagine cliccata
                     src={src}
                     alt={`Foto ${index + 1}`} // alt descrittivo
-                    className="w-full h-32 object-cover rounded-lg border border-white shadow-md"
+                    className="w-full h-32 object-cover rounded-lg border border-white shadow-md cursor-pointer"
                   />
                   <button
                     type="button"
@@ -204,6 +206,32 @@ function AddDay() {
                     className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
                     <i className="fa-solid fa-xmark"></i>
                   </button>
+
+                  {/* Modale Foto Ingrandita */}
+                  {openImage && (
+                    <div
+                      onClick={() => setOpenImage(null)} // chiude il modale
+                      className="fixed inset-0 backdrop-blur-xl flex items-center justify-center z-[9999]">
+                      {/* prevengo la chiusura quando clicco sull'immagine o sulla X */}
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="relative">
+                        {/* Bottone X */}
+                        <button
+                          onClick={() => setOpenImage(null)} // chiude il modale
+                          className="absolute -top-4 -right-4 bg-red-500 text-white rounded-full p-2 shadow-lg cursor-pointer">
+                          <i className="fa-solid fa-xmark text-lg"></i>
+                        </button>
+
+                        {/* Immagine ingrandita */}
+                        <img
+                          src={openImage.replace("w=400", "w=1600")}
+                          alt="Immagine ingrandita"
+                          className="sm:max-w-4xl max-h-[90vh] rounded-lg shadow-lg"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
