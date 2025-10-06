@@ -10,6 +10,7 @@ function Sidebar() {
   const isHome = path === "/";
   const isTravels = path === "/travels";
   const isAdd = path === "/add";
+  const isProfile = path === "/profile";
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -52,9 +53,19 @@ function Sidebar() {
             <Link
               to="/user"
               onClick={toggleSidebar}
-              className="text-white px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+              className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
               <span><i className="fa-solid fa-user"></i></span>
               Area Personale
+            </Link>
+          )}
+
+          {/* Profilo ovunque tranne in Home e /profile */}
+          {!isHome && !isProfile && (
+            <Link
+              to="/profile"
+              className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+              <span><i className="fa-solid fa-user"></i></span>
+              Profilo
             </Link>
           )}
 
@@ -63,7 +74,7 @@ function Sidebar() {
             <Link
               to="/travels"
               onClick={toggleSidebar}
-              className="text-white text-lg font-medium hover:underline flex items-center gap-2">
+              className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
               <i className="fa-solid fa-globe"></i>
               I miei viaggi
             </Link>
@@ -74,9 +85,19 @@ function Sidebar() {
             <Link
               to="/add"
               onClick={toggleSidebar}
-              className="text-white text-lg font-medium hover:underline flex items-center gap-2">
+              className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
               <i className="fa-solid fa-plus"></i>
               Aggiungi Viaggio
+            </Link>
+          )}
+
+          { /* Pulsante Esci ovunque tranne in Home */}
+          {!isHome && (
+            <Link
+              to="/"
+              className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+              <span><i class="fa-solid fa-right-from-bracket"></i></span>
+              Esci
             </Link>
           )}
         </motion.div>

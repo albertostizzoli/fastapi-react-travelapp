@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
+    const navigate = useNavigate(); // per la navigazione
 
     // uso lo useEffect per ottenere i dati dell'utente
     useEffect(() => {
@@ -15,6 +16,14 @@ function ProfilePage() {
             .then((res) => setUser(res.data)) // aggiorna lo stato con i dati ricevuti
             .catch((err) => console.error(err)); // gestisce errori
     }, []);
+
+    // funzione per il logout
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+
+        // Reindirizza alla Home Page
+        navigate('/');
+    };
 
     return (
         <div className="flex flex-col min-h-screen bg-transparent text-white p-8">
@@ -44,17 +53,21 @@ function ProfilePage() {
                         </div>
                         <ul className="space-y-4">
                             <li className="flex items-center py-2 px-4 bg-yellow-500 text-white font-bold rounded-lg shadow-md hover:bg-yellow-400 transition duration-300">
+                                <i className="fa-solid fa-edit mr-2"></i>
                                 Modifica Profilo
                             </li>
 
                             <li className="flex items-center py-2 px-4 bg-red-500 text-white font-bold rounded-lg shadow-md hover:bg-red-400 transition duration-300">
+                                <i className="fa-solid fa-trash mr-2 "></i> 
                                 Cancella Profilo
                             </li>
 
                             <li>
                                 <button
-                                    className="flex items-center py-2 px-4 bg-red-500 text-white font-bold rounded-lg shadow-md hover:bg-red-600 transition duration-300"> 
-                                    Logout
+                                    onClick={handleLogout}
+                                    className="flex items-center py-2 px-4 bg-red-500 text-white font-bold rounded-lg shadow-md hover:bg-red-600 transition duration-300">
+                                    <span><i class="fa-solid fa-right-from-bracket mr-2"></i></span>
+                                    Esci
                                 </button>
                             </li>
                         </ul>
@@ -76,7 +89,7 @@ function ProfilePage() {
                                         <Link
                                             to="/add"
                                             className="flex items-center hover:text-teal-400">
-                                           Aggiungi Viaggio
+                                            Aggiungi Viaggio
                                         </Link>
                                     </li>
                                 </ul>

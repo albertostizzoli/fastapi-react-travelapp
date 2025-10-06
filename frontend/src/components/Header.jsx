@@ -7,6 +7,7 @@ function Header() {
   const isHome = path === "/";
   const isTravels = path === "/travels";
   const isAdd = path === "/add";
+  const isProfile = path === "/profile";
 
   return (
     <nav
@@ -21,6 +22,16 @@ function Header() {
             className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
             <span><i className="fa-solid fa-user"></i></span>
             Area Personale
+          </Link>
+        )}
+
+        {/* Profilo ovunque tranne in Home e /profile */}
+        {!isHome && !isProfile && (
+          <Link
+            to="/profile"
+            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            <span><i className="fa-solid fa-user"></i></span>
+            Profilo
           </Link>
         )}
 
@@ -41,6 +52,16 @@ function Header() {
             className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
             <span><i className="fa-solid fa-plus"></i></span>
             Aggiungi Viaggio
+          </Link>
+        )}
+
+        { /* Pulsante Esci ovunque tranne in Home */}
+        {!isHome && (
+          <Link
+            to="/"
+            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            <span><i class="fa-solid fa-right-from-bracket"></i></span>
+            Esci
           </Link>
         )}
       </div>

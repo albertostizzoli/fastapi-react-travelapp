@@ -51,7 +51,7 @@ function HomePage() {
 
         return (
             <motion.h2
-                className="text-3xl font-bold mb-4 text-gray-900"
+                className="text-3xl font-bold mb-4 text-gray-900 break-words"
                 variants={container}
                 initial="hidden"
                 whileInView="visible">
@@ -68,7 +68,7 @@ function HomePage() {
     return (
         <div className="bg-gradient-to-b from-blue-400 via-white to-orange-400 font-sans overflow-y-auto overflow-x-hidden">
             {/* Section 1 */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>
                     <Typewriter text="Conserva i tuoi ricordi di viaggio" />
                     <motion.p className="text-gray-700 mb-4 text-justify" variants={firstBlock} initial="initial" whileInView="animate">
@@ -89,7 +89,7 @@ function HomePage() {
             </section>
 
             {/* Section 2 */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <motion.img
                     src="/images/amalfi_2.jpg"
                     alt="Costiera Amalfitana"
@@ -109,7 +109,7 @@ function HomePage() {
             </section>
 
             {/* Section 3 */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>
                     <Typewriter text="Un diario solo per te" />
                     <motion.p className="text-gray-700 mb-4 text-justify" variants={firstBlock} initial="initial" whileInView="animate">
@@ -129,7 +129,7 @@ function HomePage() {
             </section>
 
             {/* Section 4 */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 items-center">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <motion.img
                     src="/images/hollywood.jpg"
                     alt="Hollywood"
@@ -137,7 +137,7 @@ function HomePage() {
                     variants={firstBlock} initial="initial" whileInView="animate"
                 />
                 <div>
-                    <Typewriter text="Il prossimo viaggio scelto per te" />
+                    <Typewriter text="Il tuo viaggio scelto per te" />
                     <motion.p className="text-gray-700 mb-4 text-justify" variants={secondBlock} initial="initial" whileInView="animate">
                         Grazie all’<strong>intelligenza artificiale</strong>, l’app può suggerirti la prossima
                         <strong> destinazione</strong> ideale in base ai tuoi viaggi passati, preferenze e interessi.
