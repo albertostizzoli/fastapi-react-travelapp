@@ -9,9 +9,7 @@ function AddDay() {
   const travelIdFromState = location.state?.travelId || ""; // id passato da TravelDays per avere il viaggio già selezionato
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
   const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
-  const [photo, setPhoto] = useState([]); // stato per le foto
   const fileInputRef = useRef(null); // riferimento all’input nascosto
-  const [messagePhoto, setMessagePhoto] = useState(""); // stato per i messaggi di caricamento foto
 
   const [form, setForm] = useState({ // stato del form
     date: "",
@@ -55,30 +53,20 @@ function AddDay() {
 
   // Funzione per gestire la selezione delle foto
   const handleFileChange = (e) => {
-    const newFiles = Array.from(e.target.files); // nuova selezione
-
-    if (newFiles.length > 0) {
-      setPhoto((prev) => {
-        const updatedPhotos = [...prev, ...newFiles]; // aggiungo le nuove foto a quelle esistenti
-
-        // Aggiorna anche lo stato del form
-        setForm((prevForm) => ({
-          ...prevForm,
-          photo: updatedPhotos, // aggiorno l'array delle foto nel form
-        }));
-
-        // Messaggio dinamico con tutte le foto
-        const fileNames = updatedPhotos.map((f) => f.name).join(", "); // nomi dei file selezionati
-        if (updatedPhotos.length === 1) { // se c'è una sola foto
-          setMessagePhoto(` Foto selezionata: ${fileNames}`);
-        } else {
-          setMessagePhoto(` ${updatedPhotos.length} foto selezionate }`);
-        }
-        return updatedPhotos; // ritorno l'array aggiornato
-      });
+    const newFiles = Array.from(e.target.files); // converto FileList in array
+    if (newFiles.length > 0) { // se ci sono file selezionati
+      setForm((prevForm) => ({ // aggiorno lo stato del form
+        ...prevForm, // mantengo gli altri campi
+        photo: [...prevForm.photo, ...newFiles], // aggiungo i nuovi file all'array delle foto
+      }));
     }
-    // Resetto l’input per permettere nuove selezioni
-    e.target.value = null;
+    e.target.value = null; // reset input
+  };
+
+  // rimuovi foto
+  const removePhoto = (index) => {
+    const newPhotos = form.photo.filter((_, i) => i !== index); // filtro l'array delle foto per rimuovere quella all'indice specificato
+    setForm({ ...form, photo: newPhotos }); // aggiorno lo stato del giorno
   };
 
 
@@ -110,8 +98,6 @@ function AddDay() {
 
       setMessage("✅ Giorno aggiunto con successo!");
       setForm({ date: "", title: "", description: "", photo: [] }); // resetto il form
-      setPhoto([]);
-      setMessagePhoto("");
 
       // reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -192,24 +178,55 @@ function AddDay() {
             rows="4" />
         </div>
 
-        {/*  Bottone per caricare la foto */}
-        <button
-          type="button"
-          onClick={handlePhotoSelect}
-          className=" px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-          <i className="fa-solid fa-camera mr-2"></i> Carica foto
-        </button>
+        <div className="md:col-span-2">
+          {/* Foto esistenti + nuove foto */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+            {form.photo.map((item, index) => {
+              // se è una stringa, è un URL dal DB
+              const src =
+                typeof item === "string" // se è una stringa, è un URL dal DB
+                  ? item.startsWith("http") // se inizia con http, è un URL completo
+                    ? item
+                    : `http://127.0.0.1:8000/${item}`
+                  // se è un File (nuova foto)
+                  : URL.createObjectURL(item);
 
-        {/* Input file nascosto */}
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          accept="image/*"
-          multiple
-          style={{ display: "none" }}
-        />
-        {messagePhoto && <p className="mt-4 text-center text-white md:col-span-2">{messagePhoto}</p>}
+              return (
+                <div key={index} className="relative group">
+                  <img
+                    src={src}
+                    alt={`Foto ${index + 1}`} // alt descrittivo
+                    className="w-full h-32 object-cover rounded-lg border border-white shadow-md"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePhoto(index)}
+                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+          {/*  Bottone per caricare la foto */}
+          <button
+            type="button"
+            onClick={handlePhotoSelect}
+            className=" px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+            <i className="fa-solid fa-camera mr-2"></i> Carica foto
+          </button>
+
+          {/* Input file nascosto */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept="image/*"
+            multiple
+            style={{ display: "none" }}
+          />
+        </div>
+
 
         {/* Pulsante */}
         <div className="md:col-span-2">

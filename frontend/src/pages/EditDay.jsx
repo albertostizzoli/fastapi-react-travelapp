@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -7,8 +7,8 @@ function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
   const navigate = useNavigate(); // hook per navigare fra le pagine
   const [day, setDay] = useState(null); // per salvare i dati del giorno
-  const [newPhotos, setNewPhotos] = useState([]); // per i file caricati
   const [loading, setLoading] = useState(true); // stato di caricamento
+  const fileInputRef = useRef(null); // riferimento all’input nascosto
 
   // recupero i dati del giorno dal backend
   useEffect(() => {
@@ -37,17 +37,22 @@ function EditDay() {
     setDay({ ...day, [name]: value }); // aggiorno lo stato del giorno
   };
 
-  // gestione cambio delle foto
-  const handlePhotoChange = (index, value) => {
-    const finalUrl = value.trim(); // rimuovo eventuali spazi vuoti all'inizio/fine dell'URL inserito
-
-    const newPhotos = [...day.photo]; // creo una copia dell'array delle foto (immutabilità in React)
-
-    newPhotos[index] = finalUrl;  // aggiorno l'URL della foto corrispondente all'indice passato
-
-    setDay({ ...day, photo: newPhotos }); // aggiorno lo stato "day" con il nuovo array di foto
+  // Funzione per gestire la selezione della foto
+  const handlePhotoSelect = () => {
+    fileInputRef.current.click(); // simula il click sull’input file nascosto
   };
 
+  const handleFileChange = (e) => {
+    const newFiles = Array.from(e.target.files);
+
+    if (newFiles.length > 0) {
+      setDay((prevForm) => {
+        const updatedPhotos = [...(prevForm.photo || []), ...newFiles];
+        return { ...prevForm, photo: updatedPhotos };
+      });
+    }
+    e.target.value = null; // reset input
+  };
 
   // rimuovi foto
   const removePhoto = (index) => {
@@ -66,13 +71,14 @@ function EditDay() {
     formData.append("description", day.description);
 
     // foto già esistenti
-    day.photo.forEach((url) => {
-      formData.append("existing_photos", url);
-    });
-
-    // nuove foto (file upload)
-    newPhotos.forEach((file) => {
-      formData.append("photos", file);
+    day.photo.forEach((item) => {
+      if (typeof item === "string") {
+        // URL già salvato
+        formData.append("existing_photos", item);
+      } else {
+        // File nuovo
+        formData.append("photos", item);
+      }
     });
 
     try {
@@ -142,56 +148,54 @@ function EditDay() {
 
         {/* Foto */}
         <div className="md:col-span-2">
-          <label className="block font-medium text-white">Foto *</label>
-          {day.photo.map((url, index) => (
-            <div key={index} className="flex gap-2 mb-2">
-              <input
-                type="text"
-                value={url}
-                onChange={(e) => handlePhotoChange(index, e.target.value)}
-                className="w-full border border-white text-white rounded-lg p-2" />
+          {/* Foto esistenti + nuove foto */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+            {day.photo.map((item, index) => {
+              // se è una stringa, è un URL dal DB
+              const src =
+                typeof item === "string"
+                  ? item.startsWith("http")
+                    ? item
+                    : `http://127.0.0.1:8000/${item}`
+                  // se è un File (nuova foto)
+                  : URL.createObjectURL(item);
 
-              {/* Pulsante rimuovi foto */}
-              <button
-                type="button"
-                onClick={() => removePhoto(index)}
-                className="bg-red-500 hover:bg-red-400 text-white px-3 rounded cursor-pointer transition hover:scale-105">
-                <i className="fa-solid fa-xmark"></i>
-              </button>
-            </div>
-          ))}
-
-          {/* Input nuova foto */}
-          <div className="mt-4">
-            <label className="block font-medium text-white">Carica nuove foto</label>
-            <div className="relative w-full">
-              {/* Input file nascosto */}
-              <input
-                id="fileUpload"
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={(e) => setNewPhotos([...newPhotos, ...Array.from(e.target.files)])}
-                className="hidden"
-              />
-
-              {/* Campo di testo che simula l'input */}
-              <input
-                type="text"
-                readOnly
-                value={newPhotos.map(file => file.name).join(", ")}
-                placeholder="Nessun file selezionato"
-                className="w-full p-2 border border-white text-white rounded-lg bg-transparent"
-              />
-
-              {/* Bottone Carica Foto */}
-              <label
-                htmlFor="fileUpload"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 hover:bg-green-400 text-white px-3 py-1 rounded-lg cursor-pointer">
-                Carica Foto
-              </label>
-            </div>
+              return (
+                <div key={index} className="relative group">
+                  <img
+                    src={src}
+                    alt={`Foto ${index + 1}`} // alt descrittivo
+                    className="w-full h-32 object-cover rounded-lg border border-white shadow-md"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePhoto(index)}
+                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              );
+            })}
           </div>
+
+
+          {/*  Bottone per caricare la foto */}
+          <button
+            type="button"
+            onClick={handlePhotoSelect}
+            className=" px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+            <i className="fa-solid fa-camera mr-2"></i> Carica foto
+          </button>
+
+          {/* Input file nascosto */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept="image/*"
+            multiple
+            style={{ display: "none" }}
+          />
         </div>
 
         {/* Pulsante di salvataggio */}
