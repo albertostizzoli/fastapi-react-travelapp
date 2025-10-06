@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -7,14 +7,17 @@ function AddDay() {
   const location = useLocation(); // per ottenere lo stato passato da TravelDays
   const navigate = useNavigate(); // per reindirizzare dopo l'aggiunta del giorno
   const travelIdFromState = location.state?.travelId || ""; // id passato da TravelDays per avere il viaggio già selezionato
-
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
   const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
+  const [photo, setPhoto] = useState([]); // stato per le foto
+  const fileInputRef = useRef(null); // riferimento all’input nascosto
+  const [messagePhoto, setMessagePhoto] = useState(""); // stato per i messaggi di caricamento foto
+
   const [form, setForm] = useState({ // stato del form
     date: "",
     title: "",
     description: "",
-    photo: [""], // inizialmente una foto vuota
+    photo: [], // array di foto
   });
   const [message, setMessage] = useState(""); // messaggio di successo o errore
 
@@ -45,17 +48,39 @@ function AddDay() {
     setForm({ ...form, [e.target.name]: e.target.value }); // aggiorno il campo specifico
   };
 
-  // gestisce cambio file locale
-  const handlePhotoFileChange = (index, file) => {
-    const newPhotos = [...form.photo];
-    newPhotos[index] = file; // salvo l'oggetto File
-    setForm({ ...form, photo: newPhotos });
+  // Funzione per gestire la selezione della foto
+  const handlePhotoSelect = () => {
+    fileInputRef.current.click(); // simula il click sull’input file nascosto
   };
 
-  // aggiunge un nuovo campo foto vuoto al form
-  const addPhotoField = () => {
-    setForm({ ...form, photo: [...form.photo, ""] }); // aggiungo una nuova stringa vuota all'array foto
+  // Funzione per gestire la selezione delle foto
+  const handleFileChange = (e) => {
+    const newFiles = Array.from(e.target.files); // nuova selezione
+
+    if (newFiles.length > 0) {
+      setPhoto((prev) => {
+        const updatedPhotos = [...prev, ...newFiles]; // aggiungo le nuove foto a quelle esistenti
+
+        // Aggiorna anche lo stato del form
+        setForm((prevForm) => ({
+          ...prevForm,
+          photo: updatedPhotos, // aggiorno l'array delle foto nel form
+        }));
+
+        // Messaggio dinamico con tutte le foto
+        const fileNames = updatedPhotos.map((f) => f.name).join(", "); // nomi dei file selezionati
+        if (updatedPhotos.length === 1) { // se c'è una sola foto
+          setMessagePhoto(` Foto selezionata: ${fileNames}`);
+        } else {
+          setMessagePhoto(` ${updatedPhotos.length} foto selezionate }`);
+        }
+        return updatedPhotos; // ritorno l'array aggiornato
+      });
+    }
+    // Resetto l’input per permettere nuove selezioni
+    e.target.value = null;
   };
+
 
   // gestisce l'invio del form e salva il nuovo giorno nel backend
   const handleSubmit = async (e) => {
@@ -85,6 +110,8 @@ function AddDay() {
 
       setMessage("✅ Giorno aggiunto con successo!");
       setForm({ date: "", title: "", description: "", photo: [] }); // resetto il form
+      setPhoto([]);
+      setMessagePhoto("");
 
       // reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -165,48 +192,24 @@ function AddDay() {
             rows="4" />
         </div>
 
-        {/* Foto */}
-        <div className="md:col-span-2">
-          <label className="block text-white">Foto *</label>
-          {form.photo.map((p, index) => (
-            <div key={index} className="flex flex-col gap-2 mb-2">
-              {/* Contenitore con input di testo + pulsante */}
-              <div className="relative w-full">
-                {/* Input file nascosto */}
-                <input
-                  id={`fileUpload-${index}`}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handlePhotoFileChange(index, e.target.files[0])}
-                  className="hidden"
-                />
+        {/*  Bottone per caricare la foto */}
+        <button
+          type="button"
+          onClick={handlePhotoSelect}
+          className=" px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+          <i className="fa-solid fa-camera mr-2"></i> Carica foto
+        </button>
 
-                {/* Campo di testo che mostra il nome del file selezionato */}
-                <input
-                  type="text"
-                  readOnly
-                  value={p instanceof File ? p.name : ""}
-                  placeholder="Nessun file selezionato"
-                  className="w-full p-2 border border-white text-white rounded-lg bg-transparent"
-                />
-
-                {/* Bottone personalizzato */}
-                <label
-                  htmlFor={`fileUpload-${index}`}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 hover:bg-green-400 text-white px-3 py-1 rounded-lg cursor-pointer">
-                  Carica Foto
-                </label>
-              </div>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addPhotoField}
-            className="px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-lg hover:bg-green-400 cursor-pointer transition hover:scale-105">
-            <i className="fa-solid fa-plus"></i>
-            Aggiungi Foto
-          </button>
-        </div>
+        {/* Input file nascosto */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          accept="image/*"
+          multiple
+          style={{ display: "none" }}
+        />
+        {messagePhoto && <p className="mt-4 text-center text-white md:col-span-2">{messagePhoto}</p>}
 
         {/* Pulsante */}
         <div className="md:col-span-2">
