@@ -1,13 +1,22 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
+  const navigate = useNavigate(); // per la navigazione
   const path = location.pathname;
 
   const isHome = path === "/";
   const isTravels = path === "/travels";
   const isAdd = path === "/add";
   const isProfile = path === "/profile";
+
+  // funzione per il logout
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+
+    // Reindirizza alla Home Page
+    navigate('/');
+  };
 
   return (
     <nav
@@ -57,12 +66,12 @@ function Header() {
 
         { /* Pulsante Esci ovunque tranne in Home */}
         {!isHome && (
-          <Link
-            to="/"
-            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
-            <span><i class="fa-solid fa-right-from-bracket"></i></span>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline cursor-pointer">
+            <span><i className="fa-solid fa-right-from-bracket"></i></span>
             Esci
-          </Link>
+          </button>
         )}
       </div>
     </nav>
