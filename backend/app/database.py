@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base # per poter creare la ba
 from sqlalchemy.orm import sessionmaker # per generare sessioni per interagire con il DB
 
 # URL del database MySQL
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:root@localhost:8889/travelapp_db" 
+SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:root@localhost:3306/travelapp_db" 
 
 # engine serve per gestire la connessione con il database
 engine = create_engine(SQLALCHEMY_DATABASE_URL) 
