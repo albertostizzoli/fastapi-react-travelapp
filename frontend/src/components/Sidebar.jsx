@@ -13,17 +13,21 @@ function Sidebar() {
   const isAdd = path === "/add";
   const isProfile = path === "/profile";
 
+  // funzione per aprire / chiudere la sidebar
   const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
+    setSidebarOpen(!isSidebarOpen); // inverte lo stato
   };
 
   // funzione per il logout
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    // rimuovo token e dati utente
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
 
     // Reindirizza alla Home Page
     navigate('/');
   };
+
 
   return (
     <div className="sm:hidden">

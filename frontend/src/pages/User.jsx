@@ -40,16 +40,17 @@ function User() {
     }
   };
 
-
   //  LOGIN
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://127.0.0.1:8000/users/login", null, { // invio i dati come parametri
-        params: { email, password }, // uso params per inviare i dati come query string
+      const res = await axios.post("http://127.0.0.1:8000/users/login", null, {
+        params: { email, password },
       });
 
-      localStorage.setItem("userId", res.data.user_id); // salvo l'id utente nel localStorage
+      const token = res.data.access_token;
+      localStorage.setItem("token", token); // salvo il token
+      localStorage.setItem("userId", res.data.user_id);
       setMessage("✅ Login effettuato con successo!");
       navigate("/profile");
     } catch (err) {
@@ -302,8 +303,8 @@ function User() {
                           key={tag}
                           onClick={() => toggleInterest(tag)} // seleziono/deseleziono il tag
                           className={`px-3 py-2 rounded-lg border text-sm transition cursor-pointer ${selectedInterests.includes(tag)
-                              ? "bg-yellow-300 text-black border-yellow-600"
-                              : "bg-orange-400 text-black border-orange-400 hover:bg-orange-300"
+                            ? "bg-yellow-300 text-black border-yellow-600"
+                            : "bg-orange-400 text-black border-orange-400 hover:bg-orange-300"
                             }`}>
                           {tag}
                         </button>

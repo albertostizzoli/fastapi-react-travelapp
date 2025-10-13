@@ -12,11 +12,14 @@ function Header() {
 
   // funzione per il logout
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    // rimuovo token e dati utente
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
 
     // Reindirizza alla Home Page
     navigate('/');
   };
+
 
   return (
     <nav

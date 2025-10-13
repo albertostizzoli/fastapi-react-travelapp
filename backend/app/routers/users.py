@@ -6,7 +6,10 @@ from app.schemas.users import User, UserCreate # schemi Pydantic per validare in
 from app.utils.users import get_password_hash, verify_password # importo le funzioni per hashare e verificare la password
 from app.config import cloudinary  # importo la configurazione di Cloudinary
 import cloudinary.uploader  # per caricare immagini su Cloudinary
-import json
+import json # per gestire la conversione da stringa JSON a lista Python
+from app.auth import create_access_token # importo la funzione per creare il token JWT
+from app.config import settings # importo le impostazioni
+from datetime import timedelta # per gestire la durata del token
 
 # creo il router per il modulo "users"
 router = APIRouter(prefix="/users", tags=["users"])
@@ -118,11 +121,24 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
 # POST: Rotta del login
 @router.post("/login")
 def login(email: str, password: str, db: Session = Depends(get_db)):
-    user = db.query(UserDB).filter(UserDB.email == email).first()
+    user = db.query(UserDB).filter(UserDB.email == email).first() # cerco l'utente tramite email
     if not user:
-        raise HTTPException(status_code=400, detail="Email non registrata")
+        raise HTTPException(status_code=400, detail="Email non registrata") # se non esiste, errore
 
-    if not verify_password(password, user.password):
+    if not verify_password(password, user.password): #  verifico la password
         raise HTTPException(status_code=400, detail="Password errata")
 
-    return {"message": "Login effettuato con successo", "user_id": user.id}
+    # crea il token
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES) # durata del token
+    access_token = create_access_token( #   creo il token
+        data={"sub": user.email, "id": user.id}, #  dati da includere nel token
+        expires_delta=access_token_expires #   durata del token
+    )
+
+# ritorno il token e i dati dell'utente (esclusa la password
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user_id": user.id,
+        "message": "Login effettuato con successo"
+    }
