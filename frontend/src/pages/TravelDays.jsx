@@ -9,8 +9,8 @@ function TravelDays() {
   const [travel, setTravel] = useState(null); // stato per ottenere i dati del viaggio
   const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno (Apri / Chiudi)
   const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto (Apri / Chiudi)
-  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi) 
-  const [isOpen, setIsOpen] = useState(false); // stato per ingrandire e ridurre la mappa 
+  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
+  const [showMapModal, setShowMapModal] = useState(false); // stato per mostrare il modale della mappa ingrandita 
   const mapRef = useRef(null); // per ridisegnare la mappa quando è ingrandita
 
   // Fetch dati viaggio all'inizio e quando cambia l'id
@@ -27,14 +27,6 @@ function TravelDays() {
     }
   }, [selectedDay]);
 
-  // Quando la modale si apre, forziamo Leaflet a ridisegnarsi
-  useEffect(() => {
-    if (isOpen && mapRef.current) {
-      setTimeout(() => {
-        mapRef.current.invalidateSize();
-      }, 300); // piccolo delay per dare tempo all'animazione
-    }
-  }, [isOpen]);
 
   // Funzione per caricare i dati del viaggio
   const fetchTravel = () => {
@@ -62,7 +54,7 @@ function TravelDays() {
 
 
   return (
-    <div className="min-h-screen bg-transparent md:p-12">
+    <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
 
@@ -97,10 +89,10 @@ function TravelDays() {
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}>
-            <h2 className="text-xl font-semibold text-white mb-2">
+            <h2 className="text-2xl font-semibold text-white mb-2">
               📍 {travel.town} - {travel.city} {/* Paese e Città */}
             </h2>
-            <p className="text-white mb-4">
+            <p className="text-xl text-white mb-4">
               📅 {travel.start_date} → {travel.end_date} { /* Data Inizio e Data Fine */}
             </p>
             {travel.title && <p className="text-gray-200 italic">{travel.title}</p>} { /* Titolo */}
@@ -185,34 +177,57 @@ function TravelDays() {
 
       {/* Modale Leggi Tutto */}
       {selectedDay && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]">
-          <div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col lg:flex-row overflow-hidden">
-            {/* Colonna sinistra: contenuti scrollabili */}
-            <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
+        <motion.div className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]"
+          variants={{
+            hidden: { opacity: 1 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.5 } },
+          }}
+          initial="hidden"
+          animate="visible">
+          <motion.div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col overflow-hidden"
+            variants={{
+              hidden: { scale: 0, opacity: 0 },
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: { duration: 0.8, ease: "easeOut" }
+              }
+            }}>
+            {/* Header: pulsanti Chiudi e Mappa */}
+            <div className="flex justify-between items-center p-4 border-b border-gray-700">
               <button
                 onClick={() => setSelectedDay(null)}
                 className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-arrow-left"></i> Chiudi
               </button>
 
-              { /* Titolo */}
-              <div className="flex justify-between items-start mb-3 mt-3">
-                <h1 className="text-2xl sm:text-2xl font-bold text-white">
-                  {selectedDay.title}
-                </h1>
+              {/*  Pulsante per aprire la mappa come modale */}
+              <button
+                onClick={() => setShowMapModal(true)}
+                className="px-3 py-1 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                <i className="fa-solid fa-map-location-dot"></i> Vai alla Mappa
+              </button>
+            </div>
+
+            {/* Contenuto scrollabile */}
+            <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
+              {/* Titolo */}
+              <div className="mb-3">
+                <h1 className="text-2xl sm:text-2xl font-bold text-white">{selectedDay.title}</h1>
               </div>
 
-              { /* Data */}
-              <div className="flex justify-between items-start mb-3 mt-3">
+              {/* Data */}
+              <div className="mb-3">
                 <p className="sm:text-xl text-white">{selectedDay.date}</p>
               </div>
 
-              { /* Descrizione */}
+              {/* Descrizione */}
               <p className="text-white text-justify mb-3">{selectedDay.description}</p>
 
-              { /* Foto */}
+              {/* Foto */}
               {selectedDay.photo.length > 0 && (
-                <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+                <motion.div
+                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
                   variants={{
                     hidden: { opacity: 1 },
                     visible: { opacity: 1, transition: { staggerChildren: 0.5 } },
@@ -232,77 +247,62 @@ function TravelDays() {
                         visible: {
                           scale: 1,
                           opacity: 1,
-                          transition: { duration: 0.8, ease: "easeOut" }
-                        }
-                      }} />
+                          transition: { duration: 0.8, ease: 'easeOut' },
+                        },
+                      }}
+                    />
                   ))}
                 </motion.div>
               )}
             </div>
-
-            {/* Colonna destra: mappa */}
-            <div className="flex justify-center items-center p-10">
-
-              {/* Mappa in versione compatta */}
-              {!isOpen && (
-                <WorldMap
-                  days={travel.days}
-                  selectedDay={selectedDay} // vedo il solo il Pin del giorno selezionato
-                  mapRef={mapRef} // passo la ref al MapContainer
-                  onExpand={() => setIsOpen(true)}  // mi permette di poter ingrandire la mappa
-                />
-              )}
-
-              {/* Modale Mappa  */}
-              {isOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-[9999]">
-                  <div className="relative bg-gray-800 rounded-2xl overflow-hidden shadow-2xl"
-                    style={{ width: "90vw", height: "90vh" }}>
-
-                    {/* Bottone chiudi */}
-                    <button
-                      onClick={() => setIsOpen(false)} // per rimettere la mappa in versione compatta
-                      className="absolute top-4 right-4 z-[9999] bg-white px-3 py-1 rounded-md shadow hover:bg-gray-100 transition cursor-pointer">
-                      <i className="fa-solid fa-xmark"></i>
-                    </button>
-
-                    <WorldMap
-                      days={travel.days}
-                      selectedDay={selectedDay} // vedo solo il Pin del giorno selezionato
-                      mapRef={mapRef} // passo la ref al MapContainer
-                      isModal={true} // prendo is Modal dal componente WorldMap
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          </motion.div>
 
           {/* Modale Foto */}
           {openImage && (
             <div
               className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
-              onClick={() => setOpenImage(null)}> { /* Per poter ridurre l'immagine */}
-              {/* Prevengo la chiusura quando clicco sull'immagine */}
+              onClick={() => setOpenImage(null)}>
               <div onClick={(e) => e.stopPropagation()} className="relative">
-                {/* Bottone X */}
                 <button
                   onClick={() => setOpenImage(null)}
                   className="absolute -top-4 -right-4 bg-red-500 text-white rounded-full p-2 shadow-lg cursor-pointer">
                   <i className="fa-solid fa-xmark text-lg"></i>
                 </button>
                 <motion.img
-                  src={openImage.replace("w=400", "w=1600")} // quando clicco l'immagine si ingrandisce a 1600px
+                  src={openImage.replace('w=400', 'w=1600')}
                   alt="foto ingrandita"
                   loading="lazy"
                   className="w-auto h-full max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5 }} />
+                  transition={{ duration: 0.5 }}
+                />
               </div>
             </div>
           )}
-        </div>
+
+          {/* Modale Mappa */}
+          {showMapModal && (
+            <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[10001]">
+              <div className="relative sm:w-[70vw] sm:h-[90vh] bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
+                {/* Bottone Chiudi Mappa */}
+                <div onClick={(e) => e.stopPropagation()} className="relative">
+                  <button
+                    onClick={() => setShowMapModal(false)}
+                    className="absolute top-4 right-4 bg-red-500 text-white rounded-full p-3 shadow-lg cursor-pointer z-[1000] hover:bg-red-400 transition">
+                    <i className="fa-solid fa-xmark text-lg"></i>
+                  </button>
+                </div>
+                <WorldMap
+                  days={travel.days}
+                  selectedDay={selectedDay}
+                  mapRef={mapRef}
+                  isModal={true}
+                />
+              </div>
+            </div>
+          )}
+        </motion.div>
       )}
 
 

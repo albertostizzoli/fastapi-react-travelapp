@@ -110,7 +110,7 @@ function AddDay() {
   };
 
   return (
-    <motion.div className="flex items-center justify-center bg-transparent min-h-screen p-8"
+    <motion.div className="flex items-center justify-center bg-transparent min-h-screen sm:p-8 p-4"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
@@ -211,7 +211,7 @@ function AddDay() {
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)} // chiude il modale
-                      className="fixed inset-0 backdrop-blur-xl flex items-center justify-center z-[9999]">
+                      className="fixed inset-0 backdrop-blur-3xl flex items-center justify-center z-[9999]">
                       {/* prevengo la chiusura quando clicco sull'immagine o sulla X */}
                       <div
                         onClick={(e) => e.stopPropagation()}

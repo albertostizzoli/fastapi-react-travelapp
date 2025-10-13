@@ -101,7 +101,7 @@ function AddTravel() {
   };
 
   return (
-    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8"
+    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen sm:p-8 p-4"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
@@ -152,16 +152,6 @@ function AddTravel() {
               className="w-full p-2 border border-white text-white rounded-lg" />
           </div>
 
-          {/* Media Voto */}
-          <div className="flex flex-col">
-            <label className="mb-1 text-white">Media Voto</label>
-            <input
-              type="text"
-              value={calculateGeneralVote() ?? "-"}
-              readOnly
-              className="w-full p-2 border border-white text-white font-semibold rounded" />
-          </div>
-
           {/* Date */}
           <div className="flex flex-col">
             <label className="mb-1 text-white">Data Inizio *</label>
@@ -203,6 +193,16 @@ function AddTravel() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Media Voto */}
+          <div className="md:col-span-2 mt-1">
+            <label className="pe-3 text-white">Media Voti</label>
+            <input
+              type="text"
+              value={calculateGeneralVote() ?? "-"}
+              readOnly
+              className="p-2 border border-white text-white font-semibold rounded" />
           </div>
 
           {/* Pulsante */}

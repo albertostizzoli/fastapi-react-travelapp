@@ -102,7 +102,7 @@ function EditDay() {
 
 
   return (
-    <motion.div className="flex items-center justify-center bg-transparent p-8 min-h-screen"
+    <motion.div className="flex items-center justify-center bg-transparent sm:p-8 p-4 min-h-screen"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
@@ -182,7 +182,7 @@ function EditDay() {
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)} // chiude il modale
-                      className="fixed inset-0 backdrop-blur-xl flex items-center justify-center z-[9999]">
+                      className="fixed inset-0 backdrop-blur-3xl flex items-center justify-center z-[9999]">
                       {/* prevengo la chiusura quando clicco sull'immagine o sulla X */}
                       <div
                         onClick={(e) => e.stopPropagation()}

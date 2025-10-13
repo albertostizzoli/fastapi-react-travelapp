@@ -104,7 +104,7 @@ function Sidebar() {
           {!isHome && (
             <button
               onClick={handleLogout}
-              className="px-4 py-2 flex items-center gap-2 font-medium hover:underline cursor-pointer">
+              className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
               <span><i className="fa-solid fa-right-from-bracket"></i></span>
               Esci
             </button>

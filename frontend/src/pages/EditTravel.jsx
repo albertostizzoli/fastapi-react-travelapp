@@ -71,7 +71,7 @@ function EditTravel() {
 
 
   return (
-    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen p-8"
+    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen sm:p-8 p-4"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
@@ -80,8 +80,8 @@ function EditTravel() {
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-bold">✏️ Modifica Viaggio</h2>
-          <p className="text-sm italic">* Il campo è obbligatorio</p>
+          <h2 className="text-white text-2xl font-bold">✏️ Modifica Viaggio</h2>
+          <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
         </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -148,17 +148,10 @@ function EditTravel() {
               className="p-2 border border-white text-white rounded" />
           </div>
 
-          {/* Media Voto */}
-          <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Media Voto</label>
-            <p className="p-2 border border-white text-blue-400 rounded bg-black/20">
-              {calculateGeneralVote() ?? "-"} {/* mostra la media o "-" se non c'è */}
-            </p>
-          </div>
 
           {/* Voti dettagliati (span 2 colonne) */}
           <div className="md:col-span-2">
-            <h3 className="font-semibold mb-2 text-white">Voti *</h3>
+            <h3 className="font-semibold text-lg mt-6 mb-2 text-white">Voti *</h3>
             <div className="flex flex-wrap gap-4">
               {Object.entries(travel.votes).map(([key, value]) => ( // itera su ogni voto */}
                 <div key={key} className="flex flex-col w-28 text-white">
@@ -170,10 +163,20 @@ function EditTravel() {
                     onChange={handleVoteChange}
                     min="1"
                     max="5"
-                    className=" p-1 border border-white text-white rounded" />
+                    className="w-full p-2 border border-white text-white rounded-lg" />
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Media Voto */}
+          <div className="md:col-span-2 mt-1">
+            <label className="pe-3 text-white font-semibold">Media Voti</label>
+            <input
+              type="text"
+              value={calculateGeneralVote() ?? "-"}
+              readOnly
+              className="p-2 border border-white text-white font-semibold rounded" />
           </div>
 
           {/* Pulsante (span 2 colonne) */}
