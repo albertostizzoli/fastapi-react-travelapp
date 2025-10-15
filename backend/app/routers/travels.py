@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.travel_db import TravelDB # modello ORM per la tabella dei viaggi
 from app.schemas.travels import Travel, TravelCreate # schemi Pydantic per validare input/output
-from app.utils.travels import format_date # funzioni di utilità per formattare date 
+from app.utils.travels import format_date # funzioni di utilità per formattare date
+from app.auth import get_current_user # importo la funzione per il token dell'utente loggato
 
 # creo il router per il modulo "travels"
 router = APIRouter(prefix="/travels", tags=["travels"])
@@ -21,15 +22,17 @@ def get_db():
 
 # GET: per ottenere tutti i viaggi
 @router.get("/", response_model=list[Travel])
-def get_travels(user_id: int, db: Session = Depends(get_db)):
+def get_travels(db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)): # Sessione DB iniettata come dipendenza (Depends), prendo l'id dal token
+    user_id = current_user["id"]
     # restituisce solo i viaggi dell'utente loggato
     return db.query(TravelDB).filter(TravelDB.user_id == user_id).all()
 
 
 #  GET: per ottenere un viaggio singolo tramite ID
 @router.get("/{travel_id}", response_model=Travel)
-def get_travel(travel_id: int, db: Session = Depends(get_db)): # ID del nuovo viaggio, , Sessione DB iniettata come dipendenza (Depends)
-    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first() # ottengo il viaggio
+def get_travel(travel_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)): # ID del nuovo viaggio
+    user_id = current_user["id"]
+    travel = db.query(TravelDB).filter(TravelDB.id == travel_id, TravelDB.user_id == user_id).first() # ottengo il viaggio
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
     return travel
@@ -37,7 +40,8 @@ def get_travel(travel_id: int, db: Session = Depends(get_db)): # ID del nuovo vi
 
 #  POST: per aggiungere un nuovo viaggio 
 @router.post("/", response_model=Travel)
-def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
+def add_travel(travel: TravelCreate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user_id = current_user["id"]
     # creo il record del viaggio
     db_travel = TravelDB(
         town=travel.town,
@@ -47,7 +51,7 @@ def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
         end_date=format_date(travel.end_date),
         general_vote=travel.general_vote,
         votes=travel.votes,
-        user_id=travel.user_id
+        user_id=user_id
     )
     db.add(db_travel)     # il viaggio viene salvato
     db.commit()           # salva le modifiche
@@ -58,11 +62,12 @@ def add_travel(travel: TravelCreate, db: Session = Depends(get_db)):
 
 # PUT: modifica un viaggio esistente 
 @router.put("/{travel_id}", response_model=Travel)
-def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = Depends(get_db)):
+def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user_id = current_user["id"]
     # cerca il viaggio solo se appartiene all'utente
     travel = db.query(TravelDB).filter(
         TravelDB.id == travel_id,
-        TravelDB.user_id == updated_travel.user_id
+        TravelDB.user_id == user_id
     ).first()
 
     if not travel:
@@ -84,7 +89,8 @@ def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = De
 
 # DELETE: elimina un viaggio 
 @router.delete("/{travel_id}")
-def delete_travel(travel_id: int, user_id: int, db: Session = Depends(get_db)):
+def delete_travel(travel_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user_id = current_user["id"]
     # cerco il viaggio filtrando anche per user_id
     travel = db.query(TravelDB).filter(
         TravelDB.id == travel_id,

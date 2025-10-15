@@ -12,7 +12,7 @@ class TravelBase(BaseModel):
     end_date: str           # data di fine 
     general_vote: Optional[float] = None  # media dei voti da votes
     votes: Optional[dict] = None            # voti (giorno, paesaggio, attività relax, prezzo)
-    user_id: int            # ID Utente
+    user_id: Optional[int] = None  
 
 # modello per creare un nuovo viaggio
 # aggiunge il campo 'days', lista di oggetti Day

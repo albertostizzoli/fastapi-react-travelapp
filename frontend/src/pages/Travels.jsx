@@ -41,28 +41,37 @@ function Travels() {
 
   // uso lo useEffect per ottenere i dati dei viaggi
   useEffect(() => {
-    const userId = localStorage.getItem("userId"); // recupero id utente
-    if (!userId) return; // se non c'è, non faccio nulla
+    const token = localStorage.getItem("token"); // recupera il token JWT
+    if (!token) return; // se non c'è token, non faccio nulla
 
     axios
-      .get(`http://127.0.0.1:8000/travels?user_id=${userId}`) // recupera i viaggi dell'utente dal backend
+      .get("http://127.0.0.1:8000/travels", {
+        headers: {
+          Authorization: `Bearer ${token}`, //  token nell'header
+        },
+      })
       .then((res) => setTravels(res.data)) // aggiorna lo stato con i dati ricevuti
       .catch((err) => console.error(err)); // gestisce errori
   }, []);
 
   // con questa cancello tutti i dati del viaggio
   const handleDelete = () => {
-    const userId = localStorage.getItem("userId"); // recupero id utente
-    if (!userId) return; // se non c'è, non faccio nulla
+    const token = localStorage.getItem("token"); //  recupera il token JWT
+    if (!token) return; // se non c'è token, non faccio nulla
 
     axios
-      .delete(`http://127.0.0.1:8000/travels/${deleteId}?user_id=${userId}`) // elimina il viaggio
+      .delete(`http://127.0.0.1:8000/travels/${deleteId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, //  invia il token
+        },
+      })
       .then(() => {
         setTravels(travels.filter((t) => t.id !== deleteId)); // aggiorna lista
         setDeleteId(null); // chiudi modale
       })
       .catch((err) => console.error(err));
   };
+
 
 
   return (

@@ -10,17 +10,20 @@ function EditTravel() {
 
   // recupero i viaggi dal backend
   useEffect(() => {
-    const userId = localStorage.getItem("userId"); // recupero id utente
-    if (!userId) return; // se non c'è, non faccio nulla
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
     axios
-      .get(`http://127.0.0.1:8000/travels?user_id=${userId}`)
-      .then((res) => {
-        const t = res.data.find((tr) => tr.id === parseInt(id)); // trova il viaggio con l'ID corrispondente
-        setTravel(t); // salva il viaggio nello stato
+      .get("http://127.0.0.1:8000/travels", {
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch((err) => console.error(err));
+      .then((res) => {
+        const t = res.data.find((tr) => tr.id === parseInt(id));
+        setTravel(t);
+      })
+      .catch((err) => console.error("Errore nel caricamento del viaggio:", err));
   }, [id]);
+
 
   // gestisce il cambiamento dei campi principali ( town, city...)
   const handleChange = (e) => {
@@ -52,6 +55,8 @@ function EditTravel() {
   const handleSubmit = (e) => {
     e.preventDefault(); // previene il comportamento di default del form
 
+    const token = localStorage.getItem("token");
+
     const updatedTravel = {
       ...travel, // mantiene gli altri dati del viaggio
       general_vote: calculateGeneralVote() // aggiorna la media dei voti
@@ -60,7 +65,9 @@ function EditTravel() {
     };
 
     axios
-      .put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel) // invia la richiesta PUT al backend
+      .put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel, {
+        headers: { Authorization: `Bearer ${token}` }, //  aggiungo token
+      }) // invia la richiesta PUT al backend
       .then(() => {
         navigate("/travels"); // torna alla pagina dei viaggi
       })

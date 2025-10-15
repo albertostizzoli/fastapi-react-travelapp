@@ -52,7 +52,7 @@ function AddTravel() {
         ? parseFloat(calculateGeneralVote()) // lo converto in numero
         : null; // altrimenti null
 
-      const userId = localStorage.getItem("userId");  // recupero l’id salvato
+      const token = localStorage.getItem("token"); //  prendo il token
 
       // creo l'oggetto viaggio da inviare al backend
       const newTravel = {
@@ -62,20 +62,20 @@ function AddTravel() {
         start_date: form.start_date,
         end_date: form.end_date,
         general_vote: general_vote, // calcolato
-        days: [], // inizialmente vuoto
         votes: {
           cibo: form.cibo ? parseInt(form.cibo) : null,
           paesaggio: form.paesaggio ? parseInt(form.paesaggio) : null,
           attività: form.attività ? parseInt(form.attività) : null,
           relax: form.relax ? parseInt(form.relax) : null,
           prezzo: form.prezzo ? parseInt(form.prezzo) : null,
-        },
-        user_id: parseInt(userId),
+        }
       };
 
       // invio al backend
-      await axios.post("http://127.0.0.1:8000/travels", newTravel);
-      setMessage("✅ Viaggio aggiunto con successo!");
+      await axios.post("http://127.0.0.1:8000/travels", newTravel, {
+        headers: { Authorization: `Bearer ${token}` }, //  aggiungo token
+      });
+      setMessage(" Viaggio aggiunto con successo!");
 
       // il form si resetta dopo l'invio
       setForm({
@@ -96,7 +96,7 @@ function AddTravel() {
 
     } catch (err) {
       console.error(err);
-      setMessage("❌ Errore durante l'aggiunta del viaggio.");
+      setMessage(" Errore durante l'aggiunta del viaggio.");
     }
   };
 
