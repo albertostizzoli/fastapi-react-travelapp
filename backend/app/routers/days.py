@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Form, UploadFile, Depends, HTTPException  # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
 from sqlalchemy.orm import Session  # sessione ORM per interagire con il database
 from typing import List
-
 from app.database import SessionLocal  # connessione locale al DB (crea le sessioni)
 from app.models.travel_db import TravelDB  # modello ORM per la tabella dei viaggi
 from app.models.day_db import DayDB  # modello ORM per la tabella dei giorni
@@ -9,6 +8,7 @@ from app.schemas.days import Day # schema Pydantic per validare input/output
 from app.utils.travels import format_date, get_coordinates  # funzioni di utilità per formattare date e ottenere coordinate
 from app.config import cloudinary   # importo la configurazione di Cloudinary
 import cloudinary.uploader  # per caricare immagini su Cloudinary
+from app.auth import get_current_user # importo la funzione per ottenere l'utente in base al token fornito
 
 # creo il router per i giorni, con prefisso e tag
 router = APIRouter(prefix="/travels", tags=["days"])
@@ -32,10 +32,12 @@ async def add_day_travel(
     title: str = Form(...),
     description: str = Form(...),
     photos: List[UploadFile] = None,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user) 
 ):
+    user_id = current_user["id"]
     # controllo che il viaggio esista
-    travel = db.query(TravelDB).filter(TravelDB.id == travel_id).first()
+    travel = db.query(TravelDB).filter(TravelDB.id == travel_id, TravelDB.user_id == user_id).first()
     if not travel:
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
@@ -67,53 +69,67 @@ async def add_day_travel(
 
 #  PUT: modifica un giorno esistente
 @router.put("/{travel_id}/days/{day_id}", response_model=Day)
-async def update_day(
-    travel_id: int, 
+async def update_day_travel(
+    travel_id: int,
     day_id: int,
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
-    existing_photos: List[str] = Form([]),   # URL delle foto da mantenere
-    photos: List[UploadFile] = None,         # nuove foto caricate
-    db: Session = Depends(get_db)
+    photos: List[UploadFile] = None,
+    existing_photos: List[str] = Form([]),  # URL foto già presenti
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
 ):
-    day = db.query(DayDB).filter(DayDB.id == day_id, DayDB.travel_id == travel_id).first()
-    if not day:
+    user_id = current_user["id"]
+
+    # controllo che il viaggio appartenga all'utente
+    travel = db.query(TravelDB).filter(
+        TravelDB.id == travel_id,
+        TravelDB.user_id == user_id
+    ).first()
+    if not travel:
+        raise HTTPException(status_code=404, detail="Viaggio non trovato")
+
+    # controllo che il giorno esista
+    db_day = db.query(DayDB).filter(
+        DayDB.id == day_id,
+        DayDB.travel_id == travel_id
+    ).first()
+    if not db_day:
         raise HTTPException(status_code=404, detail="Giorno non trovato")
 
-    # aggiorna i campi base
-    day.date = format_date(date)
-    day.title = title
-    day.description = description
+    # aggiorno i campi
+    db_day.date = format_date(date)
+    db_day.title = title
+    db_day.description = description
 
-    # inizializza l'elenco con quelle già esistenti
-    final_photos = existing_photos.copy()
-
-    # carico nuove foto su Cloudinary
+    # gestisco le foto: mantieni quelle esistenti + nuove caricate
+    photo_urls = existing_photos or []
     if photos:
         for photo in photos:
             result = cloudinary.uploader.upload(photo.file)
-            final_photos.append(result["secure_url"])
+            photo_urls.append(result["secure_url"])
+    db_day.photo = photo_urls
 
-    # salvo nel DB
-    day.photo = final_photos
-
-    # aggiorna coordinate
-    lat, lng = get_coordinates(title, day.travel.city, day.travel.town)
-    if lat and lng:
-        day.lat, day.lng = lat, lng
+    # aggiorno lat/lng
+    db_day.lat, db_day.lng = get_coordinates(title, travel.city, travel.town)
 
     db.commit()
-    db.refresh(day)
-    return day
-
+    db.refresh(db_day)
+    return db_day
 
 
 #  DELETE: elimina un giorno da un viaggio
 @router.delete("/{travel_id}/days/{day_id}")
-def delete_day_travel(travel_id: int, day_id: int, db: Session = Depends(get_db)):
+def delete_day_travel(travel_id: int, day_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user_id = current_user["id"]
     # trovo il giorno da eliminare
-    day = db.query(DayDB).filter(DayDB.id == day_id, DayDB.travel_id == travel_id).first()
+    day = db.query(DayDB).join(TravelDB).filter(
+        DayDB.id == day_id,
+        TravelDB.id == travel_id,
+        TravelDB.user_id == user_id
+    ).first()
+    
     if not day:
         raise HTTPException(status_code=404, detail="Giorno non trovato")
 

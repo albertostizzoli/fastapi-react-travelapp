@@ -9,28 +9,35 @@ function EditDay() {
   const [day, setDay] = useState(null); // per salvare i dati del giorno
   const [loading, setLoading] = useState(true); // stato di caricamento
   const fileInputRef = useRef(null); // riferimento all’input nascosto
-  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi) 
+  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
+  const token = localStorage.getItem("token");
 
   // recupero i dati del giorno dal backend
   useEffect(() => {
-    const userId = localStorage.getItem("userId"); // recupero id utente
-    if (!userId) return; // se non c'è, non faccio nulla
-    axios
-      .get(`http://127.0.0.1:8000/travels?user_id=${userId}`) // recupero tutti i viaggi
-      .then((res) => { // cerco il giorno con l'ID specificato
-        let dayFound = null; // inizializzo la variabile per il giorno trovato
-        res.data.forEach((travel) => {
-          const d = travel.days.find((day) => day.id === parseInt(id)); // cerco il giorno nel viaggio corrente
-          if (d) { // se il giorno è trovato
-            dayFound = { ...d, travelId: travel.id }; // aggiungo anche l'id del viaggio
-          }
+    const fetchDay = async () => {
+      try {
+        // recupera tutti i viaggi dell'utente
+        const res = await axios.get(`http://127.0.0.1:8000/travels?user_id=${localStorage.getItem("userId")}`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
-        setDay(dayFound); // salvo il giorno nello stato
-        setLoading(false); // imposto lo stato di caricamento a false
-      })
-      .catch((err) => console.error(err)); // gestisco gli errori
-  }, [id]);
 
+        // cerca il giorno con l'id giusto
+        let foundDay = null;
+        res.data.forEach((travel) => {
+          const d = travel.days.find((day) => day.id === parseInt(id));
+          if (d) foundDay = { ...d, travelId: travel.id }; // aggiungi travelId
+        });
+
+        setDay(foundDay);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
+
+    fetchDay();
+  }, [id, token]);
 
   // gestione cambiamento dei campi
   const handleChange = (e) => {
@@ -61,23 +68,21 @@ function EditDay() {
     setDay({ ...day, photo: newPhotos }); // aggiorno lo stato del giorno
   };
 
-  // invio al backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    const token = localStorage.getItem("token");
 
+    const formData = new FormData();
     formData.append("date", day.date);
     formData.append("title", day.title);
     formData.append("description", day.description);
 
     // foto già esistenti
-    day.photo.forEach((item) => {
+    (day.photo || []).forEach((item) => {
       if (typeof item === "string") {
-        // URL già salvato
         formData.append("existing_photos", item);
       } else {
-        // File nuovo
         formData.append("photos", item);
       }
     });
@@ -85,17 +90,22 @@ function EditDay() {
     try {
       await axios.put(
         `http://127.0.0.1:8000/travels/${day.travelId}/days/${id}`,
-
         formData,
-        { headers: { "Content-Type": "multipart/form-data" }, }
-
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
+      // aggiorna la pagina dei giorni
       navigate(`/travels/${day.travelId}/days`);
     } catch (error) {
       console.error("Errore nell'aggiornamento:", error);
+      setMessage("❌ Errore durante la modifica del giorno.");
     }
   };
-
 
   if (loading) return <p>Caricamento...</p>;
   if (!day) return <p>Tappa non trovata</p>;

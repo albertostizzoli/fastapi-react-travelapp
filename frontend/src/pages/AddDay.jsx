@@ -22,20 +22,23 @@ function AddDay() {
 
   // carico i viaggi dal backend
   useEffect(() => {
-    const fetchTravels = async () => { // funzione asincrona per fetch
-      const userId = localStorage.getItem("userId"); // recupero id utente
-      if (!userId) return; // se non c'è, non faccio nulla
+    const fetchTravels = async () => {
+      const token = localStorage.getItem("token");
       try {
-        const res = await axios.get(`http://127.0.0.1:8000/travels?user_id=${userId}`); // richiesta GET
-        setTravels(res.data); // aggiorno lo stato con i viaggi ricevuti
+        const res = await axios.get(`http://127.0.0.1:8000/travels`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setTravels(res.data); // array di viaggi per la select
       } catch (err) {
-        console.error(err); // log dell'errore
+        console.error(err);
       }
     };
-    fetchTravels(); // chiamo la funzione
+
+    fetchTravels();
   }, []);
 
-  // per ottenre l'id del viaggio
+
+  // per ottenere l'id del viaggio
   useEffect(() => {
     if (travelIdFromState) { // se c'è un id passato dallo stato
       setSelectedTravel(travelIdFromState); // lo imposto come viaggio selezionato
@@ -76,7 +79,7 @@ function AddDay() {
     e.preventDefault(); // previene il comportamento di default del form
 
     if (!selectedTravel) {
-      setMessage("❌ Devi selezionare un viaggio!");
+      setMessage(" Devi selezionare un viaggio!");
       return;
     }
 
@@ -92,12 +95,17 @@ function AddDay() {
       });
 
       await axios.post(
-        `http://127.0.0.1:8000/travels/${selectedTravel}/days`, // endpoint per aggiungere un giorno a un viaggio specifico
+        `http://127.0.0.1:8000/travels/${selectedTravel}/days`,
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
 
-      setMessage("✅ Giorno aggiunto con successo!");
+      setMessage(" Giorno aggiunto con successo!");
       setForm({ date: "", title: "", description: "", photo: [] }); // resetto il form
 
       // reindirizzo alla pagina dei giorni del viaggio selezionato
@@ -105,7 +113,7 @@ function AddDay() {
 
     } catch (err) {
       console.error(err);
-      setMessage("❌ Errore durante l'aggiunta del giorno.");
+      setMessage(" Errore durante l'aggiunta del giorno.");
     }
   };
 

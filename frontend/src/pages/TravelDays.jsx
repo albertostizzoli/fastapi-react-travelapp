@@ -30,25 +30,35 @@ function TravelDays() {
 
   // Funzione per caricare i dati del viaggio
   const fetchTravel = () => {
-    axios
-      .get(`http://127.0.0.1:8000/travels/${id}`) // Chiamata API per ottenere i dati del viaggio
-      .then((res) => setTravel(res.data)) // Aggiorno lo stato con i dati ricevuti
-      .catch((err) => console.error(err)); // Gestione eventuali errori
-  };
+  const token = localStorage.getItem("token"); // prendo il token
+
+  axios
+    .get(`http://127.0.0.1:8000/travels/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }, 
+    })
+    .then((res) => setTravel(res.data))
+    .catch((err) => console.error("Errore nel caricamento del viaggio:", err));
+};
+
 
   // Funzione per eliminare un giorno
   const handleDeleteDay = () => {
-    axios
-      .delete(`http://127.0.0.1:8000/travels/${id}/days/${deleteDayId}`) // Chiamata API per eliminare il giorno
-      .then(() => { // Se l'eliminazione ha successo
-        setTravel({ // aggiorno lo stato del viaggio rimuovendo il giorno eliminato
-          ...travel, // mantengo gli altri dati del viaggio
-          days: travel.days.filter((d) => d.id !== deleteDayId), // filtro il giorno eliminato
-        });
-        setDeleteDayId(null); // chiudo il modale di conferma eliminazione
-      })
-      .catch((err) => console.error(err)); // Gestione eventuali errori
-  };
+  const token = localStorage.getItem("token");
+
+  axios
+    .delete(`http://127.0.0.1:8000/travels/${id}/days/${deleteDayId}`, {
+      headers: { Authorization: `Bearer ${token}` }, 
+    })
+    .then(() => {
+      setTravel({
+        ...travel,
+        days: travel.days.filter((d) => d.id !== deleteDayId),
+      });
+      setDeleteDayId(null);
+    })
+    .catch((err) => console.error("Errore nell'eliminazione del giorno:", err));
+};
+
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 

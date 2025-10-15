@@ -4,7 +4,7 @@ from app.database import SessionLocal # connessione locale al DB (crea le sessio
 from app.models.travel_db import TravelDB # modello ORM per la tabella dei viaggi
 from app.schemas.travels import Travel, TravelCreate # schemi Pydantic per validare input/output
 from app.utils.travels import format_date # funzioni di utilità per formattare date
-from app.auth import get_current_user # importo la funzione per il token dell'utente loggato
+from app.auth import get_current_user # importo la funzione per ottenere l'utente in base al token fornito
 
 # creo il router per il modulo "travels"
 router = APIRouter(prefix="/travels", tags=["travels"])

@@ -19,7 +19,9 @@ function ProfilePage() {
 
     // funzione per il logout
     const handleLogout = () => {
-        localStorage.removeItem('user');
+        // rimuovo token e dati utente
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
 
         // Reindirizza alla Home Page
         navigate('/');
@@ -58,7 +60,7 @@ function ProfilePage() {
                             </li>
 
                             <li className="flex items-center py-2 px-4 bg-red-500 text-white font-bold rounded-lg shadow-md hover:bg-red-400 transition duration-300">
-                                <i className="fa-solid fa-trash mr-2 "></i> 
+                                <i className="fa-solid fa-trash mr-2 "></i>
                                 Cancella Profilo
                             </li>
 
