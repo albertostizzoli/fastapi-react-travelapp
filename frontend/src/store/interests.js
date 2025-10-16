@@ -4,12 +4,12 @@ const interests = [
     description: "Ama l’adrenalina, l’esplorazione e le esperienze estreme all’aria aperta.",
     tags: [
       "Trekking & Escursionismo",
-      "Camping",
+      "Camping Selvaggio",
       "Arrampicata",
       "Rafting",
       "Kayak",
       "Parapendio",
-      "Subacquea",
+      "Immersioni Subacquee",
       "Speleologia",
       "Quad & Offroad",
       "Safari",
@@ -24,15 +24,15 @@ const interests = [
     description: "Curioso, ama scoprire la storia, le tradizioni e l’arte dei luoghi.",
     tags: [
       "Città Storiche",
-      "Musei",
+      "Musei & Gallerie",
       "Arte & Architettura",
       "Borghi Antichi",
       "Tour Letterari",
       "Tour Cinematografici",
       "Percorsi Religiosi",
-      "Festival & Eventi",
+      "Festival Tradizionali",
       "Viaggi Storici",
-      "Spettacoli Culturali",
+      "Spettacoli Teatrali",
       "Incontri con le Popolazioni Locali"
     ]
   },
@@ -41,12 +41,12 @@ const interests = [
     description: "Assaggia tutto, ama la cucina autentica e i sapori locali.",
     tags: [
       "Cucina Locale",
-      "Street Food",
+      "Street Food Experience",
       "Degustazione Vini",
-      "Mercati Locali",
-      "Festival Gastronomici",
+      "Mercati Gastronomici",
+      "Festival del Gusto",
       "Corsi di Cucina",
-      "Itinerari Enogastronomici"
+      "Tour Enogastronomici"
     ]
   },
   {
@@ -56,14 +56,13 @@ const interests = [
       "Natura & Paesaggi",
       "Birdwatching",
       "Fotografia Naturalistica",
-      "Camping",
-      "Eco-Turismo",
+      "Eco-Lodge",
       "Turismo Lento",
       "Viaggi Sostenibili",
       "Isole Remote",
       "Destinazioni Artiche",
-      "Wellness & Spa Retreat",
-      "Ritiri Yoga"
+      "Ritiri Benessere",
+      "Yoga nella Natura"
     ]
   },
   {
@@ -71,12 +70,12 @@ const interests = [
     description: "Ama condividere emozioni e panorami con la propria metà.",
     tags: [
       "Viaggi Romantici",
-      "Relax & Mare",
-      "Wellness & Spa Retreat",
-      "Crociere",
-      "Viaggi di Lusso",
-      "Glamping",
-      "Cene Panoramiche"
+      "Resort sul Mare",
+      "Spa di Lusso",
+      "Crociere Esclusive",
+      "Suite Panoramiche",
+      "Glamping di Coppia",
+      "Cene al Tramonto"
     ]
   },
   {
@@ -85,49 +84,49 @@ const interests = [
     tags: [
       "Capitali Europee",
       "Vita Notturna",
-      "Shopping",
-      "Street Food",
-      "Arte & Architettura",
-      "Musei",
-      "Città Storiche",
-      "Festival & Eventi",
-      "Workation",
-      "Digital Nomad"
+      "Shopping Metropolitano",
+      "Mercati Urbani",
+      "Street Art",
+      "Musei Contemporanei",
+      "Caffè Letterari",
+      "Eventi Musicali",
+      "Coworking City",
+      "Architettura Moderna"
     ]
   },
   {
     category: "💻 Il Nomade Digitale",
     description: "Lavora viaggiando, cercando sempre nuovi luoghi stimolanti.",
     tags: [
-      "Workation",
-      "Digital Nomad",
+      "Workation Spots",
+      "Comunità Remote Worker",
       "Solo Travel",
       "Van Life",
       "Couchsurfing",
-      "Backpacking",
-      "Turismo Lento"
+      "Backpacking Globale",
+      "Turismo Lento Digitale"
     ]
   },
   {
     category: "👨‍👩‍👧‍👦 Il Viaggiatore in Famiglia",
     description: "Cerca esperienze da vivere con i propri cari, tra relax e scoperta.",
     tags: [
-      "Viaggi in Famiglia",
-      "Relax & Mare",
-      "Natura & Paesaggi",
+      "Vacanze in Famiglia",
+      "Resort per Bambini",
+      "Natura Interattiva",
       "Villaggi Turistici",
-      "Viaggi Educativi",
-      "Road Trip",
-      "Crociere"
+      "Esperienze Educative",
+      "Road Trip Familiare",
+      "Mini Crociere"
     ]
   },
   {
     category: "🤝 Il Volontario",
     description: "Viaggia per aiutare, imparare e restituire valore alle comunità locali.",
     tags: [
-      "Volontariato",
-      "Viaggi Sostenibili",
-      "Eco-Turismo",
+      "Volontariato Ambientale",
+      "Viaggi Etici",
+      "Eco-Turismo Solidale",
       "Turismo Responsabile",
       "Progetti Umanitari"
     ]

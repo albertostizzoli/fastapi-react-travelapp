@@ -277,7 +277,7 @@ function User() {
         { /* Modale Interessi */}
         {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-[9999] p-4">
-            <div className="bg-blue-600 rounded-xl w-full max-w-3xl max-h-[90vh] shadow-lg flex flex-col overflow-hidden">
+            <div className="bg-blue-500 rounded-xl w-full max-w-3xl max-h-[90vh] shadow-lg flex flex-col overflow-hidden">
               {/* Contenuto scrollabile */}
               <div className="flex-1 p-6 overflow-y-auto scrollbar-custom">
                 <h2 className="text-2xl font-semibold text-white mb-4">
@@ -304,7 +304,7 @@ function User() {
                           onClick={() => toggleInterest(tag)} // seleziono/deseleziono il tag
                           className={`px-3 py-2 rounded-lg border text-sm transition cursor-pointer ${selectedInterests.includes(tag)
                             ? "bg-yellow-300 text-black border-yellow-600"
-                            : "bg-orange-400 text-black border-orange-400 hover:bg-orange-300"
+                            : "bg-orange-500 text-black border-orange-500 hover:bg-orange-400"
                             }`}>
                           {tag}
                         </button>

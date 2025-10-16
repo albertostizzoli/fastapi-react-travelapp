@@ -1,6 +1,7 @@
 from pydantic import BaseModel # definire schemi di dati con controlli di validazione
 from typing import List, Optional # tipi generici: List per array tipizzati, Optional per valori facoltativi
 from app.schemas.travels import Travel
+from datetime import datetime
 
 # classe base per il modello User
 # serve a definire i campi comuni a tutti i modelli Pydantic relativi agli utenti
@@ -10,6 +11,7 @@ class UserBase(BaseModel):
     email: str                             # email
     interests: Optional[List[str]] = None  # interessi 
     photo: Optional[str] = None            # foto profilo
+    registration_date: datetime                 # data di registrazione
 
 # modello per creare un nuovo utente
 # eredita da UserBase, nessuna modifica aggiuntiva

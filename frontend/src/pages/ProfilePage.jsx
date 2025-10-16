@@ -73,9 +73,14 @@ function ProfilePage() {
 
                         {/* Nome e data registrazione */}
                         <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">{user?.name} {user?.surname}</h3>
-                        {user?.registrationDate && (
-                            <p className="text-xs text-gray-300 mb-6">
-                                Registrato il: {new Date(user.registrationDate).toLocaleDateString()}
+                        {user?.registration_date && (
+                            <p className="text-sm text-white mb-6">
+                                Data di registrazione:{" "}
+                                {new Date(user.registration_date).toLocaleDateString("it-IT", {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                })}
                             </p>
                         )}
 
@@ -97,7 +102,7 @@ function ProfilePage() {
                         </div>
                     </motion.section>
 
-                    {/* Interessi utente e Azioni */}
+                    {/* Gestione Viaggi e Interessi */}
                     <motion.section className=" flex flex-col gap-6"
                         variants={{
                             hidden: { opacity: 1 },
@@ -105,35 +110,6 @@ function ProfilePage() {
                         }}
                         initial="hidden"
                         animate="visible">
-
-                        {/* Interessi utente */}
-                        <motion.div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10"
-                            variants={{
-                                hidden: { scale: 0, opacity: 0 },
-                                visible: {
-                                    scale: 1,
-                                    opacity: 1,
-                                    transition: { duration: 1.2, ease: "easeOut" }
-                                }
-                            }}>
-                            <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">
-                                I tuoi interessi
-                            </h3>
-
-                            {user?.interests && user.interests.length > 0 ? (
-                                <div className="flex flex-wrap justify-center gap-3 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-500/40 scrollbar-track-transparent p-2">
-                                    {user.interests.slice(0, 10).map((interest, idx) => (
-                                        <span
-                                            key={idx}
-                                            className="px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-sm sm:text-base font-medium text-white shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-150">
-                                            {interest}
-                                        </span>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-white italic text-center">Nessun interesse impostato.</p>
-                            )}
-                        </motion.div>
 
                         {/* Azioni principali */}
                         <motion.div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4"
@@ -166,6 +142,35 @@ function ProfilePage() {
                                     <i className="fa-solid fa-question"></i> Il tuo prossimo viaggio
                                 </button>
                             </div>
+                        </motion.div>
+
+                        {/* Interessi utente */}
+                        <motion.div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10"
+                            variants={{
+                                hidden: { scale: 0, opacity: 0 },
+                                visible: {
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: { duration: 1.2, ease: "easeOut" }
+                                }
+                            }}>
+                            <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">
+                                I tuoi interessi
+                            </h3>
+
+                            {user?.interests && user.interests.length > 0 ? (
+                                <div className="flex flex-wrap justify-center gap-3 max-h-[200px] overflow-y-auto scrollbar-interests p-2">
+                                    {user.interests.slice(0, 10).map((interest, idx) => (
+                                        <span
+                                            key={idx}
+                                            className="px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-sm sm:text-base font-medium text-white shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-150">
+                                            {interest}
+                                        </span>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-white italic text-center">Nessun interesse impostato.</p>
+                            )}
                         </motion.div>
                     </motion.section>
 
