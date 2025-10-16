@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
+    const [recentTravels, setRecentTravels] = useState([]) // stato per i viaggi recenti
     const navigate = useNavigate(); // per la navigazione
 
     // uso lo useEffect per ottenere i dati dell'utente
@@ -14,6 +15,21 @@ function ProfilePage() {
         axios
             .get(`http://127.0.0.1:8000/users/${userId}`) // recupera i dati dell'utente dal backend
             .then((res) => setUser(res.data)) // aggiorna lo stato con i dati ricevuti
+            .catch((err) => console.error(err)); // gestisce errori
+    }, []);
+
+    // uso lo useEffect per ottenere i dati dei viaggi
+    useEffect(() => {
+        const token = localStorage.getItem("token"); // recupera il token JWT
+        if (!token) return; // se non c'è token, non faccio nulla
+
+        axios
+            .get("http://127.0.0.1:8000/travels", {
+                headers: {
+                    Authorization: `Bearer ${token}`, //  token nell'header
+                },
+            })
+            .then((res) => setRecentTravels(res.data)) // aggiorna lo stato con i dati ricevuti
             .catch((err) => console.error(err)); // gestisce errori
     }, []);
 
@@ -31,11 +47,11 @@ function ProfilePage() {
         <div className="flex flex-col min-h-screen bg-transparent text-white sm:p-6 p-4">
 
             {/* Main Content */}
-            <main className="flex-1 container mx-auto px-4 py-12 mt-8">
+            <main className="flex-1 container mx-auto px-2 sm:px-4 py-10 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
                     {/* Informazioni Utente */}
-                    <section className="md:col-span-1 bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/10 flex flex-col items-center">
+                    <section className="md:col-span-1 bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col items-center">
 
                         {/* Foto profilo */}
                         {user?.photo ? (
@@ -51,9 +67,8 @@ function ProfilePage() {
                             </div>
                         )}
 
-                        {/* Nome, email e data registrazione */}
-                        <h3 className="text-2xl font-bold text-blue-500">{user?.name} {user?.surname}</h3>
-                        <p className="text-sm text-white mb-1">{user?.email}</p>
+                        {/* Nome e data registrazione */}
+                        <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">{user?.name} {user?.surname}</h3>
                         {user?.registrationDate && (
                             <p className="text-xs text-gray-300 mb-6">
                                 Registrato il: {new Date(user.registrationDate).toLocaleDateString()}
@@ -78,19 +93,19 @@ function ProfilePage() {
                         </div>
                     </section>
 
-                    {/* Interessi utente */}
-                    <section className="md:col-span-2 flex flex-col gap-6">
+                    {/* Interessi utente e Azioni */}
+                    <section className=" flex flex-col gap-6">
 
                         {/* Interessi utente */}
-                        <div className="backdrop-blur-xl p-6 rounded-xl shadow-md border border-white/10">
-                            <h3 className="text-2xl font-semibold mb-4 text-blue-500">Che tipo di viaggiatore sei?</h3>
+                        <div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10">
+                            <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">Che tipo di viaggiatore sei?</h3>
                             {user?.interests && user.interests.length > 0 ? (
                                 <div className="flex flex-wrap gap-2">
                                     {user.interests.map((interest, idx) => (
                                         <span
                                             key={idx}
-                                            className="px-4 py-2 bg-orange-500 rounded-full text-base font-medium text-white transition hover:bg-orange-400 cursor-pointer">
-                                            #{interest}
+                                            className="px-4 py-2 bg-orange-500 rounded-full text-base font-medium text-white transition hover:bg-orange-400">
+                                            # {interest}
                                         </span>
                                     ))}
                                 </div>
@@ -100,8 +115,8 @@ function ProfilePage() {
                         </div>
 
                         {/* Azioni principali */}
-                        <div className="backdrop-blur-xl p-6 rounded-xl shadow-md border border-white/10 flex flex-col gap-4">
-                            <h3 className="text-2xl font-semibold text-blue-500 mb-4">
+                        <div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4">
+                            <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">
                                 Gestisci i tuoi viaggi
                             </h3>
                             <div className="flex flex-wrap gap-4 justify-center">
@@ -123,6 +138,64 @@ function ProfilePage() {
                                 </button>
                             </div>
                         </div>
+                    </section>
+
+                    {/* Viaggi recenti */}
+                    <section className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4">
+                        <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">Viaggi Recenti</h3>
+                        {recentTravels && recentTravels.length > 0 ? (
+                            <ul className="flex flex-col gap-3">
+                                {recentTravels.slice(0, 3).map((travel, idx) => (
+                                    <li
+                                        key={idx}
+                                        className="p-3 bg-gradient-to-r from-blue-500 to-blue-400 rounded-xl shadow-lg flex flex-col gap-3 hover:scale-[1.02] hover:shadow-xl transition-transform duration-200">
+
+                                        {/* Viaggio con date */}
+                                        <div className="flex justify-between items-center">
+                                            <h4 className="text-lg font-semibold text-white">
+                                                <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
+                                                {travel.town}, {travel.city}
+                                            </h4>
+                                            <span className="text-sm text-white/90 bg-white/20 px-2 py-1 rounded-md">
+                                                {travel.start_date} → {travel.end_date}
+                                            </span>
+                                        </div>
+
+                                        {/* Bordo divisore */}
+                                        <div className="h-[1px] bg-white/20" />
+
+                                        {/* Voto */}
+                                        <div className="flex justify-between items-center text-sm">
+                                            {travel.general_vote ? (
+                                                <div className="flex items-center gap-1 text-yellow-300">
+                                                    {Array.from({ length: 5 }).map((_, i) => {
+                                                        const fullStar = i + 1 <= Math.floor(travel.general_vote);
+                                                        const halfStar =
+                                                            i + 1 > Math.floor(travel.general_vote) &&
+                                                            i < travel.general_vote;
+                                                        return (
+                                                            <i
+                                                                key={i}
+                                                                className={`fa-star ${fullStar
+                                                                        ? "fa-solid"
+                                                                        : halfStar
+                                                                            ? "fa-star-half-stroke"
+                                                                            : "fa-regular"
+                                                                    }`}
+                                                            ></i>
+                                                        );
+                                                    })}
+                                                </div>
+                                            ) : (
+                                                <span className="text-gray-200 italic">Nessun voto</span>
+                                            )}
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-white italic text-center">Nessun viaggio recente.</p>
+                        )}
                     </section>
                 </div>
             </main>
