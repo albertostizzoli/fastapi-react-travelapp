@@ -1,16 +1,16 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer # importo lo schema per ottenere il token
-from datetime import datetime, timedelta # per gestire la scadenza del token
+from datetime import datetime, timedelta, timezone # per gestire la scadenza del token
 from jose import JWTError, jwt # libreria per creare e verificare i token JWT
 from app.config import settings  # importo le impostazioni dal file config.py
 
 # Funzione per creare il token JWT
-def create_access_token(data: dict, expires_delta: timedelta | None = None): #  dati da includere nel token, durata del token
-    to_encode = data.copy() # copio i dati
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)) # calcolo la scadenza
+def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    to_encode = data.copy()  # copia dei dati
+    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)) # calcolo della scadenza del token
     to_encode.update({"exp": expire}) # aggiungo la scadenza ai dati
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM) # creo il token
-    return encoded_jwt # ritorno il token
+    return encoded_jwt
 
 # Funzione per verificare il token JWT
 def verify_token(token: str): # token da verificare
