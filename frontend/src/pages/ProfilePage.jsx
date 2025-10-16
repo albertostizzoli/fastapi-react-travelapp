@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
@@ -46,12 +47,15 @@ function ProfilePage() {
     return (
         <div className="flex flex-col min-h-screen bg-transparent text-white sm:p-6 p-4">
 
-            {/* Main Content */}
+            {/* Contenuto Principale */}
             <main className="flex-1 container mx-auto px-2 sm:px-4 py-10 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
                     {/* Informazioni Utente */}
-                    <section className="md:col-span-1 bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col items-center">
+                    <motion.section className="md:col-span-1 bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col items-center"
+                        initial={{ x: -100, opacity: 0 }} // animazione parte da sinistra
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}>
 
                         {/* Foto profilo */}
                         {user?.photo ? (
@@ -91,31 +95,56 @@ function ProfilePage() {
                                 <i className="fa-solid fa-right-from-bracket"></i> Esci
                             </button>
                         </div>
-                    </section>
+                    </motion.section>
 
                     {/* Interessi utente e Azioni */}
-                    <section className=" flex flex-col gap-6">
+                    <motion.section className=" flex flex-col gap-6"
+                        variants={{
+                            hidden: { opacity: 1 },
+                            visible: { opacity: 1, transition: { staggerChildren: 0.5 } },
+                        }}
+                        initial="hidden"
+                        animate="visible">
 
                         {/* Interessi utente */}
-                        <div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10">
-                            <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">Che tipo di viaggiatore sei?</h3>
+                        <motion.div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10"
+                            variants={{
+                                hidden: { scale: 0, opacity: 0 },
+                                visible: {
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: { duration: 1.2, ease: "easeOut" }
+                                }
+                            }}>
+                            <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">
+                                I tuoi interessi
+                            </h3>
+
                             {user?.interests && user.interests.length > 0 ? (
-                                <div className="flex flex-wrap gap-2">
-                                    {user.interests.map((interest, idx) => (
+                                <div className="flex flex-wrap justify-center gap-3 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-500/40 scrollbar-track-transparent p-2">
+                                    {user.interests.slice(0, 10).map((interest, idx) => (
                                         <span
                                             key={idx}
-                                            className="px-4 py-2 bg-orange-500 rounded-full text-base font-medium text-white transition hover:bg-orange-400">
-                                            # {interest}
+                                            className="px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-sm sm:text-base font-medium text-white shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-150">
+                                            {interest}
                                         </span>
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-white italic">Nessun interesse impostato.</p>
+                                <p className="text-white italic text-center">Nessun interesse impostato.</p>
                             )}
-                        </div>
+                        </motion.div>
 
                         {/* Azioni principali */}
-                        <div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4">
+                        <motion.div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4"
+                            variants={{
+                                hidden: { scale: 0, opacity: 0 },
+                                visible: {
+                                    scale: 1,
+                                    opacity: 1,
+                                    transition: { duration: 1.2, ease: "easeOut" }
+                                }
+                            }}>
                             <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">
                                 Gestisci i tuoi viaggi
                             </h3>
@@ -137,11 +166,14 @@ function ProfilePage() {
                                     <i className="fa-solid fa-question"></i> Il tuo prossimo viaggio
                                 </button>
                             </div>
-                        </div>
-                    </section>
+                        </motion.div>
+                    </motion.section>
 
                     {/* Viaggi recenti */}
-                    <section className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4">
+                    <motion.section className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4"
+                        initial={{ x: 100, opacity: 0 }} // animazione parte da destra
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}>
                         <h3 className="text-2xl font-semibold text-blue-500 text-center mb-4 tracking-wide">Viaggi Recenti</h3>
                         {recentTravels && recentTravels.length > 0 ? (
                             <ul className="flex flex-col gap-3">
@@ -177,10 +209,10 @@ function ProfilePage() {
                                                             <i
                                                                 key={i}
                                                                 className={`fa-star ${fullStar
-                                                                        ? "fa-solid"
-                                                                        : halfStar
-                                                                            ? "fa-star-half-stroke"
-                                                                            : "fa-regular"
+                                                                    ? "fa-solid"
+                                                                    : halfStar
+                                                                        ? "fa-star-half-stroke"
+                                                                        : "fa-regular"
                                                                     }`}
                                                             ></i>
                                                         );
@@ -196,7 +228,7 @@ function ProfilePage() {
                         ) : (
                             <p className="text-white italic text-center">Nessun viaggio recente.</p>
                         )}
-                    </section>
+                    </motion.section>
                 </div>
             </main>
         </div>
