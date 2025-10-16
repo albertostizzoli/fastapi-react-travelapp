@@ -44,12 +44,41 @@ function ProfilePage() {
         navigate('/');
     };
 
+    // funzione per ottenere le stelle 
+    function StarRating({ rating = 0, max = 5 }) {
+        const safe = Math.max(0, Math.min(rating, max)); // assicura che il voto sia tra 0 e max
+
+        return (
+            <span className="inline-flex items-center">
+                {Array.from({ length: max }).map((_, i) => {
+                    const fill = Math.max(0, Math.min(1, safe - i)); // calcola la porzione da riempire (0, 0.5, 1)
+                    const width = `${fill * 100}%`; // converte in percentuale
+
+                    return (
+                        <span
+                            key={i}
+                            className="relative inline-block w-5 h-5 mr-0.5 align-middle"
+                            aria-hidden="true">
+                            {/* Riempimento giallo */}
+                            <span className="absolute inset-0 overflow-hidden" style={{ width }}>
+                                <span className="text-yellow-400 text-lg leading-5 select-none">★</span>
+                            </span>
+                        </span>
+                    );
+                })}
+                {/* Testo nascosto per screen reader */}
+                <span className="sr-only">{safe} su {max}</span>
+            </span>
+        );
+    }
+
+
     return (
         <div className="flex flex-col min-h-screen bg-transparent text-white sm:p-6 p-4">
 
             {/* Contenuto Principale */}
             <main className="flex-1 container mx-auto px-2 sm:px-4 py-10 mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 auto-rows-min">
 
                     {/* Informazioni Utente */}
                     <motion.section className="md:col-span-1 bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col items-center"
@@ -204,25 +233,7 @@ function ProfilePage() {
                                         {/* Voto */}
                                         <div className="flex justify-between items-center text-sm">
                                             {travel.general_vote ? (
-                                                <div className="flex items-center gap-1 text-yellow-300">
-                                                    {Array.from({ length: 5 }).map((_, i) => {
-                                                        const fullStar = i + 1 <= Math.floor(travel.general_vote);
-                                                        const halfStar =
-                                                            i + 1 > Math.floor(travel.general_vote) &&
-                                                            i < travel.general_vote;
-                                                        return (
-                                                            <i
-                                                                key={i}
-                                                                className={`fa-star ${fullStar
-                                                                    ? "fa-solid"
-                                                                    : halfStar
-                                                                        ? "fa-star-half-stroke"
-                                                                        : "fa-regular"
-                                                                    }`}
-                                                            ></i>
-                                                        );
-                                                    })}
-                                                </div>
+                                                <StarRating rating={travel.general_vote ?? 0} />
                                             ) : (
                                                 <span className="text-gray-200 italic">Nessun voto</span>
                                             )}

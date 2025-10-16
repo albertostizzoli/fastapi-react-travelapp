@@ -4,35 +4,33 @@ import axios from "axios";
 import { motion } from "framer-motion";
 
 // funzione per ottenere le stelle 
-function StarRating({ rating = 0, max = 5 }) {
-  const safe = Math.max(0, Math.min(rating, max)); // assicura che il voto sia tra 0 e max
-
-  return (
-    <span className="inline-flex items-center">
-      {Array.from({ length: max }).map((_, i) => { // per ogni stella
-        const fill = Math.max(0, Math.min(1, safe - i)); // calcola la porzione da riempire (0, 0.5, 1)
-        const width = `${fill * 100}%`; // converte in percentuale
+    function StarRating({ rating = 0, max = 5 }) {
+        const safe = Math.max(0, Math.min(rating, max)); // assicura che il voto sia tra 0 e max
 
         return (
-          <span
-            key={i}
-            className="relative inline-block w-5 h-5 mr-0.5 align-middle"
-            aria-hidden="true">
-            {/* porzione vuota (sempre visibile) */}
-            <span className="absolute inset-0 text-white text-lg leading-5 select-none flex items-center gap-2 mt-0.5">☆</span>
+            <span className="inline-flex items-center">
+                {Array.from({ length: max }).map((_, i) => {
+                    const fill = Math.max(0, Math.min(1, safe - i)); // calcola la porzione da riempire (0, 0.5, 1)
+                    const width = `${fill * 100}%`; // converte in percentuale
 
-            {/* porzione piena (larghezza variabile) */}
-            <span className="absolute inset-0 overflow-hidden" style={{ width }}>
-              <span className="text-yellow-400 text-lg leading-5 select-none">★</span>
+                    return (
+                        <span
+                            key={i}
+                            className="relative inline-block w-5 h-5 mr-0.5 align-middle"
+                            aria-hidden="true">
+                            {/* Riempimento giallo */}
+                            <span className="absolute inset-0 overflow-hidden" style={{ width }}>
+                                <span className="text-yellow-400 text-lg leading-5 select-none">★</span>
+                            </span>
+                        </span>
+                    );
+                })}
+                {/* Testo nascosto per screen reader */}
+                <span className="sr-only">{safe} su {max}</span>
             </span>
-          </span>
         );
-      })}
-      {/* Testo nascosto per screen reader */}
-      <span className="sr-only">{safe} su {max}</span>
-    </span>
-  );
-}
+    }
+
 
 
 function Travels() {
