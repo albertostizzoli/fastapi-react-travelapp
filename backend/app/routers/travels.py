@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
+from sqlalchemy import func
 from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.travel_db import TravelDB # modello ORM per la tabella dei viaggi
@@ -24,8 +25,17 @@ def get_db():
 @router.get("/", response_model=list[Travel])
 def get_travels(db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)): # Sessione DB iniettata come dipendenza (Depends), prendo l'id dal token
     user_id = current_user["id"]
-    # restituisce solo i viaggi dell'utente loggato
-    return db.query(TravelDB).filter(TravelDB.user_id == user_id).all()
+    # restituisce solo i viaggi dell'utente loggato dal più recente al più vecchio
+    travels = (
+        db.query(TravelDB)
+        .filter(TravelDB.user_id == user_id)
+        .order_by(
+            TravelDB.year.desc(),
+            func.str_to_date(TravelDB.start_date, "%Y-%m-%d").desc()
+        )
+        .all()
+    )
+    return travels
 
 
 #  GET: per ottenere un viaggio singolo tramite ID
