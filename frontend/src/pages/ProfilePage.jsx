@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
     const [recentTravels, setRecentTravels] = useState([]) // stato per i viaggi recenti
+    const [deleteProfileId, setDeleteProfileId] = useState(null); //  stato per il modale di conferma eliminazione profilo (Apri / Chiudi)
     const navigate = useNavigate(); // per la navigazione
 
     // uso lo useEffect per ottenere i dati dell'utente
@@ -42,6 +43,23 @@ function ProfilePage() {
 
         // Reindirizza alla Home Page
         navigate('/');
+    };
+
+    // Funzione per eliminare un profilo
+    const handleDeleteProfile = () => {
+        const userId = localStorage.getItem("userId"); // recupero l'id utente
+        const token = localStorage.getItem("token"); // recupero il token
+        if (!userId && !token) return; // se non ci sono, non faccio nulla
+
+        axios
+            .delete(`http://127.0.0.1:8000/users/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then(() => {
+                setDeleteProfileId(null); // chiudi modale
+                handleLogout(); // chiamo la funzione per il logout
+            })
+            .catch((err) => console.error("Errore nell'eliminazione del profilo:", err));
     };
 
     // funzione per ottenere le stelle 
@@ -120,7 +138,9 @@ function ProfilePage() {
                                 <i className="fa-solid fa-edit"></i> Modifica Profilo
                             </button>
 
-                            <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-500 hover:bg-red-400 text-white font-semibold rounded-xl shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
+                            <button
+                                onClick={() => setDeleteProfileId(user?.id)}
+                                className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-500 hover:bg-red-400 text-white font-semibold rounded-xl shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
                                 <i className="fa-solid fa-trash"></i> Cancella Profilo
                             </button>
 
@@ -241,6 +261,32 @@ function ProfilePage() {
                         )}
                     </motion.div>
                 </div>
+
+                {/* Modale di conferma eliminazione profilo */}
+                {deleteProfileId && ( // se deleteProfileId non è null, mostro il modale
+                    <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.3 }}>
+                        <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
+                            <h2 className="text-xl font-bold mb-4 text-white">
+                                Vuoi cancellare il tuo profilo?
+                            </h2>
+                            <div className="flex justify-center gap-4">
+                                <button
+                                    onClick={handleDeleteProfile}
+                                    className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                                    <i className="fa-solid fa-check"></i> Sì
+                                </button>
+                                <button
+                                    onClick={() => setDeleteProfileId(null)}
+                                    className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                                    <i className="fa-solid fa-xmark"></i> No
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
             </main>
         </div>
     );

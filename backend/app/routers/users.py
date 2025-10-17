@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
 from app.schemas.users import User, UserCreate # schemi Pydantic per validare input/output
+from app.models.travel_db import TravelDB # modello ORM per la tabella dei viaggi
 from app.utils.users import get_password_hash, verify_password # importo le funzioni per hashare e verificare la password
 from app.config import cloudinary  # importo la configurazione di Cloudinary
 import cloudinary.uploader  # per caricare immagini su Cloudinary
@@ -112,6 +113,9 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     user = db.query(UserDB).filter(UserDB.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="Utente non trovato")
+    
+    # elimina i viaggi dell'utente
+    db.query(TravelDB).filter(TravelDB.user_id == user_id).delete()
 
     db.delete(user)     # elimina l'utente
     db.commit()         # conferma le modifiche nel DB
