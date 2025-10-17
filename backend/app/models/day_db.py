@@ -8,12 +8,13 @@ class DayDB(Base):
 
     # Colonne della tabella
     id = Column(Integer, primary_key=True, index=True)  # ID univoco del giorno
-    date = Column(String, nullable=False)              # data
-    title = Column(String, nullable=False)             # titolo
-    description = Column(String, nullable=False)       # descrizione
-    photo = Column(JSON, nullable=True)                # foto
-    lat = Column(Float, nullable=True)                 # latitudine
-    lng = Column(Float, nullable=True)                 # longitudine
+    date = Column(String, nullable=False)               # data
+    title = Column(String, nullable=False)              # titolo
+    description = Column(String, nullable=True)         # descrizione
+    categories = Column(JSON, nullable=True)            # categorie
+    photo = Column(JSON, nullable=True)                 # foto
+    lat = Column(Float, nullable=True)                  # latitudine
+    lng = Column(Float, nullable=True)                  # longitudine
 
     # Colonna per la relazione con la tabella "travels"
     travel_id = Column(Integer, ForeignKey("travels.id"))  # Chiave esterna verso TravelDB

@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import interests from "../store/interests";
 
 function AddDay() {
   const location = useLocation(); // per ottenere lo stato passato da TravelDays
@@ -10,12 +11,15 @@ function AddDay() {
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
   const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
   const fileInputRef = useRef(null); // riferimento all’input nascosto
-  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi) 
+  const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // apre / chiude il modale delle categorie
+
 
   const [form, setForm] = useState({ // stato del form
     date: "",
     title: "",
     description: "",
+    categories: [], // array di categorie
     photo: [], // array di foto
   });
   const [message, setMessage] = useState(""); // messaggio di successo o errore
@@ -73,6 +77,12 @@ function AddDay() {
     setForm({ ...form, photo: newPhotos }); // aggiorno lo stato del giorno
   };
 
+  // Funzione per gestire selezione multipla categorie
+  const handleCategoriesChange = (e) => {
+    const selected = Array.from(e.target.selectedOptions, (option) => option.value);
+    setForm({ ...form, categories: selected });
+  };
+
 
   // gestisce l'invio del form e salva il nuovo giorno nel backend
   const handleSubmit = async (e) => {
@@ -89,7 +99,12 @@ function AddDay() {
       formData.append("title", form.title);
       formData.append("description", form.description);
 
-      // aggiungo tutti i file
+      // aggiungo tutte le categorie
+      form.categories.forEach((cat) => {
+        formData.append("categories", cat);
+      });
+
+      // aggiungo tutte le foto
       form.photo.forEach((file) => {
         formData.append("photos", file);
       });
@@ -106,7 +121,7 @@ function AddDay() {
       );
 
       setMessage(" Giorno aggiunto con successo!");
-      setForm({ date: "", title: "", description: "", photo: [] }); // resetto il form
+      setForm({ date: "", title: "", description: "", categories: [], photo: [] }); // resetto il form
 
       // reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -187,6 +202,126 @@ function AddDay() {
             rows="4" />
         </div>
 
+        {/* Pulsanti principali: Seleziona categorie + Carica foto */}
+        <div className="md:col-span-2 flex flex-wrap gap-4">
+          {/* Pulsante categorie */}
+          <button
+            type="button"
+            onClick={() => setIsCategoryModalOpen(true)}
+            className="flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            <i className="fa-solid fa-list-check"></i> Seleziona Tag
+          </button>
+
+          {/* Pulsante foto */}
+          <button
+            type="button"
+            onClick={handlePhotoSelect}
+            className="flex-1 px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            <i className="fa-solid fa-camera"></i> Carica Foto
+          </button>
+        </div>
+
+
+        {/* Mostra le categorie selezionate */}
+        {form.categories.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {form.categories.map((cat, i) => (
+              <span
+                key={i}
+                className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm shadow-md flex items-center gap-2">
+                {cat}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setForm({
+                      ...form,
+                      categories: form.categories.filter((c) => c !== cat),
+                    })
+                  }
+                  className="text-white hover:text-red-400">
+                  <i className="fa-solid fa-xmark text-xs"></i>
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Modale Categorie */}
+        <AnimatePresence>
+          {isCategoryModalOpen && (
+            <motion.div
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm rounded-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}>
+              <motion.div
+                className="bg-gray-900 rounded-2xl shadow-xl p-6 w-full max-w-6xl overflow-y-auto max-h-[80vh] border border-gray-700 scrollbar-custom"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3 }}>
+                <h2 className="text-white text-2xl font-bold mb-4 text-center">
+                  🏷️ Seleziona i tuoi Tag per la Tappa del tuo Viaggio
+                </h2>
+
+                <div className="space-y-5">
+                  {interests.map((cat) => (
+                    <div key={cat.category}>
+                      <div className="flex flex-wrap gap-3">
+                        {cat.tags.map((tag) => (
+                          <label
+                            key={tag}
+                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${form.categories.includes(tag)
+                              ? "bg-blue-600 border-blue-400 text-white"
+                              : "bg-transparent border-gray-400 text-white hover:bg-blue-400/20"
+                              }`}>
+                            <input
+                              type="checkbox"
+                              className="accent-blue-500"
+                              checked={form.categories.includes(tag)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setForm({
+                                    ...form,
+                                    categories: [...form.categories, tag],
+                                  });
+                                } else {
+                                  setForm({
+                                    ...form,
+                                    categories: form.categories.filter(
+                                      (c) => c !== tag
+                                    ),
+                                  });
+                                }
+                              }}
+                            />
+                            <span>{tag}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex justify-end gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsCategoryModalOpen(false)}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition hover:scale-105 cursor-pointer">
+                    Conferma
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsCategoryModalOpen(false)}
+                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition hover:scale-105 cursor-pointer">
+                    Chiudi
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="md:col-span-2">
           {/* Foto esistenti + nuove foto */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
@@ -244,13 +379,6 @@ function AddDay() {
               );
             })}
           </div>
-          {/*  Bottone per caricare la foto */}
-          <button
-            type="button"
-            onClick={handlePhotoSelect}
-            className=" px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-            <i className="fa-solid fa-camera mr-2"></i> Carica foto
-          </button>
 
           {/* Input file nascosto */}
           <input
@@ -276,7 +404,7 @@ function AddDay() {
 
         {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
       </form>
-    </motion.div>
+    </motion.div >
   );
 }
 

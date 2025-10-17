@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Form, UploadFile, Depends, HTTPException  # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
 from sqlalchemy.orm import Session  # sessione ORM per interagire con il database
-from typing import List
+from typing import List, Optional
 from app.database import SessionLocal  # connessione locale al DB (crea le sessioni)
 from app.models.travel_db import TravelDB  # modello ORM per la tabella dei viaggi
 from app.models.day_db import DayDB  # modello ORM per la tabella dei giorni
@@ -31,6 +31,7 @@ async def add_day_travel(
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
+    categories: Optional[List[str]] = Form(None),
     photos: List[UploadFile] = None,
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user) 
@@ -51,11 +52,15 @@ async def add_day_travel(
             result = cloudinary.uploader.upload(photo.file)
             photo_urls.append(result["secure_url"])
 
+    # carico le categorie
+    categories_data = categories or []
+
     # creo il giorno nel DB
     db_day = DayDB(
         date=format_date(date),
         title=title,
         description=description,
+        categories=categories_data,
         photo=photo_urls,
         lat=lat,
         lng=lng,

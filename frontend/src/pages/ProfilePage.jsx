@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
@@ -263,30 +263,36 @@ function ProfilePage() {
                 </div>
 
                 {/* Modale di conferma eliminazione profilo */}
-                {deleteProfileId && ( // se deleteProfileId non è null, mostro il modale
-                    <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.3 }}>
-                        <div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center">
-                            <h2 className="text-xl font-bold mb-4 text-white">
-                                Vuoi cancellare il tuo profilo?
-                            </h2>
-                            <div className="flex justify-center gap-4">
-                                <button
-                                    onClick={handleDeleteProfile}
-                                    className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                                    <i className="fa-solid fa-check"></i> Sì
-                                </button>
-                                <button
-                                    onClick={() => setDeleteProfileId(null)}
-                                    className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                                    <i className="fa-solid fa-xmark"></i> No
-                                </button>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
+                <AnimatePresence>
+                    {deleteProfileId && ( // se deleteProfileId non è null, mostro il modale
+                        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}>
+                            <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center"
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.8, opacity: 0 }}
+                                transition={{ duration: 0.5 }}>
+                                <h2 className="text-xl font-bold mb-4 text-white">
+                                    Vuoi cancellare il tuo profilo?
+                                </h2>
+                                <div className="flex justify-center gap-4">
+                                    <button
+                                        onClick={handleDeleteProfile}
+                                        className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                                        <i className="fa-solid fa-check"></i> Sì
+                                    </button>
+                                    <button
+                                        onClick={() => setDeleteProfileId(null)}
+                                        className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                                        <i className="fa-solid fa-xmark"></i> No
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </main>
         </div>
     );
