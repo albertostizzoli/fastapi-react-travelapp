@@ -14,7 +14,6 @@ function AddDay() {
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // apre / chiude il modale delle categorie
 
-
   const [form, setForm] = useState({ // stato del form
     date: "",
     title: "",
@@ -75,12 +74,6 @@ function AddDay() {
   const removePhoto = (index) => {
     const newPhotos = form.photo.filter((_, i) => i !== index); // filtro l'array delle foto per rimuovere quella all'indice specificato
     setForm({ ...form, photo: newPhotos }); // aggiorno lo stato del giorno
-  };
-
-  // Funzione per gestire selezione multipla categorie
-  const handleCategoriesChange = (e) => {
-    const selected = Array.from(e.target.selectedOptions, (option) => option.value);
-    setForm({ ...form, categories: selected });
   };
 
 
@@ -228,7 +221,7 @@ function AddDay() {
             {form.categories.map((cat, i) => (
               <span
                 key={i}
-                className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm shadow-md flex items-center gap-2">
+                className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm shadow-md flex items-center gap-2">
                 {cat}
                 <button
                   type="button"

@@ -72,7 +72,7 @@ function Header() {
             <img
               src={user.photo || "/default-avatar.png"}
               alt="Avatar"
-              className="w-8 h-8 rounded-full object-cover border border-white"
+              className="w-8 h-8 rounded-full object-cover border-3 border-white"
             />
             <span>{user.name}</span>
           </Link>

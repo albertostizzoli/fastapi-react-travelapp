@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import interests from "../store/interests";
 
 function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
@@ -10,6 +11,7 @@ function EditDay() {
   const [loading, setLoading] = useState(true); // stato di caricamento
   const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // apre / chiude il modale delle categorie
   const token = localStorage.getItem("token");
 
   // recupero i dati del giorno dal backend
@@ -77,6 +79,11 @@ function EditDay() {
     formData.append("date", day.date);
     formData.append("title", day.title);
     formData.append("description", day.description);
+
+    // aggiungo tutte le categorie
+    day.categories.forEach((cat) => {
+      formData.append("categories", cat);
+    });
 
     // foto già esistenti
     (day.photo || []).forEach((item) => {
@@ -157,6 +164,126 @@ function EditDay() {
             rows="4" />
         </div>
 
+        {/* Pulsanti principali: Seleziona categorie + Carica foto */}
+        <div className="md:col-span-2 flex flex-wrap gap-4">
+          {/* Pulsante categorie */}
+          <button
+            type="button"
+            onClick={() => setIsCategoryModalOpen(true)}
+            className="flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            <i className="fa-solid fa-list-check"></i> Seleziona Tag
+          </button>
+
+          {/* Pulsante foto */}
+          <button
+            type="button"
+            onClick={handlePhotoSelect}
+            className="flex-1 px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            <i className="fa-solid fa-camera"></i> Carica Foto
+          </button>
+        </div>
+
+
+        {/* Mostra le categorie selezionate */}
+        {day.categories.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {day.categories.map((cat, i) => (
+              <span
+                key={i}
+                className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm shadow-md flex items-center gap-2">
+                {cat}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setDay({
+                      ...day,
+                      categories: day.categories.filter((c) => c !== cat),
+                    })
+                  }
+                  className="text-white hover:text-red-400">
+                  <i className="fa-solid fa-xmark text-xs"></i>
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Modale Categorie */}
+        <AnimatePresence>
+          {isCategoryModalOpen && (
+            <motion.div
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-gray/10 backdrop-blur-sm rounded-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}>
+              <motion.div
+                className="bg-blue-400 backdrop-blur-xl rounded-2xl shadow-xl p-6 w-full max-w-6xl overflow-y-auto max-h-[80vh] border border-gray-700"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3 }}>
+                <h2 className="text-white text-2xl font-bold mb-4 text-center">
+                  🏷️ Cambia i tuoi Tag per la Tappa del tuo Viaggio
+                </h2>
+
+                <div className="space-y-5">
+                  {interests.map((cat) => (
+                    <div key={cat.category}>
+                      <div className="flex flex-wrap gap-3">
+                        {cat.tags.map((tag) => (
+                          <label
+                            key={tag}
+                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${day.categories.includes(tag)
+                              ? "bg-blue-600 text-white"
+                              : "bg-white text-black"
+                              }`}>
+                            <input
+                              type="checkbox"
+                              className="accent-white"
+                              checked={day.categories.includes(tag)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setDay({
+                                    ...day,
+                                    categories: [...day.categories, tag],
+                                  });
+                                } else {
+                                  setDay({
+                                    ...day,
+                                    categories: day.categories.filter(
+                                      (c) => c !== tag
+                                    ),
+                                  });
+                                }
+                              }}
+                            />
+                            <span>{tag}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex justify-end gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsCategoryModalOpen(false)}
+                    className="px-4 py-2 bg-white hover:bg-gray-300 text-black rounded-lg transition hover:scale-105 cursor-pointer">
+                    Conferma
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsCategoryModalOpen(false)}
+                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition hover:scale-105 cursor-pointer">
+                    Chiudi
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Foto */}
         <div className="md:col-span-2">
           {/* Foto esistenti + nuove foto */}
@@ -217,15 +344,6 @@ function EditDay() {
               );
             })}
           </div>
-
-
-          {/*  Bottone per caricare la foto */}
-          <button
-            type="button"
-            onClick={handlePhotoSelect}
-            className=" px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-            <i className="fa-solid fa-camera mr-2"></i> Carica foto
-          </button>
 
           {/* Input file nascosto */}
           <input
