@@ -1,25 +1,54 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
-  const navigate = useNavigate(); // per la navigazione
-  const path = location.pathname;
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null); // stato per ottenere i dati dell'utente
 
+  // Rotte dinamiche della navbar
+  const path = location.pathname;
   const isHome = path === "/";
   const isTravels = path === "/travels";
   const isAdd = path === "/add";
   const isProfile = path === "/profile";
 
-  // funzione per il logout
+
+  // prendo l'id e il token dell'utente del LocalStorage
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+
+  // carico i dati dal backend
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+        } else {
+          console.error("Errore HTTP:", res.status);
+        }
+      } catch (error) {
+        console.error("Errore nel recupero utente:", error);
+      }
+    };
+
+    if (token && userId) fetchUser();
+  }, [token, userId]);
+
+  // funzione di Logout
   const handleLogout = () => {
-    // rimuovo token e dati utente
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-
-    // Reindirizza alla Home Page
-    navigate('/');
+    // rimuovo il token e l'id utente dal LocalStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    navigate("/"); // reindirizza alla HomePage
   };
-
 
   return (
     <nav
@@ -27,7 +56,6 @@ function Header() {
         ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
       <h1 className="font-bold text-3xl underline">Travel App</h1>
       <div className="flex gap-3">
-        {/* Area Personale solo in Home */}
         {isHome && (
           <Link
             to="/user"
@@ -37,17 +65,19 @@ function Header() {
           </Link>
         )}
 
-        {/* Profilo ovunque tranne in Home e /profile */}
-        {!isHome && !isProfile && (
+        {!isHome && !isProfile && user && (
           <Link
             to="/profile"
             className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
-            <span><i className="fa-solid fa-user"></i></span>
-            Profilo
+            <img
+              src={user.photo || "/default-avatar.png"}
+              alt="Avatar"
+              className="w-8 h-8 rounded-full object-cover border border-white"
+            />
+            <span>{user.name}</span>
           </Link>
         )}
 
-        {/* I miei viaggi ovunque tranne in Home e in /travels */}
         {!isHome && !isTravels && (
           <Link
             to="/travels"
@@ -57,7 +87,6 @@ function Header() {
           </Link>
         )}
 
-        {/* Aggiungi Viaggio ovunque tranne in Home e in /add */}
         {!isHome && !isAdd && (
           <Link
             to="/add"
@@ -67,7 +96,6 @@ function Header() {
           </Link>
         )}
 
-        { /* Pulsante Esci ovunque tranne in Home */}
         {!isHome && (
           <button
             onClick={handleLogout}
