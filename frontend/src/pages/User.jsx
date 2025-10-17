@@ -169,7 +169,7 @@ function User() {
 
               <button
                 type="submit"
-                className="px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                className="px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Accedi
               </button>
@@ -242,7 +242,7 @@ function User() {
                   type="button"
                   onClick={() => setIsModalOpen(true)}
                   className="w-full px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-plane mr-2"></i> Che tipo di viaggiatore sei?
+                  <i className="fa-solid fa-plane mr-2"></i> Tipi di viaggi
                 </button>
 
                 {/*  Bottone per caricare la foto */}
@@ -266,7 +266,7 @@ function User() {
               {/* Submit */}
               <button
                 type="submit"
-                className="mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                className="mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Registrati
               </button>
@@ -281,7 +281,7 @@ function User() {
               {/* Contenuto scrollabile */}
               <div className="flex-1 p-6 overflow-y-auto scrollbar-custom">
                 <h2 className="text-2xl font-semibold text-white mb-4">
-                  Che tipo di viaggiatore sei?
+                  Che viaggiatore sei?
                 </h2>
 
                 {interests.map((category) => ( // ciclo sulle categorie di interessi
