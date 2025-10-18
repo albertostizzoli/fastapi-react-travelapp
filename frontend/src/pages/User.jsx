@@ -44,23 +44,36 @@ function User() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://127.0.0.1:8000/users/login", null, {
-        params: { email, password },
-      });
+      const res = await axios.post(
+        "http://127.0.0.1:8000/users/login",
+        null,
+        { params: { email, password } }
+      );
 
       const token = res.data.access_token;
-      localStorage.setItem("token", token); // salvo il token
+      localStorage.setItem("token", token);
       localStorage.setItem("userId", res.data.user_id);
-      setMessage("✅ Login effettuato con successo!");
-      navigate("/profile");
+
+      // Mostra messaggio di successo
+      setMessage("✅ Login effettuato!");
+
+      // Dopo 2 secondi naviga alla pagina profilo
+      setTimeout(() => {
+        setMessage("");
+        navigate("/profile");
+      }, 2000);
+
     } catch (err) {
       if (err.response) {
         setMessage(`❌ Errore: ${err.response.data.detail}`);
       } else {
         setMessage("❌ Errore di connessione al server");
       }
+      // facciamo sparire il messaggio di errore dopo 3 secondi
+      setTimeout(() => setMessage(""), 3000);
     }
   };
+
 
   //  REGISTRAZIONE
   const handleRegister = async (e) => {
@@ -79,15 +92,23 @@ function User() {
       });
 
       setMessage("✅ Registrazione avvenuta con successo! Ora effettua il login.");
-      setIsLogin(true);
+
+      // Dopo 2 secondi resetto il messaggio e passo al login
+      setTimeout(() => {
+        setMessage("");
+        setIsLogin(true);
+      }, 2000);
+
     } catch (err) {
       if (err.response) {
         setMessage(`❌ Errore: ${err.response.data.detail}`);
       } else {
         setMessage("❌ Errore di connessione al server");
       }
+      setTimeout(() => setMessage(""), 3000);
     }
   };
+
 
   return (
     <div className="h-screen flex flex-col md:flex-row">
@@ -339,10 +360,17 @@ function User() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Messaggi */}
+        {/* Modale di conferma */}
         {message && (
-          <p className="mt-4 text-center font-semibold text-sm text-gray-700">{message}</p>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+            transition={{ duration: 0.5 }}
+            className="fixed top-6 right-6 backdrop-blur-xl border border-white
+                       text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+            <p className="text-lg font-semibold">{message}</p>
+          </motion.div>
         )}
       </div>
     </div >

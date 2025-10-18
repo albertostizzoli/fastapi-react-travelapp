@@ -7,6 +7,7 @@ function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
     const [recentTravels, setRecentTravels] = useState([]) // stato per i viaggi recenti
     const [deleteProfileId, setDeleteProfileId] = useState(null); //  stato per il modale di conferma eliminazione profilo (Apri / Chiudi)
+    const [message, setMessage] = useState(""); // stato per i messaggi di errore/successo
     const navigate = useNavigate(); // per la navigazione
 
     // uso lo useEffect per ottenere i dati dell'utente
@@ -46,10 +47,11 @@ function ProfilePage() {
     };
 
     // Funzione per eliminare un profilo
+    // Funzione per eliminare un profilo
     const handleDeleteProfile = () => {
         const userId = localStorage.getItem("userId"); // recupero l'id utente
-        const token = localStorage.getItem("token"); // recupero il token
-        if (!userId && !token) return; // se non ci sono, non faccio nulla
+        const token = localStorage.getItem("token");   // recupero il token
+        if (!userId || !token) return;                // se manca qualcosa, esci
 
         axios
             .delete(`http://127.0.0.1:8000/users/${userId}`, {
@@ -57,9 +59,23 @@ function ProfilePage() {
             })
             .then(() => {
                 setDeleteProfileId(null); // chiudi modale
-                handleLogout(); // chiamo la funzione per il logout
+
+                // Mostra messaggio di conferma
+                setMessage("Arrivederci e a presto!");
+
+                // Dopo 2 secondi effettua il logout e nasconde il messaggio
+                setTimeout(() => {
+                    setMessage("");
+                    handleLogout();
+                }, 2000);
             })
-            .catch((err) => console.error("Errore nell'eliminazione del profilo:", err));
+            .catch((err) => {
+                console.error("Errore nell'eliminazione del profilo:", err);
+
+                // Mostra messaggio di errore
+                setMessage("❌ Errore durante l'eliminazione del profilo.");
+                setTimeout(() => setMessage(""), 3000);
+            });
     };
 
     // funzione per ottenere le stelle 
@@ -294,6 +310,18 @@ function ProfilePage() {
                     )}
                 </AnimatePresence>
             </main>
+            {/* Modale di conferma */}
+            {message && (
+                <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 50 }}
+                    transition={{ duration: 0.5 }}
+                    className="fixed top-6 right-6 backdrop-blur-xl border border-white
+                       text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+                    <p className="text-lg font-semibold">{message}</p>
+                </motion.div>
+            )}
         </div>
     );
 }

@@ -8,6 +8,7 @@ function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
   const navigate = useNavigate(); // hook per navigare fra le pagine
   const [day, setDay] = useState(null); // per salvare i dati del giorno
+  const [message, setMessage] = useState(""); // messaggio di successo o errore
   const [loading, setLoading] = useState(true); // stato di caricamento
   const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
@@ -108,12 +109,16 @@ function EditDay() {
           },
         }
       );
+      setMessage("✅ Tappa modificata!");
 
-      // aggiorna la pagina dei giorni
-      navigate(`/travels/${day.travelId}/days`);
+      // reindirizzo alla pagina delle tappe
+      setTimeout(() => {
+        setMessage(""); // fa sparire il modale
+        navigate(`/travels/${day.travelId}/days`);
+      }, 2000);
     } catch (error) {
       console.error("Errore nell'aggiornamento:", error);
-      setMessage("❌ Errore durante la modifica del giorno.");
+      setMessage("❌ Errore durante la modifica della tappa.");
     }
   };
 
@@ -232,7 +237,7 @@ function EditDay() {
                 </h2>
 
                 <div className="space-y-6 flex-1 overflow-y-auto pr-2 scrollbar">
-                {/* Ciclo sullo store travellers category e experiences vengono dallo store mentre tags è la colonna sul database*/}
+                  {/* Ciclo sullo store travellers category e experiences vengono dallo store mentre tags è la colonna sul database*/}
                   {travellers.map((cat) => (
                     <div key={cat.category}>
                       <h3 className="text-lg font-semibold text-white mb-2">{cat.category}</h3>
@@ -381,6 +386,18 @@ function EditDay() {
           </button>
         </div>
       </form>
+      {/* Modale di conferma */}
+      {message && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white
+               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          <p className="text-lg font-semibold">{message}</p>
+        </motion.div>
+      )}
     </motion.div>
   );
 }

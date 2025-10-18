@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 function TravelDays() {
   const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
   const [travel, setTravel] = useState(null); // stato per ottenere i dati del viaggio
+  const [message, setMessage] = useState(""); // messaggio di successo o errore
   const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno (Apri / Chiudi)
   const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto (Apri / Chiudi)
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
@@ -50,14 +51,29 @@ function TravelDays() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {
+        // aggiorna la lista dei giorni nel viaggio
         setTravel({
           ...travel,
           days: travel.days.filter((d) => d.id !== deleteDayId),
         });
         setDeleteDayId(null);
+
+        // mostra messaggio di successo
+        setMessage("✅ Tappa cancellata!");
+
+        // fa sparire il messaggio dopo 2 secondi
+        setTimeout(() => {
+          setMessage("");
+        }, 2000);
       })
-      .catch((err) => console.error("Errore nell'eliminazione del giorno:", err));
+      .catch((err) => {
+        console.error("Errore nell'eliminazione del giorno:", err);
+        // mostra messaggio di errore
+        setMessage("❌ Errore durante la cancellazione della tappa.");
+        setTimeout(() => setMessage(""), 2500);
+      });
   };
+
 
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -357,6 +373,18 @@ function TravelDays() {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* Modale di conferma */}
+      {message && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white
+               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          <p className="text-lg font-semibold">{message}</p>
+        </motion.div>
+      )}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 function AddTravel() {
 
   const navigate = useNavigate(); // inizializzo useNavigate
+  const [message, setMessage] = useState(""); // stato per mostrare messaggi di conferma/errore
 
   // stato del form con tutti i campi del viaggio
   const [form, setForm] = useState({
@@ -20,9 +21,6 @@ function AddTravel() {
     attività: "",
     paesaggio: "",
   });
-
-  // stato per mostrare messaggi di conferma/errore
-  const [message, setMessage] = useState("");
 
   // gestisce il cambiamento dei campi input del form
   const handleChange = (e) => {
@@ -75,7 +73,7 @@ function AddTravel() {
       await axios.post("http://127.0.0.1:8000/travels", newTravel, {
         headers: { Authorization: `Bearer ${token}` }, //  aggiungo token
       });
-      setMessage(" Viaggio aggiunto con successo!");
+      setMessage("✅ Viaggio aggiunto!");
 
       // il form si resetta dopo l'invio
       setForm({
@@ -92,11 +90,15 @@ function AddTravel() {
       });
 
       // reindirizzo alla pagina dei viaggi
-      navigate("/travels");
+      setTimeout(() => {
+        setMessage(""); // fa sparire il modale
+        navigate("/travels");
+      }, 2000);
+
 
     } catch (err) {
       console.error(err);
-      setMessage(" Errore durante l'aggiunta del viaggio.");
+      setMessage("❌ Errore durante l'aggiunta del viaggio.");
     }
   };
 
@@ -220,10 +222,20 @@ function AddTravel() {
               Aggiungi Viaggio
             </button>
           </div>
-
-          {message && <p className="mt-4 text-center text-white font-bold md:col-span-2">{message}</p>}
         </form>
       </div>
+      {/* Modale di conferma */}
+      {message && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white
+               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          <p className="text-lg font-semibold">{message}</p>
+        </motion.div>
+      )}
     </motion.div>
   );
 }

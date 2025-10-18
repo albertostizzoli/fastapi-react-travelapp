@@ -9,6 +9,7 @@ function AddDay() {
   const navigate = useNavigate(); // per reindirizzare dopo l'aggiunta del giorno
   const travelIdFromState = location.state?.travelId || ""; // id passato da TravelDays per avere il viaggio già selezionato
   const [travels, setTravels] = useState([]); // lista viaggi esistenti
+  const [message, setMessage] = useState(""); // messaggio di successo o errore
   const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
   const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
@@ -21,7 +22,6 @@ function AddDay() {
     tags: [], // array di tags
     photo: [], // array di foto
   });
-  const [message, setMessage] = useState(""); // messaggio di successo o errore
 
   // carico i viaggi dal backend
   useEffect(() => {
@@ -113,15 +113,18 @@ function AddDay() {
         }
       );
 
-      setMessage(" Giorno aggiunto con successo!");
       setForm({ date: "", title: "", description: "", tags: [], photo: [] }); // resetto il form
+      setMessage("✅ Tappa aggiunta!");
 
-      // reindirizzo alla pagina dei giorni del viaggio selezionato
-      navigate(`/travels/${selectedTravel}/days`);
+      // reindirizzo alla pagina delle tappe
+      setTimeout(() => {
+        setMessage(""); // fa sparire il modale
+        navigate(`/travels/${selectedTravel}/days`);
+      }, 2000);
 
     } catch (err) {
       console.error(err);
-      setMessage(" Errore durante l'aggiunta del giorno.");
+      setMessage("❌ Errore durante l'aggiunta della tappa.");
     }
   };
 
@@ -403,9 +406,19 @@ function AddDay() {
             Aggiungi Tappa
           </button>
         </div>
-
-        {message && <p className="mt-4 text-center text-white font-bold md:col-span-2">{message}</p>}
       </form>
+      {/* Modale di conferma */}
+      {message && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white
+               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          <p className="text-lg font-semibold">{message}</p>
+        </motion.div>
+      )}
     </motion.div >
   );
 }

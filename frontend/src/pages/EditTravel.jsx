@@ -7,6 +7,7 @@ function EditTravel() {
   const { id } = useParams(); // recupero l'ID del viaggio dall'URL
   const navigate = useNavigate(); // hook per navigare fra le pagine
   const [travel, setTravel] = useState(null); // per salvare i dati del viaggio
+  const [message, setMessage] = useState(""); // stato per mostrare messaggi di conferma/errore
 
   // recupero i viaggi dal backend
   useEffect(() => {
@@ -51,28 +52,34 @@ function EditTravel() {
     return avg.toFixed(1); // media con 1 decimale
   };
 
-  // invio dal form e aggiorna il backend
-  const handleSubmit = (e) => {
-    e.preventDefault(); // previene il comportamento di default del form
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const token = localStorage.getItem("token");
 
-    const updatedTravel = {
-      ...travel, // mantiene gli altri dati del viaggio
-      general_vote: calculateGeneralVote() // aggiorna la media dei voti
-        ? parseFloat(calculateGeneralVote()) // converte in numero
-        : null, // se non c'è media, mette null
-    };
+    try {
+      const updatedTravel = {
+        ...travel,
+        general_vote: calculateGeneralVote()
+          ? parseFloat(calculateGeneralVote())
+          : null,
+      };
 
-    axios
-      .put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel, {
-        headers: { Authorization: `Bearer ${token}` }, //  aggiungo token
-      }) // invia la richiesta PUT al backend
-      .then(() => {
-        navigate("/travels"); // torna alla pagina dei viaggi
-      })
-      .catch((err) => console.error(err));
+      await axios.put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setMessage("✅ Viaggio aggiornato!");
+
+      setTimeout(() => {
+        setMessage("");
+        navigate("/travels");
+      }, 2000);
+    } catch (err) {
+      console.error("Errore durante l'aggiornamento del viaggio:", err);
+      setMessage("❌ Errore durante l'aggiornamento del viaggio.");
+    }
   };
+
 
   if (!travel) return <p className="text-center">Caricamento...</p>;
 
@@ -203,6 +210,18 @@ function EditTravel() {
           </div>
         </form>
       </div>
+      {/* Modale di conferma */}
+      {message && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white
+               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          <p className="text-lg font-semibold">{message}</p>
+        </motion.div>
+      )}
     </motion.div>
   );
 }

@@ -32,10 +32,10 @@ function StarRating({ rating = 0, max = 5 }) {
 }
 
 
-
 function Travels() {
   const [travels, setTravels] = useState([]); // stato per i viaggi
   const [deleteId, setDeleteId] = useState(null); // stato per l'id del viaggio da eliminare
+  const [message, setMessage] = useState(""); // messaggio di successo o errore
 
   // uso lo useEffect per ottenere i dati dei viaggi
   useEffect(() => {
@@ -54,22 +54,33 @@ function Travels() {
 
   // con questa cancello tutti i dati del viaggio
   const handleDelete = () => {
-    const token = localStorage.getItem("token"); //  recupera il token JWT
+    const token = localStorage.getItem("token"); // recupera il token JWT
     if (!token) return; // se non c'è token, non faccio nulla
 
     axios
       .delete(`http://127.0.0.1:8000/travels/${deleteId}`, {
         headers: {
-          Authorization: `Bearer ${token}`, //  invia il token
+          Authorization: `Bearer ${token}`, // invia il token
         },
       })
       .then(() => {
-        setTravels(travels.filter((t) => t.id !== deleteId)); // aggiorna lista
-        setDeleteId(null); // chiudi modale
-      })
-      .catch((err) => console.error(err));
-  };
+        // aggiorna la lista rimuovendo il viaggio eliminato
+        setTravels(travels.filter((t) => t.id !== deleteId));
+        setDeleteId(null);
 
+        // mostra messaggio di successo
+        setMessage("✅ Viaggio eliminato!");
+
+        // nasconde il messaggio dopo 2 secondi
+        setTimeout(() => setMessage(""), 2000);
+      })
+      .catch((err) => {
+        console.error("Errore durante l'eliminazione del viaggio:", err);
+        // mostra messaggio di errore
+        setMessage("❌ Errore durante l'eliminazione del viaggio.");
+        setTimeout(() => setMessage(""), 2500);
+      });
+  };
 
 
   return (
@@ -182,6 +193,18 @@ function Travels() {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* Modale di conferma */}
+      {message && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white
+               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          <p className="text-lg font-semibold">{message}</p>
+        </motion.div>
+      )}
     </div>
   );
 }
