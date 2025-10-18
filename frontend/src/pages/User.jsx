@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import interests from "../store/interests";
+import travellers from "../store/travellers";
 import { motion, AnimatePresence } from "framer-motion";
 
 function User() {
@@ -242,7 +242,7 @@ function User() {
                   type="button"
                   onClick={() => setIsModalOpen(true)}
                   className="w-full px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-plane mr-2"></i> Tipi di viaggi
+                  <i className="fa-solid fa-plane mr-2"></i> Esperienze
                 </button>
 
                 {/*  Bottone per caricare la foto */}
@@ -274,62 +274,71 @@ function User() {
           )}
         </AnimatePresence>
 
-        { /* Modale Interessi */}
-        {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-[9999] p-4">
-            <div className="bg-blue-500 rounded-xl w-full max-w-3xl max-h-[90vh] shadow-lg flex flex-col overflow-hidden">
-              {/* Contenuto scrollabile */}
-              <div className="flex-1 p-6 overflow-y-auto scrollbar-custom">
-                <h2 className="text-2xl font-semibold text-white mb-4">
-                  Che viaggiatore sei?
-                </h2>
+        { /* Modale Viaggiatori */}
+        <AnimatePresence>
+          {isModalOpen && (
+            <motion.div className="fixed inset-0 flex items-center justify-center bg-black/50 z-[9999] p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}>
+              <motion.div className="bg-blue-500 rounded-xl w-full max-w-3xl max-h-[90vh] shadow-lg flex flex-col overflow-hidden"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3 }}>
+                {/* Contenuto scrollabile */}
+                <div className="flex-1 p-6 overflow-y-auto scrollbar-custom">
+                  <h2 className="text-2xl font-semibold text-white mb-4">
+                    Dicci le tue esperienze
+                  </h2>
 
-                {interests.map((category) => ( // ciclo sulle categorie di interessi
-                  <div key={category.category} className="mb-6">
-                    <h3 className="text-lg font-bold text-white mb-1">
-                      {category.category}
-                    </h3>
-                    {/* Descrizione della categoria */}
-                    {category.description && (
-                      <p className="text-sm text-white mb-3 italic">
-                        {category.description}
-                      </p>
-                    )}
+                  {travellers.map((category) => ( // ciclo sulle categorie dei viaggiatori
+                    <div key={category.category} className="mb-6">
+                      <h3 className="text-lg font-bold text-white mb-1">
+                        {category.category}
+                      </h3>
+                      {/* Descrizione della categoria */}
+                      {category.description && (
+                        <p className="text-sm text-white mb-3 italic">
+                          {category.description}
+                        </p>
+                      )}
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                      {category.tags.map((tag) => ( // ciclo sui tag di ogni categoria
-                        <button
-                          type="button"
-                          key={tag}
-                          onClick={() => toggleInterest(tag)} // seleziono/deseleziono il tag
-                          className={`px-3 py-2 rounded-lg border text-sm transition cursor-pointer ${selectedInterests.includes(tag)
-                            ? "bg-yellow-300 text-black border-yellow-600"
-                            : "bg-orange-500 text-black border-orange-500 hover:bg-orange-400"
-                            }`}>
-                          {tag}
-                        </button>
-                      ))}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {category.experiences.map((experience) => ( // ciclo sui tag di ogni categoria
+                          <button
+                            type="button"
+                            key={experience}
+                            onClick={() => toggleInterest(experience)} // seleziono/deseleziono il tag
+                            className={`px-3 py-2 rounded-lg border text-sm transition cursor-pointer ${selectedInterests.includes(experience)
+                              ? "bg-yellow-300 text-black border-yellow-600"
+                              : "bg-orange-500 text-black border-orange-500 hover:bg-orange-400"
+                              }`}>
+                            {experience}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              {/* Azioni */}
-              <div className="p-4 flex justify-end gap-3 border-t border-gray-700">
-                <button
-                  onClick={() => setIsModalOpen(false)} // chiudo il modale salvando le preferenze
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-400 transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-check mr-2"></i> Salva Preferenze
-                </button>
-                <button
-                  onClick={() => setIsModalOpen(false)} // chiudo il modale
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-400 transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-xmark mr-2"></i> Annulla
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+                {/* Azioni */}
+                <div className="p-4 flex justify-end gap-3 border-t border-gray-700">
+                  <button
+                    onClick={() => setIsModalOpen(false)} // chiudo il modale salvando le preferenze
+                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-400 transition hover:scale-105 cursor-pointer">
+                    <i className="fa-solid fa-check mr-2"></i> Salva Preferenze
+                  </button>
+                  <button
+                    onClick={() => setIsModalOpen(false)} // chiudo il modale
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-400 transition hover:scale-105 cursor-pointer">
+                    <i className="fa-solid fa-xmark mr-2"></i> Annulla
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Messaggi */}
         {message && (

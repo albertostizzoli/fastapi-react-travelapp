@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import interests from "../store/interests";
+import travellers from "../store/travellers";
 
 function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
@@ -227,37 +227,37 @@ function EditDay() {
                 </h2>
 
                 <div className="space-y-5">
-                  {interests.map((cat) => (
+                  {travellers.map((cat) => (
                     <div key={cat.category}>
                       <div className="flex flex-wrap gap-3">
-                        {cat.tags.map((tag) => (
+                        {cat.experiences.map((experience) => (
                           <label
-                            key={tag}
-                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${day.categories.includes(tag)
+                            key={experience}
+                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${day.categories.includes(experience)
                               ? "bg-blue-600 text-white"
                               : "bg-white text-black"
                               }`}>
                             <input
                               type="checkbox"
                               className="accent-white"
-                              checked={day.categories.includes(tag)}
+                              checked={day.categories.includes(experience)}
                               onChange={(e) => {
                                 if (e.target.checked) {
                                   setDay({
                                     ...day,
-                                    categories: [...day.categories, tag],
+                                    categories: [...day.categories, experience],
                                   });
                                 } else {
                                   setDay({
                                     ...day,
                                     categories: day.categories.filter(
-                                      (c) => c !== tag
+                                      (c) => c !== experience
                                     ),
                                   });
                                 }
                               }}
                             />
-                            <span>{tag}</span>
+                            <span>{experience}</span>
                           </label>
                         ))}
                       </div>

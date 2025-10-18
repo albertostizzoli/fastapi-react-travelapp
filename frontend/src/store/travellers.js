@@ -1,8 +1,8 @@
-const interests = [
+const travellers = [
   {
     category: "🌋 L’Avventuriero",
     description: "Ama l’adrenalina, l’esplorazione e le esperienze estreme all’aria aperta.",
-    tags: [
+    experiences: [
       "Trekking & Escursionismo",
       "Camping Selvaggio",
       "Arrampicata",
@@ -22,7 +22,7 @@ const interests = [
   {
     category: "🏛️ Il Viaggiatore Culturale",
     description: "Curioso, ama scoprire la storia, le tradizioni e l’arte dei luoghi.",
-    tags: [
+    experiences: [
       "Città Storiche",
       "Musei & Gallerie",
       "Arte & Architettura",
@@ -39,7 +39,7 @@ const interests = [
   {
     category: "🍷 Il Food Lover",
     description: "Assaggia tutto, ama la cucina autentica e i sapori locali.",
-    tags: [
+    experiences: [
       "Cucina Locale",
       "Street Food Experience",
       "Degustazione Vini",
@@ -52,7 +52,7 @@ const interests = [
   {
     category: "🌿 Il Naturalista",
     description: "Cerca pace e connessione con la natura, tra montagne, foreste e mare.",
-    tags: [
+    experiences: [
       "Natura & Paesaggi",
       "Birdwatching",
       "Fotografia Naturalistica",
@@ -68,7 +68,7 @@ const interests = [
   {
     category: "💞 Il Viaggiatore Romantico",
     description: "Ama condividere emozioni e panorami con la propria metà.",
-    tags: [
+    experiences: [
       "Viaggi Romantici",
       "Resort sul Mare",
       "Spa di Lusso",
@@ -81,7 +81,7 @@ const interests = [
   {
     category: "🏙️ L’Esploratore Urbano",
     description: "Si sente a casa tra le luci della città, i musei e i locali notturni.",
-    tags: [
+    experiences: [
       "Capitali Europee",
       "Vita Notturna",
       "Shopping Metropolitano",
@@ -97,7 +97,7 @@ const interests = [
   {
     category: "💻 Il Nomade Digitale",
     description: "Lavora viaggiando, cercando sempre nuovi luoghi stimolanti.",
-    tags: [
+    experiences: [
       "Workation Spots",
       "Comunità Remote Worker",
       "Solo Travel",
@@ -110,7 +110,7 @@ const interests = [
   {
     category: "👨‍👩‍👧‍👦 Il Viaggiatore in Famiglia",
     description: "Cerca esperienze da vivere con i propri cari, tra relax e scoperta.",
-    tags: [
+    experiences: [
       "Vacanze in Famiglia",
       "Resort per Bambini",
       "Natura Interattiva",
@@ -123,7 +123,7 @@ const interests = [
   {
     category: "🤝 Il Volontario",
     description: "Viaggia per aiutare, imparare e restituire valore alle comunità locali.",
-    tags: [
+    experiences: [
       "Volontariato Ambientale",
       "Viaggi Etici",
       "Eco-Turismo Solidale",
@@ -133,4 +133,4 @@ const interests = [
   }
 ];
 
-export default interests;
+export default travellers;

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import interests from "../store/interests";
+import travellers from "../store/travellers";
 
 function AddDay() {
   const location = useLocation(); // per ottenere lo stato passato da TravelDays
@@ -258,37 +258,37 @@ function AddDay() {
                 </h2>
 
                 <div className="space-y-5">
-                  {interests.map((cat) => (
+                  {travellers.map((cat) => (
                     <div key={cat.category}>
                       <div className="flex flex-wrap gap-3">
-                        {cat.tags.map((tag) => (
+                        {cat.experiences.map((experience) => (
                           <label
-                            key={tag}
-                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${form.categories.includes(tag)
+                            key={experience}
+                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${form.categories.includes(experience)
                               ? "bg-blue-600 border-blue-400 text-white"
                               : "bg-transparent border-gray-400 text-white hover:bg-blue-400/20"
                               }`}>
                             <input
                               type="checkbox"
                               className="accent-blue-500"
-                              checked={form.categories.includes(tag)}
+                              checked={form.categories.includes(experience)}
                               onChange={(e) => {
                                 if (e.target.checked) {
                                   setForm({
                                     ...form,
-                                    categories: [...form.categories, tag],
+                                    categories: [...form.categories, experience],
                                   });
                                 } else {
                                   setForm({
                                     ...form,
                                     categories: form.categories.filter(
-                                      (c) => c !== tag
+                                      (c) => c !== experience
                                     ),
                                   });
                                 }
                               }}
                             />
-                            <span>{tag}</span>
+                            <span>{experience}</span>
                           </label>
                         ))}
                       </div>
