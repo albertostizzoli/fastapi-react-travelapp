@@ -31,7 +31,7 @@ async def add_day_travel(
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
-    categories: Optional[List[str]] = Form(None),
+    tags: Optional[List[str]] = Form(None),
     photos: List[UploadFile] = None,
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user) 
@@ -52,15 +52,15 @@ async def add_day_travel(
             result = cloudinary.uploader.upload(photo.file)
             photo_urls.append(result["secure_url"])
 
-    # carico le categorie
-    categories_data = categories or []
+    # carico i tags
+    tags_data = tags or []
 
     # creo il giorno nel DB
     db_day = DayDB(
         date=format_date(date),
         title=title,
         description=description,
-        categories=categories_data,
+        tags=tags_data,
         photo=photo_urls,
         lat=lat,
         lng=lng,
@@ -80,7 +80,7 @@ async def update_day_travel(
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
-    categories: Optional[List[str]] = Form(None),
+    tags: Optional[List[str]] = Form(None),
     photos: List[UploadFile] = None,
     existing_photos: List[str] = Form([]),  # URL foto già presenti
     db: Session = Depends(get_db),
@@ -104,14 +104,14 @@ async def update_day_travel(
     if not db_day:
         raise HTTPException(status_code=404, detail="Giorno non trovato")
     
-        # carico le categorie
-    categories_data = categories or []
+    # carico i tags
+    tags_data = tags or []
 
     # aggiorno i campi
     db_day.date = format_date(date)
     db_day.title = title
     db_day.description = description
-    db_day.categories = categories_data
+    db_day.tags = tags_data
 
     # gestisco le foto: mantieni quelle esistenti + nuove caricate
     photo_urls = existing_photos or []

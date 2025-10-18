@@ -11,7 +11,7 @@ function EditDay() {
   const [loading, setLoading] = useState(true); // stato di caricamento
   const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // apre / chiude il modale delle categorie
+  const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
   const token = localStorage.getItem("token");
 
   // recupero i dati del giorno dal backend
@@ -80,9 +80,9 @@ function EditDay() {
     formData.append("title", day.title);
     formData.append("description", day.description);
 
-    // aggiungo tutte le categorie
-    day.categories.forEach((cat) => {
-      formData.append("categories", cat);
+    // aggiungo tutti i tags
+    day.tags.forEach((tag) => {
+      formData.append("tags", tag);
     });
 
     // foto già esistenti
@@ -169,7 +169,7 @@ function EditDay() {
           {/* Pulsante categorie */}
           <button
             type="button"
-            onClick={() => setIsCategoryModalOpen(true)}
+            onClick={() => setIsTagModalOpen(true)}
             className="flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
@@ -184,73 +184,76 @@ function EditDay() {
         </div>
 
 
-        {/* Mostra le categorie selezionate */}
-        {day.categories.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {day.categories.map((cat, i) => (
+        {/* Mostra i tags selezionati */}
+        {day.tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-3 w-full">
+            {day.tags.map((tag, i) => (
               <span
                 key={i}
-                className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm shadow-md flex items-center gap-2">
-                {cat}
+                className="flex items-center justify-between bg-blue-600 text-white px-4 py-2 rounded-xl text-base font-semibold shadow-md transition-transform hover:scale-105">
+                <span>{tag}</span>
                 <button
                   type="button"
                   onClick={() =>
                     setDay({
                       ...day,
-                      categories: day.categories.filter((c) => c !== cat),
+                      tags: day.tags.filter((c) => c !== tag),
                     })
                   }
-                  className="text-white hover:text-red-400">
-                  <i className="fa-solid fa-xmark text-xs"></i>
+                  className="ml-3 text-white hover:text-red-400 transition">
+                  <i className="fa-solid fa-xmark text-sm"></i>
                 </button>
               </span>
             ))}
           </div>
         )}
 
+
         {/* Modale Categorie */}
         <AnimatePresence>
-          {isCategoryModalOpen && (
+          {isTagModalOpen && (
             <motion.div
-              className="fixed inset-0 z-[9999] flex items-center justify-center bg-gray/10 backdrop-blur-sm rounded-2xl"
+              className="fixed inset-0 z-[9999] flex items-center justify-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}>
               <motion.div
-                className="bg-blue-400 backdrop-blur-xl rounded-2xl shadow-xl p-6 w-full max-w-6xl overflow-y-auto max-h-[80vh] border border-gray-700"
+                className="bg-blue-500/90 backdrop-blur-xl rounded-2xl shadow-2xl p-6 w-[90%] max-w-4xl overflow-y-auto max-h-[75vh] border border-white flex flex-col"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ duration: 0.3 }}>
-                <h2 className="text-white text-2xl font-bold mb-4 text-center">
+
+                <h2 className="text-white text-2xl font-bold mb-6 text-center">
                   🏷️ Cambia i tuoi Tag per la Tappa del tuo Viaggio
                 </h2>
 
-                <div className="space-y-5">
+                <div className="space-y-6 flex-1 overflow-y-auto pr-2">
                   {travellers.map((cat) => (
                     <div key={cat.category}>
-                      <div className="flex flex-wrap gap-3">
+                      <h3 className="text-lg font-semibold text-white mb-2">{cat.category}</h3>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                         {cat.experiences.map((experience) => (
                           <label
                             key={experience}
-                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${day.categories.includes(experience)
-                              ? "bg-blue-600 text-white"
-                              : "bg-white text-black"
+                            className={`flex items-center justify-center text-center px-3 py-2 border rounded-lg cursor-pointer text-sm font-medium transition-all ${day.tags.includes(experience)
+                              ? "bg-blue-700 border-white text-white shadow-md"
+                              : "bg-white text-black border-gray-300 hover:bg-blue-100"
                               }`}>
                             <input
                               type="checkbox"
-                              className="accent-white"
-                              checked={day.categories.includes(experience)}
+                              className="hidden"
+                              checked={day.tags.includes(experience)}
                               onChange={(e) => {
                                 if (e.target.checked) {
                                   setDay({
                                     ...day,
-                                    categories: [...day.categories, experience],
+                                    tags: [...day.tags, experience],
                                   });
                                 } else {
                                   setDay({
                                     ...day,
-                                    categories: day.categories.filter(
+                                    tags: day.tags.filter(
                                       (c) => c !== experience
                                     ),
                                   });
@@ -268,13 +271,13 @@ function EditDay() {
                 <div className="mt-6 flex justify-end gap-4">
                   <button
                     type="button"
-                    onClick={() => setIsCategoryModalOpen(false)}
-                    className="px-4 py-2 bg-white hover:bg-gray-300 text-black rounded-lg transition hover:scale-105 cursor-pointer">
+                    onClick={() => setIsTagModalOpen(false)}
+                    className="px-4 py-2 bg-white hover:bg-gray-200 text-black rounded-lg transition hover:scale-105 cursor-pointer">
                     Conferma
                   </button>
                   <button
                     type="button"
-                    onClick={() => setIsCategoryModalOpen(false)}
+                    onClick={() => setIsTagModalOpen(false)}
                     className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition hover:scale-105 cursor-pointer">
                     Chiudi
                   </button>
@@ -283,6 +286,7 @@ function EditDay() {
             </motion.div>
           )}
         </AnimatePresence>
+
 
         {/* Foto */}
         <div className="md:col-span-2">

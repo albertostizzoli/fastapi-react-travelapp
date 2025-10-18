@@ -229,14 +229,14 @@ function TravelDays() {
                 <p className="text-white text-justify mb-3">{selectedDay.description}</p>
 
                 {/* Categorie  */}
-                {selectedDay.categories?.length > 0 && (
+                {selectedDay.tags?.length > 0 && (
                   <div className="mb-6">
                     <div className="flex flex-wrap gap-2">
-                      {selectedDay.categories.map((cat, i) => (
+                      {selectedDay.tags.map((tag, i) => (
                         <span
                           key={i}
                           className="bg-blue-500 text-white px-3 py-2 rounded-full text-sm shadow-md mt-2">
-                          {cat}
+                          {tag}
                         </span>
                       ))}
                     </div>

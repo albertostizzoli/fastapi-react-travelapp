@@ -12,13 +12,13 @@ function AddDay() {
   const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
   const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // apre / chiude il modale delle categorie
+  const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
 
   const [form, setForm] = useState({ // stato del form
     date: "",
     title: "",
     description: "",
-    categories: [], // array di categorie
+    tags: [], // array di tags
     photo: [], // array di foto
   });
   const [message, setMessage] = useState(""); // messaggio di successo o errore
@@ -92,9 +92,9 @@ function AddDay() {
       formData.append("title", form.title);
       formData.append("description", form.description);
 
-      // aggiungo tutte le categorie
-      form.categories.forEach((cat) => {
-        formData.append("categories", cat);
+      // aggiungo tutti i tags
+      form.tags.forEach((tag) => {
+        formData.append("tags", tag);
       });
 
       // aggiungo tutte le foto
@@ -114,7 +114,7 @@ function AddDay() {
       );
 
       setMessage(" Giorno aggiunto con successo!");
-      setForm({ date: "", title: "", description: "", categories: [], photo: [] }); // resetto il form
+      setForm({ date: "", title: "", description: "", tags: [], photo: [] }); // resetto il form
 
       // reindirizzo alla pagina dei giorni del viaggio selezionato
       navigate(`/travels/${selectedTravel}/days`);
@@ -200,7 +200,7 @@ function AddDay() {
           {/* Pulsante categorie */}
           <button
             type="button"
-            onClick={() => setIsCategoryModalOpen(true)}
+            onClick={() => setIsTagModalOpen(true)}
             className="flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
@@ -215,24 +215,24 @@ function AddDay() {
         </div>
 
 
-        {/* Mostra le categorie selezionate */}
-        {form.categories.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {form.categories.map((cat, i) => (
+        {/* Mostra i tags selezionati */}
+        {form.tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-3 w-full">
+            {form.tags.map((tag, i) => (
               <span
                 key={i}
-                className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm shadow-md flex items-center gap-2">
-                {cat}
+                className="flex items-center justify-between bg-blue-600 text-white px-4 py-2 rounded-xl text-base font-semibold shadow-md transition-transform hover:scale-105">
+                <span>{tag}</span>
                 <button
                   type="button"
                   onClick={() =>
                     setForm({
                       ...form,
-                      categories: form.categories.filter((c) => c !== cat),
+                      tags: form.tags.filter((c) => c !== tag),
                     })
                   }
-                  className="text-white hover:text-red-400">
-                  <i className="fa-solid fa-xmark text-xs"></i>
+                  className="ml-3 text-white hover:text-red-400 transition">
+                  <i className="fa-solid fa-xmark text-sm"></i>
                 </button>
               </span>
             ))}
@@ -241,55 +241,57 @@ function AddDay() {
 
         {/* Modale Categorie */}
         <AnimatePresence>
-          {isCategoryModalOpen && (
+          {isTagModalOpen && (
             <motion.div
-              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm rounded-2xl"
+              className="fixed inset-0 z-[9999] rounded flex items-center justify-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}>
+
               <motion.div
-                className="bg-gray-900 rounded-2xl shadow-xl p-6 w-full max-w-6xl overflow-y-auto max-h-[80vh] border border-gray-700 scrollbar-custom"
+                className="bg-gray-900 rounded-2xl shadow-2xl p-6 w-[90%] max-w-4xl overflow-y-auto max-h-[75vh] border border-gray-700 flex flex-col"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ duration: 0.3 }}>
+
                 <h2 className="text-white text-2xl font-bold mb-4 text-center">
                   🏷️ Seleziona i tuoi Tag per la Tappa del tuo Viaggio
                 </h2>
 
-                <div className="space-y-5">
+                <div className="space-y-5 flex-1 overflow-y-auto pr-2 scrollbar-custom">
                   {travellers.map((cat) => (
                     <div key={cat.category}>
-                      <div className="flex flex-wrap gap-3">
+                      <h3 className="text-lg font-semibold text-blue-400 mb-2">{cat.category}</h3>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                         {cat.experiences.map((experience) => (
                           <label
                             key={experience}
-                            className={`flex items-center gap-2 px-3 py-1 border rounded-full cursor-pointer transition-all ${form.categories.includes(experience)
-                              ? "bg-blue-600 border-blue-400 text-white"
-                              : "bg-transparent border-gray-400 text-white hover:bg-blue-400/20"
+                            className={`flex items-center justify-center text-center gap-2 px-3 py-2 border rounded-lg cursor-pointer text-sm font-medium transition-all ${form.tags.includes(experience)
+                              ? "bg-blue-600 border-blue-400 text-white shadow-md"
+                              : "bg-transparent border-gray-500 text-white hover:bg-blue-400/20 hover:scale-105"
                               }`}>
                             <input
                               type="checkbox"
-                              className="accent-blue-500"
-                              checked={form.categories.includes(experience)}
+                              className="accent-blue-500 hidden"
+                              checked={form.tags.includes(experience)}
                               onChange={(e) => {
                                 if (e.target.checked) {
                                   setForm({
                                     ...form,
-                                    categories: [...form.categories, experience],
+                                    tags: [...form.tags, experience],
                                   });
                                 } else {
                                   setForm({
                                     ...form,
-                                    categories: form.categories.filter(
-                                      (c) => c !== experience
-                                    ),
+                                    tags: form.tags.filter((c) => c !== experience),
                                   });
                                 }
                               }}
                             />
                             <span>{experience}</span>
                           </label>
+
                         ))}
                       </div>
                     </div>
@@ -299,13 +301,13 @@ function AddDay() {
                 <div className="mt-6 flex justify-end gap-4">
                   <button
                     type="button"
-                    onClick={() => setIsCategoryModalOpen(false)}
+                    onClick={() => setIsTagModalOpen(false)}
                     className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition hover:scale-105 cursor-pointer">
                     Conferma
                   </button>
                   <button
                     type="button"
-                    onClick={() => setIsCategoryModalOpen(false)}
+                    onClick={() => setIsTagModalOpen(false)}
                     className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition hover:scale-105 cursor-pointer">
                     Chiudi
                   </button>
