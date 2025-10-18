@@ -260,6 +260,7 @@ function AddDay() {
                 </h2>
 
                 <div className="space-y-5 flex-1 overflow-y-auto pr-2 scrollbar-custom">
+                  {/* Ciclo sullo store travellers category e experiences vengono dallo store mentre tags è la colonna sul database*/}
                   {travellers.map((cat) => (
                     <div key={cat.category}>
                       <h3 className="text-lg font-semibold text-blue-400 mb-2">{cat.category}</h3>

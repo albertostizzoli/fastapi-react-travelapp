@@ -142,14 +142,14 @@ function User() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.4 }}
-              className="backdrop-blur-xl shadow-lg rounded-2xl p-8 w-11/12 sm:w-96 border sm:border-black">
+              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-96 border sm:border-black">
               <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">Login</h2>
 
               <div className="mb-4">
                 <label className="block sm:text-black mb-1 text-white">Email</label>
                 <input
                   type="email"
-                  className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                  className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -160,7 +160,7 @@ function User() {
                 <label className="block sm:text-black mb-1 text-white">Password</label>
                 <input
                   type="password"
-                  className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                  className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -169,7 +169,7 @@ function User() {
 
               <button
                 type="submit"
-                className="px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                className=" font-semibold px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Accedi
               </button>
@@ -184,7 +184,7 @@ function User() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="backdrop-blur-xl shadow-lg rounded-2xl p-8 w-11/12 sm:w-[600px] border sm:border-black">
+              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-[600px] border sm:border-black">
               <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">
                 Registrati
               </h2>
@@ -195,7 +195,7 @@ function User() {
                   <label className="block sm:text-black mb-1 text-white">Nome</label>
                   <input
                     type="text"
-                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -206,7 +206,7 @@ function User() {
                   <label className="block sm:text-black mb-1 text-white">Cognome</label>
                   <input
                     type="text"
-                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
                     required
@@ -217,7 +217,7 @@ function User() {
                   <label className="block sm:text-black mb-1 text-white">Email</label>
                   <input
                     type="email"
-                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -228,7 +228,7 @@ function User() {
                   <label className="block sm:text-black mb-1 text-white">Password</label>
                   <input
                     type="password"
-                    className="w-full border rounded-lg px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -241,7 +241,7 @@ function User() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  className="font-semibold w-full px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-plane mr-2"></i> Esperienze
                 </button>
 
@@ -249,7 +249,7 @@ function User() {
                 <button
                   type="button"
                   onClick={handlePhotoSelect}
-                  className="w-full px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  className="font-semibold w-full px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-camera mr-2"></i> Carica foto
                 </button>
 
@@ -266,7 +266,7 @@ function User() {
               {/* Submit */}
               <button
                 type="submit"
-                className="mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                className="font-semibold mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Registrati
               </button>
@@ -281,7 +281,7 @@ function User() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}>
-              <motion.div className="bg-blue-500 rounded-xl w-full max-w-3xl max-h-[90vh] shadow-lg flex flex-col overflow-hidden"
+              <motion.div className="bg-gray-800 rounded-3xl w-full max-w-3xl max-h-[90vh] shadow-lg flex flex-col overflow-hidden"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -310,9 +310,9 @@ function User() {
                             type="button"
                             key={experience}
                             onClick={() => toggleInterest(experience)} // seleziono/deseleziono il tag
-                            className={`px-3 py-2 rounded-lg border text-sm transition cursor-pointer ${selectedInterests.includes(experience)
-                              ? "bg-yellow-300 text-black border-yellow-600"
-                              : "bg-orange-500 text-black border-orange-500 hover:bg-orange-400"
+                            className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 border rounded-full cursor-pointer text-sm transition-all hover:scale-105 ${selectedInterests.includes(experience)
+                              ? "bg-orange-400 text-black"
+                              : "bg-blue-500 text-white hover:bg-blue-400"
                               }`}>
                             {experience}
                           </button>
@@ -326,12 +326,12 @@ function User() {
                 <div className="p-4 flex justify-end gap-3 border-t border-gray-700">
                   <button
                     onClick={() => setIsModalOpen(false)} // chiudo il modale salvando le preferenze
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-400 transition hover:scale-105 cursor-pointer">
-                    <i className="fa-solid fa-check mr-2"></i> Salva Preferenze
+                    className="font-semibold px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-400 transition hover:scale-105 cursor-pointer">
+                    <i className="fa-solid fa-check mr-2"></i> Salva Esperienze
                   </button>
                   <button
                     onClick={() => setIsModalOpen(false)} // chiudo il modale
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-400 transition hover:scale-105 cursor-pointer">
+                    className="font-semibold px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-400 transition hover:scale-105 cursor-pointer">
                     <i className="fa-solid fa-xmark mr-2"></i> Annulla
                   </button>
                 </div>
@@ -342,7 +342,7 @@ function User() {
 
         {/* Messaggi */}
         {message && (
-          <p className="mt-4 text-center text-sm text-gray-700">{message}</p>
+          <p className="mt-4 text-center font-semibold text-sm text-gray-700">{message}</p>
         )}
       </div>
     </div >

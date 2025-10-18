@@ -87,7 +87,7 @@ function Travels() {
         {travels.map((v) => (
           <motion.div
             key={v.id}
-            className="backdrop-blur-xl bg-gray-700/30 border border-gray-700 rounded-2xl shadow-lg overflow-hidden"
+            className="backdrop-blur-xl bg-gray-600/30 border border-gray-700 rounded-3xl shadow-lg overflow-hidden"
             variants={{
               hidden: { scaleY: 0, opacity: 0, originY: 0 },
               visible: { scaleY: 1, opacity: 1 }
@@ -126,19 +126,19 @@ function Travels() {
               <div className="flex flex-col sm:flex-row gap-2 mt-4">
                 <Link
                   to={`/travels/${v.id}/days`}
-                  className="px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap">
+                  className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
                   <i className="fa-solid fa-calendar-day"></i>
                   Dettagli Viaggio
                 </Link>
                 <Link
                   to={`/travels/${v.id}/edit`}
-                  className="px-2 py-2 flex justify-center items-center gap-1 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap">
+                  className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-yellow-500 hover:bg-yellow-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
                   <i className="fa-solid fa-edit"></i>
                   Modifica Viaggio
                 </Link>
                 <button
                   onClick={() => setDeleteId(v.id)}
-                  className="px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-lg text-white text-sm font-medium shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
+                  className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
                   <i className="fa-solid fa-trash"></i>
                   Cancella Viaggio
                 </button>
@@ -156,7 +156,7 @@ function Travels() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
-            <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-11/12 max-w-md text-center"
+            <motion.div className="backdrop-blur-xl p-6 rounded-3xl shadow-lg w-11/12 max-w-md text-center"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -167,13 +167,13 @@ function Travels() {
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <button
                   onClick={handleDelete}
-                  className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
+                  className="font-semibold flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-full transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-check"></i>
                   Sì
                 </button>
                 <button
                   onClick={() => setDeleteId(null)}
-                  className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
+                  className="font-semibold flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-full transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-xmark"></i>
                   No
                 </button>

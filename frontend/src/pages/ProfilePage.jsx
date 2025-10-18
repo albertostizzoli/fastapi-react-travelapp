@@ -97,7 +97,7 @@ function ProfilePage() {
 
                     {/* Profilo Utente */}
                     <motion.section
-                        className="md:col-span-1 bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col items-center text-center h-auto"
+                        className="md:col-span-1 bg-white/10 backdrop-blur-xl p-6 rounded-3xl shadow-lg border border-white/10 flex flex-col items-center text-center h-auto"
                         initial={{ x: -100, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 1, ease: "easeOut" }}>
@@ -134,19 +134,19 @@ function ProfilePage() {
 
                         {/* Azioni */}
                         <div className="w-full space-y-3 mt-4">
-                            <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-xl shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
+                            <button className="font-semibold w-full flex items-center justify-center gap-2 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
                                 <i className="fa-solid fa-edit"></i> Modifica Profilo
                             </button>
 
                             <button
                                 onClick={() => setDeleteProfileId(user?.id)}
-                                className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-500 hover:bg-red-400 text-white font-semibold rounded-xl shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
+                                className="font-semibold w-full flex items-center justify-center gap-2 py-2.5 bg-red-500 hover:bg-red-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
                                 <i className="fa-solid fa-trash"></i> Cancella Profilo
                             </button>
 
                             <button
                                 onClick={handleLogout}
-                                className="w-full flex items-center justify-center gap-2 py-2.5 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-xl shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
+                                className="font-semibold w-full flex items-center justify-center gap-2 py-2.5 bg-teal-500 hover:bg-teal-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
                                 <i className="fa-solid fa-right-from-bracket"></i> Esci
                             </button>
                         </div>
@@ -163,7 +163,7 @@ function ProfilePage() {
                         }}>
                         {/* Azioni */}
                         <motion.div
-                            className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 flex flex-col gap-4"
+                            className="bg-white/10 backdrop-blur-xl p-6 rounded-3xl shadow-lg border border-white/10 flex flex-col gap-4"
                             variants={{
                                 hidden: { scale: 0.9, opacity: 0 },
                                 visible: { scale: 1, opacity: 1, transition: { duration: 1, ease: "easeOut" } },
@@ -175,17 +175,17 @@ function ProfilePage() {
                             <div className="flex flex-col w-full gap-2 justify-center">
                                 <Link
                                     to="/travels"
-                                    className="flex justify-center items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-400 rounded-lg text-white font-medium shadow-md transition-transform hover:scale-105">
-                                    <i className="fa-solid fa-globe"></i> I tuoi viaggi
+                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-400 rounded-full text-white shadow-md transition-transform hover:scale-105">
+                                    <i className="fa-solid fa-globe"></i> I miei viaggi
                                 </Link>
 
                                 <Link
                                     to="/add"
-                                    className="flex justify-center items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition-transform hover:scale-105">
+                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white shadow-md transition-transform hover:scale-105">
                                     <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
                                 </Link>
 
-                                <button className="flex justify-center items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-lg text-white font-medium shadow-md transition-transform hover:scale-105 cursor-pointer">
+                                <button className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-full text-white shadow-md transition-transform hover:scale-105 cursor-pointer">
                                     <i className="fa-solid fa-compass"></i> Prossimo viaggio
                                 </button>
                             </div>
@@ -193,7 +193,7 @@ function ProfilePage() {
 
                         {/* Ultimo Viaggio */}
                         <motion.div
-                            className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10"
+                            className="bg-white/10 backdrop-blur-xl p-6 rounded-3xl shadow-lg border border-white/10"
                             variants={{
                                 hidden: { scale: 0.9, opacity: 0 },
                                 visible: { scale: 1, opacity: 1, transition: { duration: 1, ease: "easeOut" } },
@@ -207,13 +207,13 @@ function ProfilePage() {
                                     {recentTravels.slice(0, 1).map((travel, idx) => (
                                         <li
                                             key={idx}
-                                            className="p-4 bg-gradient-to-r from-blue-500 to-blue-400 rounded-xl shadow-md hover:scale-[1.02] hover:shadow-xl transition-all duration-200">
+                                            className="p-4 bg-gradient-to-r from-blue-500 to-blue-400 rounded-3xl shadow-md hover:scale-[1.02] hover:shadow-xl transition-all duration-200">
                                             <div className="flex justify-between items-center mb-2">
                                                 <h4 className="text-lg font-semibold text-white">
                                                     <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
                                                     {travel.town}, {travel.city}
                                                 </h4>
-                                                <span className="text-xs bg-white/20 px-2 py-1 rounded-md text-white/90">
+                                                <span className="text-xs bg-white/20 px-2 py-1 rounded-3xl text-white/90">
                                                     {travel.start_date} → {travel.end_date}
                                                 </span>
                                             </div>
@@ -229,14 +229,14 @@ function ProfilePage() {
                                     ))}
                                 </ul>
                             ) : (
-                                <p className="text-center text-white/80 italic">Nessun viaggio recente.</p>
+                                <p className="text-center font-semibold text-white/80 italic">Nessun viaggio recente.</p>
                             )}
                         </motion.div>
                     </motion.section>
 
                     {/* Interessi Utente */}
                     <motion.div
-                        className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-white/10 h-auto"
+                        className="bg-white/10 backdrop-blur-xl p-6 rounded-3xl shadow-lg border border-white/10 h-auto"
                         initial={{ x: 80, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 1, ease: "easeOut" }}>
@@ -249,13 +249,13 @@ function ProfilePage() {
                                 {user.interests.map((interest, idx) => (
                                     <span
                                         key={idx}
-                                        className="px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-sm sm:text-base font-medium text-white shadow-md hover:scale-105 transition-transform duration-150">
+                                        className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-sm sm:text-base text-white shadow-md hover:scale-105 transition-transform duration-150">
                                         {interest}
                                     </span>
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-center text-white/80 italic">
+                            <p className="text-center font-semibold text-white/80 italic">
                                 Nessun interesse impostato.
                             </p>
                         )}
@@ -269,7 +269,7 @@ function ProfilePage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}>
-                            <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center"
+                            <motion.div className="backdrop-blur-xl p-6 rounded-3xl shadow-lg w-80 text-center"
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.8, opacity: 0 }}
@@ -280,12 +280,12 @@ function ProfilePage() {
                                 <div className="flex justify-center gap-4">
                                     <button
                                         onClick={handleDeleteProfile}
-                                        className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                                        className="font-semibold flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                                         <i className="fa-solid fa-check"></i> Sì
                                     </button>
                                     <button
                                         onClick={() => setDeleteProfileId(null)}
-                                        className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                                        className="font-semibold flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                                         <i className="fa-solid fa-xmark"></i> No
                                     </button>
                                 </div>

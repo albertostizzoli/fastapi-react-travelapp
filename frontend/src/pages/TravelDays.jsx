@@ -84,7 +84,7 @@ function TravelDays() {
           <Link
             to="/addDay"
             state={{ travelId: id }}
-            className="mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-lg text-white font-medium shadow-md transition hover:scale-105">
+            className="font-semibold mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-full text-white shadow-md transition hover:scale-105">
             <i className="fa-solid fa-plus"></i> Aggiungi Tappa
           </Link>
         </motion.div>
@@ -121,7 +121,7 @@ function TravelDays() {
                 {travel.days.map((d) => (
                   <motion.div
                     key={d.id}
-                    className="backdrop-blur-xl p-4 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64"
+                    className="backdrop-blur-xl p-4 rounded-3xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64"
                     variants={{
                       hidden: { scale: 0, opacity: 0 },
                       visible: {
@@ -144,7 +144,7 @@ function TravelDays() {
                             src={p}
                             alt="foto viaggio"
                             loading="lazy"
-                            className="w-20 h-20 object-cover rounded-lg border border-gray-600 shadow-sm"
+                            className="w-20 h-20 object-cover rounded-3xl border border-gray-600 shadow-sm"
                           />
                         ))}
                       </div>
@@ -155,14 +155,14 @@ function TravelDays() {
                       {/* Mostra il resto delle informazioni della tappa */}
                       <button
                         onClick={() => setSelectedDay(d)}
-                        className="px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                        className="font-semibold px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                         <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
                       </button>
 
                       { /* Va nella pagina Modifica Tappa */}
                       <Link
                         to={`/days/${d.id}/edit`}
-                        className="px-4 py-2 flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                        className=" font-semibold px-4 py-2 flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                         <i className="fa-solid fa-edit mr-2"></i>
                         Modifica Tappa
                       </Link>
@@ -170,7 +170,7 @@ function TravelDays() {
                       { /* Cancella la Tappa */}
                       <button
                         onClick={() => setDeleteDayId(d.id)}
-                        className="px-4 py-2 flex items-center justify-center bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                        className="font-semibold px-4 py-2 flex items-center justify-center bg-red-500 hover:bg-red-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                         <i className="fa-solid fa-trash mr-2"></i> Cancella Tappa
                       </button>
                     </div>
@@ -179,7 +179,7 @@ function TravelDays() {
               </motion.div>
             ) : (
               // se non ci sono giorni del viaggio mostra questo messaggio
-              <p className="text-white text-center mt-4">Nessuna Tappa Presente</p>
+              <p className="text-white font-semibold text-center mt-4">Nessuna Tappa Presente</p>
             )}
           </div>
         </div>
@@ -192,7 +192,7 @@ function TravelDays() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
-            <motion.div className="bg-gray-800 rounded-xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col overflow-hidden"
+            <motion.div className="bg-gray-800 rounded-3xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col overflow-hidden"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -201,14 +201,14 @@ function TravelDays() {
               <div className="flex justify-between items-center p-4 border-b border-gray-700">
                 <button
                   onClick={() => setSelectedDay(null)}
-                  className="px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  className="font-semibold px-3 py-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-arrow-left"></i> Torna alle Tappe
                 </button>
 
                 {/*  Pulsante per aprire la mappa come modale */}
                 <button
                   onClick={() => setShowMapModal(true)}
-                  className="px-3 py-1 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  className="font-semibold px-3 py-1 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-map-location-dot"></i> Vai alla Mappa
                 </button>
               </div>
@@ -235,7 +235,7 @@ function TravelDays() {
                       {selectedDay.tags.map((tag, i) => (
                         <span
                           key={i}
-                          className="bg-blue-500 text-white px-3 py-2 rounded-full text-sm shadow-md mt-2">
+                          className="font-semibold bg-blue-500 hover:bg-blue-400 text-white px-3 py-2 rounded-full text-sm shadow-md mt-2">
                           {tag}
                         </span>
                       ))}
@@ -260,7 +260,7 @@ function TravelDays() {
                         alt="foto viaggio"
                         loading="lazy"
                         onClick={() => setOpenImage(p)}
-                        className="w-full h-40 sm:h-40 object-cover rounded-lg border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
+                        className="w-full h-40 sm:h-40 object-cover rounded-3xl border-3 border-gray-500 shadow-sm cursor-pointer hover:border-white"
                         variants={{
                           hidden: { scale: 0, opacity: 0 },
                           visible: {
@@ -291,7 +291,7 @@ function TravelDays() {
                     src={openImage.replace('w=400', 'w=1600')}
                     alt="foto ingrandita"
                     loading="lazy"
-                    className="w-auto h-full max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg object-contain"
+                    className="w-auto h-full max-h-[90vh] max-w-[90vw] rounded-3xl shadow-lg object-contain"
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.5 }}
@@ -303,7 +303,7 @@ function TravelDays() {
             {/* Modale Mappa */}
             {showMapModal && (
               <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[10001]">
-                <div className="relative sm:w-[70vw] sm:h-[90vh] bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
+                <div className="relative sm:w-[70vw] sm:h-[90vh] bg-gray-900 rounded-3xl overflow-hidden shadow-2xl">
                   {/* Bottone Chiudi Mappa */}
                   <div onClick={(e) => e.stopPropagation()} className="relative">
                     <button
@@ -333,7 +333,7 @@ function TravelDays() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
-            <motion.div className="backdrop-blur-xl p-6 rounded-xl shadow-lg w-80 text-center"
+            <motion.div className="backdrop-blur-xl p-6 rounded-3xl shadow-lg w-80 text-center"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -344,12 +344,12 @@ function TravelDays() {
               <div className="flex justify-center gap-4">
                 <button
                   onClick={handleDeleteDay}
-                  className="flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  className="font-semibold flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-check"></i> Sì
                 </button>
                 <button
                   onClick={() => setDeleteDayId(null)}
-                  className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg shadow-md transition hover:scale-105 cursor-pointer">
+                  className="font-semibold flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-xmark"></i> No
                 </button>
               </div>

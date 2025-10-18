@@ -1,7 +1,7 @@
 const travellers = [
   {
-    category: "🌋 L’Avventuriero",
-    description: "Ama l’adrenalina, l’esplorazione e le esperienze estreme all’aria aperta.",
+    category: "Avventura",
+    description: "Esperienze adrenaliniche e a contatto con la natura.",
     experiences: [
       "Trekking & Escursionismo",
       "Camping Selvaggio",
@@ -20,8 +20,8 @@ const travellers = [
     ]
   },
   {
-    category: "🏛️ Il Viaggiatore Culturale",
-    description: "Curioso, ama scoprire la storia, le tradizioni e l’arte dei luoghi.",
+    category: "Cultura",
+    description: "Scopri storia, arte, tradizioni e patrimonio locale.",
     experiences: [
       "Città Storiche",
       "Musei & Gallerie",
@@ -37,8 +37,8 @@ const travellers = [
     ]
   },
   {
-    category: "🍷 Il Food Lover",
-    description: "Assaggia tutto, ama la cucina autentica e i sapori locali.",
+    category: "Cibo & Vino",
+    description: "Esperienze gastronomiche e degustazioni locali.",
     experiences: [
       "Cucina Locale",
       "Street Food Experience",
@@ -50,8 +50,8 @@ const travellers = [
     ]
   },
   {
-    category: "🌿 Il Naturalista",
-    description: "Cerca pace e connessione con la natura, tra montagne, foreste e mare.",
+    category: "Natura",
+    description: "Connessione con la natura, paesaggi e benessere all’aperto.",
     experiences: [
       "Natura & Paesaggi",
       "Birdwatching",
@@ -66,8 +66,8 @@ const travellers = [
     ]
   },
   {
-    category: "💞 Il Viaggiatore Romantico",
-    description: "Ama condividere emozioni e panorami con la propria metà.",
+    category: "Romantico",
+    description: "Esperienze da condividere in coppia.",
     experiences: [
       "Viaggi Romantici",
       "Resort sul Mare",
@@ -79,8 +79,8 @@ const travellers = [
     ]
   },
   {
-    category: "🏙️ L’Esploratore Urbano",
-    description: "Si sente a casa tra le luci della città, i musei e i locali notturni.",
+    category: "Città",
+    description: "Esplora metropoli, musei, locali e vita urbana.",
     experiences: [
       "Capitali Europee",
       "Vita Notturna",
@@ -95,8 +95,8 @@ const travellers = [
     ]
   },
   {
-    category: "💻 Il Nomade Digitale",
-    description: "Lavora viaggiando, cercando sempre nuovi luoghi stimolanti.",
+    category: "Nomade Digitale",
+    description: "Viaggia lavorando e scopri posti stimolanti.",
     experiences: [
       "Workation Spots",
       "Comunità Remote Worker",
@@ -108,8 +108,8 @@ const travellers = [
     ]
   },
   {
-    category: "👨‍👩‍👧‍👦 Il Viaggiatore in Famiglia",
-    description: "Cerca esperienze da vivere con i propri cari, tra relax e scoperta.",
+    category: "Famiglia",
+    description: "Esperienze pensate per grandi e piccini.",
     experiences: [
       "Vacanze in Famiglia",
       "Resort per Bambini",
@@ -121,8 +121,8 @@ const travellers = [
     ]
   },
   {
-    category: "🤝 Il Volontario",
-    description: "Viaggia per aiutare, imparare e restituire valore alle comunità locali.",
+    category: "Volontariato",
+    description: "Viaggi per aiutare e restituire valore alle comunità.",
     experiences: [
       "Volontariato Ambientale",
       "Viaggi Etici",

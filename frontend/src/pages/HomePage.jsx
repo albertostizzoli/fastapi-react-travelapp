@@ -83,7 +83,7 @@ function HomePage() {
                 <motion.img
                     src="/images/monte_fuji.jpg"
                     alt="Monte Fuji"
-                    className="rounded-2xl shadow-lg"
+                    className="rounded-3xl shadow-lg"
                     variants={secondBlock} initial="initial" whileInView="animate"
                 />
             </section>
@@ -93,7 +93,7 @@ function HomePage() {
                 <motion.img
                     src="/images/amalfi_2.jpg"
                     alt="Costiera Amalfitana"
-                    className="rounded-2xl shadow-lg"
+                    className="rounded-3xl shadow-lg"
                     variants={firstBlock} initial="initial" whileInView="animate"
                 />
                 <div>
@@ -123,7 +123,7 @@ function HomePage() {
                 <motion.img
                     src="/images/tempio_agrigento.jpg"
                     alt="Tempio di Agrigento"
-                    className="rounded-2xl shadow-lg"
+                    className="rounded-3xl shadow-lg"
                     variants={secondBlock} initial="initial" whileInView="animate"
                 />
             </section>
@@ -133,7 +133,7 @@ function HomePage() {
                 <motion.img
                     src="/images/hollywood.jpg"
                     alt="Hollywood"
-                    className="rounded-2xl shadow-lg"
+                    className="rounded-3xl shadow-lg"
                     variants={firstBlock} initial="initial" whileInView="animate"
                 />
                 <div>

@@ -232,6 +232,7 @@ function EditDay() {
                 </h2>
 
                 <div className="space-y-6 flex-1 overflow-y-auto pr-2 scrollbar">
+                {/* Ciclo sullo store travellers category e experiences vengono dallo store mentre tags è la colonna sul database*/}
                   {travellers.map((cat) => (
                     <div key={cat.category}>
                       <h3 className="text-lg font-semibold text-white mb-2">{cat.category}</h3>
