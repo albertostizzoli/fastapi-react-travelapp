@@ -59,49 +59,78 @@ function Header() {
         {isHome && (
           <Link
             to="/user"
-            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            className="px-4 py-2 flex items-center gap-2 font-semibold">
             <span><i className="fa-solid fa-user"></i></span>
-            Area Personale
+            {/* queste classi mi permettono di avere una underline animata da destra a sinistra*/}
+            <span className="relative inline-block
+               after:content-[''] after:absolute after:left-0 after:bottom-0 
+               after:w-0 after:h-[2px] after:bg-current 
+               after:transition-all after:duration-300 
+               hover:after:w-full">Area Personale
+            </span>
           </Link>
         )}
 
         {!isHome && !isProfile && user && (
           <Link
             to="/profile"
-            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            className="px-4 py-2 flex items-center gap-2 font-semibold">
             <img
               src={user.photo || "/default-avatar.png"}
               alt="Avatar"
               className="w-8 h-8 rounded-full object-cover border-3 border-white"
             />
-            <span>{user.name}</span>
+            <span className="relative inline-block
+               after:content-[''] after:absolute after:left-0 after:bottom-0 
+               after:w-0 after:h-[2px] after:bg-current 
+               after:transition-all after:duration-300 
+               hover:after:w-full">
+              {user.name}
+            </span>
           </Link>
         )}
 
         {!isHome && !isTravels && (
           <Link
             to="/travels"
-            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            className="flex items-center gap-2 px-4 py-2 font-semibold">
             <span><i className="fa-solid fa-globe"></i></span>
-            I miei viaggi
+            <span
+              className="relative inline-block
+               after:content-[''] after:absolute after:left-0 after:bottom-0 
+               after:w-0 after:h-[2px] after:bg-current 
+               after:transition-all after:duration-300 
+               hover:after:w-full">
+              I miei viaggi
+            </span>
           </Link>
         )}
 
         {!isHome && !isAdd && (
           <Link
             to="/add"
-            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+            className="px-4 py-2 flex items-center gap-2 font-semibold">
             <span><i className="fa-solid fa-plus"></i></span>
-            Aggiungi Viaggio
+            <span className="relative inline-block
+               after:content-[''] after:absolute after:left-0 after:bottom-0 
+               after:w-0 after:h-[2px] after:bg-current 
+               after:transition-all after:duration-300 
+               hover:after:w-full">Aggiungi Viaggio
+            </span>
           </Link>
         )}
 
         {!isHome && (
           <button
             onClick={handleLogout}
-            className="px-4 py-2 flex items-center gap-2 font-medium hover:underline cursor-pointer">
+            className="px-4 py-2 flex items-center gap-2 font-semibold cursor-pointer">
             <span><i className="fa-solid fa-right-from-bracket"></i></span>
-            Esci
+            <span className="relative inline-block
+               after:content-[''] after:absolute after:left-0 after:bottom-0 
+               after:w-0 after:h-[2px] after:bg-current 
+               after:transition-all after:duration-300 
+               hover:after:w-full">Esci
+            </span>
           </button>
         )}
       </div>

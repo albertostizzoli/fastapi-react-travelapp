@@ -106,9 +106,14 @@ function Sidebar() {
                   <Link
                     to="/user"
                     onClick={toggleSidebar}
-                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
                     <i className="fa-solid fa-user"></i>
-                    Area Personale
+                    <span className="relative inline-block
+                    after:content-[''] after:absolute after:left-0 after:bottom-0 
+                    after:w-0 after:h-[2px] after:bg-current 
+                    after:transition-all after:duration-300 
+                    hover:after:w-full">Area Personale
+                    </span>
                   </Link>
                 )}
 
@@ -117,13 +122,18 @@ function Sidebar() {
                   <Link
                     to="/profile"
                     onClick={toggleSidebar}
-                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
                     <img
                       src={user.photo || "/default-avatar.png"}
                       alt="Avatar"
                       className="w-8 h-8 rounded-full object-cover border-3 border-white"
                     />
-                    <span>{user.name}</span>
+                    <span className="relative inline-block
+                    after:content-[''] after:absolute after:left-0 after:bottom-0 
+                    after:w-0 after:h-[2px] after:bg-current 
+                    after:transition-all after:duration-300 
+                    hover:after:w-full">{user.name}
+                    </span>
                   </Link>
                 )}
 
@@ -132,9 +142,14 @@ function Sidebar() {
                   <Link
                     to="/travels"
                     onClick={toggleSidebar}
-                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
                     <i className="fa-solid fa-globe"></i>
-                    I miei viaggi
+                     <span className="relative inline-block
+                    after:content-[''] after:absolute after:left-0 after:bottom-0 
+                    after:w-0 after:h-[2px] after:bg-current 
+                    after:transition-all after:duration-300 
+                    hover:after:w-full">I tuoi viaggi
+                    </span>
                   </Link>
                 )}
 
@@ -143,9 +158,14 @@ function Sidebar() {
                   <Link
                     to="/add"
                     onClick={toggleSidebar}
-                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
                     <i className="fa-solid fa-plus"></i>
-                    Aggiungi Viaggio
+                    <span className="relative inline-block
+                    after:content-[''] after:absolute after:left-0 after:bottom-0 
+                    after:w-0 after:h-[2px] after:bg-current 
+                    after:transition-all after:duration-300 
+                    hover:after:w-full">Aggiungi Viaggio
+                    </span>
                   </Link>
                 )}
               </div>
@@ -155,9 +175,14 @@ function Sidebar() {
                 {!isHome && (
                   <button
                     onClick={handleLogout}
-                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-medium hover:underline">
+                    className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
                     <i className="fa-solid fa-right-from-bracket"></i>
-                    Esci
+                    <span className="relative inline-block
+                    after:content-[''] after:absolute after:left-0 after:bottom-0 
+                    after:w-0 after:h-[2px] after:bg-current 
+                    after:transition-all after:duration-300 
+                    hover:after:w-full">Esci
+                    </span>
                   </button>
                 )}
 
