@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 
@@ -83,7 +83,7 @@ function EditTravel() {
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
       {/* Container del form */}
-      <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 space-y-4 border border-white">
+      <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-3xl p-6 space-y-4 border border-white">
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
@@ -95,7 +95,7 @@ function EditTravel() {
 
           {/* Paese */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Paese *</label>
+            <label className="mb-1 text-white font-bold">Paese *</label>
             <input
               id="town"
               type="text"
@@ -103,12 +103,12 @@ function EditTravel() {
               value={travel.town}
               onChange={handleChange} // aggiorna lo stato al cambiamento
               placeholder="Paese"
-              className="p-2 border border-white rounded text-white" />
+              className="p-2 font-semibold border border-white rounded-full text-white" />
           </div>
 
           {/* Città */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Città *</label>
+            <label className="mb-1 text-white font-bold">Città *</label>
             <input
               id="city"
               type="text"
@@ -116,53 +116,53 @@ function EditTravel() {
               value={travel.city}
               onChange={handleChange}
               placeholder="Città"
-              className="p-2 border border-white rounded text-white" />
+              className="p-2 font-semibold border border-white rounded-full text-white" />
           </div>
 
           {/* Anno */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Anno *</label>
+            <label className="mb-1 text-white font-bold">Anno *</label>
             <input
               type="number"
               name="year"
               value={travel.year}
               onChange={handleChange}
               placeholder="Anno"
-              className="p-2 border border-white text-white rounded" />
+              className="p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
           {/* Data inizio */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Data Inizio *</label>
+            <label className="mb-1 text-white font-bold">Data Inizio *</label>
             <input
               type="text"
               name="start_date"
               value={travel.start_date}
               onChange={handleChange}
               placeholder="Data inizio"
-              className="p-2 border border-white text-white rounded" />
+              className="p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
           {/* Data fine */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white font-semibold">Data Fine *</label>
+            <label className="mb-1 text-white font-bold">Data Fine *</label>
             <input
               type="text"
               name="end_date"
               value={travel.end_date}
               onChange={handleChange}
               placeholder="Data fine"
-              className="p-2 border border-white text-white rounded" />
+              className="p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
 
           {/* Voti dettagliati (span 2 colonne) */}
           <div className="md:col-span-2">
-            <h3 className="font-semibold text-lg mt-6 mb-2 text-white">Voti *</h3>
+            <h3 className="font-bold  mt-6 mb-2 text-white">Voti *</h3>
             <div className="flex flex-wrap gap-4">
               {Object.entries(travel.votes).map(([key, value]) => ( // itera su ogni voto */}
-                <div key={key} className="flex flex-col w-28 text-white">
-                  <label className="capitalize mb-1">{key}</label>
+                <div key={key} className="flex flex-col w-16 text-white">
+                  <label className="capitalize mb-1 font-bold">{key}</label>
                   <input
                     type="number"
                     name={key}
@@ -170,7 +170,7 @@ function EditTravel() {
                     onChange={handleVoteChange}
                     min="1"
                     max="5"
-                    className="w-full p-2 border border-white text-white rounded-lg" />
+                    className="w-16 font-semibold p-2 border border-white text-white rounded-full" />
                 </div>
               ))}
             </div>
@@ -178,19 +178,25 @@ function EditTravel() {
 
           {/* Media Voto */}
           <div className="md:col-span-2 mt-1">
-            <label className="pe-3 text-white font-semibold">Media Voti</label>
+            <label className="pe-3 text-white font-bold">Media Voti</label>
             <input
               type="text"
               value={calculateGeneralVote() ?? "-"}
               readOnly
-              className="p-2 border border-white text-white font-semibold rounded" />
+              className="w-16 p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
-          {/* Pulsante (span 2 colonne) */}
-          <div className="md:col-span-2">
+          {/* Pulsanti (span 2 colonne) */}
+          <div className="md:col-span-2 flex justify-center gap-2">
+            <Link
+              to="/travels"
+              className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+              <i className="fa-solid fa-arrow-left"></i>
+              Torna ai Viaggi
+            </Link>
             <button
               type="submit"
-              className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 cursor-pointer transition hover:scale-105">
+              className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-edit"></i>
               Salva Modifiche
             </button>

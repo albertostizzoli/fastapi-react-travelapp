@@ -2,7 +2,8 @@
 
 @import "leaflet/dist/leaflet.css"; 
 
-/* index.css */
+
+/* questa scrollbar serve per il Modale Leggi Tutto in TravelDays e per il Modale dei Tags in AddDay */
 .scrollbar-custom::-webkit-scrollbar {
   width: 8px; /* larghezza della barra */
   will-change: scroll;
@@ -18,6 +19,30 @@
   border-radius: 8px;
   border: 2px solid #1f2937; /* bordo per staccarlo dal track */
 }
+
+/* questa scrollbar serve per tutto il progetto e per le textarea in AddDay e in EditDay  */
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.4); /* trasparenza per adattarsi allo sfondo */
+  border-radius: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.7); /* grigio chiaro semi-trasparente */
+  border-radius: 8px;
+  border: 2px solid rgba(31, 41, 55, 0.4);
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(229, 231, 235, 0.8); /* più chiaro al passaggio */
+}
+
+
+
+
 
 
 

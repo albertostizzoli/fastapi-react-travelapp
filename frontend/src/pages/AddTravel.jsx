@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // use Navigate serve per il reindirizzamento fra le pagine
+import { useNavigate, Link } from "react-router-dom"; // use Navigate serve per il reindirizzamento fra le pagine
 import axios from "axios";
 import { motion } from "framer-motion";
 
@@ -15,10 +15,10 @@ function AddTravel() {
     start_date: "",
     end_date: "",
     cibo: "",
-    paesaggio: "",
-    attività: "",
     relax: "",
     prezzo: "",
+    attività: "",
+    paesaggio: "",
   });
 
   // stato per mostrare messaggi di conferma/errore
@@ -31,7 +31,7 @@ function AddTravel() {
 
   // calcolo la media dei voti 
   const calculateGeneralVote = () => {
-    const votes = ["cibo", "paesaggio", "attività", "relax", "prezzo"] // campi da considerare
+    const votes = ["cibo", "relax", "prezzo", "attività", "paesaggio"] // campi da considerare
       .map((field) => parseFloat(form[field])) // converto in numeri
       .filter((v) => !isNaN(v)); // filtro quelli validi
 
@@ -64,10 +64,10 @@ function AddTravel() {
         general_vote: general_vote, // calcolato
         votes: {
           cibo: form.cibo ? parseInt(form.cibo) : null,
-          paesaggio: form.paesaggio ? parseInt(form.paesaggio) : null,
-          attività: form.attività ? parseInt(form.attività) : null,
           relax: form.relax ? parseInt(form.relax) : null,
           prezzo: form.prezzo ? parseInt(form.prezzo) : null,
+          attività: form.attività ? parseInt(form.attività) : null,
+          paesaggio: form.paesaggio ? parseInt(form.paesaggio) : null,
         }
       };
 
@@ -85,10 +85,10 @@ function AddTravel() {
         start_date: "",
         end_date: "",
         cibo: "",
-        paesaggio: "",
-        attività: "",
         relax: "",
         prezzo: "",
+        attività: "",
+        paesaggio: "",
       });
 
       // reindirizzo alla pagina dei viaggi
@@ -106,7 +106,7 @@ function AddTravel() {
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
       {/* Container del form */}
-      <div className="w-full max-w-4xl h-full sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-2xl p-6 border border-white">
+      <div className="w-full max-w-4xl h-full sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-3xl p-6 border border-white">
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
@@ -118,70 +118,70 @@ function AddTravel() {
 
           {/* Paese */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white">Paese *</label>
+            <label className="block font-bold text-white mb-1">Paese *</label>
             <input
               type="text"
               name="town"
               value={form.town}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white text-white rounded-lg" />
+              className="w-full p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
           {/* Città */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white">Città *</label>
+            <label className="block font-bold text-white mb-1">Città *</label>
             <input
               type="text"
               name="city"
               value={form.city}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white text-white rounded-lg" />
+              className="w-full p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
           {/* Anno */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white">Anno *</label>
+            <label className="block font-bold text-white mb-1">Anno *</label>
             <input
               type="number"
               name="year"
               value={form.year}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white text-white rounded-lg" />
+              className="w-full p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
           {/* Date */}
           <div className="flex flex-col">
-            <label className="mb-1 text-white">Data Inizio *</label>
+            <label className="block font-bold text-white mb-1">Data Inizio *</label>
             <input
               type="date"
               name="start_date"
               value={form.start_date}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white text-white rounded-lg [color-scheme:dark]" />
+              className="w-full p-2 font-semibold border border-white text-white rounded-full [color-scheme:dark]" />
           </div>
 
           <div className="flex flex-col">
-            <label className="mb-1 text-white">Data Fine *</label>
+            <label className="block font-bold text-white mb-1">Data Fine *</label>
             <input
               type="date"
               name="end_date"
               value={form.end_date}
               onChange={handleChange}
               required
-              className="w-full p-2 border border-white text-white rounded-lg [color-scheme:dark]" />
+              className="w-full p-2 font-semibold border border-white text-white rounded-full [color-scheme:dark]" />
           </div>
 
           {/* Voti dettagliati con flex-wrap */}
           <div className="md:col-span-2">
-            <h3 className="font-semibold text-lg mt-6 mb-2 text-white">Voti *</h3>
+            <h3 className="font-bold mt-6 mb-2 text-white">Voti *</h3>
             <div className="flex flex-wrap gap-4">
-              {["cibo", "paesaggio", "attività", "relax", "prezzo"].map((field) => ( // mappa i campi dei voti
-                <div key={field} className="flex flex-col w-28">
-                  <label className="mb-1 text-white capitalize">{field}</label>
+              {["cibo", "relax", "prezzo", "attività", "paesaggio"].map((field) => ( // mappa i campi dei voti
+                <div key={field} className="flex flex-col w-16">
+                  <label className="capitalize mb-1 font-bold text-white">{field}</label>
                   <input
                     type="number"
                     name={field}
@@ -189,7 +189,7 @@ function AddTravel() {
                     max="5"
                     value={form[field]}
                     onChange={handleChange}
-                    className="w-full p-2 border border-white text-white rounded-lg" />
+                    className="w-16 font-semibold p-2 border border-white text-white rounded-3xl" />
                 </div>
               ))}
             </div>
@@ -197,25 +197,31 @@ function AddTravel() {
 
           {/* Media Voto */}
           <div className="md:col-span-2 mt-1">
-            <label className="pe-3 text-white">Media Voti</label>
+            <label className="pe-3 font-bold text-white">Media Voti</label>
             <input
               type="text"
               value={calculateGeneralVote() ?? "-"}
               readOnly
-              className="p-2 border border-white text-white font-semibold rounded" />
+              className="w-16 p-2 font-semibold border border-white text-white rounded-full" />
           </div>
 
           {/* Pulsante */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 flex justify-center gap-2">
+            <Link
+              to="/travels"
+              className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+              <i className="fa-solid fa-arrow-left"></i>
+              Torna ai Viaggi
+            </Link>
             <button
               type="submit"
-              className="w-full px-4 py-2 mt-4 flex items-center justify-center gap-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 cursor-pointer transition hover:scale-105">
+              className="font-semibold w-full px-4 py-2  flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-plus"></i>
               Aggiungi Viaggio
             </button>
           </div>
 
-          {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
+          {message && <p className="mt-4 text-center text-white font-bold md:col-span-2">{message}</p>}
         </form>
       </div>
     </motion.div>

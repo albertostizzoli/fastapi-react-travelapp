@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import travellers from "../store/travellers";
 
@@ -132,7 +132,7 @@ function AddDay() {
       transition={{ duration: 1.5 }}>
       <form
         onSubmit={handleSubmit}
-        className="backdrop-blur-xl shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
+        className="backdrop-blur-xl shadow-lg rounded-3xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
@@ -144,11 +144,11 @@ function AddDay() {
 
         {/* Selezione viaggio */}
         <div>
-          <label className="block text-white">Viaggio *</label>
+          <label className="block font-bold text-white mb-1">Viaggio *</label>
           <select
             value={selectedTravel}
             onChange={(e) => setSelectedTravel(e.target.value)} // aggiorno il viaggio selezionato
-            className="w-full p-2 border border-white rounded-lg bg-transparent text-white"
+            className="w-full p-2 border border-white rounded-full bg-transparent text-white font-bold"
             required>
 
             <option value="" className="bg-black text-white">-- Seleziona --</option>
@@ -162,37 +162,37 @@ function AddDay() {
 
         {/* Data */}
         <div>
-          <label className="block text-white">Data *</label>
+          <label className="block font-bold text-white mb-1">Data *</label>
           <input
             type="date"
             name="date"
             value={form.date}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-white rounded-lg text-white bg-transparent [color-scheme:dark]" />
+            className="w-full p-2 font-semibold border border-white rounded-full text-white bg-transparent [color-scheme:dark]" />
         </div>
 
         {/* Titolo */}
         <div className="md:col-span-1">
-          <label className="block text-white">Titolo *</label>
+          <label className="block font-bold text-white mb-1">Titolo *</label>
           <input
             name="title"
             value={form.title}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-white text-white rounded-lg" />
+            className="w-full p-2 font-semibold border border-white text-white rounded-full" />
         </div>
 
         {/* Descrizione */}
         <div className="md:col-span-2">
-          <label className="block text-white">Riassunto della giornata *</label>
+          <label className="block font-bold text-white mb-1">Riassunto della giornata *</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-white text-white rounded-lg"
-            rows="4" />
+            className="w-full p-2 font-semibold border border-white text-white rounded-3xl scrollbar"
+            rows="6" />
         </div>
 
         {/* Pulsanti principali: Seleziona categorie + Carica foto */}
@@ -201,7 +201,7 @@ function AddDay() {
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
 
@@ -209,7 +209,7 @@ function AddDay() {
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="flex-1 px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-lg shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
         </div>
@@ -221,7 +221,7 @@ function AddDay() {
             {form.tags.map((tag, i) => (
               <span
                 key={i}
-                className="flex items-center justify-between bg-blue-600 text-white px-4 py-2 rounded-xl text-base font-semibold shadow-md transition-transform hover:scale-105">
+                className="flex items-center justify-between bg-blue-600 text-white px-4 py-2 rounded-full text-base font-semibold shadow-md transition-transform hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
                 <button
                   type="button"
@@ -231,7 +231,7 @@ function AddDay() {
                       tags: form.tags.filter((c) => c !== tag),
                     })
                   }
-                  className="ml-3 text-white hover:text-red-400 transition">
+                  className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
                   <i className="fa-solid fa-xmark text-sm"></i>
                 </button>
               </span>
@@ -249,7 +249,7 @@ function AddDay() {
               exit={{ opacity: 0 }}>
 
               <motion.div
-                className="bg-gray-900 rounded-2xl shadow-2xl p-6 w-[90%] max-w-4xl overflow-y-auto max-h-[75vh] border border-gray-700 flex flex-col"
+                className="bg-gray-900 rounded-3xl shadow-2xl p-6 w-[90%] max-w-4xl overflow-y-auto max-h-[75vh] border border-gray-700 flex flex-col"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -267,7 +267,7 @@ function AddDay() {
                         {cat.experiences.map((experience) => (
                           <label
                             key={experience}
-                            className={`flex items-center justify-center text-center gap-2 px-3 py-2 border rounded-lg cursor-pointer text-sm font-medium transition-all ${form.tags.includes(experience)
+                            className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 border rounded-full cursor-pointer text-sm transition-all ${form.tags.includes(experience)
                               ? "bg-blue-600 border-blue-400 text-white shadow-md"
                               : "bg-transparent border-gray-500 text-white hover:bg-blue-400/20 hover:scale-105"
                               }`}>
@@ -302,13 +302,13 @@ function AddDay() {
                   <button
                     type="button"
                     onClick={() => setIsTagModalOpen(false)}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition hover:scale-105 cursor-pointer">
+                    className="font-semibold px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-full transition hover:scale-105 cursor-pointer">
                     Conferma
                   </button>
                   <button
                     type="button"
                     onClick={() => setIsTagModalOpen(false)}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition hover:scale-105 cursor-pointer">
+                    className="font-semibold px-4 py-2 bg-red-500 hover:bg-red-500 text-white rounded-full transition hover:scale-105 cursor-pointer">
                     Chiudi
                   </button>
                 </div>
@@ -349,15 +349,15 @@ function AddDay() {
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)} // chiude il modale
-                      className="fixed inset-0 backdrop-blur-3xl flex items-center justify-center z-[9999]">
+                      className="fixed inset-0 z-[9999] bg-opacity-50 flex items-center justify-center p-4">
                       {/* prevengo la chiusura quando clicco sull'immagine o sulla X */}
                       <div
                         onClick={(e) => e.stopPropagation()}
-                        className="relative">
+                        className="relative w-full max-w-4xl mx-auto">
                         {/* Bottone X */}
                         <button
                           onClick={() => setOpenImage(null)} // chiude il modale
-                          className="absolute -top-4 -right-4 bg-red-500 text-white rounded-full p-2 shadow-lg cursor-pointer">
+                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg hover:bg-red-600 transition cursor-pointer">
                           <i className="fa-solid fa-xmark text-lg"></i>
                         </button>
 
@@ -365,7 +365,7 @@ function AddDay() {
                         <img
                           src={openImage.replace("w=400", "w=1600")}
                           alt="Immagine ingrandita"
-                          className="sm:max-w-4xl max-h-[90vh] rounded-lg shadow-lg"
+                          className="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-xl"
                         />
                       </div>
                     </div>
@@ -388,16 +388,22 @@ function AddDay() {
 
 
         {/* Pulsante */}
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 flex justify-center gap-2">
+          <Link
+            to={`/travels/${selectedTravel}/days`}
+            className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+            <i className="fa-solid fa-arrow-left"></i>
+            Torna alle Tappe
+          </Link>
           <button
             type="submit"
-            className="w-full px-4 py-2 flex items-center justify-center gap-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 cursor-pointer transition hover:scale-105">
+            className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa
           </button>
         </div>
 
-        {message && <p className="mt-4 text-center md:col-span-2">{message}</p>}
+        {message && <p className="mt-4 text-center text-white font-bold md:col-span-2">{message}</p>}
       </form>
     </motion.div >
   );
