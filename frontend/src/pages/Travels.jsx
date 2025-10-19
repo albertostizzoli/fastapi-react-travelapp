@@ -88,7 +88,7 @@ function Travels() {
       {/* Titolo */}
       <h1 className="text-3xl font-bold text-center text-white mb-8"> 🌍 I miei viaggi</h1>
 
-      <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
         initial="hidden"
         animate="visible"
         variants={{
@@ -134,7 +134,7 @@ function Travels() {
               )}
 
               {/* Pulsanti */}
-              <div className="flex flex-col sm:flex-row gap-2 mt-4">
+              <div className="flex flex-col lg:flex-row gap-2 mt-4">
                 <Link
                   to={`/travels/${v.id}/days`}
                   className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">

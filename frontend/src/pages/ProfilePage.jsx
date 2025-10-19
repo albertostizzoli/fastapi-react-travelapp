@@ -160,8 +160,8 @@ function ProfilePage() {
 
     return (
         <div className="flex flex-col min-h-screen bg-transparent text-white sm:p-8 p-4">
-            <main className="flex-1 container mx-auto px-2 sm:px-6 py-10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+            <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
 
                     {/* Profilo Utente */}
                     <motion.section
@@ -393,7 +393,7 @@ function ProfilePage() {
                                 <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center md:col-span-2">
                                     Modifica Profilo
                                 </h2>
-                                
+
                                 {/* Colonna sinistra */}
                                 <div className="space-y-3">
                                     <input

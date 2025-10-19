@@ -172,11 +172,11 @@ function User() {
             <motion.form
               key="login"
               onSubmit={handleSubmit}
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
+              exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-96 border sm:border-black">
+              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-[600px] md:w-3/4 md:mx-auto lg:w-[600px] border sm:border-black md:flex md:flex-col">
               <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">Login</h2>
 
               <div className="mb-4">
@@ -230,13 +230,13 @@ function User() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-[600px] border sm:border-black">
+              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-[600px] md:w-3/4 md:mx-auto lg:w-[600px] border sm:border-black md:flex md:flex-col">
               <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">
                 Registrati
               </h2>
 
               {/* Campi in 2 colonne */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                   <label className="block sm:text-black mb-1 text-white">Nome</label>
                   <input
@@ -295,20 +295,19 @@ function User() {
               </div>
 
               {/* Interessi e Foto Profilo  */}
-              <div className="mt-6 flex items-center gap-4">
+              <div className="mt-6 flex md:flex-nowrap items-center gap-4">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="font-semibold w-full px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
+                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
                   <i className="fa-solid fa-plane mr-2"></i> Esperienze
                 </button>
 
-                {/*  Bottone per caricare la foto */}
                 <button
                   type="button"
                   onClick={handlePhotoSelect}
-                  className="font-semibold w-full px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-camera mr-2"></i> Carica foto
+                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
+                  <i className="fa-solid fa-camera mr-2"></i> Foto
                 </button>
 
                 {/* Input file nascosto */}

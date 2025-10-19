@@ -70,7 +70,7 @@ function HomePage() {
             {/* Section 1 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>
-                    <Typewriter text="Conserva i tuoi ricordi di viaggio" />
+                    <Typewriter text="Conserva i tuoi viaggi" />
                     <motion.p className="text-gray-700 mb-4 text-justify" variants={firstBlock} initial="initial" whileInView="animate">
                         Un viaggio non è solo una serie di <strong>tappe</strong>, ma un insieme di emozioni e
                         momenti unici che meritano di essere custoditi. Con la nostra app,
@@ -137,7 +137,7 @@ function HomePage() {
                     variants={firstBlock} initial="initial" whileInView="animate"
                 />
                 <div>
-                    <Typewriter text="Il tuo viaggio scelto per te" />
+                    <Typewriter text="Il viaggio scelto per te" />
                     <motion.p className="text-gray-700 mb-4 text-justify" variants={secondBlock} initial="initial" whileInView="animate">
                         Grazie all’<strong>intelligenza artificiale</strong>, l’app può suggerirti la prossima
                         <strong> destinazione</strong> ideale in base ai tuoi viaggi passati, preferenze e interessi.
