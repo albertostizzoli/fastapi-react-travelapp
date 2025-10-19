@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import travellers from "../store/travellers";
 
 function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
     const [recentTravels, setRecentTravels] = useState([]) // stato per i viaggi recenti
     const [deleteProfileId, setDeleteProfileId] = useState(null); //  stato per il modale di conferma eliminazione profilo (Apri / Chiudi)
     const [message, setMessage] = useState(""); // stato per i messaggi di errore/successo
+    const [showEditModal, setShowEditModal] = useState(false); // stato per mostrare/nascondere il modale di modifica
+    const [showPassword, setShowPassword] = useState(false); // stato per nascondere / mostrare la password
     const navigate = useNavigate(); // per la navigazione
+    const allExperiences = travellers.flatMap(t => t.experiences); // unifica tutte le experiences dallo store in un unico array
+
+
 
     // uso lo useEffect per ottenere i dati dell'utente
     useEffect(() => {
@@ -47,7 +53,6 @@ function ProfilePage() {
     };
 
     // Funzione per eliminare un profilo
-    // Funzione per eliminare un profilo
     const handleDeleteProfile = () => {
         const userId = localStorage.getItem("userId"); // recupero l'id utente
         const token = localStorage.getItem("token");   // recupero il token
@@ -76,6 +81,55 @@ function ProfilePage() {
                 setMessage("❌ Errore durante l'eliminazione del profilo.");
                 setTimeout(() => setMessage(""), 3000);
             });
+    };
+
+    // stato per i campi modificabili
+    const [editForm, setEditForm] = useState({
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        interests: "",
+        photo: null,
+    });
+
+    // aggiorna i campi del form
+    const handleEditChange = (e) => {
+        const { name, value, files } = e.target;
+        setEditForm((prev) => ({
+            ...prev,
+            [name]: files ? files[0] : value,
+        }));
+    };
+
+    // invia i dati al backend
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault();
+        const userId = localStorage.getItem("userId");
+
+        if (!userId) return;
+
+        const formData = new FormData();
+        formData.append("name", editForm.name);
+        formData.append("surname", editForm.surname);
+        formData.append("email", editForm.email);
+        formData.append("password", editForm.password);
+        formData.append("interests", JSON.stringify(editForm.interests));
+        if (editForm.photo) formData.append("photo", editForm.photo);
+
+        try {
+            const res = await axios.put(`http://127.0.0.1:8000/users/${userId}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            setUser(res.data); // aggiorno i dati utente
+            setShowEditModal(false);
+            setMessage("✅ Profilo aggiornato!");
+            setTimeout(() => setMessage(""), 3000);
+        } catch (err) {
+            console.error("Errore aggiornamento profilo:", err);
+            setMessage("❌ Errore durante l'aggiornamento del profilo.");
+            setTimeout(() => setMessage(""), 3000);
+        }
     };
 
     // funzione per ottenere le stelle 
@@ -132,7 +186,7 @@ function ProfilePage() {
                         )}
 
                         {/* Nome e Data */}
-                        <h3 className="text-2xl font-bold text-blue-600 tracking-wide mb-2">
+                        <h3 className="text-2xl font-bold text-blue-600  mb-4">
                             {user?.name} {user?.surname}
                         </h3>
                         {user?.registration_date && (
@@ -150,19 +204,31 @@ function ProfilePage() {
 
                         {/* Azioni */}
                         <div className="w-full space-y-3 mt-4">
-                            <button className="font-semibold w-full flex items-center justify-center gap-2 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
+                            <button
+                                onClick={() => {
+                                    {/* All'apertura del modale i dati vengono inizializzati così */ }
+                                    setEditForm({
+                                        name: user?.name || "", // stringa
+                                        surname: user?.surname || "", // stringa
+                                        email: user?.email || "", // stringa
+                                        password: "",  // stringa 
+                                        interests: Array.isArray(user?.interests) ? user.interests : [], // array
+                                        photo: null, // valore nullo
+                                    });
+                                    setShowEditModal(true);
+                                }}
+                                className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2 bg-yellow-500 hover:bg-yellow-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
                                 <i className="fa-solid fa-edit"></i> Modifica Profilo
                             </button>
-
                             <button
                                 onClick={() => setDeleteProfileId(user?.id)}
-                                className="font-semibold w-full flex items-center justify-center gap-2 py-2.5 bg-red-500 hover:bg-red-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
+                                className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
                                 <i className="fa-solid fa-trash"></i> Cancella Profilo
                             </button>
 
                             <button
                                 onClick={handleLogout}
-                                className="font-semibold w-full flex items-center justify-center gap-2 py-2.5 bg-teal-500 hover:bg-teal-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
+                                className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-400 text-white rounded-full shadow-md transition-all duration-200 hover:scale-105 cursor-pointer">
                                 <i className="fa-solid fa-right-from-bracket"></i> Esci
                             </button>
                         </div>
@@ -184,7 +250,7 @@ function ProfilePage() {
                                 hidden: { scale: 0.9, opacity: 0 },
                                 visible: { scale: 1, opacity: 1, transition: { duration: 1, ease: "easeOut" } },
                             }}>
-                            <h3 className="text-2xl font-semibold text-blue-600 text-center mb-2">
+                            <h3 className="text-2xl font-bold text-blue-600 text-center mb-4">
                                 Gestisci i tuoi viaggi
                             </h3>
 
@@ -214,7 +280,7 @@ function ProfilePage() {
                                 hidden: { scale: 0.9, opacity: 0 },
                                 visible: { scale: 1, opacity: 1, transition: { duration: 1, ease: "easeOut" } },
                             }}>
-                            <h3 className="text-2xl font-semibold text-blue-600 text-center mb-4">
+                            <h3 className="text-2xl font-bold text-blue-600 text-center mb-4">
                                 Ultimo Viaggio
                             </h3>
 
@@ -256,12 +322,12 @@ function ProfilePage() {
                         initial={{ x: 80, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 1, ease: "easeOut" }}>
-                        <h3 className="text-2xl font-semibold text-blue-600 text-center mb-4">
+                        <h3 className="text-2xl font-bold text-blue-600 text-center mb-4">
                             I tuoi interessi
                         </h3>
 
                         {user?.interests?.length ? (
-                            <div className="flex flex-wrap justify-center gap-3">
+                            <div className="flex flex-wrap justify-center items-center gap-2">
                                 {user.interests.map((interest, idx) => (
                                     <span
                                         key={idx}
@@ -306,6 +372,156 @@ function ProfilePage() {
                                     </button>
                                 </div>
                             </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Modale di modifica profilo */}
+                <AnimatePresence>
+                    {showEditModal && (
+                        <motion.div
+                            className="fixed inset-0 flex items-center justify-center bg-black/40 z-[9999]"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}>
+                            <motion.form
+                                onSubmit={handleUpdateProfile}
+                                encType="multipart/form-data"
+                                className="bg-gray-800 backdrop-blur-xl p-8 rounded-3xl shadow-lg w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.8, opacity: 0 }}
+                                transition={{ duration: 0.4 }}>
+                                <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center md:col-span-2">
+                                    Modifica Profilo
+                                </h2>
+
+                                {/* Colonna sinistra */}
+                                <div className="space-y-3">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={editForm.name}
+                                        onChange={handleEditChange}
+                                        placeholder="Nome"
+                                        className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
+                                        required
+                                    />
+                                    <input
+                                        type="text"
+                                        name="surname"
+                                        value={editForm.surname}
+                                        onChange={handleEditChange}
+                                        placeholder="Cognome"
+                                        className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
+                                        required
+                                    />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={editForm.email}
+                                        onChange={handleEditChange}
+                                        placeholder="Email"
+                                        className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
+                                        required
+                                    />
+                                    <div className="relative w-full">
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            name="password"
+                                            value={editForm.password}
+                                            onChange={handleEditChange}
+                                            placeholder="Nuova Password"
+                                            className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute top-1/2 right-3 -translate-y-1/2 text-white/70 hover:text-white cursor-pointer">
+                                            {showPassword ? (
+                                                <i className="fa-solid fa-eye-slash"></i>
+                                            ) : (
+                                                <i className="fa-solid fa-eye"></i>
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Colonna destra */}
+                                <div className="space-y-3">
+                                    <select
+                                        onChange={(e) => {
+                                            const selected = e.target.value;
+                                            if (selected && !editForm.interests.includes(selected)) {
+                                                setEditForm((prev) => ({
+                                                    ...prev,
+                                                    interests: [...prev.interests, selected],
+                                                }));
+                                            }
+                                            e.target.value = ""; // resetta la select dopo la scelta
+                                        }}
+                                        className="w-full px-4 py-2 rounded-full bg-white/20 text-white focus:outline-none cursor-pointer scrollbar">
+                                        <option value="" className="bg-gray-600 text-white">
+                                            Seleziona un’esperienza
+                                        </option>
+                                        {allExperiences.map((exp, i) => (
+                                            <option key={i} value={exp} className="bg-gray-600 text-white">
+                                                {exp}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    {/* Mostra gli interessi selezionati */}
+                                    {editForm.interests.length > 0 && (
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            {editForm.interests.map((interest, i) => (
+                                                <span
+                                                    key={i}
+                                                    className="bg-blue-500/30 px-3 py-1 rounded-full text-sm text-white/90 flex items-center gap-2">
+                                                    {interest}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            setEditForm((prev) => ({
+                                                                ...prev,
+                                                                interests: prev.interests.filter((x) => x !== interest),
+                                                            }))
+                                                        }
+                                                        className="hover:text-red-400 cursor-pointer">
+                                                        ✕
+                                                    </button>
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* Upload foto */}
+                                    <input
+                                        type="file"
+                                        name="photo"
+                                        accept="image/*"
+                                        onChange={handleEditChange}
+                                        className="w-full text-sm text-white cursor-pointer hover:underline"
+                                    />
+                                </div>
+
+                                {/* Pulsanti Salva / Annulla su tutta la larghezza */}
+                                <div className="flex justify-between mt-6 md:col-span-2">
+                                    <button
+                                        type="submit"
+                                        className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
+                                        <i className="fa-solid fa-check mr-2"></i>
+                                        Salva
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowEditModal(false)}
+                                        className="px-4 py-2 bg-red-500 hover:bg-red-400 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
+                                        <i className="fa-solid fa-xmark mr-2"></i>
+                                        Annulla
+                                    </button>
+                                </div>
+                            </motion.form>
                         </motion.div>
                     )}
                 </AnimatePresence>

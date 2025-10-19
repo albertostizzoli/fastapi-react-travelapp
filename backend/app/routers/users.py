@@ -89,22 +89,52 @@ async def add_user(
 
 # PUT: Funzione per modificare un utente  
 @router.put("/{user_id}", response_model=User)
-def update_user(user_id: int, updated_user: UserCreate, db: Session = Depends(get_db)):
-    user = db.query(UserDB).filter(UserDB.id == user_id).first() # Modifica l'id dell'utente selezionato
+async def update_user(
+    user_id: int,
+    name: str = Form(...),
+    surname: str = Form(...),
+    email: str = Form(...), 
+    password: str = Form(...),
+    interests: str = Form(None),
+    photo: UploadFile = File(None),
+    db: Session = Depends(get_db)
+):
+    # trova l'utente nel DB
+    user = db.query(UserDB).filter(UserDB.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="Utente non trovato")
 
-    # aggiorno i campi dell'utente
-    user.name = updated_user.name
-    user.surname = updated_user.surname
-    user.email = updated_user.email
-    user.password = get_password_hash(updated_user.password)
-    user.interests = updated_user.interests
-    user.photo = updated_user.photo
+    # decodifica gli interessi da stringa JSON a lista Python
+    interests_list = None
+    if interests:
+        try:
+            interests_list = json.loads(interests)
+        except Exception:
+            interests_list = [interests]
 
-    db.commit()        # modifiche salvate
-    db.refresh(user)   # database aggiornato
-    return user        # utente modificato
+    # carica la foto su Cloudinary se presente
+    photo_url = user.photo  # mantieni la vecchia se non viene cambiata
+    if photo:
+        upload_result = cloudinary.uploader.upload(photo.file)
+        photo_url = upload_result.get("secure_url")
+
+    # aggiorna i campi
+    user.name = name
+    user.surname = surname
+    user.email = email
+
+    # aggiorna la password solo se ne è stata inviata una nuova
+    if password:
+       user.password = get_password_hash(password)
+
+    user.interests = interests_list
+    user.photo = photo_url
+
+    db.commit()       # modifiche salvate
+    db.refresh(user)  # database aggiornato
+
+    return user
+
 
 
 # DELETE: Funzione per cancellare un utente
