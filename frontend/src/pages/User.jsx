@@ -9,7 +9,8 @@ function User() {
   const [name, setName] = useState(""); // stato per il nome
   const [surname, setSurname] = useState(""); // stato per il cognome
   const [email, setEmail] = useState(""); // stato per l'email
-  const [password, setPassword] = useState(""); // stato per la password 
+  const [password, setPassword] = useState(""); // stato per la password
+  const [showPassword, setShowPassword] = useState(false); // stato per nascondere / mostrare la password
   const [selectedInterests, setSelectedInterests] = useState([]); // stato per gli interessi selezionati
   const [isModalOpen, setIsModalOpen] = useState(false); // stato per il modale interessi
   const [photo, setPhoto] = useState(null); // stato per la foto profilo
@@ -59,7 +60,7 @@ function User() {
 
       // Dopo 2 secondi naviga alla pagina profilo
       setTimeout(() => {
-        setMessage("");
+        setMessage(""); // scompare il modale
         navigate("/profile");
       }, 2000);
 
@@ -91,12 +92,24 @@ function User() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setMessage("✅ Registrazione avvenuta con successo! Ora effettua il login.");
+      setMessage("✅ Registrazione avvenuta!");
 
-      // Dopo 2 secondi resetto il messaggio e passo al login
+      // Login automatico subito dopo la registrazione
+      const res = await axios.post(
+        "http://127.0.0.1:8000/users/login",
+        null,
+        { params: { email, password } }
+      );
+
+      const token = res.data.access_token;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", res.data.user_id);
+
+
+      // Dopo 2 secondi resetto il messaggio e passo al profilo
       setTimeout(() => {
         setMessage("");
-        setIsLogin(true);
+        navigate("/profile");
       }, 2000);
 
     } catch (err) {
@@ -179,13 +192,25 @@ function User() {
 
               <div className="mb-6">
                 <label className="block sm:text-black mb-1 text-white">Password</label>
-                <input
-                  type="password"
-                  className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative w-full">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute top-1/2 right-3 -translate-y-1/2 sm:text-gray-700 text-white cursor-pointer">
+                    {showPassword ? (
+                      <i className="fa-solid fa-eye-slash"></i>
+                    ) : (
+                      <i className="fa-solid fa-eye"></i>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <button
@@ -247,13 +272,25 @@ function User() {
 
                 <div>
                   <label className="block sm:text-black mb-1 text-white">Password</label>
-                  <input
-                    type="password"
-                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <div className="relative w-full">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute top-1/2 right-3 -translate-y-1/2 sm:text-gray-700 text-white cursor-pointer">
+                      {showPassword ? (
+                        <i className="fa-solid fa-eye-slash"></i>
+                      ) : (
+                        <i className="fa-solid fa-eye"></i>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
 

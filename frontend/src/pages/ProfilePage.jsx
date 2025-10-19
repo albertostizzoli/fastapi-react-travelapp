@@ -14,8 +14,6 @@ function ProfilePage() {
     const navigate = useNavigate(); // per la navigazione
     const allExperiences = travellers.flatMap(t => t.experiences); // unifica tutte le experiences dallo store in un unico array
 
-
-
     // uso lo useEffect per ottenere i dati dell'utente
     useEffect(() => {
         const userId = localStorage.getItem("userId"); // recupero id utente
@@ -395,7 +393,7 @@ function ProfilePage() {
                                 <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center md:col-span-2">
                                     Modifica Profilo
                                 </h2>
-
+                                
                                 {/* Colonna sinistra */}
                                 <div className="space-y-3">
                                     <input

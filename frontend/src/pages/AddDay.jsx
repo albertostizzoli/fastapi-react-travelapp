@@ -14,6 +14,8 @@ function AddDay() {
   const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
   const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
+  const [query, setQuery] = useState(""); // stato per ottenre i luoghi dall'API  Photon
+  const [suggestions, setSuggestions] = useState([]); // stato per i suggerimenti dall'API Photon
 
   const [form, setForm] = useState({ // stato del form
     date: "",
@@ -75,6 +77,30 @@ function AddDay() {
     const newPhotos = form.photo.filter((_, i) => i !== index); // filtro l'array delle foto per rimuovere quella all'indice specificato
     setForm({ ...form, photo: newPhotos }); // aggiorno lo stato del giorno
   };
+
+  useEffect(() => {
+    if (query.length < 2) return; // evita richieste troppo frequenti
+
+    const timeoutId = setTimeout(() => {
+      fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5`) // chiamo l'API di Photon per ottenere i luoghi
+        .then(res => res.json())
+        .then(data => {
+          if (data.features) {
+            setSuggestions(
+              data.features.map(f => ({
+                name: f.properties.name,
+                city: f.properties.city,
+                country: f.properties.country,
+                lat: f.geometry.coordinates[1],
+                lng: f.geometry.coordinates[0],
+              }))
+            );
+          }
+        });
+    }, 300); // debounce 300ms
+
+    return () => clearTimeout(timeoutId);
+  }, [query]);
 
 
   // gestisce l'invio del form e salva il nuovo giorno nel backend
@@ -176,14 +202,34 @@ function AddDay() {
         </div>
 
         {/* Titolo */}
-        <div className="md:col-span-1">
+        <div className="md:col-span-1 relative">
           <label className="block font-bold text-white mb-1">Titolo *</label>
           <input
             name="title"
             value={form.title}
-            onChange={handleChange}
+            onChange={(e) => {
+              const value = e.target.value;
+              setForm(prev => ({ ...prev, title: value })); // aggiorna il titolo nel form
+              setQuery(value); // aggiorna query per l'autocomplete
+            }}
             required
-            className="w-full p-2 font-semibold border border-white text-white rounded-full" />
+            className="w-full p-2 font-semibold border border-white text-white rounded-full bg-transparent"
+          />
+          {suggestions.length > 0 && (
+            <ul className="absolute bg-black text-white w-full mt-1 rounded shadow-lg z-10">
+              {suggestions.map((s, i) => (
+                <li
+                  key={i}
+                  className="p-2 hover:bg-blue-400 cursor-pointer"
+                  onClick={() => {
+                    setForm((prev) => ({ ...prev, title: s.name }));
+                    setSuggestions([]);
+                  }}>
+                  {s.name}, {s.city}, {s.country}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Descrizione */}
