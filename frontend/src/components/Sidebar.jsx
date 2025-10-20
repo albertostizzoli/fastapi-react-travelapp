@@ -218,7 +218,7 @@ function Sidebar() {
 
                 {/* Copyright */}
                 <span className="text-white text-xl mt-4">
-                  &copy; 2025 Travel App. Tutti i diritti riservati
+                  &copy; 2025 TravelDiary. Tutti i diritti riservati
                 </span>
               </div>
             </motion.div>

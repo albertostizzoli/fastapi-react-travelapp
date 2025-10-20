@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 
 // Questo è il modale per cancellare i viaggi
-function ModalDeleteConfirm({ isOpen, onConfirm, onCancel }) {
+function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
     return (
         <AnimatePresence>
             {isOpen && (
@@ -41,4 +41,4 @@ function ModalDeleteConfirm({ isOpen, onConfirm, onCancel }) {
     );
 }
 
-export default ModalDeleteConfirm;
+export default ModalDeleteTravel;

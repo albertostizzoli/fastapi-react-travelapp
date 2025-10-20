@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header"; // componente Header
 import Sidebar from "./components/Sidebar"; // componente Sidebar
+import Footer from "./components/Footer"; // componente Footer
 import HomePage from "./pages/HomePage"; // pagina Home
 import LoginRegisterPage from "./pages/LoginRegisterPage"; // pagina di Login e Registrazione
 import ProfilePage from "./pages/ProfilePage"; // pagina Profilo Utente
@@ -44,7 +45,10 @@ function Layout({ children }) {
       {location.pathname !== "/loginregister" && <Header />}
 
       {/* Contenuto pagina */}
-      <div>{children}</div>
+      <div className="flex-1">{children}</div>
+      {/* Footer scompare a 576px e non appare in HomePage e LoginRegisterPage */}
+      {location.pathname !== "/loginregister" && location.pathname !== "/" && <Footer className="hidden sm:flex" />}
+
     </div>
   );
 }
