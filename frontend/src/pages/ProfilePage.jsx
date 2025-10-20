@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import travellers from "../store/travellers";
+import { motion } from "framer-motion";
+import EditProfileModal from "../components/Modals/EditProfileModal";
+import ModalDeleteProfile from "../components/DeleteModals/ModalDeleteProfile";
+
 
 function ProfilePage() {
     const [user, setUser] = useState(null); // stato per i dati utente
@@ -12,7 +14,6 @@ function ProfilePage() {
     const [showEditModal, setShowEditModal] = useState(false); // stato per mostrare/nascondere il modale di modifica
     const [showPassword, setShowPassword] = useState(false); // stato per nascondere / mostrare la password
     const navigate = useNavigate(); // per la navigazione
-    const allExperiences = travellers.flatMap(t => t.experiences); // unifica tutte le experiences dallo store in un unico array
 
     // uso lo useEffect per ottenere i dati dell'utente
     useEffect(() => {
@@ -343,186 +344,23 @@ function ProfilePage() {
                 </div>
 
                 {/* Modale di conferma eliminazione profilo */}
-                <AnimatePresence>
-                    {deleteProfileId && ( // se deleteProfileId non è null, mostro il modale
-                        <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}>
-                            <motion.div className="backdrop-blur-xl p-6 rounded-3xl shadow-lg w-80 text-center"
-                                initial={{ scale: 0.8, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.8, opacity: 0 }}
-                                transition={{ duration: 0.5 }}>
-                                <h2 className="text-xl font-bold mb-4 text-white">
-                                    Vuoi cancellare il tuo profilo?
-                                </h2>
-                                <div className="flex justify-center gap-4">
-                                    <button
-                                        onClick={handleDeleteProfile}
-                                        className="font-semibold flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-full shadow-md transition hover:scale-105 cursor-pointer">
-                                        <i className="fa-solid fa-check"></i> Sì
-                                    </button>
-                                    <button
-                                        onClick={() => setDeleteProfileId(null)}
-                                        className="font-semibold flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-full shadow-md transition hover:scale-105 cursor-pointer">
-                                        <i className="fa-solid fa-xmark"></i> No
-                                    </button>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                <ModalDeleteProfile
+                    isOpen={!!deleteProfileId}
+                    onConfirm={handleDeleteProfile}
+                    onCancel={() => setDeleteProfileId(null)}
+                />
 
                 {/* Modale di modifica profilo */}
-                <AnimatePresence>
-                    {showEditModal && (
-                        <motion.div
-                            className="fixed inset-0 flex items-center justify-center bg-black/40 z-[9999]"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}>
-                            <motion.form
-                                onSubmit={handleUpdateProfile}
-                                encType="multipart/form-data"
-                                className="bg-gray-800 backdrop-blur-xl p-8 rounded-3xl shadow-lg w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
-                                initial={{ scale: 0.8, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.8, opacity: 0 }}
-                                transition={{ duration: 0.4 }}>
-                                <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center md:col-span-2">
-                                    Modifica Profilo
-                                </h2>
+                <EditProfileModal
+                    isOpen={showEditModal}
+                    onClose={() => setShowEditModal(false)}
+                    onSubmit={handleUpdateProfile}
+                    editForm={editForm}
+                    setEditForm={setEditForm}
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                />
 
-                                {/* Colonna sinistra */}
-                                <div className="space-y-3">
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={editForm.name}
-                                        onChange={handleEditChange}
-                                        placeholder="Nome"
-                                        className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
-                                        required
-                                    />
-                                    <input
-                                        type="text"
-                                        name="surname"
-                                        value={editForm.surname}
-                                        onChange={handleEditChange}
-                                        placeholder="Cognome"
-                                        className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
-                                        required
-                                    />
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={editForm.email}
-                                        onChange={handleEditChange}
-                                        placeholder="Email"
-                                        className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
-                                        required
-                                    />
-                                    <div className="relative w-full">
-                                        <input
-                                            type={showPassword ? "text" : "password"}
-                                            name="password"
-                                            value={editForm.password}
-                                            onChange={handleEditChange}
-                                            placeholder="Nuova Password"
-                                            className="w-full px-4 py-2 rounded-full bg-white/20 placeholder-white/70 focus:outline-none"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute top-1/2 right-3 -translate-y-1/2 text-white/70 hover:text-white cursor-pointer">
-                                            {showPassword ? (
-                                                <i className="fa-solid fa-eye-slash"></i>
-                                            ) : (
-                                                <i className="fa-solid fa-eye"></i>
-                                            )}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Colonna destra */}
-                                <div className="space-y-3">
-                                    <select
-                                        onChange={(e) => {
-                                            const selected = e.target.value;
-                                            if (selected && !editForm.interests.includes(selected)) {
-                                                setEditForm((prev) => ({
-                                                    ...prev,
-                                                    interests: [...prev.interests, selected],
-                                                }));
-                                            }
-                                            e.target.value = ""; // resetta la select dopo la scelta
-                                        }}
-                                        className="w-full px-4 py-2 rounded-full bg-white/20 text-white focus:outline-none cursor-pointer scrollbar">
-                                        <option value="" className="bg-gray-600 text-white">
-                                            Seleziona un’esperienza
-                                        </option>
-                                        {allExperiences.map((exp, i) => (
-                                            <option key={i} value={exp} className="bg-gray-600 text-white">
-                                                {exp}
-                                            </option>
-                                        ))}
-                                    </select>
-
-                                    {/* Mostra gli interessi selezionati */}
-                                    {editForm.interests.length > 0 && (
-                                        <div className="flex flex-wrap gap-2 mt-2">
-                                            {editForm.interests.map((interest, i) => (
-                                                <span
-                                                    key={i}
-                                                    className="bg-blue-500/30 px-3 py-1 rounded-full text-sm text-white/90 flex items-center gap-2">
-                                                    {interest}
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            setEditForm((prev) => ({
-                                                                ...prev,
-                                                                interests: prev.interests.filter((x) => x !== interest),
-                                                            }))
-                                                        }
-                                                        className="hover:text-red-400 cursor-pointer">
-                                                        ✕
-                                                    </button>
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    {/* Upload foto */}
-                                    <input
-                                        type="file"
-                                        name="photo"
-                                        accept="image/*"
-                                        onChange={handleEditChange}
-                                        className="w-full text-sm text-white cursor-pointer hover:underline"
-                                    />
-                                </div>
-
-                                {/* Pulsanti Salva / Annulla su tutta la larghezza */}
-                                <div className="flex justify-between mt-6 md:col-span-2">
-                                    <button
-                                        type="submit"
-                                        className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
-                                        <i className="fa-solid fa-check mr-2"></i>
-                                        Salva
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowEditModal(false)}
-                                        className="px-4 py-2 bg-red-500 hover:bg-red-400 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
-                                        <i className="fa-solid fa-xmark mr-2"></i>
-                                        Annulla
-                                    </button>
-                                </div>
-                            </motion.form>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </main>
             {/* Modale di conferma */}
             {message && (

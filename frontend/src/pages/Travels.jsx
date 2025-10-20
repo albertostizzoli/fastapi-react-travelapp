@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel";
+
 
 // funzione per ottenere le stelle 
 function StarRating({ rating = 0, max = 5 }) {
@@ -161,38 +163,12 @@ function Travels() {
       </motion.div>
 
       {/* Modale di conferma eliminazione */}
-      <AnimatePresence>
-        {deleteId && (
-          <motion.div className="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}>
-            <motion.div className="backdrop-blur-xl p-6 rounded-3xl shadow-lg w-11/12 max-w-md text-center"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.5 }}>
-              <h2 className="text-xl font-bold mb-4 text-white">
-                Sei sicuro di voler cancellare il viaggio?
-              </h2>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <button
-                  onClick={handleDelete}
-                  className="font-semibold flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-full transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-check"></i>
-                  Sì
-                </button>
-                <button
-                  onClick={() => setDeleteId(null)}
-                  className="font-semibold flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-full transition hover:scale-105 cursor-pointer">
-                  <i className="fa-solid fa-xmark"></i>
-                  No
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <ModalDeleteTravel
+        isOpen={!!deleteId}
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteId(null)}
+      />
+
       {/* Modale di conferma */}
       {message && (
         <motion.div
