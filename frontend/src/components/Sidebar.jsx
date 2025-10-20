@@ -68,7 +68,7 @@ function Sidebar() {
           className="text-white text-3xl font-bold p-2 cursor-pointer">
           <i className="fa-solid fa-bars"></i>
         </button>
-        <h1 className="font-bold text-3xl underline">Travel App</h1>
+        <h1 className="font-bold text-3xl underline">TravelDiary</h1>
       </nav>
 
       {/* Sidebar + overlay */}
@@ -104,7 +104,7 @@ function Sidebar() {
                 {/* Area Personale */}
                 {isHome && (
                   <Link
-                    to="/user"
+                    to="/loginregister"
                     onClick={toggleSidebar}
                     className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
                     <i className="fa-solid fa-user"></i>

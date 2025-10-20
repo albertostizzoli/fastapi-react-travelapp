@@ -54,11 +54,11 @@ function Header() {
     <nav
       className={`hidden sm:flex p-4 gap-4 justify-between items-center 
         ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
-      <h1 className="font-bold text-3xl underline">Travel App</h1>
+      <h1 className="font-bold text-3xl underline">TravelDiary</h1>
       <div className="flex gap-3">
         {isHome && (
           <Link
-            to="/user"
+            to="/loginregister"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
             <span><i className="fa-solid fa-user"></i></span>
             {/* queste classi mi permettono di avere una underline animata da destra a sinistra*/}

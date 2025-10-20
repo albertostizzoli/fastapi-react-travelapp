@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header"; // componente Header
 import Sidebar from "./components/Sidebar"; // componente Sidebar
+import HomePage from "./pages/HomePage"; // pagina Home
+import LoginRegisterPage from "./pages/LoginRegisterPage"; // pagina di Login e Registrazione
+import ProfilePage from "./pages/ProfilePage"; // pagina Profilo Utente
 import Travels from "./pages/Travels";       // pagina Viaggi
 import AddTravel from "./pages/AddTravel"; //  pagina Aggiungi Viaggio
-import AddDay from "./pages/AddDay"; // pagina Aggiungi Giorno
-import TravelDays from "./pages/TravelDays"; // pagina Dettagli Viaggio
 import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
-import EditDay from "./pages/EditDay"; // pagina Modifica Giorno
-import HomePage from "./pages/HomePage"; // pagina Home
-import User from "./pages/User"; // pagina di Login e Registrazione
-import ProfilePage from "./pages/ProfilePage"; // pagina Profilo Utente
+import TravelDays from "./pages/TravelDays"; // pagina Tappe
+import AddDay from "./pages/AddDay"; // pagina Aggiungi Tappe
+import EditDay from "./pages/EditDay"; // pagina Modifica Tappe
 
 function Layout({ children }) {
   const location = useLocation();
@@ -38,10 +38,10 @@ function Layout({ children }) {
   return (
     <div className="bg-cover bg-center scrollbar overflow-y-auto h-screen" style={{ backgroundImage: bgImage }}>
       {/* Sidebar sempre visibile */}
-      {location.pathname !== "/user" && <Sidebar />}
+      {location.pathname !== "/loginregister" && <Sidebar />}
 
       {/* Header visibile solo se NON sono nella rotta /user */}
-      {location.pathname !== "/user" && <Header />}
+      {location.pathname !== "/loginregister" && <Header />}
 
       {/* Contenuto pagina */}
       <div>{children}</div>
@@ -56,13 +56,13 @@ function App() {
         {/* Rotte */}
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/travels" element={<Travels />} />
+          <Route path="/loginregister" element={<LoginRegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/travels" element={<Travels />} />
           <Route path="/add" element={<AddTravel />} />
-          <Route path="/addDay" element={<AddDay />} />
-          <Route path="/travels/:id/days" element={<TravelDays />} />
           <Route path="/travels/:id/edit" element={<EditTravel />} />
+          <Route path="/travels/:id/days" element={<TravelDays />} />
+          <Route path="/addDay" element={<AddDay />} />
           <Route path="/days/:id/edit" element={<EditDay />} />
         </Routes>
       </Layout>

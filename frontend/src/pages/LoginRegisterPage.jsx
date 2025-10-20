@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import LoginModal from "../components/modals/LoginModal";
 
-
-function User() {
+function LoginRegisterPage() {
   const [isLogin, setIsLogin] = useState(true); //  stato per il toggle login/registrazione
   const [name, setName] = useState(""); // stato per il nome
   const [surname, setSurname] = useState(""); // stato per il cognome
@@ -143,7 +142,7 @@ function User() {
           md:bg-gradient-to-b md:from-blue-400 md:via-white md:to-orange-400">
         {/* Titolo */}
         <h1 className="font-bold text-4xl mb-6 text-center text-white drop-shadow-md md:text-black md:drop-shadow-none">
-          🌍 Travel App
+          🌍 TravelDiary
         </h1>
 
         {/*  Toggle Login/Registrati */}
@@ -357,4 +356,4 @@ function User() {
   );
 }
 
-export default User;
+export default LoginRegisterPage;
