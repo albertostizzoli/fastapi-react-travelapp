@@ -140,10 +140,15 @@ function LoginRegisterPage() {
           flex-1 flex flex-col items-center justify-center
           bg-[url('/images/amalfi.jpg')] bg-cover bg-center
           md:bg-gradient-to-b md:from-blue-400 md:via-white md:to-orange-400">
-        {/* Titolo */}
-        <h1 className="font-bold text-4xl mb-6 text-center text-white drop-shadow-md md:text-black md:drop-shadow-none">
-          TravelDiary
-        </h1>
+        {/* Contenitore logo */}
+        <div className="flex flex-col items-center">
+          {/* Logo */}
+          <img
+            src="/images/logo.png"
+            alt="Logo TravelDiary"
+            className="w-50 h-50 object-contain"
+          />
+        </div>
 
         {/*  Toggle Login/Registrati */}
         <div className="relative flex mb-6 bg-blue-400 p-1 rounded-full w-64">
