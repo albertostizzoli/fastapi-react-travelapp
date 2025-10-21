@@ -85,12 +85,13 @@ function EditTravel() {
 
 
   return (
-    <motion.div className="flex flex-col items-center justify-center bg-transparent w-full overflow-hidden min-h-screen sm:p-8 p-4"
+    <motion.div
+      className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
       {/* Container del form */}
-      <div className="w-full max-w-4xl h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] overflow-auto backdrop-blur-xl shadow-lg rounded-3xl p-6 space-y-4 border border-white">
+      <div className="w-full max-w-4xl h-auto backdrop-blur-xl shadow-lg rounded-3xl p-6 space-y-4 border border-white">
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
@@ -108,9 +109,10 @@ function EditTravel() {
               type="text"
               name="town"
               value={travel.town}
-              onChange={handleChange} // aggiorna lo stato al cambiamento
+              onChange={handleChange}
               placeholder="Paese"
-              className="p-2 font-semibold border border-white rounded-full text-white" />
+              className="p-2 font-semibold border border-white rounded-full text-white"
+            />
           </div>
 
           {/* Città */}
@@ -123,7 +125,8 @@ function EditTravel() {
               value={travel.city}
               onChange={handleChange}
               placeholder="Città"
-              className="p-2 font-semibold border border-white rounded-full text-white" />
+              className="p-2 font-semibold border border-white rounded-full text-white"
+            />
           </div>
 
           {/* Anno */}
@@ -135,7 +138,8 @@ function EditTravel() {
               value={travel.year}
               onChange={handleChange}
               placeholder="Anno"
-              className="p-2 font-semibold border border-white text-white rounded-full" />
+              className="p-2 font-semibold border border-white text-white rounded-full"
+            />
           </div>
 
           {/* Data inizio */}
@@ -147,7 +151,8 @@ function EditTravel() {
               value={travel.start_date}
               onChange={handleChange}
               placeholder="Data inizio"
-              className="p-2 font-semibold border border-white text-white rounded-full" />
+              className="p-2 font-semibold border border-white text-white rounded-full"
+            />
           </div>
 
           {/* Data fine */}
@@ -159,17 +164,20 @@ function EditTravel() {
               value={travel.end_date}
               onChange={handleChange}
               placeholder="Data fine"
-              className="p-2 font-semibold border border-white text-white rounded-full" />
+              className="p-2 font-semibold border border-white text-white rounded-full"
+            />
           </div>
 
+          {/* Divider */}
+          <div className="md:col-span-2 border-t border-white/30 my-4"></div>
 
           {/* Voti dettagliati (span 2 colonne) */}
           <div className="md:col-span-2">
-            <h3 className="font-bold  mt-6 mb-2 text-white">Voti *</h3>
-            <div className="flex flex-wrap gap-4">
-              {Object.entries(travel.votes).map(([key, value]) => ( // itera su ogni voto */}
-                <div key={key} className="flex flex-col w-16 text-white">
-                  <label className="capitalize mb-1 font-bold">{key}</label>
+            <h3 className="font-bold mt-4 mb-3 text-white text-center">Voti *</h3>
+            <div className="flex flex-wrap justify-center gap-6">
+              {Object.entries(travel.votes).map(([key, value]) => (
+                <div key={key} className="flex flex-col items-center text-white">
+                  <label className="capitalize mb-1 font-bold text-center">{key}</label>
                   <input
                     type="number"
                     name={key}
@@ -177,39 +185,47 @@ function EditTravel() {
                     onChange={handleVoteChange}
                     min="1"
                     max="5"
-                    className="w-16 font-semibold p-2 border border-white text-white rounded-full" />
+                    className="w-20 font-semibold p-2 border border-white text-white rounded-full text-center"
+                  />
                 </div>
               ))}
             </div>
           </div>
 
           {/* Media Voto */}
-          <div className="md:col-span-2 mt-1">
-            <label className="pe-3 text-white font-bold">Media Voti</label>
-            <input
-              type="text"
-              value={calculateGeneralVote() ?? "-"}
-              readOnly
-              className="w-16 p-2 font-semibold border border-white text-white rounded-full" />
+          <div className="md:col-span-2 mt-2 flex justify-center">
+            <div className="flex flex-col items-center">
+              <label className="pe-3 text-white font-bold mb-1">Media Voti</label>
+              <input
+                type="text"
+                value={calculateGeneralVote() ?? "-"}
+                readOnly
+                className="w-20 p-2 font-semibold border border-white text-white rounded-full text-center"
+              />
+            </div>
           </div>
 
+          {/* Divider */}
+          <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+
           {/* Pulsanti (span 2 colonne) */}
-          <div className="md:col-span-2 flex justify-center gap-2">
+          <div className="md:col-span-2 flex justify-between gap-2">
             <Link
               to="/travels"
-              className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-arrow-left"></i>
               Torna ai Viaggi
             </Link>
             <button
               type="submit"
-              className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-edit"></i>
               Salva Modifiche
             </button>
           </div>
         </form>
       </div>
+
       {/* Modale di conferma */}
       {message && (
         <motion.div
@@ -217,13 +233,13 @@ function EditTravel() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white
-               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
     </motion.div>
   );
+
 }
 
 export default EditTravel;

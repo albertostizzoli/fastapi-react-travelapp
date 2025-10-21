@@ -155,34 +155,31 @@ function AddDay() {
   };
 
   return (
-    <motion.div className="flex items-center justify-center bg-transparent min-h-screen sm:p-8 p-4"
+    <motion.div
+      className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl shadow-lg rounded-3xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
-
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-bold text-white">
-            ➕ Aggiungi una tappa al viaggio
-          </h2>
+          <h2 className="text-2xl font-bold text-white">➕ Aggiungi una tappa al viaggio</h2>
           <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
         </div>
 
         {/* Selezione viaggio */}
         <div>
-          <label className="block font-bold text-white mb-1">Viaggio *</label>
+          <label className="block font-bold text-white mb-2">Viaggio *</label>
           <select
             value={selectedTravel}
-            onChange={(e) => setSelectedTravel(e.target.value)} // aggiorno il viaggio selezionato
+            onChange={(e) => setSelectedTravel(e.target.value)}
             className="w-full p-2 border border-white rounded-full bg-transparent text-white font-bold"
             required>
-
             <option value="" className="bg-black text-white">-- Seleziona --</option>
             {travels.map((t) => (
-              <option key={t.id} value={t.id} className="bg-black text-white"> {/* opzione per ogni viaggio */}
+              <option key={t.id} value={t.id} className="bg-black text-white">
                 {t.city} ({t.year})
               </option>
             ))}
@@ -191,32 +188,33 @@ function AddDay() {
 
         {/* Data */}
         <div>
-          <label className="block font-bold text-white mb-1">Data *</label>
+          <label className="block font-bold text-white mb-2">Data *</label>
           <input
             type="date"
             name="date"
             value={form.date}
             onChange={handleChange}
             required
-            className="w-full p-2 font-semibold border border-white rounded-full text-white bg-transparent [color-scheme:dark]" />
+            className="w-full p-2 font-semibold border border-white rounded-full text-white bg-transparent [color-scheme:dark]"
+          />
         </div>
 
         {/* Titolo */}
         <div className="md:col-span-1 relative">
-          <label className="block font-bold text-white mb-1">Titolo *</label>
+          <label className="block font-bold text-white mb-2">Titolo *</label>
           <input
             name="title"
             value={form.title}
             onChange={(e) => {
               const value = e.target.value;
-              setForm(prev => ({ ...prev, title: value })); // aggiorna il titolo nel form
-              setQuery(value); // aggiorna query per l'autocomplete
+              setForm((prev) => ({ ...prev, title: value }));
+              setQuery(value);
             }}
             required
             className="w-full p-2 font-semibold border border-white text-white rounded-full bg-transparent"
           />
           {suggestions.length > 0 && (
-            <ul className="absolute bg-black text-white w-full mt-1 rounded shadow-lg z-10">
+            <ul className="absolute bg-black text-white w-full mt-1 shadow-lg z-10">
               {suggestions.map((s, i) => (
                 <li
                   key={i}
@@ -232,41 +230,44 @@ function AddDay() {
           )}
         </div>
 
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+
         {/* Descrizione */}
         <div className="md:col-span-2">
-          <label className="block font-bold text-white mb-1">Riassunto della giornata *</label>
+          <label className="block font-bold text-white mb-2">Riassunto della giornata *</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
             required
             className="w-full p-2 font-semibold border border-white text-white rounded-3xl scrollbar"
-            rows="6" />
+            rows="6"
+          />
         </div>
 
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+
         {/* Pulsanti principali: Seleziona categorie + Carica foto */}
-        <div className="md:col-span-2 flex flex-wrap gap-4">
-          {/* Pulsante categorie */}
+        <div className="md:col-span-2 flex justify-between gap-4">
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
-
-          {/* Pulsante foto */}
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="font-semibold flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
         </div>
 
-
         {/* Mostra i tags selezionati */}
         {form.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-3 w-full">
+          <div className="mt-2 flex gap-3 w-full justify-center flex-wrap">
             {form.tags.map((tag, i) => (
               <span
                 key={i}
@@ -288,7 +289,6 @@ function AddDay() {
           </div>
         )}
 
-        {/* Modale Categorie */}
         <ModalAddTag
           isOpen={isTagModalOpen}
           onClose={() => setIsTagModalOpen(false)}
@@ -296,27 +296,23 @@ function AddDay() {
           setForm={setForm}
         />
 
-
+        {/* Foto */}
         <div className="md:col-span-2">
-          {/* Foto esistenti + nuove foto */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-2">
             {form.photo.map((item, index) => {
-              // se è una stringa, è un URL dal DB
               const src =
-                typeof item === "string" // se è una stringa, è un URL dal DB
-                  ? item.startsWith("http") // se inizia con http, è un URL completo
+                typeof item === "string"
+                  ? item.startsWith("http")
                     ? item
                     : `http://127.0.0.1:8000/${item}`
-                  // se è un File (nuova foto)
                   : URL.createObjectURL(item);
-
               return (
                 <div key={index} className="relative group">
                   <img
-                    onClick={() => setOpenImage(src)} // apri immagine cliccata
+                    onClick={() => setOpenImage(src)}
                     src={src}
-                    alt={`Foto ${index + 1}`} // alt descrittivo
-                    className="w-full h-32 object-cover rounded-lg border border-white shadow-md cursor-pointer"
+                    alt={`Foto ${index + 1}`}
+                    className="w-full h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
                   />
                   <button
                     type="button"
@@ -325,23 +321,18 @@ function AddDay() {
                     <i className="fa-solid fa-xmark"></i>
                   </button>
 
-                  {/* Modale Foto Ingrandita */}
                   {openImage && (
                     <div
-                      onClick={() => setOpenImage(null)} // chiude il modale
+                      onClick={() => setOpenImage(null)}
                       className="fixed inset-0 z-[9999] bg-opacity-50 flex items-center justify-center p-4">
-                      {/* prevengo la chiusura quando clicco sull'immagine o sulla X */}
                       <div
                         onClick={(e) => e.stopPropagation()}
                         className="relative w-full max-w-4xl mx-auto">
-                        {/* Bottone X */}
                         <button
-                          onClick={() => setOpenImage(null)} // chiude il modale
+                          onClick={() => setOpenImage(null)}
                           className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg hover:bg-red-600 transition cursor-pointer">
                           <i className="fa-solid fa-xmark text-lg"></i>
                         </button>
-
-                        {/* Immagine ingrandita */}
                         <img
                           src={openImage.replace("w=400", "w=1600")}
                           alt="Immagine ingrandita"
@@ -355,7 +346,6 @@ function AddDay() {
             })}
           </div>
 
-          {/* Input file nascosto */}
           <input
             type="file"
             ref={fileInputRef}
@@ -366,23 +356,26 @@ function AddDay() {
           />
         </div>
 
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
 
-        {/* Pulsante */}
-        <div className="md:col-span-2 flex justify-center gap-2">
+        {/* Pulsante Aggiungi Tappa */}
+        <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={`/travels/${selectedTravel}/days`}
-            className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
           </Link>
           <button
             type="submit"
-            className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa
           </button>
         </div>
       </form>
+
       {/* Modale di conferma */}
       {message && (
         <motion.div
@@ -390,12 +383,11 @@ function AddDay() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white
-               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
-    </motion.div >
+    </motion.div>
   );
 }
 

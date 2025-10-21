@@ -37,7 +37,9 @@ function Layout({ children }) {
   const bgImage = backgrounds[location.pathname];
 
   return (
-    <div className="bg-cover bg-center scrollbar overflow-y-auto h-screen" style={{ backgroundImage: bgImage }}>
+    <div
+      className={`bg-cover bg-center overflow-y-auto h-screen ${location.pathname === "/" ? "scrollbar-home" : "scrollbar"}`}
+      style={{ backgroundImage: bgImage }}>
       {/* Sidebar sempre visibile */}
       {location.pathname !== "/loginregister" && <Sidebar />}
 

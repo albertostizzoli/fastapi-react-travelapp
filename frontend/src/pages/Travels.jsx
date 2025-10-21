@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel";
 
 
@@ -97,69 +97,76 @@ function Travels() {
           hidden: {},
           visible: { transition: { staggerChildren: 0.2 } }
         }}>
-        {travels.map((v) => (
-          <motion.div
-            key={v.id}
-            className="backdrop-blur-xl bg-gray-600/30 border border-gray-700 rounded-3xl shadow-lg overflow-hidden"
-            variants={{
-              hidden: { scaleY: 0, opacity: 0, originY: 0 },
-              visible: { scaleY: 1, opacity: 1 }
-            }}
-            transition={{ duration: 1, ease: "easeOut" }}>
-            {/* Immagine */}
-            {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
-              <img
-                src={v.days[0].photo[0]} // usa la prima foto del primo giorno
-                alt={`Foto di ${v.town}`}
-                className="w-full h-48 object-cover" />
-            )}
 
-            {/* Contenuto */}
-            <div className="p-4 flex flex-col gap-2">
-              <h2 className="text-lg font-semibold text-white">{v.town} - {v.city}</h2>
-              <p className="text-gray-300 text-sm">📅 {v.start_date} → {v.end_date}</p>
-              <p className="text-white font-medium mt-1">Anno: {v.year}</p>
-              <p className="text-white font-medium flex items-center gap-2">
-                Media Voto: <StarRating rating={v.general_vote ?? 0} /> {/* mostra la media voto o 0 se non definito */}
-              </p>
-
-              {/* Voti dettagliati */}
-              {v.votes && (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
-                  {Object.entries(v.votes).map(([key, value]) => ( // itera sulle coppie chiave-valore dei voti
-                    <li key={key} className="flex justify-between"> {/* mostra il nome del voto e la stella corrispondente */}
-                      <span className="capitalize">{key}:</span>
-                      <StarRating rating={value} /> {/* mostra il voto con le stelle */}
-                    </li>
-                  ))}
-                </ul>
+        <AnimatePresence>
+          {travels.map((v) => (
+            <motion.div
+              key={v.id}
+              layout
+              className="backdrop-blur-xl bg-gray-600/30 border border-gray-700 rounded-3xl shadow-lg overflow-hidden"
+              variants={{
+                hidden: { scaleY: 0, opacity: 0, originY: 0 },
+                visible: { scaleY: 1, opacity: 1 }
+              }}
+              initial="hidden"
+              animate="visible"
+              exit={{ scaleY: 0, opacity: 0, originY: 0 }} // exit anima come l’entrata ma al contrario
+              transition={{ duration: 0.8, ease: "easeOut" }}>
+              {/* Immagine */}
+              {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
+                <img
+                  src={v.days[0].photo[0]} // usa la prima foto del primo giorno
+                  alt={`Foto di ${v.town}`}
+                  className="w-full h-48 object-cover" />
               )}
 
-              {/* Pulsanti */}
-              <div className="flex flex-col lg:flex-row gap-2 mt-4">
-                <Link
-                  to={`/travels/${v.id}/days`}
-                  className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
-                  <i className="fa-solid fa-calendar-day"></i>
-                  Dettagli Viaggio
-                </Link>
-                <Link
-                  to={`/travels/${v.id}/edit`}
-                  className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-yellow-500 hover:bg-yellow-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
-                  <i className="fa-solid fa-edit"></i>
-                  Modifica Viaggio
-                </Link>
-                <button
-                  onClick={() => setDeleteId(v.id)}
-                  className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
-                  <i className="fa-solid fa-trash"></i>
-                  Cancella Viaggio
-                </button>
-              </div>
+              {/* Contenuto */}
+              <div className="p-4 flex flex-col gap-2">
+                <h2 className="text-lg font-semibold text-white">{v.town} - {v.city}</h2>
+                <p className="text-gray-300 text-sm">📅 {v.start_date} → {v.end_date}</p>
+                <p className="text-white font-medium mt-1">Anno: {v.year}</p>
+                <p className="text-white font-medium flex items-center gap-2">
+                  Media Voto: <StarRating rating={v.general_vote ?? 0} /> {/* mostra la media voto o 0 se non definito */}
+                </p>
 
-            </div>
-          </motion.div>
-        ))}
+                {/* Voti dettagliati */}
+                {v.votes && (
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
+                    {Object.entries(v.votes).map(([key, value]) => ( // itera sulle coppie chiave-valore dei voti
+                      <li key={key} className="flex justify-between"> {/* mostra il nome del voto e la stella corrispondente */}
+                        <span className="capitalize">{key}:</span>
+                        <StarRating rating={value} /> {/* mostra il voto con le stelle */}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Pulsanti */}
+                <div className="flex flex-col lg:flex-row gap-2 mt-4">
+                  <Link
+                    to={`/travels/${v.id}/days`}
+                    className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
+                    <i className="fa-solid fa-calendar-day"></i>
+                    Dettagli Viaggio
+                  </Link>
+                  <Link
+                    to={`/travels/${v.id}/edit`}
+                    className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-yellow-500 hover:bg-yellow-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
+                    <i className="fa-solid fa-edit"></i>
+                    Modifica Viaggio
+                  </Link>
+                  <button
+                    onClick={() => setDeleteId(v.id)}
+                    className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
+                    <i className="fa-solid fa-trash"></i>
+                    Cancella Viaggio
+                  </button>
+                </div>
+
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </motion.div>
 
       {/* Modale di conferma eliminazione */}

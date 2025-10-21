@@ -161,6 +161,9 @@ function EditDay() {
             className="w-full font-semibold border border-white text-white rounded-full p-2" />
         </div>
 
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+
         {/* Descrizione */}
         <div className="md:col-span-2">
           <label className="block font-bold text-white mb-1">Riassunto della giornata *</label>
@@ -172,13 +175,16 @@ function EditDay() {
             rows="6" />
         </div>
 
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+
         {/* Pulsanti principali: Seleziona categorie + Carica foto */}
-        <div className="md:col-span-2 flex flex-wrap gap-4">
+        <div className="md:col-span-2 flex justify-between gap-4">
           {/* Pulsante categorie */}
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
 
@@ -186,7 +192,7 @@ function EditDay() {
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="font-semibold flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
         </div>
@@ -297,17 +303,20 @@ function EditDay() {
           />
         </div>
 
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+
         {/* Pulsante di salvataggio */}
-        <div className="md:col-span-2 flex justify-center gap-2">
+        <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={travelId ? `/travels/${travelId}/days` : `/travels`}
-            className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
           </Link>
           <button
             type="submit"
-            className="font-semibold w-full px-4 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-edit"></i>
             Salva Modifiche
           </button>
