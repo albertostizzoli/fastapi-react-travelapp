@@ -19,13 +19,13 @@ function Layout({ children }) {
   const backgrounds = {
     "/profile": "url('/images/golden_gate.jpg')",
     "/travels": "url('/images/colosseo.jpg')",
-    "/add": "url('/images/giappone.jpg')",
+    "/add": "url('/images/tokyo.jpeg')",
     "/addDay": "url('/images/newyork.jpg')",
   };
 
   // gestisco anche le rotte dinamiche
   if (location.pathname.includes("/travels") && location.pathname.includes("/days")) {
-    backgrounds[location.pathname] = "url('/images/paris.jpg')";
+    backgrounds[location.pathname] = "url('/images/paris.jpeg')";
   }
   if (location.pathname.includes("/travels") && location.pathname.includes("/edit")) {
     backgrounds[location.pathname] = "url('/images/london.jpg')";

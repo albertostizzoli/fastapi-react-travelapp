@@ -7,6 +7,7 @@ function Sidebar() {
   const [user, setUser] = useState(null); // stato per ottenere i dati dell'utente
   const location = useLocation(); // per la pagina corrente
   const navigate = useNavigate(); // stato per la navigazione sul browser
+  const currentYear = new Date().getFullYear();
 
   // Rotte dinamiche nella sidebar
   const path = location.pathname;
@@ -201,7 +202,7 @@ function Sidebar() {
 
                 {/* Copyright */}
                 <span className="text-white text-xl mt-4">
-                  &copy; 2025 TravelDiary. Tutti i diritti riservati
+                  &copy; { currentYear } TravelDiary. Tutti i diritti riservati
                 </span>
               </div>
             </motion.div>

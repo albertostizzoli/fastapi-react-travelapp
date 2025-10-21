@@ -142,7 +142,7 @@ function LoginRegisterPage() {
           md:bg-gradient-to-b md:from-blue-400 md:via-white md:to-orange-400">
         {/* Titolo */}
         <h1 className="font-bold text-4xl mb-6 text-center text-white drop-shadow-md md:text-black md:drop-shadow-none">
-          🌍 TravelDiary
+          TravelDiary
         </h1>
 
         {/*  Toggle Login/Registrati */}
