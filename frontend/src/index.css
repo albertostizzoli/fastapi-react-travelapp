@@ -26,7 +26,7 @@
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  background: rgba(31, 41, 55, 0.4); /* trasparenza per adattarsi allo sfondo */
+  background-color: transparent !important;  /* trasparenza per adattarsi allo sfondo */
   border-radius: 8px;
 }
 
