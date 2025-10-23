@@ -2,7 +2,7 @@ from fastapi import FastAPI # importo FastAPI
 from fastapi.middleware.cors import CORSMiddleware # importo CORS
 
 # importo i router delle API
-from app.routers import travels, days, users
+from app.routers import travels, days, users, chats
 
 # importo la configurazione del database
 from app.database import Base, engine
@@ -28,3 +28,4 @@ Base.metadata.create_all(bind=engine)
 app.include_router(travels.router) # viaggi
 app.include_router(days.router) # tappe
 app.include_router(users.router) # utenti
+app.include_router(chats.router) # chat AI
