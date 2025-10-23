@@ -23,4 +23,9 @@ def generate_message(msg: UserMessage):
         prompt = f"L'utente ha scritto: '{msg.message}'. Rispondi in modo naturale e amichevole."
 
     response = model.generate_content(prompt)
-    return {"response": response.text}
+
+    
+    cleaned_text = response.text.replace('**', '')  
+    cleaned_text = cleaned_text.replace('*', '') 
+
+    return {"response": cleaned_text}
