@@ -56,7 +56,7 @@ function LoginRegisterPage() {
       localStorage.setItem("userId", res.data.user_id);
 
       // Mostra messaggio di successo
-      setMessage("✅ Login effettuato!");
+      setMessage("✅ Bentornato!");
 
       // Dopo 2 secondi naviga alla pagina profilo
       setTimeout(() => {
@@ -92,7 +92,7 @@ function LoginRegisterPage() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setMessage("✅ Registrazione avvenuta!");
+      setMessage("✅ Benvenuto!");
 
       // Login automatico subito dopo la registrazione
       const res = await axios.post(

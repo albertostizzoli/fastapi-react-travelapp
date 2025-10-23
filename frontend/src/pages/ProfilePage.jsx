@@ -266,9 +266,11 @@ function ProfilePage() {
                                     <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
                                 </Link>
 
-                                <button className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-full text-white shadow-md transition-transform hover:scale-105 cursor-pointer">
+                                <Link
+                                    to="/chat"
+                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-400 rounded-full text-white shadow-md transition-transform hover:scale-105 cursor-pointer">
                                     <i className="fa-solid fa-compass"></i> Prossimo viaggio
-                                </button>
+                                </Link>
                             </div>
                         </motion.div>
 

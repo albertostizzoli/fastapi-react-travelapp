@@ -11,6 +11,7 @@ import EditTravel from "./pages/EditTravel"; // pagina Modifica Viaggio
 import TravelDays from "./pages/TravelDays"; // pagina Tappe
 import AddDay from "./pages/AddDay"; // pagina Aggiungi Tappe
 import EditDay from "./pages/EditDay"; // pagina Modifica Tappe
+import ChatAI from "./pages/ChatAI"; // pagina Chat AI 
 
 function Layout({ children }) {
   const location = useLocation();
@@ -32,6 +33,9 @@ function Layout({ children }) {
   }
   if (location.pathname.includes("/days") && location.pathname.includes("/edit")) {
     backgrounds[location.pathname] = "url('/images/miami.jpg')";
+  }
+  if (location.pathname.includes("/chat")) {
+    backgrounds[location.pathname] = "url('/images/lugano.jpg')";
   }
 
   const bgImage = backgrounds[location.pathname];
@@ -70,6 +74,7 @@ function App() {
           <Route path="/travels/:id/days" element={<TravelDays />} />
           <Route path="/addDay" element={<AddDay />} />
           <Route path="/days/:id/edit" element={<EditDay />} />
+          <Route path="/chat" element={<ChatAI />} />
         </Routes>
       </Layout>
     </BrowserRouter>

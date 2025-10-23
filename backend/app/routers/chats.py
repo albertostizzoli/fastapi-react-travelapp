@@ -5,7 +5,7 @@ from app.config import genai, UserMessage
 router = APIRouter(prefix="/chats")
 
 @router.post("/")
-def recommend(msg: UserMessage):
+def generate_message(msg: UserMessage):
     model = genai.GenerativeModel("gemini-2.0-flash")
 
     if msg.mode == "json":
