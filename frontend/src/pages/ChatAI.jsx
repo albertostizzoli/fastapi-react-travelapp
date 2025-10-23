@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 function ChatAI() {
+
     const [messages, setMessages] = useState([
         {
             role: "ai",
@@ -24,7 +25,7 @@ function ChatAI() {
             body: JSON.stringify({ message: input, mode: "chat" })
         });
 
-        const data = await res.json(); 
+        const data = await res.json();
 
         const aiMessage = { role: "ai", text: data.response };
         setMessages((prev) => [...prev, aiMessage]);
@@ -32,13 +33,15 @@ function ChatAI() {
     };
 
     return (
-        <div className="flex flex-col h-screen max-w-5xl mx-auto bg-transparent backdrop-blur-xl">
+        <div className="flex flex-col h-[85vh] sm:h-[80vh] md:h-[75vh] max-w-4xl mx-auto mt-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden px-8 sm:px-4 md:px-6">
             {/* Chat messaggi */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 rounded-3xl border scrollbar">
+            <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar">
                 {messages.map((m, i) => (
                     <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                         <div
-                            className={`rounded-lg px-4 py-2 max-w-xs ${m.role === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-900"
+                            className={`px-5 py-3 rounded-2xl shadow-sm transition-all duration-300 max-w-[75%] ${m.role === "user"
+                                ? "bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-br-none"
+                                : "bg-white/80 text-gray-900 backdrop-blur-md border border-gray-200 rounded-bl-none"
                                 }`}>
                             {m.text}
                         </div>
@@ -46,18 +49,18 @@ function ChatAI() {
                 ))}
             </div>
 
-            {/* Input */}
-            <div className="p-4 bg-transparent border-t flex gap-2 rounded-3xl">
+            {/* Input area */}
+            <div className="p-4 flex items-center gap-3">
                 <input
-                    className="flex-1 border rounded-full px-3 py-2 focus:outline-none"
+                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-3 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                     placeholder="Scrivi un messaggio..."
                 />
                 <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-full"
-                    onClick={sendMessage}>
+                    onClick={sendMessage}
+                    className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-5 py-3 rounded-full font-medium shadow-lg transition-transform transform hover:scale-105">
                     Invia
                 </button>
             </div>

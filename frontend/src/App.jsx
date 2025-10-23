@@ -52,8 +52,8 @@ function Layout({ children }) {
 
       {/* Contenuto pagina */}
       <div className="flex-1">{children}</div>
-      {/* Footer scompare a 576px e non appare in HomePage e LoginRegisterPage */}
-      {location.pathname !== "/loginregister" && location.pathname !== "/" && <Footer className="hidden sm:flex" />}
+      {/* Footer scompare a 576px e non appare in HomePage e LoginRegisterPage e ChatAI */}
+      {location.pathname !== "/loginregister" && location.pathname !== "/" && location.pathname !== "/chat" && <Footer className="hidden sm:flex" />}
 
     </div>
   );
