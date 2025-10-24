@@ -25,19 +25,19 @@ function EditProfileModal({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 flex items-center justify-center bg-black/40 z-[9999]"
+          className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-[9999]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}>
           <motion.form
             onSubmit={onSubmit}
             encType="multipart/form-data"
-            className="bg-gray-800 backdrop-blur-xl p-8 rounded-3xl shadow-lg w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="border border-white/30 bg-white/10 backdrop-blur-lg p-8 rounded-3xl shadow-lg w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.4 }}>
-            <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center md:col-span-2">
+            <h2 className="text-2xl font-bold text-blue-500 mb-4 text-center md:col-span-2">
               Modifica Profilo
             </h2>
 
@@ -128,7 +128,7 @@ function EditProfileModal({
                   {editForm.interests.map((interest, i) => (
                     <span
                       key={i}
-                      className="bg-blue-500/30 px-3 py-1 rounded-full text-sm text-white/90 flex items-center gap-2">
+                      className="bg-blue-500/70 px-3 py-1 rounded-full text-sm text-white/90 flex items-center gap-2">
                       {interest}
                       <button
                         type="button"
@@ -162,13 +162,13 @@ function EditProfileModal({
             <div className="flex justify-between mt-6 md:col-span-2">
               <button
                 type="submit"
-                className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
                 <i className="fa-solid fa-check mr-2"></i> Salva
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 bg-red-500 hover:bg-red-400 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
+                className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-400 hover:from-red-400 hover:to-red-300 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
                 <i className="fa-solid fa-xmark mr-2"></i> Annulla
               </button>
             </div>

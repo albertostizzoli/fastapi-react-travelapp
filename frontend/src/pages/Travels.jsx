@@ -86,110 +86,134 @@ function Travels() {
 
 
   return (
-    <div className="bg-transparent p-8 overflow-visible min-h-screen">
-      {/* Titolo */}
-      <h1 className="text-3xl font-bold text-center text-white mb-8"> 🌍 I miei viaggi</h1>
+    <div className="relative bg-transparent min-h-screen p-8 overflow-visible text-white">
+      {/* Sfere luminose di sfondo per effetto vetro dinamico */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
+        <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+      </div>
 
-      <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
+      {/* Titolo */}
+      <h1 className="text-4xl font-bold text-center text-white drop-shadow mb-8">
+        🌍 I miei viaggi
+      </h1>
+
+      {/* Lista viaggi */}
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4"
         initial="hidden"
         animate="visible"
         variants={{
           hidden: {},
-          visible: { transition: { staggerChildren: 0.2 } }
-        }}>
-
+          visible: { transition: { staggerChildren: 0.2 } },
+        }}
+      >
         <AnimatePresence>
           {travels.map((v) => (
             <motion.div
               key={v.id}
               layout
-              className="backdrop-blur-xl bg-gray-600/30 border border-gray-700 rounded-3xl shadow-lg overflow-hidden"
+              className="group bg-white/15 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden hover:bg-white/25 transition-all duration-300"
               variants={{
                 hidden: { scaleY: 0, opacity: 0, originY: 0 },
-                visible: { scaleY: 1, opacity: 1 }
+                visible: { scaleY: 1, opacity: 1 },
               }}
               initial="hidden"
               animate="visible"
-              exit={{ scaleY: 0, opacity: 0, originY: 0 }} // exit anima come l’entrata ma al contrario
-              transition={{ duration: 0.8, ease: "easeOut" }}>
+              exit={{ scaleY: 0, opacity: 0, originY: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+            >
               {/* Immagine */}
-              {v.days && v.days[0]?.photo?.[0] && ( // verifica che esista almeno una foto
+              {v.days && v.days[0]?.photo?.[0] && (
                 <img
-                  src={v.days[0].photo[0]} // usa la prima foto del primo giorno
+                  src={v.days[0].photo[0]}
                   alt={`Foto di ${v.town}`}
-                  className="w-full h-48 object-cover" />
+                  className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-all duration-300"
+                />
               )}
 
               {/* Contenuto */}
-              <div className="p-4 flex flex-col gap-2">
-                <h2 className="text-lg font-semibold text-white">{v.town} - {v.city}</h2>
-                <p className="text-gray-300 text-sm">📅 {v.start_date} → {v.end_date}</p>
-                <p className="text-white font-medium mt-1">Anno: {v.year}</p>
+              <div className="p-5 flex flex-col gap-3">
+                <h2 className="text-lg font-semibold text-white drop-shadow-sm">
+                  {v.town} - {v.city}
+                </h2>
+                <p className="text-gray-200 text-sm">
+                  📅 {v.start_date} → {v.end_date}
+                </p>
+                <p className="text-white/90 font-medium mt-1">
+                  Anno: <span className="text-white">{v.year}</span>
+                </p>
+
                 <p className="text-white font-medium flex items-center gap-2">
-                  Media Voto: <StarRating rating={v.general_vote ?? 0} /> {/* mostra la media voto o 0 se non definito */}
+                  Media Voto:
+                  <StarRating rating={v.general_vote ?? 0} />
                 </p>
 
                 {/* Voti dettagliati */}
                 {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
-                    {Object.entries(v.votes).map(([key, value]) => ( // itera sulle coppie chiave-valore dei voti
-                      <li key={key} className="flex justify-between"> {/* mostra il nome del voto e la stella corrispondente */}
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white/90 mt-2">
+                    {Object.entries(v.votes).map(([key, value]) => (
+                      <li key={key} className="flex justify-between items-center">
                         <span className="capitalize">{key}:</span>
-                        <StarRating rating={value} /> {/* mostra il voto con le stelle */}
+                        <StarRating rating={value} />
                       </li>
                     ))}
                   </ul>
                 )}
 
                 {/* Pulsanti */}
-                <div className="flex flex-col lg:flex-row gap-2 mt-4">
+                <div className="flex flex-col lg:flex-row justify-center items-center gap-2 mt-4">
                   <Link
                     to={`/travels/${v.id}/days`}
-                    className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-blue-500 hover:bg-blue-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
-                    <i className="fa-solid fa-calendar-day"></i>
+                    className=" w-full font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer"
+                  >
+                    <i className="fa-solid fa-calendar-day mr-1"></i>
                     Dettagli Viaggio
                   </Link>
+
                   <Link
                     to={`/travels/${v.id}/edit`}
-                    className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-yellow-500 hover:bg-yellow-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap">
-                    <i className="fa-solid fa-edit"></i>
+                    className="w-full font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-400 hover:to-yellow-300 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer"
+                  >
+                    <i className="fa-solid fa-edit mr-1"></i>
                     Modifica Viaggio
                   </Link>
+
                   <button
                     onClick={() => setDeleteId(v.id)}
-                    className="font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-red-500 hover:bg-red-400 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer">
-                    <i className="fa-solid fa-trash"></i>
+                    className="w-full font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer"
+                  >
+                    <i className="fa-solid fa-trash mr-1"></i>
                     Cancella Viaggio
                   </button>
                 </div>
-
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>
 
-      {/* Modale di conferma eliminazione */}
+      {/* Modale eliminazione */}
       <ModalDeleteTravel
         isOpen={!!deleteId}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
       />
 
-      {/* Modale di conferma */}
+      {/* Messaggio conferma */}
       {message && (
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white
-               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white px-6 py-3 rounded-full shadow-2xl z-[9999] bg-white/10"
+        >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
     </div>
-  );
+  )
 }
 
 export default Travels;

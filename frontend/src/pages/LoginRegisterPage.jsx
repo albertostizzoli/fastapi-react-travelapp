@@ -137,41 +137,40 @@ function LoginRegisterPage() {
       {/* Sezione form */}
       <div
         className="
-          flex-1 flex flex-col items-center justify-center
-          bg-[url('/images/amalfi.jpg')] bg-cover bg-center
-          md:bg-gradient-to-b md:from-blue-400 md:via-white md:to-orange-400">
+        flex-1 flex flex-col items-center justify-center
+        bg-[url('/images/amalfi.jpg')] bg-cover bg-center
+        md:bg-gradient-to-b md:from-blue-400 md:via-white md:to-orange-400">
+
         {/* Contenitore logo */}
-        <div className="flex flex-col items-center">
-          {/* Logo */}
+        <div className="flex flex-col items-center mb-6">
           <img
             src="/images/logo.png"
             alt="Logo TravelDiary"
-            className="w-50 h-50 object-contain"
+            className="w-40 h-40 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
           />
         </div>
 
-        {/*  Toggle Login/Registrati */}
-        <div className="relative flex mb-6 bg-blue-400 p-1 rounded-full w-64">
+        {/* Toggle Login/Registrati */}
+        <div className="relative flex mb-6 bg-white/20 backdrop-blur-lg border border-white/30 p-1 rounded-full w-64 shadow-md">
           <motion.div
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`absolute top-1 bottom-1 w-1/2 rounded-full bg-orange-400 ${isLogin ? "left-1" : "right-1"}`}
+            className={`absolute top-1 bottom-1 w-1/2 rounded-full bg-gradient-to-r from-orange-400 to-pink-400 shadow-md ${isLogin ? "left-1" : "right-1"}`}
           />
 
           <button
             onClick={() => setIsLogin(true)}
-            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "text-gray-800" : "text-white"}`}>
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "text-gray-900" : "text-white"}`}>
             Login
           </button>
           <button
             onClick={() => setIsLogin(false)}
-            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "text-gray-800" : "text-white"}`}>
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "text-gray-900" : "text-white"}`}>
             Registrati
           </button>
         </div>
 
-
-        {/*  FORM LOGIN */}
+        {/* Form di Login e di Registrazione */}
         <AnimatePresence mode="wait">
           {isLogin ? (
             <motion.form
@@ -181,14 +180,18 @@ function LoginRegisterPage() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-[600px] md:w-3/4 md:mx-auto lg:w-[600px] border sm:border-black md:flex md:flex-col">
-              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">Login</h2>
+              className="
+              bg-white/10 backdrop-blur-2xl border border-white/30 shadow-2xl
+              rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
+              md:mx-auto flex flex-col">
+
+              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-gray-900 drop-shadow">Login</h2>
 
               <div className="mb-4">
-                <label className="block sm:text-black mb-1 text-white">Email</label>
+                <label className="block text-white/90 sm:text-gray-900 mb-1">Email</label>
                 <input
                   type="email"
-                  className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                  className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -196,19 +199,19 @@ function LoginRegisterPage() {
               </div>
 
               <div className="mb-6">
-                <label className="block sm:text-black mb-1 text-white">Password</label>
+                <label className="block text-white/90 sm:text-gray-900 mb-1">Password</label>
                 <div className="relative w-full">
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute top-1/2 right-3 -translate-y-1/2 sm:text-gray-700 text-white cursor-pointer">
+                    className="absolute top-1/2 right-3 -translate-y-1/2 text-white/80 sm:text-gray-900 cursor-pointer">
                     {showPassword ? (
                       <i className="fa-solid fa-eye-slash"></i>
                     ) : (
@@ -220,14 +223,12 @@ function LoginRegisterPage() {
 
               <button
                 type="submit"
-                className=" font-semibold px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                className="font-semibold px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Accedi
               </button>
             </motion.form>
           ) : (
-
-            /*  FORM REGISTRAZIONE */
             <motion.form
               key="register"
               onSubmit={handleRegister}
@@ -235,18 +236,19 @@ function LoginRegisterPage() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="backdrop-blur-xl shadow-lg rounded-3xl p-8 w-11/12 sm:w-[600px] md:w-3/4 md:mx-auto lg:w-[600px] border sm:border-black md:flex md:flex-col">
-              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-black">
-                Registrati
-              </h2>
+              className="
+              bg-white/10 backdrop-blur-2xl border border-white/30 shadow-2xl
+              rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
+              md:mx-auto flex flex-col">
 
-              {/* Campi in 2 colonne */}
-              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
+              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-gray-900 drop-shadow">Registrati</h2>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
-                  <label className="block sm:text-black mb-1 text-white">Nome</label>
+                  <label className="block text-white/90 sm:text-gray-900 mb-1">Nome</label>
                   <input
                     type="text"
-                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -254,10 +256,10 @@ function LoginRegisterPage() {
                 </div>
 
                 <div>
-                  <label className="block sm:text-black mb-1 text-white">Cognome</label>
+                  <label className="block text-white/90 sm:text-gray-900 mb-1">Cognome</label>
                   <input
                     type="text"
-                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
                     required
@@ -265,10 +267,10 @@ function LoginRegisterPage() {
                 </div>
 
                 <div>
-                  <label className="block sm:text-black mb-1 text-white">Email</label>
+                  <label className="block text-white/90 sm:text-gray-900 mb-1">Email</label>
                   <input
                     type="email"
-                    className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -276,19 +278,19 @@ function LoginRegisterPage() {
                 </div>
 
                 <div>
-                  <label className="block sm:text-black mb-1 text-white">Password</label>
+                  <label className="block text-white/90 sm:text-gray-900 mb-1">Password</label>
                   <div className="relative w-full">
                     <input
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full font-semibold border rounded-full px-3 py-2 sm:text-gray-700 text-white"
+                      className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute top-1/2 right-3 -translate-y-1/2 sm:text-gray-700 text-white cursor-pointer">
+                      className="absolute top-1/2 right-3 -translate-y-1/2 text-white/80 sm:text-gray-900 cursor-pointer">
                       {showPassword ? (
                         <i className="fa-solid fa-eye-slash"></i>
                       ) : (
@@ -299,23 +301,22 @@ function LoginRegisterPage() {
                 </div>
               </div>
 
-              {/* Interessi e Foto Profilo  */}
+              {/* Pulsanti esperienze e foto */}
               <div className="mt-6 flex md:flex-nowrap items-center gap-4">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
+                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-orange-500 to-pink-400 hover:from-orange-400 hover:to-pink-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
                   <i className="fa-solid fa-plane mr-2"></i> Esperienze
                 </button>
 
                 <button
                   type="button"
                   onClick={handlePhotoSelect}
-                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-green-500 hover:bg-green-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
+                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
                   <i className="fa-solid fa-camera mr-2"></i> Foto
                 </button>
 
-                {/* Input file nascosto */}
                 <input
                   type="file"
                   ref={fileInputRef}
@@ -325,10 +326,9 @@ function LoginRegisterPage() {
                 />
               </div>
 
-              {/* Submit */}
               <button
                 type="submit"
-                className="font-semibold mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-400 transition hover:scale-105 cursor-pointer">
+                className="font-semibold mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Registrati
               </button>
@@ -336,7 +336,7 @@ function LoginRegisterPage() {
           )}
         </AnimatePresence>
 
-        { /* Modale Viaggiatori */}
+        {/* Modali */}
         <LoginModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
@@ -344,20 +344,18 @@ function LoginRegisterPage() {
           toggleInterest={toggleInterest}
         />
 
-        {/* Modale di conferma */}
         {message && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
-            className="fixed top-6 right-6 backdrop-blur-xl border border-white
-                       text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+            className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-[9999]">
             <p className="text-lg font-semibold">{message}</p>
           </motion.div>
         )}
       </div>
-    </div >
+    </div>
   );
 }
 
