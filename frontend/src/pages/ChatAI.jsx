@@ -40,7 +40,7 @@ function ChatAI() {
                     <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                         <div
                             className={`px-5 py-3 rounded-2xl shadow-sm transition-all duration-300 max-w-[75%] ${m.role === "user"
-                                ? "bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-br-none"
+                                ? "bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white rounded-br-none"
                                 : "bg-white/80 text-gray-900 backdrop-blur-md border border-gray-200 rounded-bl-none"
                                 }`}>
                             {m.text}
@@ -60,7 +60,7 @@ function ChatAI() {
                 />
                 <button
                     onClick={sendMessage}
-                    className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-5 py-3 rounded-full font-medium shadow-lg transition-transform transform hover:scale-105">
+                    className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-5 py-3 rounded-full font-medium shadow-lg transition-transform transform hover:scale-105">
                     Invia
                 </button>
             </div>

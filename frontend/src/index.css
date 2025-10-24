@@ -46,11 +46,11 @@
 }
 
 .scrollbar-home::-webkit-scrollbar-track {
-  background: linear-gradient(180deg, rgb(96, 165, 250),white, rgba(255, 140, 29, 0.8));
+  background: linear-gradient(180deg, rgb(59, 130, 246),white, rgba(249, 115, 22, 0.8));
 }
 
 .scrollbar-home::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgb(81, 162, 255),white, rgba(255, 140, 29, 0.8));
+  background: linear-gradient(180deg, rgb(59, 130, 246),white, rgba(249, 115, 22, 0.8));
   border-radius: 20px;
 }
 

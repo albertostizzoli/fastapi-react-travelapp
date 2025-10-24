@@ -139,36 +139,43 @@ function LoginRegisterPage() {
         className="
         flex-1 flex flex-col items-center justify-center
         bg-[url('/images/amalfi.jpg')] bg-cover bg-center
-        md:bg-gradient-to-b md:from-blue-400 md:via-white md:to-orange-400">
+        md:bg-gradient-to-b md:from-blue-500 md:via-white md:to-orange-500">
 
         {/* Contenitore logo */}
-        <div className="flex flex-col items-center mb-6">
+        <div className="flex flex-col items-center">
           <img
             src="/images/logo.png"
             alt="Logo TravelDiary"
-            className="w-40 h-40 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+            className="w-55 h-55 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
           />
         </div>
 
         {/* Toggle Login/Registrati */}
-        <div className="relative flex mb-6 bg-white/20 backdrop-blur-lg border border-white/30 p-1 rounded-full w-64 shadow-md">
+        <div className="relative flex mb-6 bg-white/20 backdrop-blur-lg border border-white/30 p-1 rounded-full w-64 shadow-md transition-all duration-300 ease-in-out">
           <motion.div
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`absolute top-1 bottom-1 w-1/2 rounded-full bg-gradient-to-r from-orange-400 to-pink-400 shadow-md ${isLogin ? "left-1" : "right-1"}`}
+            className={`absolute top-1 bottom-1 w-1/2 rounded-full shadow-md ${isLogin
+                ? "bg-gradient-to-r from-orange-400 to-rose-500 left-1"
+                : "bg-gradient-to-r from-rose-500 to-orange-400 right-1"
+              }`}
           />
 
           <button
             onClick={() => setIsLogin(true)}
-            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "text-gray-900" : "text-white"}`}>
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "text-gray-900" : "text-white"
+              }`}>
             Login
           </button>
+
           <button
             onClick={() => setIsLogin(false)}
-            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "text-gray-900" : "text-white"}`}>
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "text-gray-900" : "text-white"
+              }`}>
             Registrati
           </button>
         </div>
+
 
         {/* Form di Login e di Registrazione */}
         <AnimatePresence mode="wait">
@@ -306,7 +313,7 @@ function LoginRegisterPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-orange-500 to-pink-400 hover:from-orange-400 hover:to-pink-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
+                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
                   <i className="fa-solid fa-plane mr-2"></i> Esperienze
                 </button>
 

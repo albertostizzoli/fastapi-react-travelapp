@@ -43,7 +43,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                                                 key={experience}
                                                 onClick={() => toggleInterest(experience)}
                                                 className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 rounded-full cursor-pointer text-sm transition-all border border-white/30 hover:scale-105 ${selectedInterests.includes(experience)
-                                                    ? "bg-gradient-to-r from-orange-400 to-pink-400 text-black shadow-lg"
+                                                    ? "bg-gradient-to-r from-orange-400 to-rose-400 text-black shadow-lg"
                                                     : "bg-white/20 text-white hover:bg-white/30 shadow-md"
                                                     }`}
                                             >

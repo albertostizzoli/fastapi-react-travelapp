@@ -53,7 +53,7 @@ function Header() {
   return (
     <nav
       className={`hidden sm:flex pt-3 pe-4 ps-4 gap-4 justify-between items-center 
-        ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
+        ${isHome ? "bg-blue-500 text-white" : "bg-transparent text-white"}`}>
       <h1 className="font-bold text-3xl underline">TravelDiary</h1>
       <div className="flex gap-6">
         {isHome && (
