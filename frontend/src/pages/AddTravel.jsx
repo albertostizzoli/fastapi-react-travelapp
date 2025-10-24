@@ -108,7 +108,11 @@ function AddTravel() {
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 1.5 }}>
-      <div className="w-full max-w-4xl h-auto backdrop-blur-xl shadow-lg rounded-3xl p-6 border border-white">
+      <div className="w-full max-w-4xl h-auto bg-white/15 backdrop-blur-xl shadow-lg rounded-3xl p-6 border border-white/20">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
+          <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+        </div>
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
@@ -142,7 +146,7 @@ function AddTravel() {
               className="w-full p-2 font-semibold border border-white text-white rounded-full"
             />
           </div>
-          
+
 
           {/* Anno */}
           <div className="flex flex-col">
@@ -226,13 +230,13 @@ function AddTravel() {
           <div className="md:col-span-2 flex justify-between gap-2 mt-4">
             <Link
               to="/travels"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-arrow-left"></i>
               Torna ai Viaggi
             </Link>
             <button
               type="submit"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full cursor-pointer transition hover:scale-105">
               <i className="fa-solid fa-plus"></i>
               Aggiungi Viaggio
             </button>

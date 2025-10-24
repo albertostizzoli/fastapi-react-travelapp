@@ -260,7 +260,7 @@ function ProfilePage() {
                             <div className="flex flex-col w-full gap-2 justify-center">
                                 <Link
                                     to="/travels"
-                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-pink-400 hover:from-orange-400 hover:to-pink-300 rounded-full text-white shadow-md transition-transform hover:scale-105"
+                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 rounded-full text-white shadow-md transition-transform hover:scale-105"
                                 >
                                     <i className="fa-solid fa-globe"></i> I miei viaggi
                                 </Link>
@@ -332,7 +332,7 @@ function ProfilePage() {
                                 {user.interests.map((interest, idx) => (
                                     <span
                                         key={idx}
-                                        className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500 to-pink-400 hover:from-orange-400 hover:to-pink-300 rounded-full text-sm sm:text-base text-white shadow-md hover:scale-105 transition-transform duration-150 border border-white/10"
+                                        className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 rounded-full text-sm sm:text-base text-white shadow-md hover:scale-105 transition-transform duration-150 border border-white/10"
                                     >
                                         {interest}
                                     </span>

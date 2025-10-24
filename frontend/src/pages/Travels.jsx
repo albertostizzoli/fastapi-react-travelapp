@@ -113,7 +113,7 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              className="group bg-white/15 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden hover:bg-white/25 transition-all duration-300"
+              className="group bg-white/15 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden hover:bg-white/25 transition-all duration-300 hover:scale-105"
               variants={{
                 hidden: { scaleY: 0, opacity: 0, originY: 0 },
                 visible: { scaleY: 1, opacity: 1 },

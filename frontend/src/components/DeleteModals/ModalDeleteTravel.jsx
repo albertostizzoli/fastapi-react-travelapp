@@ -35,7 +35,7 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
               <button
                 onClick={onConfirm}
                 className="font-semibold flex items-center justify-center gap-2 px-5 py-2.5 
-                bg-gradient-to-r from-green-500 to-emerald-400 hover:from-green-400 hover:to-emerald-300 
+                bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 
                 text-white rounded-full shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
               >
                 <i className="fa-solid fa-check"></i>

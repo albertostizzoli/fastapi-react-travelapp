@@ -161,15 +161,15 @@ function EditProfileModal({
             {/* Pulsanti */}
             <div className="flex justify-between mt-6 md:col-span-2">
               <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
+                <i className="fa-solid fa-xmark mr-2"></i> Annulla
+              </button>
+              <button
                 type="submit"
                 className="px-4 py-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
                 <i className="fa-solid fa-check mr-2"></i> Salva
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-400 hover:from-red-400 hover:to-red-300 rounded-full font-semibold transition-all cursor-pointer hover:scale-105">
-                <i className="fa-solid fa-xmark mr-2"></i> Annulla
               </button>
             </div>
           </motion.form>

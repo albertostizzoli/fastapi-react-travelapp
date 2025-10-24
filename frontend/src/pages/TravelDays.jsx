@@ -79,23 +79,27 @@ function TravelDays() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
 
-        { /* Titolo */}
-        <motion.h1 className="text-3xl font-bold text-white flex-1 min-w-[200px]"
-          initial={{ x: -100, opacity: 0 }} // animazione parte da sinistra
+        {/* Titolo */}
+        <motion.h1
+          className="text-4xl font-bold text-white flex-1 min-w-[200px] p-4 "
+          initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}>
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           🗓️ Tappe del viaggio
         </motion.h1>
 
-        { /* Link Aggiungi Tappa */}
+        {/* Link Aggiungi Tappa */}
         <motion.div
-          initial={{ x: 100, opacity: 0 }} // animazione parte da destra
+          initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}>
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <Link
             to="/addDay"
             state={{ travelId: id }}
-            className="font-semibold mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-green-500 hover:bg-green-400 rounded-full text-white shadow-md transition hover:scale-105">
+            className="font-semibold mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 rounded-full text-white shadow-md transition hover:scale-105"
+          >
             <i className="fa-solid fa-plus"></i> Aggiungi Tappa
           </Link>
         </motion.div>
@@ -106,82 +110,86 @@ function TravelDays() {
         {/* Info Viaggio + Giorni */}
         <div className="flex-1 flex flex-col h-full">
           {/* Info Viaggio */}
-          <motion.div className="p-6 bg-transparent rounded-xl"
+          <motion.div
+            className="p-4 "
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}>
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <h2 className="text-2xl font-semibold text-white mb-2">
-              📍 {travel.town} - {travel.city} {/* Paese e Città */}
+              📍 {travel.town} - {travel.city}
             </h2>
             <p className="text-xl text-white mb-4">
-              📅 {travel.start_date} → {travel.end_date} { /* Data Inizio e Data Fine */}
+              📅 {travel.start_date} → {travel.end_date}
             </p>
-            {travel.title && <p className="text-gray-200 italic">{travel.title}</p>} { /* Titolo */}
+            {travel.title && <p className="text-gray-200 italic">{travel.title}</p>}
           </motion.div>
 
           {/* Lista Giorni in griglia */}
-          <div className="flex-1 overflow-y-auto pr-2">
+          <div className="flex-1 pr-2 mt-4">
             {travel.days?.length > 0 ? (
-              <motion.div className="flex flex-wrap gap-4"
+              <motion.div
+                className="flex flex-wrap gap-4"
                 variants={{
                   hidden: { opacity: 1 },
                   visible: { opacity: 1, transition: { staggerChildren: 0.5 } },
                 }}
                 initial="hidden"
-                animate="visible">
+                animate="visible"
+              >
                 {travel.days.map((d) => (
                   <motion.div
                     key={d.id}
-                    className="backdrop-blur-xl p-4 rounded-3xl shadow-lg border border-gray-700 flex flex-col justify-between w-full sm:w-64"
+                    className="backdrop-blur-xl bg-white/10 border border-white/20 p-4 rounded-3xl shadow-lg flex flex-col justify-between w-full sm:w-64 transition hover:scale-105 hover:bg-white/20"
                     variants={{
                       hidden: { scale: 0, opacity: 0 },
                       visible: {
                         scale: 1,
                         opacity: 1,
-                        transition: { duration: 0.8, ease: "easeOut" }
-                      }
-                    }}>
+                        transition: { duration: 0.8, ease: "easeOut" },
+                      },
+                    }}
+                  >
                     <div className="mb-4">
-                      <p className="text-gray-300 text-lg">{d.date}</p> { /* Data */}
-                      <p className="text-white font-semibold text-xl">{d.title}</p> { /* Titolo */}
+                      <p className="text-gray-300 text-lg">{d.date}</p>
+                      <p className="text-white font-semibold text-xl">{d.title}</p>
                     </div>
 
-                    { /* Foto */}
+                    {/* Foto */}
                     {d.photo.length > 0 && (
                       <div className="flex gap-2 flex-wrap mb-4">
-                        {d.photo.slice(0, 2).map((p, i) => ( // mostro solo le prime 2 foto come anteprima
+                        {d.photo.slice(0, 2).map((p, i) => (
                           <img
                             key={i}
                             src={p}
                             alt="foto viaggio"
                             loading="lazy"
-                            className="w-20 h-20 object-cover rounded-3xl border border-gray-600 shadow-sm"
+                            className="w-20 h-20 object-cover rounded-3xl border border-white/30 shadow-sm"
                           />
                         ))}
                       </div>
                     )}
 
-                    { /* Bottoni Card */}
+                    {/* Bottoni Card */}
                     <div className="flex flex-col gap-2">
-                      {/* Mostra il resto delle informazioni della tappa */}
                       <button
                         onClick={() => setSelectedDay(d)}
-                        className="font-semibold px-4 py-2 flex items-center justify-center bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
+                        className="font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300  text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                      >
                         <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
                       </button>
 
-                      { /* Va nella pagina Modifica Tappa */}
                       <Link
                         to={`/days/${d.id}/edit`}
-                        className=" font-semibold px-4 py-2 flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
-                        <i className="fa-solid fa-edit mr-2"></i>
-                        Modifica Tappa
+                        className="font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-400 hover:to-yellow-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                      >
+                        <i className="fa-solid fa-edit mr-2"></i> Modifica Tappa
                       </Link>
 
-                      { /* Cancella la Tappa */}
                       <button
                         onClick={() => setDeleteDayId(d.id)}
-                        className="font-semibold px-4 py-2 flex items-center justify-center bg-red-500 hover:bg-red-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer">
+                        className="font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                      >
                         <i className="fa-solid fa-trash mr-2"></i> Cancella Tappa
                       </button>
                     </div>
@@ -189,36 +197,31 @@ function TravelDays() {
                 ))}
               </motion.div>
             ) : (
-              // se non ci sono giorni del viaggio mostra questo messaggio
               <p className="text-white font-semibold text-center mt-4">Nessuna Tappa Presente</p>
             )}
           </div>
         </div>
       </div>
 
-      {/* Modale Leggi Tutto */}
+      {/* Modali */}
       <DayInfoModal
         selectedDay={selectedDay}
         onClose={() => setSelectedDay(null)}
         travelDays={travel.days}
       />
-
-      {/* Modale di conferma eliminazione tappa */}
       <ModalDeleteDay
         isOpen={!!deleteDayId}
         onConfirm={handleDeleteDay}
         onCancel={() => setDeleteDayId(null)}
       />
-
-      {/* Modale di conferma */}
       {message && (
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white
-               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white/20 text-white px-6 py-3 rounded-full shadow-lg z-[9999]"
+        >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

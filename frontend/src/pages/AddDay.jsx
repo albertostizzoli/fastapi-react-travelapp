@@ -162,7 +162,11 @@ function AddDay() {
       transition={{ duration: 1.5 }}>
       <form
         onSubmit={handleSubmit}
-        className="backdrop-blur-xl shadow-lg rounded-3xl p-6 w-full max-w-4xl border border-white grid grid-cols-1 md:grid-cols-2 gap-4">
+        className="backdrop-blur-xl bg-white/15 shadow-lg rounded-3xl p-6 w-full max-w-4xl border border-white/20 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
+          <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+        </div>
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
           <h2 className="text-2xl font-bold text-white">➕ Aggiungi una tappa al viaggio</h2>
@@ -254,13 +258,13 @@ function AddDay() {
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold px-6 py-2 bg-orange-500 hover:bg-orange-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="font-semibold px-6 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
         </div>
@@ -271,7 +275,7 @@ function AddDay() {
             {form.tags.map((tag, i) => (
               <span
                 key={i}
-                className="flex items-center justify-between bg-blue-600 text-white px-4 py-2 rounded-full text-base font-semibold shadow-md transition-transform hover:scale-105 cursor-pointer">
+                className="flex items-center justify-between bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white px-4 py-2 rounded-full text-base font-semibold shadow-md transition-transform hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
                 <button
                   type="button"
@@ -330,7 +334,7 @@ function AddDay() {
                         className="relative w-full max-w-4xl mx-auto">
                         <button
                           onClick={() => setOpenImage(null)}
-                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg hover:bg-red-600 transition cursor-pointer">
+                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg hover:bg-red-400 transition cursor-pointer">
                           <i className="fa-solid fa-xmark text-lg"></i>
                         </button>
                         <img
@@ -363,13 +367,13 @@ function AddDay() {
         <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={`/travels/${selectedTravel}/days`}
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-red-500 text-white rounded-full hover:bg-red-400 cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
           </Link>
           <button
             type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full cursor-pointer transition hover:scale-105">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa
           </button>

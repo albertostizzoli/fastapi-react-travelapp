@@ -59,15 +59,15 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                         <div className="p-4 flex justify-end gap-3 border-t border-white/20 backdrop-blur-sm">
                             <button
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full transition hover:scale-105 cursor-pointer"
+                                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full transition hover:scale-105 cursor-pointer"
                             >
-                                <i className="fa-solid fa-check mr-2"></i> Salva Esperienze
+                                <i className="fa-solid fa-xmark mr-2"></i> Annulla
                             </button>
                             <button
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-500 to-pink-400 hover:from-red-400 hover:to-pink-300 text-white rounded-full transition hover:scale-105 cursor-pointer"
+                                className="font-semibold px-4 py-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full transition hover:scale-105 cursor-pointer"
                             >
-                                <i className="fa-solid fa-xmark mr-2"></i> Annulla
+                                <i className="fa-solid fa-check mr-2"></i> Salva Esperienze
                             </button>
                         </div>
                     </motion.div>
