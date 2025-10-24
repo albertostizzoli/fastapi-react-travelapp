@@ -16,7 +16,11 @@ const travellers = [
       "Viaggi Avventura",
       "Overlanding",
       "Deserti & Oasi",
-      "Astroturismo"
+      "Astroturismo",
+      "Canyoning",
+      "Surf & Kite Surf",
+      "Mountain Biking",
+      "Snowboarding & Sci Estremo"
     ]
   },
   {
@@ -33,7 +37,11 @@ const travellers = [
       "Festival Tradizionali",
       "Viaggi Storici",
       "Spettacoli Teatrali",
-      "Incontri con le Popolazioni Locali"
+      "Incontri con le Popolazioni Locali",
+      "Tour Archeologici",
+      "Visite a Siti Patrimonio UNESCO",
+      "Laboratori Artigianali",
+      "Festival Musicali Tradizionali"
     ]
   },
   {
@@ -46,7 +54,10 @@ const travellers = [
       "Mercati Gastronomici",
       "Festival del Gusto",
       "Corsi di Cucina",
-      "Tour Enogastronomici"
+      "Tour Enogastronomici",
+      "Degustazione Birre Artigianali",
+      "Tour di Cioccolato & Dolci",
+      "Esperienze di Pesca & Cucina Locale"
     ]
   },
   {
@@ -62,7 +73,11 @@ const travellers = [
       "Isole Remote",
       "Destinazioni Artiche",
       "Ritiri Benessere",
-      "Yoga nella Natura"
+      "Yoga nella Natura",
+      "Trekking Botanico",
+      "Safari Fotografico",
+      "Osservazione Vulcani & Geoturismo",
+      "Bagni di Foresta (Shinrin-Yoku)"
     ]
   },
   {
@@ -75,14 +90,17 @@ const travellers = [
       "Crociere Esclusive",
       "Suite Panoramiche",
       "Glamping di Coppia",
-      "Cene al Tramonto"
+      "Cene al Tramonto",
+      "Castelli & Ville Storiche",
+      "Picnic Gourmet",
+      "Viaggi in Treno Panoramico"
     ]
   },
   {
     category: "Città",
     description: "Esplora metropoli, musei, locali e vita urbana.",
     experiences: [
-      "Capitali Europee",
+      "Tour nelle Capitali",
       "Vita Notturna",
       "Shopping Metropolitano",
       "Mercati Urbani",
@@ -91,7 +109,10 @@ const travellers = [
       "Caffè Letterari",
       "Eventi Musicali",
       "Coworking City",
-      "Architettura Moderna"
+      "Architettura Moderna",
+      "Tour Gastronomici Urbani",
+      "Festival di Design & Moda",
+      "Passeggiate Fotografiche"
     ]
   },
   {
@@ -104,7 +125,10 @@ const travellers = [
       "Van Life",
       "Couchsurfing",
       "Backpacking Globale",
-      "Turismo Lento Digitale"
+      "Turismo Lento Digitale",
+      "Coworking Retreat",
+      "Reti Digitali Locali",
+      "Residenze Creative"
     ]
   },
   {
@@ -117,7 +141,10 @@ const travellers = [
       "Villaggi Turistici",
       "Esperienze Educative",
       "Road Trip Familiare",
-      "Mini Crociere"
+      "Mini Crociere",
+      "Parchi Tematici & Acquatici",
+      "Zoo & Aquari",
+      "Vacanze in Fattoria"
     ]
   },
   {
@@ -128,9 +155,57 @@ const travellers = [
       "Viaggi Etici",
       "Eco-Turismo Solidale",
       "Turismo Responsabile",
-      "Progetti Umanitari"
+      "Progetti Umanitari",
+      "Conservazione della Fauna",
+      "Insegnamento & Mentoring",
+      "Agricoltura Sostenibile"
+    ]
+  },
+  {
+    category: "Benessere",
+    description: "Viaggi dedicati al relax, rigenerazione e salute mentale.",
+    experiences: [
+      "Spa & Centri Termali",
+      "Meditazione e Yoga Retreat",
+      "Vacanze Detox",
+      "Ritiri di Mindfulness",
+      "Resort Benessere",
+      "Bagni Termali Naturali",
+      "Percorsi di Rigenerazione in Natura"
+    ]
+  },
+  {
+    category: "Esperienziale",
+    description: "Viaggi unici per imparare o vivere esperienze particolari.",
+    experiences: [
+      "Corsi d'Arte e Artigianato",
+      "Esperienze Musicali",
+      "Tour di Fotografia",
+      "Immersioni Culturali Locali",
+      "Esperienze Avventurose Tematiche",
+      "Workshop di Sopravvivenza",
+      "Stage Linguistici"
+    ]
+  },
+  {
+    category: "Estremo & Insolito",
+    description: "Esperienze uniche, insolite e ad alto tasso di adrenalina.",
+    experiences: [
+      "Viaggi Polari & Ghiacciai",
+      "Sopravvivenza in Natura Selvaggia",
+      "Caccia all’Aurora Boreale",
+      "Volare in Mongolfiera su Paesaggi Inesplorati",
+      "Sottomarini Turistici",
+      "Escursioni nei Vulcani Attivi",
+      "Tour di Luoghi Abbandonati (Urban Exploration)",
+      "Paracadutismo Estremo",
+      "Caving Estremo",
+      "Traversate Desertiche & Dune Giganti",
+      "Esperienze in Isolamento Totale",
+      "Viaggi su Rotte Estreme e Rare"
     ]
   }
+
 ];
 
 export default travellers;
