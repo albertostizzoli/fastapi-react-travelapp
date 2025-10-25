@@ -159,222 +159,281 @@ function ProfilePage() {
         );
     }
 
-    return (
-        <div className="flex flex-col min-h-screen bg-transparent text-white sm:p-8 p-4 relative overflow-hidden">
-            {/* Effetto sfere luminose di sfondo */}
-            <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
-                <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+return (
+  <div className="flex flex-col min-h-screen bg-transparent text-white sm:p-8 p-4 relative overflow-hidden">
+    {/* Effetto glow dinamico di sfondo */}
+    <div className="absolute inset-0 -z-10 overflow-hidden">
+      <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-cyan-400/20 to-blue-400/10 
+      rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+      <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-400/20 to-rose-400/10 
+      rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+    </div>
+
+    <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
+        
+        {/*  PROFILO UTENTE */}
+        <motion.section
+          className="md:col-span-1 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
+         p-6 rounded-3xl shadow-2xl border border-white/20 flex flex-col items-center text-center 
+         hover:bg-white/20 transition-all duration-500"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          {user?.photo ? (
+            <img
+              src={user.photo}
+              alt="Profilo"
+              className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] object-cover border-4 border-blue-400/60"
+              style={{ width: "140px", height: "140px" }}
+            />
+          ) : (
+            <div className="w-36 h-36 mb-6 rounded-full bg-white/10 flex items-center justify-center text-4xl font-bold
+             text-gray-300 border-4 border-blue-400/60">
+              {user?.name?.[0]?.toUpperCase() || "?"}
             </div>
+          )}
 
-            <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
+          <h3 className="text-2xl font-bold text-white/90 drop-shadow mb-3">
+            {user?.name} {user?.surname}
+          </h3>
 
-                    {/*  Profilo Utente */}
-                    <motion.section
-                        className="md:col-span-1 bg-white/15 backdrop-blur-2xl p-6 rounded-3xl shadow-2xl border border-white/20  flex flex-col items-center text-center h-auto hover:bg-white/20 transition-all duration-300"
-                        initial={{ x: -100, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 1, ease: 'easeOut' }}
-                    >
-                        {user?.photo ? (
-                            <img
-                                src={user.photo}
-                                alt="Profilo"
-                                className="rounded-full mb-6 shadow-2xl object-cover border-4 border-blue-500"
-                                style={{ width: '140px', height: '140px' }}
-                            />
-                        ) : (
-                            <div className="w-36 h-36 mb-6 rounded-full bg-white/10 flex items-center justify-center text-4xl font-bold text-gray-300 border-4 border-blue-400/50">
-                                {user?.name?.[0]?.toUpperCase() || '?'}
-                            </div>
-                        )}
+          {user?.registration_date && (
+            <p className="text-sm text-white/80 mb-6">
+              Registrato il{" "}
+              <span className="font-medium text-white">
+                {new Date(user.registration_date).toLocaleDateString("it-IT", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </span>
+            </p>
+          )}
 
-                        <h3 className="text-2xl font-bold text-blue-500 drop-shadow mb-4">
-                            {user?.name} {user?.surname}
-                        </h3>
+          <div className="w-full space-y-3 mt-4">
+            <button
+              onClick={() => {
+                setEditForm({
+                  name: user?.name || "",
+                  surname: user?.surname || "",
+                  email: user?.email || "",
+                  password: "",
+                  interests: Array.isArray(user?.interests)
+                    ? user.interests
+                    : [],
+                  photo: null,
+                });
+                setShowEditModal(true);
+              }}
+              className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
+             bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/20
+             text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+            >
+              <i className="fa-solid fa-pen"></i> Modifica Profilo
+            </button>
 
-                        {user?.registration_date && (
-                            <p className="text-sm text-white/80 mb-6">
-                                Registrato il{' '}
-                                <span className="font-medium text-white">
-                                    {new Date(user.registration_date).toLocaleDateString('it-IT', {
-                                        day: 'numeric',
-                                        month: 'long',
-                                        year: 'numeric',
-                                    })}
-                                </span>
-                            </p>
-                        )}
+            <button
+              onClick={() => setDeleteProfileId(user?.id)}
+              className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
+             bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/20
+             text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+            >
+              <i className="fa-solid fa-trash"></i> Cancella Profilo
+            </button>
 
-                        <div className="w-full space-y-3 mt-4">
-                            <button
-                                onClick={() => {
-                                    setEditForm({
-                                        name: user?.name || '',
-                                        surname: user?.surname || '',
-                                        email: user?.email || '',
-                                        password: '',
-                                        interests: Array.isArray(user?.interests) ? user.interests : [],
-                                        photo: null,
-                                    });
-                                    setShowEditModal(true);
-                                }}
-                                className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-400 hover:to-yellow-300 text-white rounded-full shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
-                            >
-                                <i className="fa-solid fa-edit"></i> Modifica Profilo
-                            </button>
-                            <button
-                                onClick={() => setDeleteProfileId(user?.id)}
-                                className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
-                            >
-                                <i className="fa-solid fa-trash"></i> Cancella Profilo
-                            </button>
-                            <button
-                                onClick={handleLogout}
-                                className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-400 hover:from-teal-400 hover:to-cyan-300 text-white rounded-full shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
-                            >
-                                <i className="fa-solid fa-right-from-bracket"></i> Esci
-                            </button>
-                        </div>
-                    </motion.section>
+            <button
+              onClick={handleLogout}
+              className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
+             bg-gradient-to-r from-teal-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20
+             text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+            >
+              <i className="fa-solid fa-right-from-bracket"></i> Esci
+            </button>
+          </div>
+        </motion.section>
 
-                    {/*  Gestione Viaggi + Ultimo Viaggio */}
-                    <motion.section
-                        className="flex flex-col gap-8 h-auto"
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            hidden: { opacity: 1 },
-                            visible: { opacity: 1, transition: { staggerChildren: 0.4 } },
-                        }}
-                    >
-                        <motion.div
-                            className="bg-white/15 backdrop-blur-2xl p-6 rounded-3xl shadow-2xl border border-white/20 flex flex-col gap-4 hover:bg-white/20 transition-all duration-300"
-                            variants={{
-                                hidden: { scale: 0.9, opacity: 0 },
-                                visible: { scale: 1, opacity: 1, transition: { duration: 1, ease: 'easeOut' } },
-                            }}
-                        >
-                            <h3 className="text-2xl font-bold text-blue-500 text-center mb-4 drop-shadow">Gestisci i tuoi viaggi</h3>
-                            <div className="flex flex-col w-full gap-2 justify-center">
-                                <Link
-                                    to="/travels"
-                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 rounded-full text-white shadow-md transition-transform hover:scale-105"
-                                >
-                                    <i className="fa-solid fa-globe"></i> I miei viaggi
-                                </Link>
-                                <Link
-                                    to="/add"
-                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 rounded-full text-white shadow-md transition-transform hover:scale-105"
-                                >
-                                    <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
-                                </Link>
-                                <Link
-                                    to="/chat"
-                                    className="font-semibold flex justify-center items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 rounded-full text-white shadow-md transition-transform hover:scale-105 cursor-pointer"
-                                >
-                                    <i className="fa-solid fa-compass"></i> Prossimo viaggio
-                                </Link>
-                            </div>
-                        </motion.div>
+        {/*  GESTIONE VIAGGI + ULTIMO VIAGGIO */}
+        <motion.section
+          className="flex flex-col gap-8 h-auto"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 1 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.4 } },
+          }}
+        >
+          {/* Gestione viaggi */}
+          <motion.div
+            className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
+            p-6 rounded-3xl shadow-2xl border border-white/20 flex flex-col gap-4 
+             hover:bg-white/20 transition-all duration-500"
+            variants={{
+              hidden: { scale: 0.9, opacity: 0 },
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: { duration: 1, ease: "easeOut" },
+              },
+            }}
+          >
+            <h3 className="text-2xl font-bold text-white/90 text-center mb-4 drop-shadow">
+              Gestisci i tuoi viaggi
+            </h3>
+            <div className="flex flex-col w-full gap-2 justify-center">
+              <Link
+                to="/travels"
+                className="font-semibold flex justify-center items-center gap-2 px-4 py-2
+                bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md border border-white/20
+                 text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+              >
+                <i className="fa-solid fa-globe"></i> I miei viaggi
+              </Link>
+              <Link
+                to="/add"
+                className="font-semibold flex justify-center items-center gap-2 px-4 py-2
+                bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border border-white/20
+                 text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+              >
+                <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
+              </Link>
+              <Link
+                to="/chat"
+                className="font-semibold flex justify-center items-center gap-2 px-4 py-2
+                bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20
+                 text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+              >
+                <i className="fa-solid fa-compass"></i> Prossimo Viaggio
+              </Link>
+            </div>
+          </motion.div>
 
-                        <motion.div
-                            className="bg-white/15 backdrop-blur-2xl p-6 rounded-3xl shadow-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
-                            variants={{
-                                hidden: { scale: 0.9, opacity: 0 },
-                                visible: { scale: 1, opacity: 1, transition: { duration: 1, ease: 'easeOut' } },
-                            }}
-                        >
-                            <h3 className="text-2xl font-bold text-blue-500 text-center mb-4 drop-shadow">Ultimo Viaggio</h3>
+          {/* Ultimo viaggio */}
+          <motion.div
+            className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
+            p-6 rounded-3xl shadow-2xl border border-white/20 hover:bg-white/20 transition-all duration-500"
+            variants={{
+              hidden: { scale: 0.9, opacity: 0 },
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: { duration: 1, ease: "easeOut" },
+              },
+            }}
+          >
+            <h3 className="text-2xl font-bold text-white/90 text-center mb-4 drop-shadow">
+              Ultimo Viaggio
+            </h3>
 
-                            {recentTravels?.length ? (
-                                <ul className="space-y-4">
-                                    {recentTravels.slice(0, 1).map((travel, idx) => (
-                                        <li
-                                            key={idx}
-                                            className="p-4 bg-gradient-to-r from-blue-600/70 to-blue-400/70 rounded-3xl shadow-lg hover:scale-[1.02] hover:shadow-2xl transition-all duration-200 border border-white/20"
-                                        >
-                                            <div className="flex justify-between items-center mb-2">
-                                                <h4 className="text-lg font-semibold text-white">
-                                                    <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
-                                                    {travel.town}, {travel.city}
-                                                </h4>
-                                                <span className="text-xs bg-white/20 px-2 py-1 rounded-3xl text-white/90">
-                                                    {travel.start_date} → {travel.end_date}
-                                                </span>
-                                            </div>
-                                            <div className="border-t border-white/20 my-2" />
-                                            {travel.general_vote ? (
-                                                <StarRating rating={travel.general_vote} />
-                                            ) : (
-                                                <p className="text-gray-200 italic text-sm">Nessun voto disponibile</p>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p className="text-center font-semibold text-white/80 italic">Nessun viaggio recente.</p>
-                            )}
-                        </motion.div>
-                    </motion.section>
-
-                    {/*  Interessi Utente */}
-                    <motion.div
-                        className="bg-white/15 backdrop-blur-2xl p-6 rounded-3xl shadow-2xl border border-white/20 h-auto hover:bg-white/20 transition-all duration-300"
-                        initial={{ x: 80, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 1, ease: 'easeOut' }}
-                    >
-                        <h3 className="text-2xl font-bold text-blue-500 text-center mb-4 drop-shadow">I tuoi interessi</h3>
-                        {user?.interests?.length ? (
-                            <div className="flex flex-wrap justify-center items-center gap-2">
-                                {user.interests.map((interest, idx) => (
-                                    <span
-                                        key={idx}
-                                        className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 rounded-full text-sm sm:text-base text-white shadow-md hover:scale-105 transition-transform duration-150 border border-white/10"
-                                    >
-                                        {interest}
-                                    </span>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="text-center font-semibold text-white/80 italic">Nessun interesse impostato.</p>
-                        )}
-                    </motion.div>
-                </div>
-
-                {/* Modali */}
-                <ModalDeleteProfile
-                    isOpen={!!deleteProfileId}
-                    onConfirm={handleDeleteProfile}
-                    onCancel={() => setDeleteProfileId(null)}
-                />
-                <EditProfileModal
-                    isOpen={showEditModal}
-                    onClose={() => setShowEditModal(false)}
-                    onSubmit={handleUpdateProfile}
-                    editForm={editForm}
-                    setEditForm={setEditForm}
-                    showPassword={showPassword}
-                    setShowPassword={setShowPassword}
-                />
-            </main>
-
-            {/* Messaggio conferma */}
-            {message && (
-                <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 50 }}
-                    transition={{ duration: 0.5 }}
-                    className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white px-6 py-3 rounded-full shadow-2xl z-[9999] bg-white/10"
-                >
-                    <p className="text-lg font-semibold">{message}</p>
-                </motion.div>
+            {recentTravels?.length ? (
+              <ul className="space-y-4">
+                {recentTravels.slice(0, 1).map((travel, idx) => (
+                  <li
+                    key={idx}
+                    className="p-4 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md 
+                    rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
+                    transition-all duration-300 border border-white/20"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="text-lg font-semibold text-white">
+                        <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
+                        {travel.town}, {travel.city}
+                      </h4>
+                      <span className="text-xs bg-white/20 px-2 py-1 rounded-3xl text-white/90">
+                        {travel.start_date} → {travel.end_date}
+                      </span>
+                    </div>
+                    <div className="border-t border-white/20 my-2" />
+                    {travel.general_vote ? (
+                      <StarRating rating={travel.general_vote} />
+                    ) : (
+                      <p className="text-gray-200 italic text-sm">
+                        Nessun voto disponibile
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-center font-semibold text-white/80 italic">
+                Nessun viaggio recente.
+              </p>
             )}
-        </div>
-    );
+          </motion.div>
+        </motion.section>
+
+        {/*  INTERESSI UTENTE */}
+        <motion.div
+          className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
+         p-6 rounded-3xl shadow-2xl border border-white/20 hover:bg-white/20 transition-all duration-500"
+          initial={{ x: 80, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <h3 className="text-2xl font-bold text-white/90 text-center mb-4 drop-shadow">
+            I tuoi interessi
+          </h3>
+          {user?.interests?.length ? (
+            <div className="flex flex-wrap justify-center items-center gap-2">
+              {user.interests.map((interest, idx) => (
+                <span
+                  key={idx}
+                  className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 
+                 backdrop-blur-md border border-white/20 text-white/90 rounded-full 
+                 text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-300"
+                >
+                  {interest}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center font-semibold text-white/80 italic">
+              Nessun interesse impostato.
+            </p>
+          )}
+        </motion.div>
+      </div>
+
+      {/* Modali */}
+      <ModalDeleteProfile
+        isOpen={!!deleteProfileId}
+        onConfirm={handleDeleteProfile}
+        onCancel={() => setDeleteProfileId(null)}
+      />
+      <EditProfileModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSubmit={handleUpdateProfile}
+        editForm={editForm}
+        setEditForm={setEditForm}
+        showPassword={showPassword}
+        setShowPassword={setShowPassword}
+      />
+    </main>
+
+    {/* Messaggio conferma */}
+    {message && (
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 50 }}
+        transition={{ duration: 0.5 }}
+        className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white/90 
+        px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-500/60 to-teal-400/60"
+      >
+        <p className="text-lg font-semibold">{message}</p>
+      </motion.div>
+    )}
+  </div>
+);
+
 
 }
 

@@ -87,25 +87,27 @@ function Travels() {
 
   return (
     <div className="relative bg-transparent min-h-screen p-8 overflow-visible text-white">
-      {/* Sfere luminose di sfondo per effetto vetro dinamico */}
+      {/* Glow dinamico di sfondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
-        <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-cyan-400/20 to-blue-400/10 
+        rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-400/20 to-rose-400/10 
+        rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
       </div>
 
       {/* Titolo */}
-      <h1 className="text-4xl font-bold text-center text-white drop-shadow mb-8">
+      <h1 className="text-4xl font-extrabold text-center text-white/90 drop-shadow-md mb-10">
         🌍 I miei viaggi
       </h1>
 
       {/* Lista viaggi */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 max-w-7xl mx-auto"
         initial="hidden"
         animate="visible"
         variants={{
           hidden: {},
-          visible: { transition: { staggerChildren: 0.2 } },
+          visible: { transition: { staggerChildren: 0.25 } },
         }}
       >
         <AnimatePresence>
@@ -113,45 +115,47 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              className="group bg-white/15 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden hover:bg-white/25 transition-all duration-300 hover:scale-105"
+              className="group relative bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
+               border border-white/20 rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 
+               hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
               variants={{
-                hidden: { scaleY: 0, opacity: 0, originY: 0 },
-                visible: { scaleY: 1, opacity: 1 },
+                hidden: { scale: 0.95, opacity: 0 },
+                visible: { scale: 1, opacity: 1 },
               }}
               initial="hidden"
               animate="visible"
-              exit={{ scaleY: 0, opacity: 0, originY: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
               {/* Immagine */}
               {v.days && v.days[0]?.photo?.[0] && (
                 <img
                   src={v.days[0].photo[0]}
                   alt={`Foto di ${v.town}`}
-                  className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-all duration-300"
+                  className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-all duration-500"
                 />
               )}
 
               {/* Contenuto */}
-              <div className="p-5 flex flex-col gap-3">
-                <h2 className="text-lg font-semibold text-white drop-shadow-sm">
+              <div className="p-6 flex flex-col gap-3">
+                <h2 className="text-xl font-semibold text-white drop-shadow-sm">
                   {v.town} - {v.city}
                 </h2>
-                <p className="text-gray-200 text-sm">
+                <p className="text-white/70 text-sm">
                   📅 {v.start_date} → {v.end_date}
                 </p>
-                <p className="text-white/90 font-medium mt-1">
-                  Anno: <span className="text-white">{v.year}</span>
+                <p className="text-white/80 font-medium">
+                  🗓️ Anno: <span className="text-white">{v.year}</span>
                 </p>
 
-                <p className="text-white font-medium flex items-center gap-2">
-                  Media Voto:
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-white/80 font-medium">⭐ Media voto:</span>
                   <StarRating rating={v.general_vote ?? 0} />
-                </p>
+                </div>
 
                 {/* Voti dettagliati */}
                 {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white/90 mt-2">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white/80 mt-2">
                     {Object.entries(v.votes).map(([key, value]) => (
                       <li key={key} className="flex justify-between items-center">
                         <span className="capitalize">{key}:</span>
@@ -162,29 +166,35 @@ function Travels() {
                 )}
 
                 {/* Pulsanti */}
-                <div className="flex flex-col lg:flex-row justify-center items-center gap-2 mt-4">
+                <div className="flex flex-col lg:flex-row justify-center items-center gap-2 mt-5">
                   <Link
                     to={`/travels/${v.id}/days`}
-                    className=" w-full font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer"
+                    className="w-full font-semibold px-4 py-2 flex justify-center items-center gap-2
+                     bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20
+                     text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
-                    <i className="fa-solid fa-calendar-day mr-1"></i>
-                    Dettagli Viaggio
+                    <i className="fa-solid fa-calendar-day mr-1"></i> Dettagli
                   </Link>
 
                   <Link
                     to={`/travels/${v.id}/edit`}
-                    className="w-full font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-400 hover:to-yellow-300 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer"
+                    className="w-full font-semibold px-4 py-2 flex justify-center items-center gap-2
+                     bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/20
+                     text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
-                    <i className="fa-solid fa-edit mr-1"></i>
-                    Modifica Viaggio
+                    <i className="fa-solid fa-pen mr-1"></i> Modifica
                   </Link>
 
                   <button
                     onClick={() => setDeleteId(v.id)}
-                    className="w-full font-semibold px-2 py-2 flex justify-center items-center gap-1 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 rounded-full text-white text-sm shadow-md transition hover:scale-105 whitespace-nowrap cursor-pointer"
+                    className="w-full font-semibold px-4 py-2 flex justify-center items-center gap-2
+                     bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/20
+                     text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
-                    <i className="fa-solid fa-trash mr-1"></i>
-                    Cancella Viaggio
+                    <i className="fa-solid fa-trash mr-1"></i> Cancella
                   </button>
                 </div>
               </div>
@@ -207,13 +217,15 @@ function Travels() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white px-6 py-3 rounded-full shadow-2xl z-[9999] bg-white/10"
+          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white/90 px-6 py-3 
+                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-500/60 to-teal-400/60"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
     </div>
-  )
+  );
+
 }
 
 export default Travels;

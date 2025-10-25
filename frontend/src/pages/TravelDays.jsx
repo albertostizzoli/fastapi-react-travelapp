@@ -75,13 +75,21 @@ function TravelDays() {
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
   return (
-    <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 max-w-6xl mx-auto gap-4">
+    <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
+      {/* Effetto Glow dinamico di sfondo */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-cyan-400/20 to-blue-400/10 
+        rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+        <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-rose-400/10 
+        rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+      </div>
 
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
         {/* Titolo */}
         <motion.h1
-          className="text-4xl font-bold text-white flex-1 min-w-[200px] p-4 "
+          className="text-4xl font-extrabold text-white/90 flex-1 min-w-[200px] px-4 py-2 rounded-3xl
+           bg-white/5 backdrop-blur-md border border-white/20 shadow-lg"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -98,7 +106,10 @@ function TravelDays() {
           <Link
             to="/addDay"
             state={{ travelId: id }}
-            className="font-semibold mt-4 sm:mt-0 px-4 py-2 flex items-center gap-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 rounded-full text-white shadow-md transition hover:scale-105"
+            className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
+             bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border border-white/20
+             text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+             hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
           >
             <i className="fa-solid fa-plus"></i> Aggiungi Tappa
           </Link>
@@ -107,32 +118,35 @@ function TravelDays() {
 
       {/* Layout principale */}
       <div className="flex flex-col lg:flex-row max-w-6xl mx-auto gap-8">
-        {/* Info Viaggio + Giorni */}
         <div className="flex-1 flex flex-col h-full">
           {/* Info Viaggio */}
           <motion.div
-            className="p-4 "
+            className="p-6 rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/20 shadow-xl"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h2 className="text-2xl font-semibold text-white mb-2">
+            <h2 className="text-2xl font-bold text-white/90 mb-2 drop-shadow-md">
               📍 {travel.town} - {travel.city}
             </h2>
-            <p className="text-xl text-white mb-4">
+            <p className="text-lg text-white/90 mb-4">
               📅 {travel.start_date} → {travel.end_date}
             </p>
-            {travel.title && <p className="text-gray-200 italic">{travel.title}</p>}
+            {travel.title && (
+              <p className="text-white/60 italic border-t border-white/10 pt-2">
+                {travel.title}
+              </p>
+            )}
           </motion.div>
 
-          {/* Lista Giorni in griglia */}
-          <div className="flex-1 pr-2 mt-4">
+          {/* Lista Giorni */}
+          <div className="flex-1 pr-2 mt-6">
             {travel.days?.length > 0 ? (
               <motion.div
-                className="flex flex-wrap gap-4"
+                className="flex flex-wrap gap-6"
                 variants={{
                   hidden: { opacity: 1 },
-                  visible: { opacity: 1, transition: { staggerChildren: 0.5 } },
+                  visible: { opacity: 1, transition: { staggerChildren: 0.4 } },
                 }}
                 initial="hidden"
                 animate="visible"
@@ -140,7 +154,9 @@ function TravelDays() {
                 {travel.days.map((d) => (
                   <motion.div
                     key={d.id}
-                    className="backdrop-blur-xl bg-white/10 border border-white/20 p-4 rounded-3xl shadow-lg flex flex-col justify-between w-full sm:w-64 transition hover:scale-105 hover:bg-white/20"
+                    className="group relative backdrop-blur-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent
+                     border border-white/20 p-5 rounded-3xl shadow-xl flex flex-col justify-between w-full sm:w-64
+                     transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)]"
                     variants={{
                       hidden: { scale: 0, opacity: 0 },
                       visible: {
@@ -151,7 +167,7 @@ function TravelDays() {
                     }}
                   >
                     <div className="mb-4">
-                      <p className="text-gray-300 text-lg">{d.date}</p>
+                      <p className="text-white/90 text-2sm">{d.date}</p>
                       <p className="text-white font-semibold text-xl">{d.title}</p>
                     </div>
 
@@ -164,40 +180,51 @@ function TravelDays() {
                             src={p}
                             alt="foto viaggio"
                             loading="lazy"
-                            className="w-20 h-20 object-cover rounded-3xl border border-white/30 shadow-sm"
+                            className="w-20 h-20 object-cover rounded-2xl border border-white/30 shadow-md"
                           />
                         ))}
                       </div>
                     )}
 
                     {/* Bottoni Card */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 mt-auto">
                       <button
                         onClick={() => setSelectedDay(d)}
-                        className="font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300  text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                        className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                         bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20
+                         text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                         hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                       >
-                        <i className="fa-solid fa-book-open mr-2"></i> Leggi Tutto
+                        <i className="fa-solid fa-book-open"></i> Leggi Tutto
                       </button>
 
                       <Link
                         to={`/days/${d.id}/edit`}
-                        className="font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-400 hover:to-yellow-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                        className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                        bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/20
+                         text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                         hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                       >
-                        <i className="fa-solid fa-edit mr-2"></i> Modifica Tappa
+                        <i className="fa-solid fa-pen"></i> Modifica Tappa
                       </Link>
 
                       <button
                         onClick={() => setDeleteDayId(d.id)}
-                        className="font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                        className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                         bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/20
+                         text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                         hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                       >
-                        <i className="fa-solid fa-trash mr-2"></i> Cancella Tappa
+                        <i className="fa-solid fa-trash"></i> Cancella Tappa
                       </button>
                     </div>
                   </motion.div>
                 ))}
               </motion.div>
             ) : (
-              <p className="text-white font-semibold text-center mt-4">Nessuna Tappa Presente</p>
+              <p className="text-white/80 font-semibold text-center mt-6 italic">
+                Nessuna tappa presente
+              </p>
             )}
           </div>
         </div>
@@ -214,19 +241,23 @@ function TravelDays() {
         onConfirm={handleDeleteDay}
         onCancel={() => setDeleteDayId(null)}
       />
+
+      {/* Messaggio */}
       {message && (
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white/20 text-white px-6 py-3 rounded-full shadow-lg z-[9999]"
+          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white/90 px-6 py-3
+                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-500/60 to-teal-400/60"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
     </div>
   );
+
 }
 
 export default TravelDays;

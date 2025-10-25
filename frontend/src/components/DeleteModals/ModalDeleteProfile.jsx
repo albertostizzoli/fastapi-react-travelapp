@@ -1,52 +1,70 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-// Questo è il modale per cancellare il profilo
 function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
-    return (
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-[9999]"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}>
-                    <motion.div
-                        className="relative bg-white/15 backdrop-blur-2xl border border-white/20 shadow-2xl p-8 rounded-3xl w-11/12 max-w-md text-center overflow-hidden"
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: 'easeOut' }}>
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[9999] p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {/* Glow di sfondo animato */}
+          <div className="absolute inset-0 -z-10 overflow-hidden">
+            <div className="absolute w-[25rem] h-[25rem] bg-gradient-to-br from-red-500/30 to-rose-400/10 rounded-full 
+            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
+            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+          </div>
 
-                        {/* Effetto sfere di luce per profondità */}
-                        <div className="absolute inset-0 -z-10">
-                            <div className="absolute w-64 h-64 bg-blue-500/20 rounded-full blur-3xl top-0 left-0"></div>
-                            <div className="absolute w-64 h-64 bg-red-500/20 rounded-full blur-3xl bottom-0 right-0"></div>
-                        </div>
+          <motion.div
+            className="relative w-full max-w-md rounded-3xl border border-white/20 bg-gradient-to-br 
+            from-white/10 via-white/5 to-transparent backdrop-blur-2xl shadow-2xl text-white 
+            p-8 text-center overflow-hidden"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          >
+            {/* Titolo */}
+            <h2 className="text-2xl font-extrabold mb-6 text-white/90 drop-shadow-lg">
+              Vuoi davvero cancellare il tuo profilo?
+            </h2>
 
-                        <h2 className="text-2xl font-bold mb-6 text-white drop-shadow-sm">
-                            Vuoi cancellare il tuo profilo?
-                        </h2>
-                        <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <button
-                                onClick={onConfirm}
-                                className="font-semibold flex items-center justify-center gap-2 px-5 py-2.5 
-                                bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 
-                              text-white rounded-full shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer">
-                                <i className="fa-solid fa-check"></i> Sì
-                            </button>
-                            <button
-                                onClick={onCancel}
-                                className="font-semibold flex items-center justify-center gap-2 px-5 py-2.5 
-                                bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 
-                              text-white rounded-full shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer">
-                                <i className="fa-solid fa-xmark"></i> No
-                            </button>
-                        </div>
-                    </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
+            <p className="text-white/70 mb-8 text-sm">
+              Questa azione è <span className="text-red-400 font-semibold">irreversibile</span>.<br />
+              Tutti i tuoi dati e preferenze verranno rimossi definitivamente.
+            </p>
+
+            {/* Pulsanti azione */}
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <button
+                onClick={onConfirm}
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r 
+                from-green-500/60 to-teal-400/60 backdrop-blur-md border border-white/20 text-white/90 
+                rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+              >
+                <i className="fa-solid fa-check mr-2"></i> Sì
+              </button>
+
+              <button
+                onClick={onCancel}
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r 
+                from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/20 text-white/90 
+                rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+              >
+                <i className="fa-solid fa-xmark mr-2"></i> No
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
 
 export default ModalDeleteProfile;
+

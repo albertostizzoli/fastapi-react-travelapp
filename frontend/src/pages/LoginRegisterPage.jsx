@@ -151,7 +151,8 @@ function LoginRegisterPage() {
         </div>
 
         {/* Toggle Login/Registrati */}
-        <div className="relative flex mb-6 bg-white/20 backdrop-blur-lg border border-white/30 p-1 rounded-full w-64 shadow-md transition-all duration-300 ease-in-out">
+        <div className="relative flex mb-6 bg-white/20 backdrop-blur-lg border border-white/30 p-1 rounded-full w-64 
+        shadow-md transition-all duration-300 ease-in-out">
           <motion.div
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -163,14 +164,16 @@ function LoginRegisterPage() {
 
           <button
             onClick={() => setIsLogin(true)}
-            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${isLogin ? "text-gray-900" : "text-white"
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition 
+              ${isLogin ? "text-gray-900" : "text-white"
               }`}>
             Login
           </button>
 
           <button
             onClick={() => setIsLogin(false)}
-            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition ${!isLogin ? "text-gray-900" : "text-white"
+            className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition 
+              ${!isLogin ? "text-gray-900" : "text-white"
               }`}>
             Registrati
           </button>
@@ -198,7 +201,8 @@ function LoginRegisterPage() {
                 <label className="block text-white/90 sm:text-gray-900 mb-1">Email</label>
                 <input
                   type="email"
-                  className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
+                  rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -213,7 +217,8 @@ function LoginRegisterPage() {
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
+                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                   />
                   <button
                     type="button"
@@ -230,7 +235,9 @@ function LoginRegisterPage() {
 
               <button
                 type="submit"
-                className="font-semibold px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
+                className="font-semibold px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r 
+                from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg 
+                hover:scale-105 transition cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Accedi
               </button>
@@ -255,7 +262,8 @@ function LoginRegisterPage() {
                   <label className="block text-white/90 sm:text-gray-900 mb-1">Nome</label>
                   <input
                     type="text"
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
+                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -266,7 +274,8 @@ function LoginRegisterPage() {
                   <label className="block text-white/90 sm:text-gray-900 mb-1">Cognome</label>
                   <input
                     type="text"
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
+                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
                     required
@@ -277,7 +286,8 @@ function LoginRegisterPage() {
                   <label className="block text-white/90 sm:text-gray-900 mb-1">Email</label>
                   <input
                     type="email"
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
+                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -291,7 +301,8 @@ function LoginRegisterPage() {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                      className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
+                      rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
                       required
                     />
                     <button
@@ -313,14 +324,18 @@ function LoginRegisterPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
+                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r 
+                  from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 text-white rounded-full shadow-lg 
+                  hover:scale-105 transition cursor-pointer">
                   <i className="fa-solid fa-plane mr-2"></i> Esperienze
                 </button>
 
                 <button
                   type="button"
                   onClick={handlePhotoSelect}
-                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
+                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r 
+                  from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full shadow-lg 
+                  hover:scale-105 transition cursor-pointer">
                   <i className="fa-solid fa-camera mr-2"></i> Foto
                 </button>
 
@@ -335,7 +350,9 @@ function LoginRegisterPage() {
 
               <button
                 type="submit"
-                className="font-semibold mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg hover:scale-105 transition cursor-pointer">
+                className="font-semibold mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r 
+                from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg 
+                hover:scale-105 transition cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Registrati
               </button>
