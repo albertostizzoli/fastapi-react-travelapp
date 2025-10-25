@@ -26,56 +26,68 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed inset-0 flex items-center justify-center bg-black/50 p-2 sm:p-4 z-[9999]"
+          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4 z-[9999]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
+          {/* Layer di glow animato dietro */}
+          <div className="absolute inset-0 -z-10 overflow-hidden">
+            <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
+            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/30 to-pink-400/10 rounded-full 
+            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+          </div>
           <motion.div
-            className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-lg flex flex-col overflow-hidden"
+            className="backdrop-blur-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/20 
+            rounded-3xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-2xl flex flex-col overflow-hidden relative"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b border-white/20">
+            <div className="flex justify-between items-center p-4 border-b border-white/20 bg-white/5 backdrop-blur-lg">
               <button
                 onClick={handleClose}
-                className="font-semibold px-3 py-1 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border 
+                border-white/20 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
-                <i className="fa-solid fa-arrow-left"></i> Torna alle Tappe
+                <i className="fa-solid fa-arrow-left mr-2"></i> Torna alle Tappe
               </button>
 
               <button
                 onClick={() => setShowMapModal(true)}
-                className="font-semibold px-3 py-1 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer"
+                className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border 
+              border-white/20 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
-                <i className="fa-solid fa-map-location-dot"></i> Vai alla Mappa
+                <i className="fa-solid fa-map-location-dot mr-2"></i> Vai alla Mappa
               </button>
             </div>
 
             {/* Contenuto scrollabile */}
-            <div className="flex-1 p-4 sm:p-6 overflow-y-auto scrollbar-custom max-h-full">
-              <h1 className="text-2xl sm:text-2xl font-bold text-white mb-3">
+            <div className="flex-1 p-6 sm:p-6 overflow-y-auto scrollbar max-h-full text-white">
+              <h1 className="text-3xl font-extrabold text-white/90 mb-2 drop-shadow-lg">
                 {selectedDay.title}
               </h1>
-              <p className="sm:text-xl text-white mb-3">{selectedDay.date}</p>
-              <p className="text-white text-justify mb-3">{selectedDay.description}</p>
+              <p className="sm:text-xl text-lg text-cyan-200/80 mb-4">{selectedDay.date}</p>
+              <p className="text-white/90 text-justify leading-relaxed mb-6">{selectedDay.description}</p>
 
               {/* Tags */}
               {selectedDay.tags?.length > 0 && (
-                <div className="mb-6">
-                  <div className="flex flex-wrap gap-2">
+                <div className="mb-6 flex flex-wrap gap-2">
                     {selectedDay.tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white px-3 py-2 rounded-full text-sm shadow-md mt-2"
+                        className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 
+                        backdrop-blur-md border border-white/20 text-white/90 rounded-full transition-all duration-100 
+                        ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                       >
                         {tag}
                       </span>
                     ))}
-                  </div>
                 </div>
               )}
 
@@ -97,7 +109,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                       alt="foto viaggio"
                       loading="lazy"
                       onClick={() => setOpenImage(p)}
-                      className="w-full h-40 sm:h-40 object-cover rounded-3xl border border-white/20 shadow-sm cursor-pointer hover:border-white"
+                      className="w-full h-40 sm:h-40 object-cover rounded-3xl border-3 border-white/20 shadow-sm cursor-pointer
+                       hover:border-white"
                       variants={{
                         hidden: { scale: 0, opacity: 0 },
                         visible: { scale: 1, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },

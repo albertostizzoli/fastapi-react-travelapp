@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import ModalEditTag from "../components/modals/ModalEditTag";
+import ModalEditTag from "../components/Modals/ModalEditTag";
 
 function EditDay() {
   const { id } = useParams();   // recupero l'ID del giorno dall'URL
@@ -125,89 +125,110 @@ function EditDay() {
   if (loading) return <p>Caricamento...</p>;
   if (!day) return <p>Tappa non trovata</p>;
 
-
   return (
-    <motion.div className="flex items-center justify-center bg-transparent sm:p-8 p-4 min-h-screen"
+    <motion.div
+      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
-      transition={{ duration: 1.5 }}>
-      <form onSubmit={handleSubmit} className="bg-white/15 backdrop-blur-xl shadow-lg rounded-3xl p-6 w-full max-w-4xl border border-white/20 grid grid-cols-1 md:grid-cols-2 gap-4">
+      transition={{ duration: 1.2 }}>
+
+      {/* Glow morbido dietro al form */}
+      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-white/10 blur-2xl" />
+
+      <form
+        onSubmit={handleSubmit}
+        className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
+        w-full max-w-4xl border border-white/30 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {/* sfere animate */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
-          <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+          <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-cyan-400/10 rounded-full 
+          blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-pink-400/10 rounded-full
+           blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
         </div>
+
         {/* Titolo + nota obbligatorio */}
-        <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-bold text-white">✏️ Modifica Tappa</h2>
-          <p className="text-sm italic text-white">* Il campo è obbligatorio</p>
+        <div className="flex items-center justify-between md:col-span-2 mb-2">
+          <h2 className="text-2xl font-bold text-white/90">✏️ Modifica Tappa</h2>
+          <p className="text-sm italic text-white/90">* Il campo è obbligatorio</p>
         </div>
 
         {/* Data */}
-        <div className="md:col-span-1">
-          <label className="block font-bold text-white mb-1">Data *</label>
+        <div>
+          <label className="block font-bold text-white/90 mb-2">Data *</label>
           <input
             type="text"
             name="date"
             value={day.date}
             onChange={handleChange}
-            className="w-full font-semibold border border-white text-white rounded-full p-2" />
+            className="w-full font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 placeholder-white/70 
+            p-2 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+          />
         </div>
 
         {/* Titolo */}
-        <div className="md:col-span-1">
-          <label className="block font-bold text-white mb-1">Titolo *</label>
+        <div>
+          <label className="block font-bold text-white/90 mb-2">Titolo *</label>
           <input
             type="text"
             name="title"
             value={day.title}
             onChange={handleChange}
-            className="w-full font-semibold border border-white text-white rounded-full p-2" />
+            className="w-full font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 placeholder-white/70 
+            p-2 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+          />
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
 
         {/* Descrizione */}
         <div className="md:col-span-2">
-          <label className="block font-bold text-white mb-1">Riassunto della giornata *</label>
+          <label className="block font-bold text-white/90 mb-2">Riassunto della giornata *</label>
           <textarea
             name="description"
             value={day.description}
             onChange={handleChange}
-            className="w-full font-semibold border border-white text-white rounded-2xl p-2 scrollbar"
-            rows="6" />
+            rows="6"
+            className="w-full font-semibold border border-white/30 rounded-3xl bg-white/10 text-white/90 p-3 placeholder-white/70 
+            focus:ring-2 focus:ring-blue-300 focus:border-transparent transition scrollbar"
+          />
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
 
-        {/* Pulsanti principali: Seleziona categorie + Carica foto */}
+        {/* Pulsanti principali */}
         <div className="md:col-span-2 flex justify-between gap-4">
-          {/* Pulsante categorie */}
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md border 
+            border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105 cursor-pointer 
+            flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
 
-          {/* Pulsante foto */}
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border 
+            border-white/20 text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105 cursor-pointer 
+            flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
         </div>
 
-
-        {/* Mostra i tags selezionati */}
+        {/* Tag selezionati */}
         {day.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-3 w-full">
+          <div className="md:col-span-2 mt-3 flex flex-wrap justify-center gap-3">
             {day.tags.map((tag, i) => (
               <span
                 key={i}
-                className="flex items-center justify-between bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white px-4 py-2 rounded-full text-base font-semibold shadow-md transition-transform hover:scale-105 cursor-pointer">
+                className="flex items-center justify-between bg-gradient-to-r from-blue-500/60 to-cyan-500/60 backdrop-blur-md 
+                border border-white/20 text-white/90 px-4 py-2 rounded-full text-base font-semibold shadow-md transition 
+                hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
                 <button
                   type="button"
@@ -217,7 +238,7 @@ function EditDay() {
                       tags: day.tags.filter((c) => c !== tag),
                     })
                   }
-                  className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
+                  className="ml-3 text-white/90 hover:text-red-400 transition">
                   <i className="fa-solid fa-xmark text-sm"></i>
                 </button>
               </span>
@@ -225,7 +246,6 @@ function EditDay() {
           </div>
         )}
 
-        {/* Modale Tag */}
         <ModalEditTag
           isOpen={isTagModalOpen}
           onClose={() => setIsTagModalOpen(false)}
@@ -235,52 +255,43 @@ function EditDay() {
 
         {/* Foto */}
         <div className="md:col-span-2">
-          {/* Foto esistenti + nuove foto */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
             {day.photo.map((item, index) => {
-              // se è una stringa, è un URL dal DB
               const src =
                 typeof item === "string"
                   ? item.startsWith("http")
                     ? item
                     : `http://127.0.0.1:8000/${item}`
-                  // se è un File (nuova foto)
                   : URL.createObjectURL(item);
-
-              // visualizzo le foto
               return (
                 <div key={index} className="relative group">
                   <img
-                    onClick={() => setOpenImage(src)} // apri immagine cliccata
+                    onClick={() => setOpenImage(src)}
                     src={src}
                     alt={`Foto ${index + 1}`}
                     className="w-full h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
                   />
-
                   <button
                     type="button"
                     onClick={() => removePhoto(index)}
-                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white/90 rounded-full p-1 
+                    opacity-0 group-hover:opacity-100 transition">
                     <i className="fa-solid fa-xmark"></i>
                   </button>
 
-                  {/* Modale Foto Ingrandita */}
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)}
-                      className="fixed inset-0 z-[9999] bg-opacity-50 flex items-center justify-center p-4">
+                      className="fixed inset-0 z-[9999] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
                       <div
                         onClick={(e) => e.stopPropagation()}
                         className="relative w-full max-w-4xl mx-auto">
-
-                        {/* Bottone X */}
                         <button
                           onClick={() => setOpenImage(null)}
-                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg hover:bg-red-600 transition cursor-pointer">
+                          className="absolute -top-3 -right-3 bg-red-500 text-white/90 rounded-full p-2 shadow-lg 
+                          hover:bg-red-400 transition cursor-pointer">
                           <i className="fa-solid fa-xmark text-lg"></i>
                         </button>
-
-                        {/* Immagine ingrandita */}
                         <img
                           src={openImage.replace("w=400", "w=1600")}
                           alt="Immagine ingrandita"
@@ -289,13 +300,11 @@ function EditDay() {
                       </div>
                     </div>
                   )}
-
                 </div>
               );
             })}
           </div>
 
-          {/* Input file nascosto */}
           <input
             type="file"
             ref={fileInputRef}
@@ -307,24 +316,29 @@ function EditDay() {
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
 
-        {/* Pulsante di salvataggio */}
+        {/* Pulsanti finali */}
         <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={travelId ? `/travels/${travelId}/days` : `/travels`}
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full  cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
+            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
           </Link>
           <button
             type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
+            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-edit"></i>
             Salva Modifiche
           </button>
         </div>
       </form>
+
       {/* Modale di conferma */}
       {message && (
         <motion.div
@@ -332,13 +346,13 @@ function EditDay() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white
-               text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white/90 px-6 py-3 rounded-full shadow-lg z-[9999]">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
     </motion.div>
   );
+
 }
 
 export default EditDay;

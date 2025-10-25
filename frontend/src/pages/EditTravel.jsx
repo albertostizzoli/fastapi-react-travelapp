@@ -86,149 +86,167 @@ function EditTravel() {
 
   return (
     <motion.div
-      className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
+      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
-      transition={{ duration: 1.5 }}>
-      {/* Container del form */}
-      <div className="w-full max-w-4xl h-auto bg-white/15 backdrop-blur-xl shadow-lg rounded-3xl p-6 space-y-4 border border-white/20">
+      transition={{ duration: 1.2 }}>
+
+      {/* Glow morbido dietro al form */}
+      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-white/10 blur-2xl" />
+
+      <form
+        onSubmit={handleSubmit}
+        className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl 
+        p-6 w-full max-w-4xl border border-white/30 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] 
+        grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {/* Sfere animate */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
-          <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+          <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-cyan-400/10 rounded-full 
+          blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-pink-400/10 rounded-full 
+          blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
         </div>
 
         {/* Titolo + nota obbligatorio */}
-        <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-white text-2xl font-bold">✏️ Modifica Viaggio</h2>
-          <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
+        <div className="flex items-center justify-between md:col-span-2 mb-2">
+          <h2 className="text-2xl font-bold text-white/90">✏️ Modifica Viaggio</h2>
+          <p className="text-sm italic text-white/90">* Il campo è obbligatorio</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Paese */}
+        <div>
+          <label className="block font-bold text-white/90 mb-2">Paese *</label>
+          <input
+            id="town"
+            type="text"
+            name="town"
+            value={travel.town}
+            onChange={handleChange}
+            placeholder="Paese"
+            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+          />
+        </div>
 
-          {/* Paese */}
-          <div className="flex flex-col">
-            <label className="mb-1 text-white font-bold">Paese *</label>
+        {/* Città */}
+        <div>
+          <label className="block font-bold text-white/90 mb-2">Città *</label>
+          <input
+            id="city"
+            type="text"
+            name="city"
+            value={travel.city}
+            onChange={handleChange}
+            placeholder="Città"
+            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+          />
+        </div>
+
+        {/* Anno */}
+        <div>
+          <label className="block font-bold text-white/90 mb-2">Anno *</label>
+          <input
+            type="number"
+            name="year"
+            value={travel.year}
+            onChange={handleChange}
+            placeholder="Anno"
+            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+          />
+        </div>
+
+        {/* Data Inizio */}
+        <div>
+          <label className="block font-bold text-white/90 mb-2">Data Inizio *</label>
+          <input
+            type="text"
+            name="start_date"
+            value={travel.start_date}
+            onChange={handleChange}
+            placeholder="Data inizio"
+            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            placeholder-white/70 focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition"
+          />
+        </div>
+
+        {/* Data Fine */}
+        <div>
+          <label className="block font-bold text-white/90 mb-2">Data Fine *</label>
+          <input
+            type="text"
+            name="end_date"
+            value={travel.end_date}
+            onChange={handleChange}
+            placeholder="Data fine"
+            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            placeholder-white/70 focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition"
+          />
+        </div>
+
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
+
+        {/* Voti */}
+        <div className="md:col-span-2">
+          <h3 className="font-bold mb-3 text-white/90 text-center text-xl">Voti *</h3>
+          <div className="flex flex-wrap justify-center gap-6">
+            {Object.entries(travel.votes).map(([key, value]) => (
+              <div key={key} className="flex flex-col items-center">
+                <label className="capitalize mb-1 font-bold text-white/90 text-center">{key}</label>
+                <input
+                  type="number"
+                  name={key}
+                  value={value}
+                  onChange={handleVoteChange}
+                  min="1"
+                  max="5"
+                  className="w-20 p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+                  text-center focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Media Voti */}
+        <div className="md:col-span-2 mt-4 flex justify-center">
+          <div className="flex flex-col items-center">
+            <label className="font-bold text-white/90 mb-1">Media Voti</label>
             <input
-              id="town"
               type="text"
-              name="town"
-              value={travel.town}
-              onChange={handleChange}
-              placeholder="Paese"
-              className="p-2 font-semibold border border-white rounded-full text-white"
+              value={calculateGeneralVote() ?? "-"}
+              readOnly
+              className="w-20 p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 text-center"
             />
           </div>
+        </div>
 
-          {/* Città */}
-          <div className="flex flex-col">
-            <label className="mb-1 text-white font-bold">Città *</label>
-            <input
-              id="city"
-              type="text"
-              name="city"
-              value={travel.city}
-              onChange={handleChange}
-              placeholder="Città"
-              className="p-2 font-semibold border border-white rounded-full text-white"
-            />
-          </div>
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
 
-          {/* Anno */}
-          <div className="flex flex-col">
-            <label className="mb-1 text-white font-bold">Anno *</label>
-            <input
-              type="number"
-              name="year"
-              value={travel.year}
-              onChange={handleChange}
-              placeholder="Anno"
-              className="p-2 font-semibold border border-white text-white rounded-full"
-            />
-          </div>
-
-          {/* Data inizio */}
-          <div className="flex flex-col">
-            <label className="mb-1 text-white font-bold">Data Inizio *</label>
-            <input
-              type="text"
-              name="start_date"
-              value={travel.start_date}
-              onChange={handleChange}
-              placeholder="Data inizio"
-              className="p-2 font-semibold border border-white text-white rounded-full"
-            />
-          </div>
-
-          {/* Data fine */}
-          <div className="flex flex-col">
-            <label className="mb-1 text-white font-bold">Data Fine *</label>
-            <input
-              type="text"
-              name="end_date"
-              value={travel.end_date}
-              onChange={handleChange}
-              placeholder="Data fine"
-              className="p-2 font-semibold border border-white text-white rounded-full"
-            />
-          </div>
-
-          {/* Divider */}
-          <div className="md:col-span-2 border-t border-white/30 my-4"></div>
-
-          {/* Voti dettagliati (span 2 colonne) */}
-          <div className="md:col-span-2">
-            <h3 className="font-bold mt-4 mb-3 text-white text-center">Voti *</h3>
-            <div className="flex flex-wrap justify-center gap-6">
-              {Object.entries(travel.votes).map(([key, value]) => (
-                <div key={key} className="flex flex-col items-center text-white">
-                  <label className="capitalize mb-1 font-bold text-center">{key}</label>
-                  <input
-                    type="number"
-                    name={key}
-                    value={value}
-                    onChange={handleVoteChange}
-                    min="1"
-                    max="5"
-                    className="w-20 font-semibold p-2 border border-white text-white rounded-full text-center"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Media Voto */}
-          <div className="md:col-span-2 mt-2 flex justify-center">
-            <div className="flex flex-col items-center">
-              <label className="pe-3 text-white font-bold mb-1">Media Voti</label>
-              <input
-                type="text"
-                value={calculateGeneralVote() ?? "-"}
-                readOnly
-                className="w-20 p-2 font-semibold border border-white text-white rounded-full text-center"
-              />
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="md:col-span-2 border-t border-white/30 my-4"></div>
-
-          {/* Pulsanti (span 2 colonne) */}
-          <div className="md:col-span-2 flex justify-between gap-2">
-            <Link
-              to="/travels"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full cursor-pointer transition hover:scale-105">
-              <i className="fa-solid fa-arrow-left"></i>
-              Torna ai Viaggi
-            </Link>
-            <button
-              type="submit"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full cursor-pointer transition hover:scale-105">
-              <i className="fa-solid fa-edit"></i>
-              Salva Modifiche
-            </button>
-          </div>
-        </form>
-      </div>
+        {/* Pulsanti */}
+        <div className="md:col-span-2 flex justify-between gap-2 mt-4">
+          <Link
+            to="/travels"
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
+            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            <i className="fa-solid fa-arrow-left"></i>
+            Torna ai Viaggi
+          </Link>
+          <button
+            type="submit"
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
+            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            <i className="fa-solid fa-edit"></i>
+            Salva Modifiche
+          </button>
+        </div>
+      </form>
 
       {/* Modale di conferma */}
       {message && (
@@ -237,12 +255,13 @@ function EditTravel() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white/30 text-white/90 px-6 py-3 rounded-full shadow-lg z-[9999]">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
     </motion.div>
   );
+
 
 }
 

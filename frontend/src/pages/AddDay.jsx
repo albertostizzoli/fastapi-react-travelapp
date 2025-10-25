@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import ModalAddTag from "../components/modals/ModalAddTag";
+import ModalAddTag from "../components/Modals/ModalAddTag";
 
 function AddDay() {
   const location = useLocation(); // per ottenere lo stato passato da TravelDays
@@ -156,82 +156,96 @@ function AddDay() {
 
   return (
     <motion.div
-      className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
+      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
-      transition={{ duration: 1.5 }}>
+      transition={{ duration: 1 }}>
+      {/* Glow morbido dietro al form */}
+      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-white/10 blur-2xl" />
       <form
         onSubmit={handleSubmit}
-        className="backdrop-blur-xl bg-white/15 shadow-lg rounded-3xl p-6 w-full max-w-4xl border border-white/20 grid grid-cols-1 md:grid-cols-2 gap-4">
+        className="backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 w-full 
+        max-w-4xl border border-white/30 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
-          <div className="absolute w-[28rem] h-[28rem] bg-orange-400/10 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
+          <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-cyan-400/10 rounded-full 
+          blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-pink-400/10 rounded-full 
+          blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
         </div>
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-bold text-white">➕ Aggiungi una tappa al viaggio</h2>
-          <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
+          <h2 className="text-2xl font-bold text-white/90">➕ Aggiungi una tappa al viaggio</h2>
+          <p className="text-white/90 text-sm italic">* Il campo è obbligatorio</p>
         </div>
 
-        {/* Selezione viaggio */}
-        <div>
-          <label className="block font-bold text-white mb-2">Viaggio *</label>
-          <select
-            value={selectedTravel}
-            onChange={(e) => setSelectedTravel(e.target.value)}
-            className="w-full p-2 border border-white rounded-full bg-transparent text-white font-bold"
-            required>
-            <option value="" className="bg-black text-white">-- Seleziona --</option>
-            {travels.map((t) => (
-              <option key={t.id} value={t.id} className="bg-black text-white">
-                {t.city} ({t.year})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Data */}
-        <div>
-          <label className="block font-bold text-white mb-2">Data *</label>
-          <input
-            type="date"
-            name="date"
-            value={form.date}
-            onChange={handleChange}
-            required
-            className="w-full p-2 font-semibold border border-white rounded-full text-white bg-transparent [color-scheme:dark]"
-          />
-        </div>
-
-        {/* Titolo */}
-        <div className="md:col-span-1 relative">
-          <label className="block font-bold text-white mb-2">Titolo *</label>
-          <input
-            name="title"
-            value={form.title}
-            onChange={(e) => {
-              const value = e.target.value;
-              setForm((prev) => ({ ...prev, title: value }));
-              setQuery(value);
-            }}
-            required
-            className="w-full p-2 font-semibold border border-white text-white rounded-full bg-transparent"
-          />
-          {suggestions.length > 0 && (
-            <ul className="absolute bg-black text-white w-full mt-1 shadow-lg z-10">
-              {suggestions.map((s, i) => (
-                <li
-                  key={i}
-                  className="p-2 hover:bg-blue-400 cursor-pointer"
-                  onClick={() => {
-                    setForm((prev) => ({ ...prev, title: s.name }));
-                    setSuggestions([]);
-                  }}>
-                  {s.name}, {s.city}, {s.country}
-                </li>
+        {/* Griglia a due colonne */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Selezione viaggio */}
+          <div>
+            <label className="block font-bold text-white/90 mb-2">Viaggio *</label>
+            <select
+              value={selectedTravel}
+              onChange={(e) => setSelectedTravel(e.target.value)}
+              className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+              placeholder-white/70 focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition"
+              required
+            >
+              <option value="" className="bg-black text-white/90">-- Seleziona --</option>
+              {travels.map((t) => (
+                <option key={t.id} value={t.id} className="bg-black text-white/90">
+                  {t.city} ({t.year})
+                </option>
               ))}
-            </ul>
-          )}
+            </select>
+          </div>
+
+          {/* Data */}
+          <div>
+            <label className="block font-bold text-white/90 mb-2">Data *</label>
+            <input
+              type="date"
+              name="date"
+              value={form.date}
+              onChange={handleChange}
+              required
+              className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+              placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition [color-scheme:dark]"
+            />
+          </div>
+
+          {/* Titolo */}
+          <div className="md:col-span-2 relative">
+            <label className="block font-bold text-white/90 mb-2">Titolo *</label>
+            <input
+              name="title"
+              value={form.title}
+              onChange={(e) => {
+                const value = e.target.value;
+                setForm((prev) => ({ ...prev, title: value }));
+                setQuery(value);
+              }}
+              required
+              className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+              placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+            />
+            {suggestions.length > 0 && (
+              <ul className="absolute bg-black/80 backdrop-blur-3xl border border-white/20 text-white/90 w-full 
+              mt-1 shadow-lg rounded-xl z-10">
+                {suggestions.map((s, i) => (
+                  <li
+                    key={i}
+                    className="p-2 hover:bg-blue-400 cursor-pointer"
+                    onClick={() => {
+                      setForm((prev) => ({ ...prev, title: s.name }));
+                      setSuggestions([]);
+                    }}
+                  >
+                    {s.name}, {s.city}, {s.country}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
 
         {/* Divider */}
@@ -239,13 +253,14 @@ function AddDay() {
 
         {/* Descrizione */}
         <div className="md:col-span-2">
-          <label className="block font-bold text-white mb-2">Riassunto della giornata *</label>
+          <label className="block font-bold text-white/90 mb-2">Riassunto della giornata *</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
             required
-            className="w-full p-2 font-semibold border border-white text-white rounded-3xl scrollbar"
+            className="w-full p-2 font-semibold border border-white/30 rounded-3xl bg-white/10 text-white/90 
+            placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition scrollbar"
             rows="6"
           />
         </div>
@@ -258,24 +273,30 @@ function AddDay() {
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md 
+            border border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
+            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white rounded-full shadow-md transition hover:scale-105 cursor-pointer flex items-center justify-center gap-2">
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/50 backdrop-blur-md 
+            border border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
+            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
         </div>
 
         {/* Mostra i tags selezionati */}
         {form.tags.length > 0 && (
-          <div className="mt-2 flex gap-3 w-full justify-center flex-wrap">
+          <div className="mt-3 flex gap-3 w-full justify-center flex-wrap">
             {form.tags.map((tag, i) => (
               <span
                 key={i}
-                className="flex items-center justify-between bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-white px-4 py-2 rounded-full text-base font-semibold shadow-md transition-transform hover:scale-105 cursor-pointer">
+                className="flex items-center justify-between bg-gradient-to-r from-blue-500/60 to-cyan-400/60 
+                backdrop-blur-md border border-white/20 text-white/90 px-4 py-2 rounded-full text-base font-semibold 
+                shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
                 <button
                   type="button"
@@ -285,7 +306,7 @@ function AddDay() {
                       tags: form.tags.filter((c) => c !== tag),
                     })
                   }
-                  className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
+                  className="ml-3 text-white/90 hover:text-red-400 transition cursor-pointer">
                   <i className="fa-solid fa-xmark text-sm"></i>
                 </button>
               </span>
@@ -316,25 +337,27 @@ function AddDay() {
                     onClick={() => setOpenImage(src)}
                     src={src}
                     alt={`Foto ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
+                    className="w-full mt-3 h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
                   />
                   <button
                     type="button"
                     onClick={() => removePhoto(index)}
-                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white/90 rounded-full p-1 opacity-0 
+                    group-hover:opacity-100 transition">
                     <i className="fa-solid fa-xmark"></i>
                   </button>
 
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)}
-                      className="fixed inset-0 z-[9999] bg-opacity-50 flex items-center justify-center p-4">
+                      className="fixed inset-0 z-[9999] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
                       <div
                         onClick={(e) => e.stopPropagation()}
                         className="relative w-full max-w-4xl mx-auto">
                         <button
                           onClick={() => setOpenImage(null)}
-                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg hover:bg-red-400 transition cursor-pointer">
+                          className="absolute -top-3 -right-3 bg-red-500 text-white/90 rounded-full p-2 shadow-lg 
+                          hover:bg-red-400 transition cursor-pointer">
                           <i className="fa-solid fa-xmark text-lg"></i>
                         </button>
                         <img
@@ -367,13 +390,17 @@ function AddDay() {
         <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={`/travels/${selectedTravel}/days`}
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-400 hover:from-red-400 hover:to-rose-300 text-white rounded-full cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
+            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
           </Link>
           <button
             type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full cursor-pointer transition hover:scale-105">
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
+            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa
           </button>
@@ -387,7 +414,7 @@ function AddDay() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white/90 px-6 py-3 rounded-full shadow-lg z-[9999]">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
