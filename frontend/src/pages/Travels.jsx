@@ -18,11 +18,11 @@ function StarRating({ rating = 0, max = 5 }) {
         return (
           <span
             key={i}
-            className="relative inline-block w-5 h-5 mr-0.5 align-middle"
+            className="relative inline-block w-5 h-5 mr-0.5 align-middle items-center"
             aria-hidden="true">
             {/* Riempimento giallo */}
             <span className="absolute inset-0 overflow-hidden" style={{ width }}>
-              <span className="text-yellow-400 text-lg leading-5 select-none">★</span>
+              <span className="text-yellow-400 text-xl leading-5 select-none">★</span>
             </span>
           </span>
         );
@@ -97,12 +97,12 @@ function Travels() {
 
       {/* Titolo */}
       <h1 className="text-4xl font-extrabold text-center text-white/90 drop-shadow-md mb-10">
-        🌍 I miei viaggi
+         I miei viaggi
       </h1>
 
       {/* Lista viaggi */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 max-w-7xl mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 mx-auto"
         initial="hidden"
         animate="visible"
         variants={{
@@ -116,8 +116,8 @@ function Travels() {
               key={v.id}
               layout
               className="group relative bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
-               border border-white/20 rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 
-               hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+               border border-white/40 rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 
+               hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
               variants={{
                 hidden: { scale: 0.95, opacity: 0 },
                 visible: { scale: 1, opacity: 1 },
@@ -132,30 +132,30 @@ function Travels() {
                 <img
                   src={v.days[0].photo[0]}
                   alt={`Foto di ${v.town}`}
-                  className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-all duration-500"
+                  className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-all duration-100"
                 />
               )}
 
               {/* Contenuto */}
-              <div className="p-6 flex flex-col gap-3">
-                <h2 className="text-xl font-semibold text-white drop-shadow-sm">
+              <div className="p-8 flex flex-col gap-3">
+                <h2 className="text-2xl font-extrabold text-white drop-shadow-sm">
                   {v.town} - {v.city}
                 </h2>
-                <p className="text-white/70 text-sm">
-                  📅 {v.start_date} → {v.end_date}
+                <p className="text-white/70 text-xl font-semibold">
+                   {v.start_date} → {v.end_date}
                 </p>
-                <p className="text-white/80 font-medium">
-                  🗓️ Anno: <span className="text-white">{v.year}</span>
+                <p className="text-white/80 font-medium text-xl">
+                   Anno: <span className="text-white">{v.year}</span>
                 </p>
 
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-white/80 font-medium">⭐ Media voto:</span>
+                  <span className="text-white/80 font-medium text-2sm"> Media voto:</span>
                   <StarRating rating={v.general_vote ?? 0} />
                 </div>
 
                 {/* Voti dettagliati */}
                 {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white/80 mt-2">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-2sm text-white/80 mt-2">
                     {Object.entries(v.votes).map(([key, value]) => (
                       <li key={key} className="flex justify-between items-center">
                         <span className="capitalize">{key}:</span>
@@ -169,18 +169,18 @@ function Travels() {
                 <div className="flex flex-col lg:flex-row justify-center items-center gap-2 mt-5">
                   <Link
                     to={`/travels/${v.id}/days`}
-                    className="w-full font-semibold px-4 py-2 flex justify-center items-center gap-2
-                     bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20
+                    className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                     bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40
                      text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
-                    <i className="fa-solid fa-calendar-day mr-1"></i> Dettagli
+                    <i className="fa-solid fa-calendar-day mr-1"></i> Tappe
                   </Link>
 
                   <Link
                     to={`/travels/${v.id}/edit`}
-                    className="w-full font-semibold px-4 py-2 flex justify-center items-center gap-2
-                     bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/20
+                    className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                     bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/40
                      text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
@@ -189,8 +189,8 @@ function Travels() {
 
                   <button
                     onClick={() => setDeleteId(v.id)}
-                    className="w-full font-semibold px-4 py-2 flex justify-center items-center gap-2
-                     bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/20
+                    className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                     bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/40
                      text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
@@ -217,7 +217,7 @@ function Travels() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white/90 px-6 py-3 
+          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white/90 px-6 py-3 
                    rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-500/60 to-teal-400/60"
         >
           <p className="text-lg font-semibold">{message}</p>

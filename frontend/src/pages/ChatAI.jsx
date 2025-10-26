@@ -33,7 +33,7 @@ function ChatAI() {
     };
 
     return (
-        <div className="flex flex-col h-[85vh] sm:h-[80vh] md:h-[75vh] max-w-4xl mx-auto mt-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden px-8 sm:px-4 md:px-6">
+        <div className="flex flex-col h-[85vh] sm:h-[80vh] md:h-[75vh] max-w-4xl mx-auto mt-10 bg-white/10 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl overflow-hidden px-8 sm:px-4 md:px-6">
             {/* Chat messaggi */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar">
                 {messages.map((m, i) => (

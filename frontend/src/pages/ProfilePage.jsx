@@ -175,7 +175,7 @@ return (
         {/*  PROFILO UTENTE */}
         <motion.section
           className="md:col-span-1 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
-         p-6 rounded-3xl shadow-2xl border border-white/20 flex flex-col items-center text-center 
+         p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center 
          hover:bg-white/20 transition-all duration-500"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -185,12 +185,12 @@ return (
             <img
               src={user.photo}
               alt="Profilo"
-              className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] object-cover border-4 border-blue-400/60"
+              className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] object-cover border-4 border-blue-500/60"
               style={{ width: "140px", height: "140px" }}
             />
           ) : (
             <div className="w-36 h-36 mb-6 rounded-full bg-white/10 flex items-center justify-center text-4xl font-bold
-             text-gray-300 border-4 border-blue-400/60">
+             text-gray-300 border-4 border-blue-500/60">
               {user?.name?.[0]?.toUpperCase() || "?"}
             </div>
           )}
@@ -228,7 +228,7 @@ return (
                 setShowEditModal(true);
               }}
               className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-             bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/20
+             bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/40
              text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
             >
@@ -238,7 +238,7 @@ return (
             <button
               onClick={() => setDeleteProfileId(user?.id)}
               className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-             bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/20
+             bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/40
              text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
             >
@@ -248,7 +248,7 @@ return (
             <button
               onClick={handleLogout}
               className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-             bg-gradient-to-r from-teal-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20
+             bg-gradient-to-r from-teal-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40
              text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
             >
@@ -270,7 +270,7 @@ return (
           {/* Gestione viaggi */}
           <motion.div
             className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
-            p-6 rounded-3xl shadow-2xl border border-white/20 flex flex-col gap-4 
+            p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col gap-4 
              hover:bg-white/20 transition-all duration-500"
             variants={{
               hidden: { scale: 0.9, opacity: 0 },
@@ -288,7 +288,7 @@ return (
               <Link
                 to="/travels"
                 className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md border border-white/20
+                bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md border border-white/40
                  text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
@@ -297,7 +297,7 @@ return (
               <Link
                 to="/add"
                 className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border border-white/20
+                bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border border-white/40
                  text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
@@ -306,7 +306,7 @@ return (
               <Link
                 to="/chat"
                 className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20
+                bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40
                  text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
@@ -318,7 +318,7 @@ return (
           {/* Ultimo viaggio */}
           <motion.div
             className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
-            p-6 rounded-3xl shadow-2xl border border-white/20 hover:bg-white/20 transition-all duration-500"
+            p-6 rounded-3xl shadow-2xl border border-white/40 hover:bg-white/20 transition-all duration-500"
             variants={{
               hidden: { scale: 0.9, opacity: 0 },
               visible: {
@@ -339,7 +339,7 @@ return (
                     key={idx}
                     className="p-4 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md 
                     rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
-                    transition-all duration-300 border border-white/20"
+                    transition-all duration-300 border border-white/40"
                   >
                     <div className="flex justify-between items-center mb-2">
                       <h4 className="text-lg font-semibold text-white">
@@ -350,7 +350,7 @@ return (
                         {travel.start_date} → {travel.end_date}
                       </span>
                     </div>
-                    <div className="border-t border-white/20 my-2" />
+                    <div className="border-t border-white/40 my-2" />
                     {travel.general_vote ? (
                       <StarRating rating={travel.general_vote} />
                     ) : (
@@ -372,7 +372,7 @@ return (
         {/*  INTERESSI UTENTE */}
         <motion.div
           className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
-         p-6 rounded-3xl shadow-2xl border border-white/20 hover:bg-white/20 transition-all duration-500"
+         p-6 rounded-3xl shadow-2xl border border-white/40 hover:bg-white/20 transition-all duration-500"
           initial={{ x: 80, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -386,7 +386,7 @@ return (
                 <span
                   key={idx}
                   className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 
-                 backdrop-blur-md border border-white/20 text-white/90 rounded-full 
+                 backdrop-blur-md border border-white/40 text-white/90 rounded-full 
                  text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-300"
                 >
                   {interest}
@@ -425,7 +425,7 @@ return (
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: 50 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-6 right-6 backdrop-blur-2xl border border-white/20 text-white/90 
+        className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white/90 
         px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-500/60 to-teal-400/60"
       >
         <p className="text-lg font-semibold">{message}</p>

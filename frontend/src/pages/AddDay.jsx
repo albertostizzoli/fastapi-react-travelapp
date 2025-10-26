@@ -165,7 +165,7 @@ function AddDay() {
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 w-full 
-        max-w-4xl border border-white/30 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]">
+        max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-cyan-400/10 rounded-full 
           blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
@@ -174,7 +174,7 @@ function AddDay() {
         </div>
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-bold text-white/90">➕ Aggiungi una tappa al viaggio</h2>
+          <h2 className="text-2xl font-extrabold text-white/90"> Aggiungi una tappa al viaggio</h2>
           <p className="text-white/90 text-sm italic">* Il campo è obbligatorio</p>
         </div>
 
@@ -186,7 +186,7 @@ function AddDay() {
             <select
               value={selectedTravel}
               onChange={(e) => setSelectedTravel(e.target.value)}
-              className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
               placeholder-white/70 focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition"
               required
             >
@@ -208,7 +208,7 @@ function AddDay() {
               value={form.date}
               onChange={handleChange}
               required
-              className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
               placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition [color-scheme:dark]"
             />
           </div>
@@ -225,11 +225,11 @@ function AddDay() {
                 setQuery(value);
               }}
               required
-              className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
               placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
             />
             {suggestions.length > 0 && (
-              <ul className="absolute bg-black/80 backdrop-blur-3xl border border-white/20 text-white/90 w-full 
+              <ul className="absolute bg-black/80 backdrop-blur-3xl border border-white/40 text-white/90 w-full 
               mt-1 shadow-lg rounded-xl z-10">
                 {suggestions.map((s, i) => (
                   <li
@@ -249,7 +249,7 @@ function AddDay() {
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-4"></div>
 
         {/* Descrizione */}
         <div className="md:col-span-2">
@@ -259,14 +259,14 @@ function AddDay() {
             value={form.description}
             onChange={handleChange}
             required
-            className="w-full p-2 font-semibold border border-white/30 rounded-3xl bg-white/10 text-white/90 
+            className="w-full p-2 font-semibold border border-white/40 rounded-3xl bg-white/10 text-white/90 
             placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition scrollbar"
             rows="6"
           />
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-4"></div>
 
         {/* Pulsanti principali: Seleziona categorie + Carica foto */}
         <div className="md:col-span-2 flex justify-between gap-4">
@@ -274,7 +274,7 @@ function AddDay() {
             type="button"
             onClick={() => setIsTagModalOpen(true)}
             className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md 
-            border border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
+            border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
             hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
@@ -282,7 +282,7 @@ function AddDay() {
             type="button"
             onClick={handlePhotoSelect}
             className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/50 backdrop-blur-md 
-            border border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
+            border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
             hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
@@ -295,7 +295,7 @@ function AddDay() {
               <span
                 key={i}
                 className="flex items-center justify-between bg-gradient-to-r from-blue-500/60 to-cyan-400/60 
-                backdrop-blur-md border border-white/20 text-white/90 px-4 py-2 rounded-full text-base font-semibold 
+                backdrop-blur-md border border-white/40 text-white/90 px-4 py-2 rounded-full text-base font-semibold 
                 shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
                 <button
@@ -384,14 +384,14 @@ function AddDay() {
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-4"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-4"></div>
 
         {/* Pulsante Aggiungi Tappa */}
         <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={`/travels/${selectedTravel}/days`}
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
-            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
@@ -399,7 +399,7 @@ function AddDay() {
           <button
             type="submit"
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
-            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa

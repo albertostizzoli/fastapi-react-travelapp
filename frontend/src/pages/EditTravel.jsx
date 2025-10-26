@@ -97,7 +97,7 @@ function EditTravel() {
       <form
         onSubmit={handleSubmit}
         className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl 
-        p-6 w-full max-w-4xl border border-white/30 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] 
+        p-6 w-full max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] 
         grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {/* Sfere animate */}
@@ -110,7 +110,7 @@ function EditTravel() {
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-2">
-          <h2 className="text-2xl font-bold text-white/90">✏️ Modifica Viaggio</h2>
+          <h2 className="text-2xl font-extrabold text-white/90">Modifica Viaggio</h2>
           <p className="text-sm italic text-white/90">* Il campo è obbligatorio</p>
         </div>
 
@@ -124,7 +124,7 @@ function EditTravel() {
             value={travel.town}
             onChange={handleChange}
             placeholder="Paese"
-            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
             placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
           />
         </div>
@@ -139,7 +139,7 @@ function EditTravel() {
             value={travel.city}
             onChange={handleChange}
             placeholder="Città"
-            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
             placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
           />
         </div>
@@ -153,7 +153,7 @@ function EditTravel() {
             value={travel.year}
             onChange={handleChange}
             placeholder="Anno"
-            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
             placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
           />
         </div>
@@ -167,7 +167,7 @@ function EditTravel() {
             value={travel.start_date}
             onChange={handleChange}
             placeholder="Data inizio"
-            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
             placeholder-white/70 focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition"
           />
         </div>
@@ -181,13 +181,13 @@ function EditTravel() {
             value={travel.end_date}
             onChange={handleChange}
             placeholder="Data fine"
-            className="w-full p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+            className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
             placeholder-white/70 focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition"
           />
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
 
         {/* Voti */}
         <div className="md:col-span-2">
@@ -203,7 +203,7 @@ function EditTravel() {
                   onChange={handleVoteChange}
                   min="1"
                   max="5"
-                  className="w-20 p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 
+                  className="w-20 p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
                   text-center focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
                 />
               </div>
@@ -219,20 +219,20 @@ function EditTravel() {
               type="text"
               value={calculateGeneralVote() ?? "-"}
               readOnly
-              className="w-20 p-2 font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 text-center"
+              className="w-20 p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 text-center"
             />
           </div>
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
 
         {/* Pulsanti */}
         <div className="md:col-span-2 flex justify-between gap-2 mt-4">
           <Link
             to="/travels"
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
-            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out
+            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-arrow-left"></i>
             Torna ai Viaggi
@@ -240,7 +240,7 @@ function EditTravel() {
           <button
             type="submit"
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
-            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-edit"></i>
             Salva Modifiche
@@ -255,7 +255,7 @@ function EditTravel() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white/30 text-white/90 px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white/40 text-white/90 px-6 py-3 rounded-full shadow-lg z-[9999]">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

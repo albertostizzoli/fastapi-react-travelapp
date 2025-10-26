@@ -138,7 +138,7 @@ function EditDay() {
       <form
         onSubmit={handleSubmit}
         className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
-        w-full max-w-4xl border border-white/30 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 gap-6">
+        w-full max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {/* sfere animate */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -150,7 +150,7 @@ function EditDay() {
 
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-2">
-          <h2 className="text-2xl font-bold text-white/90">✏️ Modifica Tappa</h2>
+          <h2 className="text-2xl font-extrabold text-white/90"> Modifica Tappa</h2>
           <p className="text-sm italic text-white/90">* Il campo è obbligatorio</p>
         </div>
 
@@ -162,7 +162,7 @@ function EditDay() {
             name="date"
             value={day.date}
             onChange={handleChange}
-            className="w-full font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 placeholder-white/70 
+            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 placeholder-white/70 
             p-2 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
           />
         </div>
@@ -175,13 +175,13 @@ function EditDay() {
             name="title"
             value={day.title}
             onChange={handleChange}
-            className="w-full font-semibold border border-white/30 rounded-full bg-white/10 text-white/90 placeholder-white/70 
+            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 placeholder-white/70 
             p-2 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
           />
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
 
         {/* Descrizione */}
         <div className="md:col-span-2">
@@ -191,13 +191,13 @@ function EditDay() {
             value={day.description}
             onChange={handleChange}
             rows="6"
-            className="w-full font-semibold border border-white/30 rounded-3xl bg-white/10 text-white/90 p-3 placeholder-white/70 
+            className="w-full font-semibold border border-white/40 rounded-3xl bg-white/10 text-white/90 p-3 placeholder-white/70 
             focus:ring-2 focus:ring-blue-300 focus:border-transparent transition scrollbar"
           />
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
 
         {/* Pulsanti principali */}
         <div className="md:col-span-2 flex justify-between gap-4">
@@ -205,7 +205,7 @@ function EditDay() {
             type="button"
             onClick={() => setIsTagModalOpen(true)}
             className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md border 
-            border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105 cursor-pointer 
+            border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105 cursor-pointer 
             flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
@@ -214,7 +214,7 @@ function EditDay() {
             type="button"
             onClick={handlePhotoSelect}
             className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border 
-            border-white/20 text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105 cursor-pointer 
+            border-white/40 text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105 cursor-pointer 
             flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
@@ -227,7 +227,7 @@ function EditDay() {
               <span
                 key={i}
                 className="flex items-center justify-between bg-gradient-to-r from-blue-500/60 to-cyan-500/60 backdrop-blur-md 
-                border border-white/20 text-white/90 px-4 py-2 rounded-full text-base font-semibold shadow-md transition 
+                border border-white/40 text-white/90 px-4 py-2 rounded-full text-base font-semibold shadow-md transition 
                 hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
                 <button
@@ -316,14 +316,14 @@ function EditDay() {
         </div>
 
         {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/30 my-2"></div>
+        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
 
         {/* Pulsanti finali */}
         <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={travelId ? `/travels/${travelId}/days` : `/travels`}
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
-            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100
+            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
@@ -331,7 +331,7 @@ function EditDay() {
           <button
             type="submit"
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
-            backdrop-blur-md border border-white/20 text-white/90 rounded-full cursor-pointer transition-all duration-100 
+            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             <i className="fa-solid fa-edit"></i>
             Salva Modifiche
