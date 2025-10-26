@@ -33,7 +33,7 @@ function EditProfileModal({
           <motion.form
             onSubmit={onSubmit}
             encType="multipart/form-data"
-            className="relative border border-white/30 bg-gradient-to-br from-white/10 via-white/5 to-transparent 
+            className="relative border border-white/40 bg-gradient-to-br from-white/10 via-white/5 to-transparent 
             backdrop-blur-2xl p-8 rounded-3xl shadow-2xl w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -60,7 +60,7 @@ function EditProfileModal({
                 value={editForm.name}
                 onChange={handleChange}
                 placeholder="Nome"
-                className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/20 placeholder-white/70 
+                className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
                 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
                 required
               />
@@ -70,7 +70,7 @@ function EditProfileModal({
                 value={editForm.surname}
                 onChange={handleChange}
                 placeholder="Cognome"
-                className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/20 placeholder-white/70 
+                className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
                 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
                 required
               />
@@ -80,7 +80,7 @@ function EditProfileModal({
                 value={editForm.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/20 placeholder-white/70 
+                className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
                 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
                 required
               />
@@ -93,7 +93,7 @@ function EditProfileModal({
                   value={editForm.password}
                   onChange={handleChange}
                   placeholder="Nuova Password"
-                  className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/20 placeholder-white/70 
+                  className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
                   focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
                 />
                 <button
@@ -125,7 +125,7 @@ function EditProfileModal({
                   e.target.value = "";
                 }}
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 
-                border border-white/20 text-white/90 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
+                border border-white/40 text-white/90 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
                 cursor-pointer scrollbar"
               >
                 <option value="" className="bg-black text-white">
@@ -181,7 +181,7 @@ function EditProfileModal({
                 type="button"
                 onClick={onClose}
                 className="font-semibold px-6 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border 
-                border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+                border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
                 <i className="fa-solid fa-xmark mr-2"></i> Annulla
@@ -189,7 +189,7 @@ function EditProfileModal({
               <button
                 type="submit"
                 className="font-semibold px-6 py-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border 
-              border-white/20 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+              border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
                 <i className="fa-solid fa-check mr-2"></i> Salva

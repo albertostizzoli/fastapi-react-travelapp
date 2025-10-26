@@ -39,7 +39,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
           </div>
           <motion.div
-            className="backdrop-blur-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/20 
+            className="backdrop-blur-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/40 
             rounded-3xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-2xl flex flex-col overflow-hidden relative"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -47,12 +47,12 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             transition={{ duration: 0.3 }}
           >
             {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b border-white/20 bg-white/5 backdrop-blur-lg">
+            <div className="flex justify-between items-center p-4 border-b border-white/40 bg-white/5 backdrop-blur-lg">
               <button
                 onClick={handleClose}
                 className="font-semibold px-4 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border 
-                border-white/20 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
-                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
                 <i className="fa-solid fa-arrow-left mr-2"></i> Torna alle Tappe
               </button>
@@ -60,8 +60,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
               <button
                 onClick={() => setShowMapModal(true)}
                 className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border 
-              border-white/20 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
-                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+              border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
                 <i className="fa-solid fa-map-location-dot mr-2"></i> Vai alla Mappa
               </button>
@@ -72,8 +72,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
               <h1 className="text-3xl font-extrabold text-white/90 mb-2 drop-shadow-lg">
                 {selectedDay.title}
               </h1>
-              <p className="sm:text-xl text-lg text-cyan-200/80 mb-4">{selectedDay.date}</p>
-              <p className="text-white/90 text-justify leading-relaxed mb-6">{selectedDay.description}</p>
+              <p className="text-2xl font-bold text-cyan-200/80 mb-4">{selectedDay.date}</p>
+              <p className="text-white/90 text-justify font-semibold leading-relaxed mb-6">{selectedDay.description}</p>
 
               {/* Tags */}
               {selectedDay.tags?.length > 0 && (
@@ -82,8 +82,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                       <span
                         key={i}
                         className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 
-                        backdrop-blur-md border border-white/20 text-white/90 rounded-full transition-all duration-100 
-                        ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                        backdrop-blur-md border border-white/40 text-white/90 rounded-full transition-all duration-100 
+                        ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                       >
                         {tag}
                       </span>
@@ -109,7 +109,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                       alt="foto viaggio"
                       loading="lazy"
                       onClick={() => setOpenImage(p)}
-                      className="w-full h-40 sm:h-40 object-cover rounded-3xl border-3 border-white/20 shadow-sm cursor-pointer
+                      className="w-full h-40 sm:h-40 object-cover rounded-3xl border-3 border-white/40 shadow-sm cursor-pointer
                        hover:border-white"
                       variants={{
                         hidden: { scale: 0, opacity: 0 },
@@ -167,7 +167,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                 exit={{ opacity: 0 }}
               >
                 <motion.div
-                  className="relative sm:w-[70vw] sm:h-[90vh] backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl overflow-hidden shadow-2xl"
+                  className="relative sm:w-[70vw] sm:h-[90vh] backdrop-blur-xl bg-white/10 border border-white/40 rounded-3xl overflow-hidden shadow-2xl"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.8, opacity: 0 }}

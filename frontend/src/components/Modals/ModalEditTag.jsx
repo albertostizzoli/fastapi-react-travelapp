@@ -13,7 +13,7 @@ function ModalEditTag({ isOpen, onClose, tags, setTags, title }) {
                     exit={{ opacity: 0 }}
                 >
                     <motion.div
-                        className="bg-white/30 backdrop-blur-3xl border border-white/20 rounded-3xl shadow-2xl p-6 w-[90%] 
+                        className="bg-white/30 backdrop-blur-3xl border border-white/40 rounded-3xl shadow-2xl p-6 w-[90%] 
                         max-w-4xl max-h-[75vh] overflow-y-auto flex flex-col"
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
@@ -37,8 +37,8 @@ function ModalEditTag({ isOpen, onClose, tags, setTags, title }) {
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center px-3 py-2 border 
                                                         rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${tags.includes(experience)
-                                                        ? "bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20 text-white/90 shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                                                        : "bg-gradient-to-r from-white/10 to-white/30 backdrop-blur-md border border-white/20 text-white/90 shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        ? "bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40 text-white/90 shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        : "bg-gradient-to-r from-white/10 to-white/30 backdrop-blur-md border border-white/40 text-white/90 shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}
                                             >
                                                 <input
@@ -67,8 +67,8 @@ function ModalEditTag({ isOpen, onClose, tags, setTags, title }) {
                                 type="button"
                                 onClick={onClose}
                                 className="font-semibold px-4 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border 
-                                border-white/20 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
-                                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                                border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                 <i className="fa-solid fa-xmark mr-2"></i>
                                 Chiudi
                             </button>
@@ -76,8 +76,8 @@ function ModalEditTag({ isOpen, onClose, tags, setTags, title }) {
                                 type="button"
                                 onClick={onClose}
                                 className="font-semibold px-4 py-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border 
-                                border-white/20 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
-                                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)">
+                                border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
                                 <i className="fa-solid fa-check mr-2"></i>
                                 Conferma
                             </button>

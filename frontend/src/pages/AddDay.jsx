@@ -275,7 +275,7 @@ function AddDay() {
             onClick={() => setIsTagModalOpen(true)}
             className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md 
             border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
-            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
           <button
@@ -283,7 +283,7 @@ function AddDay() {
             onClick={handlePhotoSelect}
             className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/50 backdrop-blur-md 
             border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
-            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
         </div>
@@ -392,7 +392,7 @@ function AddDay() {
             to={`/travels/${selectedTravel}/days`}
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
             backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
-            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
           </Link>
@@ -400,7 +400,7 @@ function AddDay() {
             type="submit"
             className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
             backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
-            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa
           </button>

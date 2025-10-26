@@ -20,7 +20,7 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
 
           {/* Contenitore principale del modale */}
           <motion.div
-            className="relative w-full max-w-md rounded-3xl border border-white/20 bg-gradient-to-br 
+            className="relative w-full max-w-md rounded-3xl border border-white/40 bg-gradient-to-br 
             from-white/10 via-white/5 to-transparent backdrop-blur-2xl shadow-2xl text-white 
              p-8 text-center overflow-hidden"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -44,9 +44,9 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
               <button
                 onClick={onConfirm}
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
-                 bg-gradient-to-r from-green-500/60 to-cyan-400/60 backdrop-blur-md border border-white/20 
+                 bg-gradient-to-r from-green-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40 
                 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
-                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
                 <i className="fa-solid fa-check"></i> Sì
               </button>
@@ -54,9 +54,9 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
               <button
                 onClick={onCancel}
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
-                 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/20 
+                 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/40 
                  text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
-                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
                 <i className="fa-solid fa-xmark"></i> No
               </button>
