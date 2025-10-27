@@ -110,7 +110,8 @@ function ChatAI() {
 
     return (
         <div className="flex flex-col h-[80vh] max-w-6xl mx-auto mt-10 
-            bg-white/10 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl overflow-hidden px-6 sm:px-4">
+            bg-gradient-to-br from-blue-950/30 via-blue-900/10 to-orange-900/20 backdrop-blur-2xl border border-white/30
+            rounded-3xl shadow-2xl overflow-hidden px-6 sm:px-4">
 
             {/*  Area messaggi */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar text-white">
@@ -128,8 +129,8 @@ function ChatAI() {
                     >
                         {m.role === "user" ? (
                             // Messaggio utente: fumetto
-                            <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-5 py-3 
-                            rounded-2xl shadow-md max-w-[70%] rounded-br-none">
+                            <div className="bg-gradient-to-r from-blue-500 to-orange-500 text-white px-5 py-3 
+                            rounded-2xl shadow-md max-w-[70%] rounded-br-none hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
                                 {m.text}
                             </div>
                         ) : (
@@ -146,7 +147,7 @@ function ChatAI() {
                 ))}
 
                 {isLoading && (
-                    <p className="text-blue-400 animate-pulse">Sto pensando alla risposta...</p>
+                    <p className="text-white animate-pulse">Sto pensando alla risposta...</p>
                 )}
             </div>
 
@@ -154,7 +155,7 @@ function ChatAI() {
             <div className="p-4 flex items-end gap-3 border-t border-white/20">
                 <input
                     className="flex-1 bg-white/20 border border-white/30 rounded-2xl px-4 py-3 text-white
-                    placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition
+                    placeholder-white focus:outline-none focus:ring-2 focus:ring-orange-400  transition
                     resize-none overflow-y-auto leading-relaxed min-h-[3rem] max-h-[10rem]"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -166,7 +167,7 @@ function ChatAI() {
                     onClick={sendMessage}
                     disabled={isLoading}
                     className={`font-semibold flex justify-center items-center gap-2 px-5 py-3
-                    bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40
+                    bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
                   text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer `}>
                     Invia

@@ -50,7 +50,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             <div className="flex justify-between items-center p-4 border-b border-white/40 bg-white/5 backdrop-blur-lg">
               <button
                 onClick={handleClose}
-                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border 
+                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border 
                 border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                  cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
@@ -59,7 +59,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
 
               <button
                 onClick={() => setShowMapModal(true)}
-                className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border 
+                className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-600/60 to-cyan-500/60 backdrop-blur-md border 
               border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
@@ -81,7 +81,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                     {selectedDay.tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 
+                        className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-600/70 to-rose-500/60 
                         backdrop-blur-md border border-white/40 text-white/90 rounded-full transition-all duration-100 
                         ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                       >

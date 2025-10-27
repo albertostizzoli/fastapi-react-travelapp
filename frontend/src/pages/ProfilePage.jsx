@@ -339,7 +339,7 @@ function ProfilePage() {
                       key={idx}
                       className="p-4 bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md 
                     rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
-                    transition-all duration-100 border border-white/40 hover:from-blue-400/60"
+                    transition-all duration-100 border border-white/40"
                     >
                       <div className="flex justify-between items-center mb-2">
                         <h4 className="text-lg font-semibold text-white">
@@ -426,7 +426,7 @@ function ProfilePage() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white/90 
-        px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-600/70 to-teal-500/60"
+        px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>

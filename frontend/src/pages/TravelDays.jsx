@@ -78,9 +78,9 @@ function TravelDays() {
     <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
       {/* Effetto Glow dinamico di sfondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-cyan-400/20 to-blue-400/10 
+        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-400/20 to-cyan-400/10 
         rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-rose-400/10 
+        <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-amber-400/10 
         rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
       </div>
 
@@ -94,7 +94,7 @@ function TravelDays() {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-        Tappe del viaggio
+          Tappe del viaggio
         </motion.h1>
 
         {/* Link Aggiungi Tappa */}
@@ -107,7 +107,7 @@ function TravelDays() {
             to="/addDay"
             state={{ travelId: id }}
             className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
-             bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border border-white/40
+             bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
              text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
           >
@@ -127,10 +127,10 @@ function TravelDays() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h2 className="text-3xl font-bold text-white/90 mb-2 drop-shadow-md">
-               {travel.town} - {travel.city}
+              {travel.town} - {travel.city}
             </h2>
             <p className="text-2xl font-semibold text-white/90 mb-2">
-               {travel.start_date} → {travel.end_date}
+              {travel.start_date} → {travel.end_date}
             </p>
             {travel.title && (
               <p className="text-white/60 italic border-t border-white/10">
@@ -154,7 +154,7 @@ function TravelDays() {
                 {travel.days.map((d) => (
                   <motion.div
                     key={d.id}
-                    className="group relative backdrop-blur-2xl bg-gradient-to-br from-white/10 via-white/5 to-transparent
+                    className="group relative backdrop-blur-2xl bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent
                      border border-white/40 p-5 rounded-3xl shadow-xl flex flex-col justify-between w-full sm:w-64
                      transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]"
                     variants={{
@@ -191,7 +191,7 @@ function TravelDays() {
                       <button
                         onClick={() => setSelectedDay(d)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                         bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40
+                         bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
                          text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
@@ -201,7 +201,7 @@ function TravelDays() {
                       <Link
                         to={`/days/${d.id}/edit`}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/40
+                        bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
                          text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
@@ -211,7 +211,7 @@ function TravelDays() {
                       <button
                         onClick={() => setDeleteDayId(d.id)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                         bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/40
+                         bg-gradient-to-r from-red-600/70 to-rose-500/70 backdrop-blur-md border border-white/40
                          text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
@@ -250,7 +250,7 @@ function TravelDays() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white/90 px-6 py-3
-                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-500/60 to-teal-400/60"
+                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
