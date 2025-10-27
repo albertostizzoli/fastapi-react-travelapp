@@ -144,7 +144,7 @@ function EditProfileModal({
                   {editForm.interests.map((interest, i) => (
                     <span
                       key={i}
-                      className="bg-gradient-to-r from-blue-500/60 to-cyan-400/60 px-3 py-1 rounded-full text-sm text-white/90 
+                      className="bg-gradient-to-r from-blue-600/70 to-cyan-500/60 px-3 py-1 rounded-full text-sm text-white/90 
                       flex items-center gap-2 shadow-md"
                     >
                       {interest}

@@ -20,21 +20,21 @@ function Layout({ children }) {
   const getBgClass = (path) => {
     switch (true) {
       case path === "/profile":
-        return "bg-gradient-to-r from-blue-500 to-cyan-400/60";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       case path === "/travels":
-        return "bg-gradient-to-r from-orange-50 to-yellow-100";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       case path === "/add":
-        return "bg-gradient-to-r from-purple-50 to-pink-100";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       case path === "/addDay":
-        return "bg-gradient-to-r from-green-50 to-teal-100";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       case path.includes("/travels") && path.includes("/days"):
-        return "bg-gradient-to-r from-purple-50 to-indigo-100";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       case path.includes("/travels") && path.includes("/edit"):
-        return "bg-gradient-to-r from-pink-50 to-red-100";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       case path.includes("/days") && path.includes("/edit"):
-        return "bg-gradient-to-r from-yellow-50 to-orange-100";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       case path.includes("/chat"):
-        return "bg-gradient-to-r from-cyan-50 to-blue-100";
+        return "bg-gradient-to-b from-blue-500 to-orange-500";
       default:
         return "bg-white";
     }

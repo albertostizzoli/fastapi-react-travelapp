@@ -86,18 +86,18 @@ function Travels() {
 
 
   return (
-    <div className="relative bg-transparent min-h-screen p-8 overflow-visible text-white">
+    <div className="relative min-h-screen p-8 overflow-visible text-gray-50">
       {/* Glow dinamico di sfondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-cyan-400/20 to-blue-400/10 
+        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-400/20 to-cyan-300/10 
         rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-400/20 to-rose-400/10 
+        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-400/20 to-amber-300/10 
         rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
       </div>
 
       {/* Titolo */}
-      <h1 className="text-4xl font-extrabold text-center text-white/90 drop-shadow-md mb-10">
-         I miei viaggi
+      <h1 className="text-4xl font-extrabold text-center text-gray-50/90 drop-shadow-md mb-10">
+        I miei viaggi
       </h1>
 
       {/* Lista viaggi */}
@@ -115,7 +115,7 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              className="group relative bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
+              className="group relative bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
                border border-white/40 rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 
                hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
               variants={{
@@ -138,24 +138,24 @@ function Travels() {
 
               {/* Contenuto */}
               <div className="p-8 flex flex-col gap-3">
-                <h2 className="text-2xl font-extrabold text-white drop-shadow-sm">
+                <h2 className="text-2xl font-extrabold text-gray-50 drop-shadow-sm">
                   {v.town} - {v.city}
                 </h2>
-                <p className="text-white/70 text-xl font-semibold">
-                   {v.start_date} → {v.end_date}
+                <p className="text-gray-50/70 text-xl font-semibold">
+                  {v.start_date} → {v.end_date}
                 </p>
-                <p className="text-white/80 font-medium text-xl">
-                   Anno: <span className="text-white">{v.year}</span>
+                <p className="text-gray-50 font-medium text-xl">
+                  Anno: <span className="text-gray-50">{v.year}</span>
                 </p>
 
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-white/80 font-medium text-2sm"> Media voto:</span>
+                  <span className="text-gray-50 font-medium text-2sm"> Media voto:</span>
                   <StarRating rating={v.general_vote ?? 0} />
                 </div>
 
                 {/* Voti dettagliati */}
                 {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-2sm text-white/80 mt-2">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-2sm text-gray-50 mt-2">
                     {Object.entries(v.votes).map(([key, value]) => (
                       <li key={key} className="flex justify-between items-center">
                         <span className="capitalize">{key}:</span>
@@ -170,8 +170,8 @@ function Travels() {
                   <Link
                     to={`/travels/${v.id}/days`}
                     className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40
-                     text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                     bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                     text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
                     <i className="fa-solid fa-calendar-day mr-1"></i> Tappe
@@ -180,8 +180,8 @@ function Travels() {
                   <Link
                     to={`/travels/${v.id}/edit`}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-gradient-to-r from-orange-500/60 to-yellow-400/60 backdrop-blur-md border border-white/40
-                     text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                     bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
+                     text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
                     <i className="fa-solid fa-pen mr-1"></i> Modifica
@@ -190,8 +190,8 @@ function Travels() {
                   <button
                     onClick={() => setDeleteId(v.id)}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/40
-                     text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                     bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+                     text-gray-50/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
                     <i className="fa-solid fa-trash mr-1"></i> Cancella
@@ -217,8 +217,8 @@ function Travels() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white/90 px-6 py-3 
-                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-emerald-500/60 to-teal-400/60"
+          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-gray-50/90 px-6 py-3 
+                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
