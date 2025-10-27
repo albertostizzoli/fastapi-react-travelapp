@@ -3,70 +3,88 @@ from app.config import UserMessage, travel_model
 
 router = APIRouter(prefix="/chats")
 
+# Dizionario in memoria per salvare la cronologia delle chat per ogni utente
+chat_history = {}
+
 @router.post("/")
 def generate_message(msg: UserMessage):
     """
-    Endpoint POST che riceve un messaggio dell'utente e restituisce
-    una risposta generata da Google Gemini (specializzato sui viaggi).
-    """
-
-    # Analisi preliminare: riconoscimento dell'intento 
-    intent_prompt = f"""
-    Analizza la frase seguente: "{msg.message}"
-
-    Se riguarda viaggi, turismo, destinazioni, vacanze o esperienze di viaggio,
-    restituisci una sola parola che riassume l’intento (es. "mete", "budget", "stagione", "consiglio", ecc.).
-
-    Se NON riguarda i viaggi o il turismo, rispondi con la parola "fuori_tema".
-    Rispondi SOLO con una parola.
-    """
-
-    # esegue la generazione per identificare l’intento
-    intent = travel_model.generate_content(intent_prompt).text.strip().lower()
+    Endpoint POST che gestisce la chat AI di viaggi con memoria contestuale.
     
-    # Gestione dei messaggi fuori ambito
+    Funzionalità principali:
+    - Memorizza le ultime interazioni dell'utente per mantenere coerenza nella conversazione.
+    - Analizza l'intento del messaggio per rimanere nel dominio "viaggi".
+    - Gestisce messaggi fuori tema e prova un retry prima di rifiutare.
+    - Genera la risposta dell'AI coerente con il contesto precedente.
+    """
+    # Identificativo dell'utente (default se non fornito)
+    user_id = getattr(msg, "user_id", "default_user")
+    # Recupera la cronologia dell'utente, se esiste
+    history = chat_history.get(user_id, [])
+
+    # Costruzione del contesto della conversazione: ultimi 6 scambi
+    conversation_context = "\n".join([
+        f"Utente: {ex['user']}\nAssistente: {ex['ai']}"
+        for ex in history[-6:]
+    ])
+
+    # Prendi l'ultimo messaggio dell'AI per fornire contesto al riconoscimento dell'intento
+    last_ai = history[-1]["ai"] if history else ""
+
+    # Analisi dell'intento dell'utente
+    intent_prompt = f"""
+    L'assistente ha appena detto: "{last_ai}"
+    L'utente risponde: "{msg.message}"
+
+    Analizza la risposta dell'utente nel contesto di quanto detto dall'assistente.
+    Se riguarda viaggi, turismo, destinazioni o esperienze di viaggio,
+    restituisci una sola parola (es. "mete", "budget", "stagione", "consiglio").
+    Se NON riguarda i viaggi, rispondi "fuori_tema".
+    Rispondi solo con una parola.
+    """
+    intent = travel_model.generate_content(intent_prompt).text.strip().lower()
+
+    # Gestione messaggi fuori tema
     if intent == "fuori_tema":
-        # se il messaggio non è relativo ai viaggi, il modello non risponde
-        return {
-            "response": "Posso aiutarti solo con argomenti legati ai viaggi 😊. Prova a chiedermi una meta, un consiglio o un periodo per un viaggio!",
-            "intent": intent
-        }
+        # Retry: verifica se la frase può essere collegata al contesto
+        retry_prompt = f"""
+    Ecco la conversazione recente:
+    {conversation_context}
 
-    # Costruisco il prompt principale 
-    base_prompt = f"""
-    L'utente ha chiesto: "{msg.message}".
-    Il contesto individuato è: {intent}.
+    L'utente ora dice: "{msg.message}"
 
-    Rispondi solo se la richiesta riguarda viaggi, turismo, mete turistiche, vacanze o pianificazione di spostamenti.
-    Non includere argomenti al di fuori di questo ambito.
-    Se la domanda contiene più parti, rispondi separatamente a ciascuna in modo chiaro e pratico.
-    Dai risposte brevi, dirette e concrete.
+    Questa frase è collegata alla conversazione precedente?
+    Se sì, spiega brevemente come. Se no, rispondi "fuori_tema".
+    """
+        retry = travel_model.generate_content(retry_prompt).text.strip().lower()
+        if "fuori_tema" in retry:
+            return {
+                "response": "Posso aiutarti solo con argomenti legati ai viaggi 😊. "
+                            "Prova a chiedermi una meta, un consiglio o un periodo per un viaggio!",
+                "intent": intent
+            }
+
+    # Prompt principale per la generazione della risposta
+    prompt = f"""
+    Sei un assistente AI esperto di viaggi e turismo.
+
+    Ecco la conversazione precedente:
+    {conversation_context}
+
+    Nuovo messaggio:
+    Utente: "{msg.message}"
+
+    Analizza il contesto e rispondi in modo coerente con la conversazione.
+    Mantieni coerenza con la destinazione e la stagione già discusse.
+    Evita di ripetere ciò che è già stato detto.
+    Fornisci risposte chiare, pratiche e amichevoli.
+    Alla fine, se opportuno, poni una sola domanda di follow-up pertinente.
     """
 
-    #  Prompt specifico per modalità "chat" o "informativa" 
-    if msg.mode == "chat":
-        # risposte più naturali, tono conversazionale
-        prompt = f"""
-        {base_prompt}
-
-        Scrivi come un consulente di viaggi esperto ma amichevole.
-        Offri informazioni precise e reali, anche culturali o stagionali se rilevanti.
-        Alla fine, poni una sola domanda di follow-up naturale basata su ciò che l'utente ha chiesto.
-        """
-    else:
-        # risposte più strutturate e ordinate
-        prompt = f"""
-        {base_prompt}
-
-        Rispondi in modo informativo, ordinato e diretto a ciò che l'utente ti chiede.
-        Se l’utente chiede mete o luoghi, fornisci un elenco chiaro (es. in JSON o con punti elenco).
-        """
-
-    # Generazione della risposta e gestione errori 
+    # Generazione della risposta AI
     try:
         response = travel_model.generate_content(prompt)
-
-        # pulisco il testo da formattazioni indesiderate
+        # Pulizia del testo da markdown e spazi multipli
         cleaned_text = (
             response.text
             .replace("**", "")
@@ -76,11 +94,13 @@ def generate_message(msg: UserMessage):
             .strip()
         )
 
-        # restituisce la risposta elaborata e l’intento rilevato
+        # Aggiornamento cronologia dell'utente, con limite massimo di 20 scambi
+        history.append({"user": msg.message, "ai": cleaned_text})
+        chat_history[user_id] = history[-20:]
+
+        # Restituisce la risposta finale e l'intento rilevato
         return {"response": cleaned_text, "intent": intent}
 
     except Exception as e:
-        # in caso di errore nella generazione (es. timeout, rete, chiave errata)
-        return {"response": f"Si è verificato un errore durante la generazione: {e}", "intent": intent}
-
-
+        # Gestione degli errori di rete, timeout o API key
+        return {"response": f"Errore nella generazione: {e}", "intent": intent}

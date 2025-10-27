@@ -44,12 +44,12 @@ genai.configure(
 
 # Configuro l'API di Google Generative AI
 genai.configure(
-    api_key=os.getenv("GOOGLE_API_KEY")  # Recupera la chiave API dall'ambiente (variabile d'ambiente)
+    api_key=os.getenv("GOOGLE_API_KEY") 
 )
 
 # inizializzo un modello di tipo "gemini-2.0-flash" 
 travel_model = genai.GenerativeModel(
-    "gemini-2.0-flash",  # versione del modello Gemini (ottimizzata per risposte veloci e conversazioni)
+    "gemini-2.0-flash",  # versione del modello Gemini 
     system_instruction=(
         # istruzioni globali che il modello seguirà per tutte le generazioni
         "Sei un assistente AI esperto di viaggi e turismo. "
