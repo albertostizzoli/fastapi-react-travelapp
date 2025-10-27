@@ -33,7 +33,8 @@ function ChatAI() {
     };
 
     return (
-        <div className="flex flex-col h-[85vh] sm:h-[80vh] md:h-[75vh] max-w-4xl mx-auto mt-10 bg-white/10 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl overflow-hidden px-8 sm:px-4 md:px-6">
+        <div className="flex flex-col h-[85vh] sm:h-[80vh] md:h-[75vh] max-w-4xl mx-auto mt-10 bg-white/10 backdrop-blur-xl 
+        border border-white/40 rounded-3xl shadow-2xl overflow-hidden px-8 sm:px-4 md:px-6">
             {/* Chat messaggi */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar">
                 {messages.map((m, i) => (
@@ -52,7 +53,8 @@ function ChatAI() {
             {/* Input area */}
             <div className="p-4 flex items-center gap-3">
                 <input
-                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-3 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-3 text-white 
+                    placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && sendMessage()}
@@ -60,7 +62,10 @@ function ChatAI() {
                 />
                 <button
                     onClick={sendMessage}
-                    className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-5 py-3 rounded-full font-medium shadow-lg transition-transform transform hover:scale-105">
+                    className="font-semibold flex justify-center items-center gap-2 px-5 py-3
+                    bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40
+                  text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                     Invia
                 </button>
             </div>

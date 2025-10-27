@@ -42,3 +42,23 @@ genai.configure(
     api_key=os.getenv("GOOGLE_API_KEY")
 )
 
+# Configuro l'API di Google Generative AI
+genai.configure(
+    api_key=os.getenv("GOOGLE_API_KEY")  # Recupera la chiave API dall'ambiente (variabile d'ambiente)
+)
+
+# inizializzo un modello di tipo "gemini-2.0-flash" 
+travel_model = genai.GenerativeModel(
+    "gemini-2.0-flash",  # versione del modello Gemini (ottimizzata per risposte veloci e conversazioni)
+    system_instruction=(
+        # istruzioni globali che il modello seguirà per tutte le generazioni
+        "Sei un assistente AI esperto di viaggi e turismo. "
+        "Rispondi solo a domande relative a viaggi, vacanze, mete turistiche, esperienze di viaggio, "
+        "trasporti e stagionalità. "
+        "Ignora o rifiuta gentilmente domande fuori da questo ambito. "
+        "Se l'utente fa più domande, rispondi a ciascuna in modo diretto e sintetico. "
+        "Alla fine, fai una sola domanda di follow-up pertinente alla conversazione."
+    )
+)
+
+
