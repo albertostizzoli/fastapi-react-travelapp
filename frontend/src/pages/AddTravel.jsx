@@ -103,180 +103,181 @@ function AddTravel() {
   };
 
   return (
-  <motion.div
-    className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
-    initial={{ scale: 0 }}
-    animate={{ scale: 1 }}
-    transition={{ duration: 1.2 }}>
-    
-    {/* Glow morbido dietro al form */}
-    <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-white/10 blur-2xl" />
+    <motion.div
+      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 1.2 }}>
 
-    <form
-      onSubmit={handleSubmit}
-      className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
+      {/* Glow morbido dietro al form */}
+      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
+       blur-3xl" />
+
+      <form
+        onSubmit={handleSubmit}
+        className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
       w-full max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 gap-6">
-      
-      {/* sfere animate */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-cyan-400/10 rounded-full 
+
+        {/* sfere animate */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
         blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-pink-400/10 rounded-full 
+          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
         blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
-      </div>
-
-      {/* Titolo + nota obbligatorio */}
-      <div className="flex items-center justify-between md:col-span-2 mb-2">
-        <h2 className="text-2xl font-extrabold text-white/90"> Aggiungi un nuovo viaggio</h2>
-        <p className="text-sm italic text-white/90">* Il campo è obbligatorio</p>
-      </div>
-
-      {/* Paese */}
-      <div>
-        <label className="block font-bold text-white/90 mb-2">Paese *</label>
-        <input
-          type="text"
-          name="town"
-          value={form.town}
-          onChange={handleChange}
-          required
-          className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 placeholder-white/70 
-          p-2 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
-        />
-      </div>
-
-      {/* Città */}
-      <div>
-        <label className="block font-bold text-white/90 mb-2">Città *</label>
-        <input
-          type="text"
-          name="city"
-          value={form.city}
-          onChange={handleChange}
-          required
-          className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 placeholder-white/70 
-          p-2 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
-        />
-      </div>
-
-      {/* Anno */}
-      <div>
-        <label className="block font-bold text-white/90 mb-2">Anno *</label>
-        <input
-          type="number"
-          name="year"
-          value={form.year}
-          onChange={handleChange}
-          required
-          className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 p-2 focus:ring-2 
-          focus:ring-blue-300 focus:border-transparent transition"
-        />
-      </div>
-
-      {/* Data inizio */}
-      <div>
-        <label className="block font-bold text-white/90 mb-2">Data Inizio *</label>
-        <input
-          type="date"
-          name="start_date"
-          value={form.start_date}
-          onChange={handleChange}
-          required
-          className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 p-2 focus:ring-2 
-          focus:ring-cyan-300 focus:border-transparent transition [color-scheme:dark]"
-        />
-      </div>
-
-      {/* Data fine */}
-      <div>
-        <label className="block font-bold text-white/90 mb-2">Data Fine *</label>
-        <input
-          type="date"
-          name="end_date"
-          value={form.end_date}
-          onChange={handleChange}
-          required
-          className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 p-2 focus:ring-2 
-          focus:ring-cyan-300 focus:border-transparent transition [color-scheme:dark]"
-        />
-      </div>
-
-      {/* Divider */}
-      <div className="md:col-span-2 border-t border-white/40 my-2"></div>
-
-      {/* Voti */}
-      <div className="md:col-span-2">
-        <h3 className="font-bold mb-3 text-white/90 text-center text-xl"> Voti *</h3>
-        <div className="flex flex-wrap justify-center gap-6">
-          {["cibo", "relax", "prezzo", "attività", "paesaggio"].map((field) => (
-            <div key={field} className="flex flex-col items-center">
-              <label className="capitalize mb-1 font-bold text-white/90 text-center">{field}</label>
-              <input
-                type="number"
-                name={field}
-                min="1"
-                max="5"
-                value={form[field]}
-                onChange={handleChange}
-                className="w-20 font-semibold p-2 border border-white/40 bg-white/10 text-white/90 rounded-full text-center 
-                focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
-              />
-            </div>
-          ))}
         </div>
-      </div>
 
-      {/* Media voto */}
-      <div className="md:col-span-2 mt-4 flex justify-center">
-        <div className="flex flex-col items-center">
-          <label className="font-bold text-white/90 mb-1">Media Voti</label>
+        {/* Titolo + nota obbligatorio */}
+        <div className="flex items-center justify-between md:col-span-2 mb-2">
+          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"> Aggiungi un nuovo viaggio</h2>
+          <p className="text-sm italic text-white/90">* Il campo è obbligatorio</p>
+        </div>
+
+        {/* Paese */}
+        <div>
+          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Paese *</label>
           <input
             type="text"
-            value={calculateGeneralVote() ?? "-"}
-            readOnly
-            className="w-20 p-2 font-semibold border border-white/40 bg-white/10 text-white/90 rounded-full text-center"
+            name="town"
+            value={form.town}
+            onChange={handleChange}
+            required
+            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 placeholder-white/70 
+          p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
           />
         </div>
-      </div>
 
-      {/* Divider */}
-      <div className="md:col-span-2 border-t border-white/40 my-2"></div>
+        {/* Città */}
+        <div>
+          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Città *</label>
+          <input
+            type="text"
+            name="city"
+            value={form.city}
+            onChange={handleChange}
+            required
+            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 placeholder-white/70 
+          p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+          />
+        </div>
 
-      {/* Pulsanti */}
-      <div className="md:col-span-2 flex justify-between gap-2 mt-4">
-        <Link
-          to="/travels"
-          className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
+        {/* Anno */}
+        <div>
+          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Anno *</label>
+          <input
+            type="number"
+            name="year"
+            value={form.year}
+            onChange={handleChange}
+            required
+            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 p-2 focus:ring-2 
+          focus:ring-orange-400 focus:border-transparent transition"
+          />
+        </div>
+
+        {/* Data inizio */}
+        <div>
+          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Data Inizio *</label>
+          <input
+            type="date"
+            name="start_date"
+            value={form.start_date}
+            onChange={handleChange}
+            required
+            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 p-2 focus:ring-2 
+          focus:ring-orange-400 focus:border-transparent transition [color-scheme:dark]"
+          />
+        </div>
+
+        {/* Data fine */}
+        <div>
+          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Data Fine *</label>
+          <input
+            type="date"
+            name="end_date"
+            value={form.end_date}
+            onChange={handleChange}
+            required
+            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 p-2 focus:ring-2 
+          focus:ring-orange-400 focus:border-transparent transition [color-scheme:dark]"
+          />
+        </div>
+
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
+
+        {/* Voti */}
+        <div className="md:col-span-2">
+          <h3 className="font-bold mb-3 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] text-center text-xl"> Voti *</h3>
+          <div className="flex flex-wrap justify-center gap-6">
+            {["cibo", "relax", "prezzo", "attività", "paesaggio"].map((field) => (
+              <div key={field} className="flex flex-col items-center">
+                <label className="capitalize mb-1 font-bold text-white/90 text-center">{field}</label>
+                <input
+                  type="number"
+                  name={field}
+                  min="1"
+                  max="5"
+                  value={form[field]}
+                  onChange={handleChange}
+                  className="w-20 font-semibold p-2 border border-white/40 bg-white/10 text-white/90 rounded-full text-center 
+                focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Media voto */}
+        <div className="md:col-span-2 mt-4 flex justify-center">
+          <div className="flex flex-col items-center">
+            <label className="font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-1">Media Voti</label>
+            <input
+              type="text"
+              value={calculateGeneralVote() ?? "-"}
+              readOnly
+              className="w-20 p-2 font-semibold border border-white/40 bg-white/10 text-white/90 rounded-full text-center"
+            />
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
+
+        {/* Pulsanti */}
+        <div className="md:col-span-2 flex justify-between gap-2 mt-4">
+          <Link
+            to="/travels"
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600/70 to-rose-500/60 
           backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out
           hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-          <i className="fa-solid fa-arrow-left"></i>
-          Torna ai Viaggi
-        </Link>
-        <button
-          type="submit"
-          className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
+            <i className="fa-solid fa-arrow-left"></i>
+            Torna ai Viaggi
+          </Link>
+          <button
+            type="submit"
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600/70 to-teal-500/60 
           backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out
           hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-          <i className="fa-solid fa-plus"></i>
-          Aggiungi Viaggio
-        </button>
-      </div>
-    </form>
+            <i className="fa-solid fa-plus"></i>
+            Aggiungi Viaggio
+          </button>
+        </div>
+      </form>
 
-    {/* Modale conferma */}
-    {message && (
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 50 }}
-        transition={{ duration: 0.5 }}
-        className="fixed top-6 right-6 backdrop-blur-xl border border-white/40 text-white/90 px-6 py-3 rounded-full 
-        shadow-lg z-[9999]">
-        <p className="text-lg font-semibold">{message}</p>
-      </motion.div>
-    )}
-  </motion.div>
-);
+      {/* Modale conferma */}
+      {message && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white/40 text-white/90 px-6 py-3 rounded-full 
+        shadow-lg z-[9999] bg-gradient-to-r from-blue-500/60 to-orange-500/60">
+          <p className="text-lg font-semibold">{message}</p>
+        </motion.div>
+      )}
+    </motion.div>
+  );
 
 }
 

@@ -16,33 +16,9 @@ import ChatAI from "./pages/ChatAI"; // pagina Chat AI
 function Layout({ children }) {
   const location = useLocation();
 
-  // funzione helper per scegliere il colore o gradient di sfondo
-  const getBgClass = (path) => {
-    switch (true) {
-      case path === "/profile":
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      case path === "/travels":
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      case path === "/add":
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      case path === "/addDay":
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      case path.includes("/travels") && path.includes("/days"):
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      case path.includes("/travels") && path.includes("/edit"):
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      case path.includes("/days") && path.includes("/edit"):
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      case path.includes("/chat"):
-        return "bg-gradient-to-b from-blue-500 to-orange-500";
-      default:
-        return "bg-white";
-    }
-  };
-
   return (
     <div
-      className={`overflow-y-auto h-screen ${getBgClass(location.pathname)} ${location.pathname === "/" ? "scrollbar-home" : "scrollbar"
+      className={`overflow-y-auto h-screen bg-gradient-to-b from-blue-500 to-orange-500 ${location.pathname === "/" ? "scrollbar-home" : "scrollbar"
         }`}
     >
       {/* Sidebar sempre visibile */}
