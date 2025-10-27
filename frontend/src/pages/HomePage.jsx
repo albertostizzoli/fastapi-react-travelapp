@@ -71,7 +71,7 @@ function HomePage() {
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>
                     <Typewriter text="Conserva i tuoi viaggi" />
-                    <motion.p className="text-gray-700 mb-4 text-justify" variants={firstBlock} initial="initial" whileInView="animate">
+                    <motion.p className="text-gray-900 mb-4 text-justify" variants={firstBlock} initial="initial" whileInView="animate">
                         Un viaggio non è solo una serie di <strong>tappe</strong>, ma un insieme di emozioni e
                         momenti unici che meritano di essere custoditi. Con la nostra app,
                         puoi creare un vero e proprio <strong>diario digitale</strong> in cui ogni tappa
@@ -98,7 +98,7 @@ function HomePage() {
                 />
                 <div>
                     <Typewriter text="Aggiungi le tue tappe" />
-                    <motion.p className="text-gray-700 mb-4 text-justify" variants={secondBlock} initial="initial" whileInView="animate">
+                    <motion.p className="text-gray-900 mb-4 text-justify" variants={secondBlock} initial="initial" whileInView="animate">
                         Ogni viaggio può essere suddiviso in tappe, così da ricordare in modo
                         <strong> dettagliato</strong> ogni singolo momento. Puoi <strong>annotare</strong> i luoghi visitati,
                         <strong> inserire</strong> pensieri personali, <strong>arricchire</strong> le tue pagine con foto e
@@ -112,7 +112,7 @@ function HomePage() {
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>
                     <Typewriter text="Un diario solo per te" />
-                    <motion.p className="text-gray-700 mb-4 text-justify" variants={firstBlock} initial="initial" whileInView="animate">
+                    <motion.p className="text-gray-900 mb-4 text-justify" variants={firstBlock} initial="initial" whileInView="animate">
                         Questo non è un semplice elenco di luoghi, ma uno <strong>spazio</strong> intimo in cui
                         custodire <strong>emozioni</strong> e <strong>pensieri</strong> personali. Ogni tappa racconta una
                         parte di te: i <strong>sorrisi</strong>, le <strong>sfide</strong>, le <strong>scoperte</strong>.
@@ -138,7 +138,7 @@ function HomePage() {
                 />
                 <div>
                     <Typewriter text="Il viaggio scelto per te" />
-                    <motion.p className="text-gray-700 mb-4 text-justify" variants={secondBlock} initial="initial" whileInView="animate">
+                    <motion.p className="text-gray-900 mb-4 text-justify" variants={secondBlock} initial="initial" whileInView="animate">
                         Grazie all’<strong>intelligenza artificiale</strong>, l’app può suggerirti la prossima
                         <strong> destinazione</strong> ideale in base ai tuoi viaggi passati, preferenze e interessi.
                         Immagina di scoprire luoghi nuovi e sorprendenti, personalizzati

@@ -160,7 +160,7 @@ function ProfilePage() {
     }
 
 return (
-  <div className="flex flex-col min-h-screen bg-transparent text-white sm:p-8 p-4 relative overflow-hidden">
+  <div className="flex flex-col min-h-screen text-white sm:p-8 p-4 relative overflow-hidden">
     {/* Effetto glow dinamico di sfondo */}
     <div className="absolute inset-0 -z-10 overflow-hidden">
       <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-cyan-400/20 to-blue-400/10 
@@ -169,13 +169,13 @@ return (
       rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
     </div>
 
-    <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
+    <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 ">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
         
         {/*  PROFILO UTENTE */}
         <motion.section
-          className="md:col-span-1 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl 
-         p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center 
+          className="md:col-span-1 bg-gradient-to-br from-white/10 via-blue-100/10 to-transparent backdrop-blur-2xl 
+         p-6 rounded-3xl shadow-2xl border border-white/30 flex flex-col items-center text-center 
          hover:bg-white/20 transition-all duration-500"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -337,9 +337,9 @@ return (
                 {recentTravels.slice(0, 1).map((travel, idx) => (
                   <li
                     key={idx}
-                    className="p-4 bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md 
+                    className="p-4 bg-gradient-to-r from-blue-500/40 to-cyan-400/40 backdrop-blur-md 
                     rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
-                    transition-all duration-300 border border-white/40"
+                    transition-all duration-300 border border-white/40 hover:from-blue-500/60"
                   >
                     <div className="flex justify-between items-center mb-2">
                       <h4 className="text-lg font-semibold text-white">
@@ -385,7 +385,7 @@ return (
               {user.interests.map((interest, idx) => (
                 <span
                   key={idx}
-                  className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 
+                  className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-400/60 via-rose-400/40 to-cyan-400/30
                  backdrop-blur-md border border-white/40 text-white/90 rounded-full 
                  text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-300"
                 >

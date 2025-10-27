@@ -61,8 +61,7 @@ function Sidebar() {
     <div className="sm:hidden">
       {/* Navbar mobile */}
       <nav
-        className={`p-4 flex justify-between items-center ${isHome ? "bg-blue-500 text-white" : "bg-transparent text-white"
-          }`}>
+        className="p-4 flex justify-between items-center bg-blue-500 text-white">
         <button
           onClick={toggleSidebar}
           aria-label="Apri il menu"
