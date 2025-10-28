@@ -60,7 +60,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                           className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 rounded-full 
                             cursor-pointer text-sm transition-all duration-100 ease-in-out border border-white/40 backdrop-blur-md 
                             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${selected
-                              ? "bg-gradient-to-r from-blue-600/70 to-cyan-500/60 text-white/90 shadow-lg"
+                              ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white/90 shadow-lg"
                               : "bg-gradient-to-r from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
                             }`}
                         >
@@ -78,7 +78,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
               <button
                 onClick={onClose}
                 className="font-semibold flex justify-center items-center gap-2 px-6 py-2
-                  bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+                  bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
@@ -87,7 +87,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
               <button
                 onClick={onClose}
                 className="font-semibold flex justify-center items-center gap-2 px-6 py-2
-                  bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
+                  bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >

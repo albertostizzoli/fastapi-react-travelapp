@@ -147,7 +147,7 @@ function LoginRegisterPage() {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={`absolute top-1 bottom-1 w-1/2 rounded-full shadow-md ${isLogin
               ? "bg-gradient-to-r from-orange-600/70 to-rose-500/60 left-1"
-              : "bg-gradient-to-r from-rose-500/60 to-orange-600/70 right-1"
+              : "bg-gradient-to-r from-blue-600/70 to-cyan-500/60 right-1"
               }`}
           />
 
@@ -184,9 +184,9 @@ function LoginRegisterPage() {
               shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
               md:mx-auto flex flex-col">
               <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+                <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
                    blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-                <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+                <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
                   blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
               </div>
 
@@ -265,7 +265,7 @@ function LoginRegisterPage() {
                   <input
                     type="text"
                     className="w-full font-semibold border  bg-white/20 text-white 
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -277,7 +277,7 @@ function LoginRegisterPage() {
                   <input
                     type="text"
                     className="w-full font-semibold border bg-white/20 text-white  
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
                     required
@@ -289,7 +289,7 @@ function LoginRegisterPage() {
                   <input
                     type="email"
                     className="w-full font-semibold border bg-white/20 text-white
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -304,7 +304,7 @@ function LoginRegisterPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full font-semibold border  bg-white/20 text-white 
-                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
                       required
                     />
                     <button
@@ -380,7 +380,7 @@ function LoginRegisterPage() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
             className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white 
-            px-6 py-3 rounded-full shadow-xl z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70">
+            px-6 py-3 rounded-full shadow-xl z-[9999] bg-gradient-to-r from-blue-400/70 to-orange-400/70">
             <p className="text-lg font-semibold">{message}</p>
           </motion.div>
         )}

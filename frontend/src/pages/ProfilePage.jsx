@@ -163,9 +163,9 @@ function ProfilePage() {
     <div className="flex flex-col min-h-screen text-white sm:p-8 p-4 relative overflow-hidden">
       {/* Effetto glow dinamico di sfondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-400/20 to-cyan-400/10 
+        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 
       rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-400/20 to-amber-400/10 
+        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 
       rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
       </div>
 

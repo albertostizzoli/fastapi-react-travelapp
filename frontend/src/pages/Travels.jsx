@@ -89,9 +89,9 @@ function Travels() {
     <div className="relative min-h-screen p-8 overflow-visible text-gray-50">
       {/* Glow dinamico di sfondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-400/20 to-cyan-300/10 
+        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 
         rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-400/20 to-amber-300/10 
+        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 
         rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
       </div>
 
@@ -115,9 +115,9 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              className="group relative bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
-               border border-white/40 rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 
-               hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+              className="group relative bg-blue-500 backdrop-blur-2xl border border-white/40 rounded-3xl 
+              shadow-2xl overflow-hidden transition-all duration-500 hover:scale-105 
+              hover:shadow-[0_0_30px_rgba(255,255,255,0.35)]"
               variants={{
                 hidden: { scale: 0.95, opacity: 0 },
                 visible: { scale: 1, opacity: 1 },
@@ -141,15 +141,12 @@ function Travels() {
                 <h2 className="text-2xl font-extrabold text-gray-50 drop-shadow-sm">
                   {v.town} - {v.city}
                 </h2>
-                <p className="text-gray-50/70 text-xl font-semibold">
+                <p className="text-gray-90 text-xl font-semibold">
                   {v.start_date} → {v.end_date}
-                </p>
-                <p className="text-gray-50 font-medium text-xl">
-                  Anno: <span className="text-gray-50">{v.year}</span>
                 </p>
 
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-gray-50 font-medium text-2sm"> Media voto:</span>
+                  <span className="text-gray-50 font-medium text-xl"> Media voto:</span>
                   <StarRating rating={v.general_vote ?? 0} />
                 </div>
 
@@ -170,7 +167,7 @@ function Travels() {
                   <Link
                     to={`/travels/${v.id}/days`}
                     className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                     bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
                      text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
@@ -180,7 +177,7 @@ function Travels() {
                   <Link
                     to={`/travels/${v.id}/edit`}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
+                     bg-gradient-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
                      text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
@@ -190,7 +187,7 @@ function Travels() {
                   <button
                     onClick={() => setDeleteId(v.id)}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+                     bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
                      text-gray-50/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >

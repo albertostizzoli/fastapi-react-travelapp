@@ -61,7 +61,7 @@ function Sidebar() {
     <div className="sm:hidden">
       {/* Navbar mobile */}
       <nav
-        className={`p-4 flex justify-between items-center ${isHome ? "bg-blue-500 text-white" : "bg-transparent text-white"
+        className={`p-4 flex justify-between items-center ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"
           }`}>
         <button
           onClick={toggleSidebar}
@@ -92,7 +92,7 @@ function Sidebar() {
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 140, damping: 30 }}
               className={`fixed top-0 left-0 w-full h-full z-[9999] flex flex-col justify-between p-6
-                ${isHome ? "bg-gradient-to-br from-blue-500 to-orange-500" : "backdrop-blur-xl bg-gradient-to-br from-blue-500 to-orange-500 text-white"}`}>
+                ${isHome ? "bg-gradient-to-br from-blue-400 to-orange-400" : "backdrop-blur-xl bg-gradient-to-br from-blue-400 to-orange-400 text-white"}`}>
               <div className="flex flex-col gap-6">
                 {/* Chiudi */}
                 <button

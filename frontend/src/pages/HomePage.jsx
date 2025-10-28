@@ -66,7 +66,7 @@ function HomePage() {
     };
 
     return (
-        <div className="bg-gradient-to-b from-blue-500 to-orange-500 font-sans overflow-y-auto overflow-x-hidden scrollbar">
+        <div className="bg-gradient-to-b from-blue-400 to-orange-400 font-sans overflow-y-auto overflow-x-hidden scrollbar">
             {/* Section 1 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>

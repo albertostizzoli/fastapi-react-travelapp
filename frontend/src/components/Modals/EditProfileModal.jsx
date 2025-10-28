@@ -144,7 +144,7 @@ function EditProfileModal({
                   {editForm.interests.map((interest, i) => (
                     <span
                       key={i}
-                      className="bg-gradient-to-r from-blue-600/70 to-cyan-500/60 px-3 py-1 rounded-full text-sm text-white 
+                      className="bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
                       flex items-center gap-2 shadow-md"
                     >
                       {interest}
@@ -180,7 +180,7 @@ function EditProfileModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border 
+                className="font-semibold px-6 py-2 bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border 
                 border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
@@ -188,7 +188,7 @@ function EditProfileModal({
               </button>
               <button
                 type="submit"
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border 
+                className="font-semibold px-6 py-2 bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border 
               border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
