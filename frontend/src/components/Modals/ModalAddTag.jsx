@@ -8,26 +8,35 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+                    className=" fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-3xl"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}>
+                    {/* Glow morbido dietro al modale */}
+                    <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
+                    blur-3xl" />
                     <motion.div
                         className="bg-white/30 backdrop-blur-xl rounded-3xl shadow-2xl p-6 w-[90%] max-w-4xl overflow-y-auto 
-                        max-h-[75vh] border border-white/40 flex flex-col"
+                        max-h-[75vh] border border-white flex flex-col"
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.8, opacity: 0 }}
                         transition={{ duration: 0.4 }}>
+                        <div className="absolute inset-0 -z-10 overflow-hidden">
+                            <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+                                blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+                            <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+                                blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+                        </div>
                         <h2 className="text-white text-2xl font-bold mb-4 text-center drop-shadow-md">
-                            🏷️ Seleziona i tuoi Tag per la Tappa del tuo Viaggio
+                            Seleziona i tuoi Tag per la Tappa del tuo Viaggio
                         </h2>
 
                         {/* Lista categorie */}
                         <div className="space-y-5 flex-1 overflow-y-auto pr-2 scrollbar">
                             {travellers.map((cat) => (
                                 <div key={cat.category}>
-                                    <h3 className="text-lg font-semibold text-white/90 mb-2 drop-shadow-md">
+                                    <h3 className="text-lg font-semibold text-white mb-2 drop-shadow-md">
                                         {cat.category}
                                     </h3>
                                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
@@ -36,8 +45,8 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 border 
                                                         rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${form.tags.includes(experience)
-                                                        ? "bg-gradient-to-r from-blue-500/60 to-cyan-400/60 backdrop-blur-md border border-white/40 text-white/90 shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                                                        : "bg-gradient-to-r from-white/10 to-white/30 backdrop-blur-md border border-white/40 text-white/90 shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        ? "bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        : "bg-gradient-to-r from-white/10 to-white/30 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
                                                 <input
                                                     type="checkbox"
@@ -70,8 +79,8 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border 
-                                border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border 
+                                border-white text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                 <i className="fa-solid fa-xmark mr-2"></i>
                                 Chiudi
@@ -79,8 +88,8 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border 
-                                border-white/40 text-white/90 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                className="font-semibold px-4 py-2 bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border 
+                                border-white text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                 <i className="fa-solid fa-check mr-2"></i>
                                 Conferma

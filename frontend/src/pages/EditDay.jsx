@@ -283,7 +283,7 @@ function EditDay() {
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)}
-                      className="fixed inset-0 z-[9999] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
+                      className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
                       <div
                         onClick={(e) => e.stopPropagation()}
                         className="relative w-full max-w-4xl mx-auto">
