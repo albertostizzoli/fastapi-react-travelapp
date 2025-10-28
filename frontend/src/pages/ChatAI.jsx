@@ -168,7 +168,7 @@ function ChatAI() {
                     disabled={isLoading}
                     className={`font-semibold flex justify-center items-center gap-2 px-5 py-3
                     bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
-                  text-white/90 rounded-full shadow-md transition-all duration-300 hover:scale-105
+                  text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer `}>
                     Invia
                 </button>

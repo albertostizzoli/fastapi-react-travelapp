@@ -195,7 +195,7 @@ function ProfilePage() {
               </div>
             )}
 
-            <h3 className="text-2xl font-bold text-white/90 drop-shadow mb-3">
+            <h3 className="text-2xl font-bold text-white drop-shadow mb-3">
               {user?.name} {user?.surname}
             </h3>
 
@@ -229,7 +229,7 @@ function ProfilePage() {
                 }}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
              bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
-             text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-pen"></i> Modifica Profilo
@@ -239,7 +239,7 @@ function ProfilePage() {
                 onClick={() => setDeleteProfileId(user?.id)}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
              bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
-             text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-trash"></i> Cancella Profilo
@@ -249,7 +249,7 @@ function ProfilePage() {
                 onClick={handleLogout}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
              bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
-             text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-right-from-bracket"></i> Esci
@@ -281,7 +281,7 @@ function ProfilePage() {
                 },
               }}
             >
-              <h3 className="text-2xl font-bold text-white/90 text-center mb-4 drop-shadow">
+              <h3 className="text-2xl font-bold text-white text-center mb-4 drop-shadow">
                 Gestisci i tuoi viaggi
               </h3>
               <div className="flex flex-col w-full gap-2 justify-center">
@@ -289,7 +289,7 @@ function ProfilePage() {
                   to="/travels"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
                 bg-gradient-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
-                 text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                 >
                   <i className="fa-solid fa-globe"></i> I miei viaggi
@@ -298,7 +298,7 @@ function ProfilePage() {
                   to="/add"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
                 bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
-                 text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                 >
                   <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
@@ -307,7 +307,7 @@ function ProfilePage() {
                   to="/chat"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
                 bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
-                 text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
                 >
                   <i className="fa-solid fa-compass"></i> Prossimo Viaggio
@@ -328,7 +328,7 @@ function ProfilePage() {
                 },
               }}
             >
-              <h3 className="text-2xl font-bold text-white/90 text-center mb-4 drop-shadow">
+              <h3 className="text-2xl font-bold text-white text-center mb-4 drop-shadow">
                 Ultimo Viaggio
               </h3>
 
@@ -346,7 +346,7 @@ function ProfilePage() {
                           <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
                           {travel.town}, {travel.city}
                         </h4>
-                        <span className="text-xs bg-white/20 px-2 py-1 rounded-3xl text-white/90">
+                        <span className="text-xs bg-white/20 px-2 py-1 rounded-3xl text-white">
                           {travel.start_date} → {travel.end_date}
                         </span>
                       </div>
@@ -377,7 +377,7 @@ function ProfilePage() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h3 className="text-2xl font-bold text-white/90 text-center mb-4 drop-shadow">
+            <h3 className="text-2xl font-bold text-white text-center mb-4 drop-shadow">
               I tuoi interessi
             </h3>
             {user?.interests?.length ? (
@@ -386,7 +386,7 @@ function ProfilePage() {
                   <span
                     key={idx}
                     className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-600/70 to-cyan-500/60
-                 backdrop-blur-md border border-white/40 text-white/90 rounded-full 
+                 backdrop-blur-md border border-white/40 text-white rounded-full 
                  text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100"
                   >
                     {interest}
@@ -425,7 +425,7 @@ function ProfilePage() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white/90 
+          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white 
         px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
         >
           <p className="text-lg font-semibold">{message}</p>

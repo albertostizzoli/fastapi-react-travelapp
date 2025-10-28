@@ -12,15 +12,15 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
         >
           {/* Glow di sfondo animato */}
           <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute w-[25rem] h-[25rem] bg-gradient-to-br from-red-500/30 to-rose-400/10 rounded-full 
+            <div className="absolute w-[25rem] h-[25rem] bg-gradient-to-br from-blue-400/20 to-orange-400/10 rounded-full 
             blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-            <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
+            <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
             blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
           </div>
 
           <motion.div
             className="relative w-full max-w-md rounded-3xl border border-white/40 bg-gradient-to-br 
-            from-white/10 via-white/5 to-transparent backdrop-blur-2xl shadow-2xl text-white 
+            from-white/20 via-white/10 to-transparent backdrop-blur-2xl shadow-2xl text-white 
             p-8 text-center overflow-hidden"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -28,7 +28,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
             {/* Titolo */}
-            <h2 className="text-2xl font-extrabold mb-6 text-white/90 drop-shadow-lg">
+            <h2 className="text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
               Vuoi davvero cancellare il tuo profilo?
             </h2>
 
@@ -42,7 +42,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
               <button
                 onClick={onConfirm}
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r 
-                from-green-500/60 to-teal-400/60 backdrop-blur-md border border-white/40 text-white/90 
+                from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >
@@ -52,7 +52,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
               <button
                 onClick={onCancel}
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r 
-                from-red-500/60 to-rose-400/60 backdrop-blur-md border border-white/40 text-white/90 
+                from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
               >

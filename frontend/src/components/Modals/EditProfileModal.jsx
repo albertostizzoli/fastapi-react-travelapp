@@ -33,7 +33,7 @@ function EditProfileModal({
           <motion.form
             onSubmit={onSubmit}
             encType="multipart/form-data"
-            className="relative border border-white/40 bg-gradient-to-br from-white/10 via-white/5 to-transparent 
+            className="relative border border-white/40 bg-gradient-to-br from-white/20 via-white/10 to-transparent 
             backdrop-blur-2xl p-8 rounded-3xl shadow-2xl w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -42,13 +42,13 @@ function EditProfileModal({
           >
             {/* Glow animato dietro */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
-              <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
+              <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-400/20 to-orange-400/10 rounded-full 
               blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-              <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/30 to-pink-400/10 rounded-full 
+              <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
               blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
             </div>
 
-            <h2 className="text-3xl font-extrabold text-white/90 mb-4 text-center md:col-span-2 drop-shadow-lg">
+            <h2 className="text-3xl font-extrabold text-white mb-4 text-center md:col-span-2 drop-shadow-lg">
               Modifica Profilo
             </h2>
 
@@ -61,7 +61,7 @@ function EditProfileModal({
                 onChange={handleChange}
                 placeholder="Nome"
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
+                focus:ring-2 focus:ring-orange-300 focus:border-transparent transition text-white"
                 required
               />
               <input
@@ -71,7 +71,7 @@ function EditProfileModal({
                 onChange={handleChange}
                 placeholder="Cognome"
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
+                focus:ring-2 focus:ring-orange-300 focus:border-transparent transition text-white"
                 required
               />
               <input
@@ -81,7 +81,7 @@ function EditProfileModal({
                 onChange={handleChange}
                 placeholder="Email"
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
+                focus:ring-2 focus:ring-orange-300 focus:border-transparent transition text-white"
                 required
               />
 
@@ -94,12 +94,12 @@ function EditProfileModal({
                   onChange={handleChange}
                   placeholder="Nuova Password"
                   className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                  focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white/90"
+                  focus:ring-2 focus:ring-orange-300 focus:border-transparent transition text-white"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 text-white/70 hover:text-white cursor-pointer"
+                  className="absolute top-1/2 right-4 -translate-y-1/2 text-white hover:text-white cursor-pointer"
                 >
                   {showPassword ? (
                     <i className="fa-solid fa-eye-slash"></i>
@@ -125,7 +125,7 @@ function EditProfileModal({
                   e.target.value = "";
                 }}
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 
-                border border-white/40 text-white/90 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
+                border border-white/40 text-white focus:ring-2 focus:ring-orange-300 focus:border-transparent transition 
                 cursor-pointer scrollbar"
               >
                 <option value="" className="bg-black text-white">
@@ -144,7 +144,7 @@ function EditProfileModal({
                   {editForm.interests.map((interest, i) => (
                     <span
                       key={i}
-                      className="bg-gradient-to-r from-blue-600/70 to-cyan-500/60 px-3 py-1 rounded-full text-sm text-white/90 
+                      className="bg-gradient-to-r from-blue-600/70 to-cyan-500/60 px-3 py-1 rounded-full text-sm text-white 
                       flex items-center gap-2 shadow-md"
                     >
                       {interest}
@@ -171,7 +171,7 @@ function EditProfileModal({
                 name="photo"
                 accept="image/*"
                 onChange={handleChange}
-                className="w-full text-sm text-white/80 cursor-pointer hover:text-white hover:underline transition"
+                className="w-full text-sm text-white cursor-pointer hover:text-white hover:underline transition"
               />
             </div>
 
@@ -180,16 +180,16 @@ function EditProfileModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md border 
-                border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+                className="font-semibold px-6 py-2 bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border 
+                border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
                 <i className="fa-solid fa-xmark mr-2"></i> Annulla
               </button>
               <button
                 type="submit"
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md border 
-              border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+                className="font-semibold px-6 py-2 bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border 
+              border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
                 <i className="fa-solid fa-check mr-2"></i> Salva

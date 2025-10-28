@@ -161,38 +161,39 @@ function AddDay() {
       animate={{ scale: 1 }}
       transition={{ duration: 1 }}>
       {/* Glow morbido dietro al form */}
-      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-white/10 blur-2xl" />
+      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
+       blur-3xl" />
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 w-full 
         max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-cyan-400/10 rounded-full 
+          <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
           blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/20 to-pink-400/10 rounded-full 
+          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
           blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
         </div>
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-extrabold text-white/90"> Aggiungi una tappa al viaggio</h2>
-          <p className="text-white/90 text-sm italic">* Il campo è obbligatorio</p>
+          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"> Aggiungi una tappa al viaggio</h2>
+          <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
         </div>
 
         {/* Griglia a due colonne */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Selezione viaggio */}
           <div>
-            <label className="block font-bold text-white/90 mb-2">Viaggio *</label>
+            <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Viaggio *</label>
             <select
               value={selectedTravel}
               onChange={(e) => setSelectedTravel(e.target.value)}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
-              placeholder-white/70 focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white
+              placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
               required
             >
-              <option value="" className="bg-black text-white/90">-- Seleziona --</option>
+              <option value="" className="bg-black text-white">-- Seleziona --</option>
               {travels.map((t) => (
-                <option key={t.id} value={t.id} className="bg-black text-white/90">
+                <option key={t.id} value={t.id} className="bg-black text-white">
                   {t.city} ({t.year})
                 </option>
               ))}
@@ -201,21 +202,21 @@ function AddDay() {
 
           {/* Data */}
           <div>
-            <label className="block font-bold text-white/90 mb-2">Data *</label>
+            <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Data *</label>
             <input
               type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
               required
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
-              placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition [color-scheme:dark]"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white
+              placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition [color-scheme:dark]"
             />
           </div>
 
           {/* Titolo */}
           <div className="md:col-span-2 relative">
-            <label className="block font-bold text-white/90 mb-2">Titolo *</label>
+            <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Titolo *</label>
             <input
               name="title"
               value={form.title}
@@ -225,11 +226,11 @@ function AddDay() {
                 setQuery(value);
               }}
               required
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white/90 
-              placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
+              placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
             />
             {suggestions.length > 0 && (
-              <ul className="absolute bg-black/80 backdrop-blur-3xl border border-white/40 text-white/90 w-full 
+              <ul className="absolute bg-black/80 backdrop-blur-3xl border border-white/40 text-white w-full 
               mt-1 shadow-lg rounded-xl z-10">
                 {suggestions.map((s, i) => (
                   <li
@@ -253,14 +254,14 @@ function AddDay() {
 
         {/* Descrizione */}
         <div className="md:col-span-2">
-          <label className="block font-bold text-white/90 mb-2">Riassunto della giornata *</label>
+          <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Riassunto della giornata *</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
             required
-            className="w-full p-2 font-semibold border border-white/40 rounded-3xl bg-white/10 text-white/90 
-            placeholder-white/70 focus:ring-2 focus:ring-blue-300 focus:border-transparent transition scrollbar"
+            className="w-full p-2 font-semibold border border-white/40 rounded-3xl bg-white/10 text-white
+            placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition scrollbar"
             rows="6"
           />
         </div>
@@ -273,16 +274,16 @@ function AddDay() {
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-500/60 to-rose-400/60 backdrop-blur-md 
-            border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-600/70 to-rose-500/70 backdrop-blur-md 
+            border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
             hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
           </button>
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-500/60 to-cyan-400/50 backdrop-blur-md 
-            border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 ease-in-out 
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md 
+            border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
             hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-camera"></i> Carica Foto
           </button>
@@ -294,8 +295,8 @@ function AddDay() {
             {form.tags.map((tag, i) => (
               <span
                 key={i}
-                className="flex items-center justify-between bg-gradient-to-r from-blue-500/60 to-cyan-400/60 
-                backdrop-blur-md border border-white/40 text-white/90 px-4 py-2 rounded-full text-base font-semibold 
+                className="flex items-center justify-between bg-gradient-to-r from-blue-600/70 to-cyan-500/60 
+                backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
                 shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
                 <button
@@ -306,7 +307,7 @@ function AddDay() {
                       tags: form.tags.filter((c) => c !== tag),
                     })
                   }
-                  className="ml-3 text-white/90 hover:text-red-400 transition cursor-pointer">
+                  className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
                   <i className="fa-solid fa-xmark text-sm"></i>
                 </button>
               </span>
@@ -342,7 +343,7 @@ function AddDay() {
                   <button
                     type="button"
                     onClick={() => removePhoto(index)}
-                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white/90 rounded-full p-1 opacity-0 
+                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 
                     group-hover:opacity-100 transition">
                     <i className="fa-solid fa-xmark"></i>
                   </button>
@@ -356,7 +357,7 @@ function AddDay() {
                         className="relative w-full max-w-4xl mx-auto">
                         <button
                           onClick={() => setOpenImage(null)}
-                          className="absolute -top-3 -right-3 bg-red-500 text-white/90 rounded-full p-2 shadow-lg 
+                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg 
                           hover:bg-red-400 transition cursor-pointer">
                           <i className="fa-solid fa-xmark text-lg"></i>
                         </button>
@@ -390,16 +391,16 @@ function AddDay() {
         <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={`/travels/${selectedTravel}/days`}
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 
-            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600/70 to-rose-500/60 
+            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-arrow-left"></i>
             Torna alle Tappe
           </Link>
           <button
             type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 
-            backdrop-blur-md border border-white/40 text-white/90 rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600/70 to-teal-500/60 
+            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-plus"></i>
             Aggiungi Tappa
@@ -414,7 +415,8 @@ function AddDay() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white/90 px-6 py-3 rounded-full shadow-lg z-[9999]">
+          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white px-6 py-3 
+          rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/60 to-orange-500/60">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

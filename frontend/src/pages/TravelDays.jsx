@@ -88,7 +88,7 @@ function TravelDays() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
         {/* Titolo */}
         <motion.h1
-          className="text-4xl font-extrabold text-white/90 flex-1 min-w-[200px] p-3 rounded-3xl
+          className="text-4xl font-extrabold text-white flex-1 min-w-[200px] p-3 rounded-3xl
            bg-white/5 backdrop-blur-md border border-white/40 shadow-lg"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -108,7 +108,7 @@ function TravelDays() {
             state={{ travelId: id }}
             className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
              bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
-             text-white/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
           >
             <i className="fa-solid fa-plus"></i> Aggiungi Tappa
@@ -126,10 +126,10 @@ function TravelDays() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h2 className="text-3xl font-bold text-white/90 mb-2 drop-shadow-md">
+            <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-md">
               {travel.town} - {travel.city}
             </h2>
-            <p className="text-2xl font-semibold text-white/90 mb-2">
+            <p className="text-2xl font-semibold text-white mb-2">
               {travel.start_date} → {travel.end_date}
             </p>
             {travel.title && (
@@ -168,7 +168,7 @@ function TravelDays() {
                   >
                     <div className="mb-4">
                       <p className="text-white font-bold text-xl">{d.title}</p>
-                      <p className="text-white/90 text-2sm font-semibold">{d.date}</p>
+                      <p className="text-white text-2sm font-semibold">{d.date}</p>
                     </div>
 
                     {/* Foto */}
@@ -192,7 +192,7 @@ function TravelDays() {
                         onClick={() => setSelectedDay(d)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
                          bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
-                         text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                         text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
                         <i className="fa-solid fa-book-open"></i> Leggi Tutto
@@ -202,7 +202,7 @@ function TravelDays() {
                         to={`/days/${d.id}/edit`}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
                         bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
-                         text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                         text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
                         <i className="fa-solid fa-pen"></i> Modifica Tappa
@@ -212,7 +212,7 @@ function TravelDays() {
                         onClick={() => setDeleteDayId(d.id)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
                          bg-gradient-to-r from-red-600/70 to-rose-500/70 backdrop-blur-md border border-white/40
-                         text-white/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                         text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
                         <i className="fa-solid fa-trash"></i> Cancella Tappa
@@ -249,7 +249,7 @@ function TravelDays() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white/90 px-6 py-3
+          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white px-6 py-3
                    rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
         >
           <p className="text-lg font-semibold">{message}</p>
