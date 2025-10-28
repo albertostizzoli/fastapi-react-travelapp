@@ -156,7 +156,7 @@ function TravelDays() {
                     key={d.id}
                     className="group relative backdrop-blur-2xl bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent
                      border border-white/40 p-5 rounded-3xl shadow-xl flex flex-col justify-between w-full sm:w-64
-                     transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]"
+                     transition-all duration-500 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]"
                     variants={{
                       hidden: { scale: 0, opacity: 0 },
                       visible: {

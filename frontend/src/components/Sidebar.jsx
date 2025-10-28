@@ -82,7 +82,7 @@ function Sidebar() {
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               onClick={toggleSidebar}
-              className="fixed inset-0 bg-blue-400 z-[9998]"
+              className="fixed inset-0  z-[9998]"
             />
 
             {/* Sidebar full-screen */}
@@ -92,7 +92,7 @@ function Sidebar() {
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 140, damping: 30 }}
               className={`fixed top-0 left-0 w-full h-full z-[9999] flex flex-col justify-between p-6
-                ${isHome ? "bg-blue-400" : "backdrop-blur-xl bg-white/10 text-white"}`}>
+                ${isHome ? "bg-gradient-to-br from-blue-500 to-orange-500" : "backdrop-blur-xl bg-gradient-to-br from-blue-500 to-orange-500 text-white"}`}>
               <div className="flex flex-col gap-6">
                 {/* Chiudi */}
                 <button

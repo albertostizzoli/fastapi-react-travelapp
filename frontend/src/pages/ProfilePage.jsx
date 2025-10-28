@@ -175,8 +175,8 @@ function ProfilePage() {
           {/*  PROFILO UTENTE */}
           <motion.section
             className="md:col-span-1 bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
-         p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center 
-         hover:bg-white/20 transition-all duration-500"
+            p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center transition-all duration-500 
+            hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -228,9 +228,9 @@ function ProfilePage() {
                   setShowEditModal(true);
                 }}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-             bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
-             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+                bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
+              text-white rounded-full shadow-md transition-all duration-500 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-pen"></i> Modifica Profilo
               </button>
@@ -238,9 +238,9 @@ function ProfilePage() {
               <button
                 onClick={() => setDeleteProfileId(user?.id)}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-             bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
-             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+                bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+              text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-trash"></i> Cancella Profilo
               </button>
@@ -248,9 +248,9 @@ function ProfilePage() {
               <button
                 onClick={handleLogout}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-             bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
-             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+                bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+              text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-right-from-bracket"></i> Esci
               </button>
@@ -270,8 +270,8 @@ function ProfilePage() {
             {/* Gestione viaggi */}
             <motion.div
               className="bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
-            p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col gap-4 
-             hover:bg-white/20 transition-all duration-100"
+              p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col gap-4 transition-all duration-500 
+              hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
               variants={{
                 hidden: { scale: 0.9, opacity: 0 },
                 visible: {
@@ -288,27 +288,27 @@ function ProfilePage() {
                 <Link
                   to="/travels"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                bg-gradient-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+                  bg-gradient-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                 >
                   <i className="fa-solid fa-globe"></i> I miei viaggi
                 </Link>
                 <Link
                   to="/add"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
+                  bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                 >
                   <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
                 </Link>
                 <Link
                   to="/chat"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                  bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
                 >
                   <i className="fa-solid fa-compass"></i> Prossimo Viaggio
                 </Link>
@@ -318,7 +318,8 @@ function ProfilePage() {
             {/* Ultimo viaggio */}
             <motion.div
               className="bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
-            p-6 rounded-3xl shadow-2xl border border-white/40 hover:bg-white/20 transition-all duration-100"
+              p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
+              hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
               variants={{
                 hidden: { scale: 0.9, opacity: 0 },
                 visible: {
@@ -338,8 +339,8 @@ function ProfilePage() {
                     <li
                       key={idx}
                       className="p-4 bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md 
-                    rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
-                    transition-all duration-100 border border-white/40"
+                      rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
+                      transition-all duration-100 border border-white/40"
                     >
                       <div className="flex justify-between items-center mb-2">
                         <h4 className="text-lg font-semibold text-white">
@@ -372,7 +373,8 @@ function ProfilePage() {
           {/*  INTERESSI UTENTE */}
           <motion.div
             className="bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
-         p-6 rounded-3xl shadow-2xl border border-white/40 hover:bg-white/20 transition-all duration-100"
+            p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
+            hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -386,8 +388,8 @@ function ProfilePage() {
                   <span
                     key={idx}
                     className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-600/70 to-cyan-500/60
-                 backdrop-blur-md border border-white/40 text-white rounded-full 
-                 text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100"
+                    backdrop-blur-md border border-white/40 text-white rounded-full 
+                    text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100"
                   >
                     {interest}
                   </span>
@@ -426,7 +428,7 @@ function ProfilePage() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white 
-        px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
+          px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>

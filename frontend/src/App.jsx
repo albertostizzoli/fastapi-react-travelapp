@@ -18,8 +18,7 @@ function Layout({ children }) {
 
   return (
     <div
-      className={`overflow-y-auto h-screen bg-gradient-to-b from-blue-500 to-orange-500 ${location.pathname === "/" ? "scrollbar-home" : "scrollbar"
-        }`}
+      className={`overflow-y-auto h-screen bg-gradient-to-b from-blue-500 to-orange-500 scrollbar`}
     >
       {/* Sidebar sempre visibile */}
       {location.pathname !== "/loginregister" && <Sidebar />}
@@ -38,6 +37,7 @@ function Layout({ children }) {
   );
 }
 
+{ /* Rotte delle pagine */ }
 function App() {
   return (
     <BrowserRouter>

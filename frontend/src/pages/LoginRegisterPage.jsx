@@ -125,21 +125,9 @@ function LoginRegisterPage() {
 
   return (
     <div className="h-screen flex flex-col md:flex-row">
-      {/* Sezione immagine - visibile solo su desktop */}
-      <div className="hidden md:block w-1/2 h-full">
-        <img
-          src="/images/amalfi.jpg"
-          alt="Login visual"
-          className="w-full h-full object-cover"
-        />
-      </div>
-
       {/* Sezione form */}
       <div
-        className="
-        flex-1 flex flex-col items-center justify-center
-        bg-[url('/images/amalfi.jpg')] bg-cover bg-center
-        md:bg-gradient-to-b md:from-blue-500 md:via-white md:to-orange-500">
+        className="flex-1 flex flex-col items-center justify-center">
 
         {/* Contenitore logo */}
         <div className="flex flex-col items-center">
@@ -151,14 +139,15 @@ function LoginRegisterPage() {
         </div>
 
         {/* Toggle Login/Registrati */}
-        <div className="relative flex mb-6 bg-white/20 backdrop-blur-lg border border-white/30 p-1 rounded-full w-64 
-        shadow-md transition-all duration-300 ease-in-out">
+        <div className="relative flex mb-6 bg-gradient-to-br from-white/20 via-white/10 to-transparent
+         backdrop-blur-lg border border-white/40 p-1 rounded-full w-64 
+        shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
           <motion.div
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={`absolute top-1 bottom-1 w-1/2 rounded-full shadow-md ${isLogin
-                ? "bg-gradient-to-r from-orange-400 to-rose-500 left-1"
-                : "bg-gradient-to-r from-rose-500 to-orange-400 right-1"
+              ? "bg-gradient-to-r from-orange-600/70 to-rose-500/60 left-1"
+              : "bg-gradient-to-r from-rose-500/60 to-orange-600/70 right-1"
               }`}
           />
 
@@ -191,18 +180,24 @@ function LoginRegisterPage() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
               className="
-              bg-white/10 backdrop-blur-2xl border border-white/30 shadow-2xl
-              rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
+              bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
+              shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
               md:mx-auto flex flex-col">
+              <div className="absolute inset-0 -z-10 overflow-hidden">
+                <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+                   blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+                <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+                  blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              </div>
 
-              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-gray-900 drop-shadow">Login</h2>
+              <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Login</h2>
 
               <div className="mb-4">
-                <label className="block text-white/90 sm:text-gray-900 mb-1">Email</label>
+                <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Email</label>
                 <input
                   type="email"
-                  className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
-                  rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-full font-semibold border bg-white/20 text-white
+                  rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -210,20 +205,20 @@ function LoginRegisterPage() {
               </div>
 
               <div className="mb-6">
-                <label className="block text-white/90 sm:text-gray-900 mb-1">Password</label>
+                <label className="block text-white/90 mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
                 <div className="relative w-full">
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
-                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border bg-white/20 text-white 
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute top-1/2 right-3 -translate-y-1/2 text-white/80 sm:text-gray-900 cursor-pointer">
+                    className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
                     {showPassword ? (
                       <i className="fa-solid fa-eye-slash"></i>
                     ) : (
@@ -235,9 +230,10 @@ function LoginRegisterPage() {
 
               <button
                 type="submit"
-                className="font-semibold px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r 
-                from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg 
-                hover:scale-105 transition cursor-pointer">
+                className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
+                bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Accedi
               </button>
@@ -251,19 +247,25 @@ function LoginRegisterPage() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
               className="
-              bg-white/10 backdrop-blur-2xl border border-white/30 shadow-2xl
-              rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
+               bg-gradient-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
+               shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
               md:mx-auto flex flex-col">
+              <div className="absolute inset-0 -z-10 overflow-hidden">
+                <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+                  blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+                <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+                  blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              </div>
 
-              <h2 className="text-2xl font-bold mb-6 text-center text-white sm:text-gray-900 drop-shadow">Registrati</h2>
+              <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Registrati</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-white/90 sm:text-gray-900 mb-1">Nome</label>
+                  <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Nome</label>
                   <input
                     type="text"
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
-                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border  bg-white/20 text-white 
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -271,11 +273,11 @@ function LoginRegisterPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white/90 sm:text-gray-900 mb-1">Cognome</label>
+                  <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Cognome</label>
                   <input
                     type="text"
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
-                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border bg-white/20 text-white  
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
                     required
@@ -283,11 +285,11 @@ function LoginRegisterPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white/90 sm:text-gray-900 mb-1">Email</label>
+                  <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Email</label>
                   <input
                     type="email"
-                    className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
-                    rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full font-semibold border bg-white/20 text-white
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -295,20 +297,20 @@ function LoginRegisterPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white/90 sm:text-gray-900 mb-1">Password</label>
+                  <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
                   <div className="relative w-full">
                     <input
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full font-semibold border sm:border-gray-900 bg-white/20 text-white sm:text-gray-900 
-                      rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white/50"
+                      className="w-full font-semibold border  bg-white/20 text-white 
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute top-1/2 right-3 -translate-y-1/2 text-white/80 sm:text-gray-900 cursor-pointer">
+                      className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
                       {showPassword ? (
                         <i className="fa-solid fa-eye-slash"></i>
                       ) : (
@@ -324,18 +326,20 @@ function LoginRegisterPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
-                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r 
-                  from-orange-500 to-rose-400 hover:from-orange-400 hover:to-rose-300 text-white rounded-full shadow-lg 
-                  hover:scale-105 transition cursor-pointer">
+                  className="flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
+                  bg-gradient-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <i className="fa-solid fa-plane mr-2"></i> Esperienze
                 </button>
 
                 <button
                   type="button"
                   onClick={handlePhotoSelect}
-                  className="flex-1 font-semibold px-4 py-2 flex items-center justify-center bg-gradient-to-r 
-                  from-green-500 to-teal-400 hover:from-green-400 hover:to-teal-300 text-white rounded-full shadow-lg 
-                  hover:scale-105 transition cursor-pointer">
+                  className=" flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
+                  bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <i className="fa-solid fa-camera mr-2"></i> Foto
                 </button>
 
@@ -350,9 +354,10 @@ function LoginRegisterPage() {
 
               <button
                 type="submit"
-                className="font-semibold mt-4 px-2 py-2 flex justify-center items-center gap-1 w-full bg-gradient-to-r 
-                from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-300 text-white rounded-full shadow-lg 
-                hover:scale-105 transition cursor-pointer">
+                className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
+                bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
                 Registrati
               </button>
@@ -374,7 +379,8 @@ function LoginRegisterPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
-            className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-[9999]">
+            className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white 
+            px-6 py-3 rounded-full shadow-xl z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70">
             <p className="text-lg font-semibold">{message}</p>
           </motion.div>
         )}

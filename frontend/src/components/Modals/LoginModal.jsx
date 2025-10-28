@@ -11,14 +11,9 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {/* Glow di sfondo */}
-          <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
-            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-            <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/30 to-pink-400/10 rounded-full 
-            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
-          </div>
-
+          {/* Glow morbido dietro al modale */}
+          <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
+              blur-3xl" />
           {/* Contenitore principale */}
           <motion.div
             className="relative rounded-3xl w-full max-w-4xl max-h-[90vh] shadow-2xl border border-white/40 
@@ -29,6 +24,13 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
+            {/* Glow di sfondo */}
+            <div className="absolute inset-0 -z-10 overflow-hidden">
+              <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            </div>
             {/* Contenuto scrollabile */}
             <div className="flex-1 p-6 overflow-y-auto scrollbar">
               <h2 className="text-3xl font-extrabold text-white/90 mb-6 drop-shadow-lg text-center">
@@ -57,10 +59,9 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                           onClick={() => toggleInterest(experience)}
                           className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 rounded-full 
                             cursor-pointer text-sm transition-all duration-100 ease-in-out border border-white/40 backdrop-blur-md 
-                            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${
-                              selected
-                                ? "bg-gradient-to-r from-orange-500/60 to-rose-400/60 text-white/90 shadow-lg"
-                                : "bg-gradient-to-r from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
+                            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${selected
+                              ? "bg-gradient-to-r from-blue-600/70 to-cyan-500/60 text-white/90 shadow-lg"
+                              : "bg-gradient-to-r from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
                             }`}
                         >
                           {experience}
@@ -76,17 +77,19 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
             <div className="p-4 flex justify-end gap-4 border-t border-white/40 bg-white/5 backdrop-blur-lg">
               <button
                 onClick={onClose}
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-red-500/60 to-rose-400/60 backdrop-blur-md 
-                border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 
-                ease-in-out cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+                className="font-semibold flex justify-center items-center gap-2 px-6 py-2
+                  bg-gradient-to-r from-red-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-xmark mr-2"></i> Annulla
               </button>
               <button
                 onClick={onClose}
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-green-500/60 to-teal-400/60 backdrop-blur-md 
-                border border-white/40 text-white/90 rounded-full shadow-md transition-all duration-100 
-                ease-in-out cursor-pointer hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+                className="font-semibold flex justify-center items-center gap-2 px-6 py-2
+                  bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
                 <i className="fa-solid fa-check mr-2"></i> Salva Esperienze
               </button>
