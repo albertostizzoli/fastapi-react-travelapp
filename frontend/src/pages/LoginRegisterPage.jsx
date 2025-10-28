@@ -380,7 +380,7 @@ function LoginRegisterPage() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
             className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white 
-            px-6 py-3 rounded-full shadow-xl z-[9999] bg-gradient-to-r from-blue-400/70 to-orange-400/70">
+            px-6 py-3 rounded-full shadow-xl z-[9999] bg-gradient-to-r from-blue-500 to-orange-500">
             <p className="text-lg font-semibold">{message}</p>
           </motion.div>
         )}

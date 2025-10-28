@@ -129,7 +129,7 @@ function ChatAI() {
                     >
                         {m.role === "user" ? (
                             // Messaggio utente: fumetto
-                            <div className="bg-gradient-to-r from-blue-500 to-orange-500 text-white px-5 py-3 
+                            <div className="bg-gradient-to-r from-blue-400 to-orange-400 text-white px-5 py-3 
                             rounded-2xl shadow-md max-w-[70%] rounded-br-none hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
                                 {m.text}
                             </div>
@@ -155,7 +155,7 @@ function ChatAI() {
             <div className="p-4 flex items-end gap-3 border-t border-white/20">
                 <input
                     className="flex-1 bg-white/20 border border-white/30 rounded-2xl px-4 py-3 text-white
-                    placeholder-white focus:outline-none focus:ring-2 focus:ring-orange-400  transition
+                    placeholder-white focus:outline-none focus:ring-2 focus:ring-orange-300  transition
                     resize-none overflow-y-auto leading-relaxed min-h-[3rem] max-h-[10rem]"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -167,7 +167,7 @@ function ChatAI() {
                     onClick={sendMessage}
                     disabled={isLoading}
                     className={`font-semibold flex justify-center items-center gap-2 px-5 py-3
-                    bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                    bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
                   text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer `}>
                     Invia

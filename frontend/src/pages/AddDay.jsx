@@ -274,7 +274,7 @@ function AddDay() {
           <button
             type="button"
             onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-600/70 to-rose-500/70 backdrop-blur-md 
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-600 to-rose-500 backdrop-blur-md 
             border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
             hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-list-check"></i> Seleziona Tag
@@ -282,7 +282,7 @@ function AddDay() {
           <button
             type="button"
             onClick={handlePhotoSelect}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md 
+            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
             border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
             hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-camera"></i> Carica Foto
@@ -295,7 +295,7 @@ function AddDay() {
             {form.tags.map((tag, i) => (
               <span
                 key={i}
-                className="flex items-center justify-between bg-gradient-to-r from-blue-600/70 to-cyan-500/60 
+                className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-cyan-500
                 backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
                 shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
                 <span>{tag}</span>
@@ -391,7 +391,7 @@ function AddDay() {
         <div className="md:col-span-2 flex justify-between gap-2">
           <Link
             to={`/travels/${selectedTravel}/days`}
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600/70 to-rose-500/60 
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500
             backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-arrow-left"></i>
@@ -399,7 +399,7 @@ function AddDay() {
           </Link>
           <button
             type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600/70 to-teal-500/60 
+            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
             backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-plus"></i>
@@ -416,7 +416,7 @@ function AddDay() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white px-6 py-3 
-          rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/60 to-orange-500/60">
+          rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500 to-orange-500">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

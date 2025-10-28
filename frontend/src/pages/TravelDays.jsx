@@ -107,7 +107,7 @@ function TravelDays() {
             to="/addDay"
             state={{ travelId: id }}
             className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
-             bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
+             bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
              text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
           >
@@ -191,7 +191,7 @@ function TravelDays() {
                       <button
                         onClick={() => setSelectedDay(d)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                         bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                         bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
                          text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
@@ -201,7 +201,7 @@ function TravelDays() {
                       <Link
                         to={`/days/${d.id}/edit`}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-gradient-to-r from-orange-600/70 to-yellow-500/60 backdrop-blur-md border border-white/40
+                        bg-gradient-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
                          text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
@@ -211,7 +211,7 @@ function TravelDays() {
                       <button
                         onClick={() => setDeleteDayId(d.id)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                         bg-gradient-to-r from-red-600/70 to-rose-500/70 backdrop-blur-md border border-white/40
+                         bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
                          text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
@@ -250,7 +250,7 @@ function TravelDays() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white px-6 py-3
-                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500/70 to-orange-500/70"
+                   rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500 to-orange-500"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
