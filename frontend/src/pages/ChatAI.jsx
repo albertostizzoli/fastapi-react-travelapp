@@ -110,7 +110,7 @@ function ChatAI() {
 
     return (
         <div className="flex flex-col h-[80vh] max-w-6xl mx-auto mt-10 
-            bg-gradient-to-br from-blue-950/30 via-blue-900/10 to-orange-900/20 backdrop-blur-2xl border border-white/30
+            bg-gradient-to-br from-blue-400/30 via-blue-400/10 to-orange-400/20 backdrop-blur-2xl border border-white/30
             rounded-3xl shadow-2xl overflow-hidden px-6 sm:px-4">
 
             {/*  Area messaggi */}
@@ -155,7 +155,7 @@ function ChatAI() {
             <div className="p-4 flex items-end gap-3 border-t border-white/20">
                 <input
                     className="flex-1 bg-white/20 border border-white/30 rounded-2xl px-4 py-3 text-white
-                    placeholder-white focus:outline-none focus:ring-2 focus:ring-orange-300  transition
+                    placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300  transition
                     resize-none overflow-y-auto leading-relaxed min-h-[3rem] max-h-[10rem]"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}

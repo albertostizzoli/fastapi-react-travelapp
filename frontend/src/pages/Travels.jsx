@@ -138,9 +138,14 @@ function Travels() {
 
               {/* Contenuto */}
               <div className="p-8 flex flex-col gap-3">
-                <h2 className="text-2xl font-extrabold text-gray-50 drop-shadow-sm">
-                  {v.town} - {v.city}
-                </h2>
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-extrabold text-gray-50 drop-shadow-sm">
+                    {v.town} - {v.city}
+                  </h2>
+                  <h3 className="text-2xl font-extrabold text-gray-50 drop-shadow-sm">
+                    { v.year }
+                  </h3>
+                </div>
                 <p className="text-gray-90 text-xl font-semibold">
                   {v.start_date} → {v.end_date}
                 </p>
