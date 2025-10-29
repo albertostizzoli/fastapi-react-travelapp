@@ -9,17 +9,14 @@ chat_history = {}
 @router.post("/")
 def generate_message(msg: UserMessage):
     """
-    Endpoint POST che gestisce la chat AI di viaggi con memoria contestuale.
-    
+    Chat AI per viaggi con memoria contestuale e gestione intelligente del contesto.
     Funzionalità principali:
-    - Memorizza le ultime interazioni dell'utente per mantenere coerenza nella conversazione.
-    - Analizza l'intento del messaggio per rimanere nel dominio "viaggi".
-    - Gestisce messaggi fuori tema e prova un retry prima di rifiutare.
-    - Genera la risposta dell'AI coerente con il contesto precedente.
+    - Memorizza le ultime interazioni per coerenza.
+    - Analizza l'intento dell'utente per rimanere nel dominio "viaggi".
+    - Gestisce messaggi fuori tema e retry prima di rifiutare.
+    - Riconosce se l'utente vuole terminare la conversazione.
     """
-    # Identificativo dell'utente (default se non fornito)
     user_id = getattr(msg, "user_id", "default_user")
-    # Recupera la cronologia dell'utente, se esiste
     history = chat_history.get(user_id, [])
 
     # Costruzione del contesto della conversazione: ultimi 6 scambi
@@ -28,10 +25,21 @@ def generate_message(msg: UserMessage):
         for ex in history[-6:]
     ])
 
-    # Prendi l'ultimo messaggio dell'AI per fornire contesto al riconoscimento dell'intento
+    # Prendi l'ultimo messaggio dell'AI per fornire contesto
     last_ai = history[-1]["ai"] if history else ""
 
-    # Analisi dell'intento dell'utente
+
+    # Controllo se l'utente vuole terminare
+    termination_keywords = ["fine conversazione", "grazie", "stop", "è tutto", "basta così"]
+    if any(kw in msg.message.lower() for kw in termination_keywords):
+        farewell = "È stato un piacere aiutarti! Buon viaggio e alla prossima 😊"
+        # Salva anche questo nel contesto
+        history.append({"user": msg.message, "ai": farewell})
+        chat_history[user_id] = history[-20:]
+        return {"response": farewell, "intent": "terminazione"}
+
+
+    # Analisi intento dell'utente
     intent_prompt = f"""
     L'assistente ha appena detto: "{last_ai}"
     L'utente risponde: "{msg.message}"
@@ -44,18 +52,17 @@ def generate_message(msg: UserMessage):
     """
     intent = travel_model.generate_content(intent_prompt).text.strip().lower()
 
-    # Gestione messaggi fuori tema
+    # Gestione messaggi fuori tema con retry
     if intent == "fuori_tema":
-        # Retry: verifica se la frase può essere collegata al contesto
         retry_prompt = f"""
-    Ecco la conversazione recente:
-    {conversation_context}
+        Ecco la conversazione recente:
+        {conversation_context}
 
-    L'utente ora dice: "{msg.message}"
+        L'utente ora dice: "{msg.message}"
 
-    Questa frase è collegata alla conversazione precedente?
-    Se sì, spiega brevemente come. Se no, rispondi "fuori_tema".
-    """
+        Questa frase è collegata alla conversazione precedente?
+        Se sì, spiega brevemente come. Se no, rispondi "fuori_tema".
+        """
         retry = travel_model.generate_content(retry_prompt).text.strip().lower()
         if "fuori_tema" in retry:
             return {
@@ -64,7 +71,7 @@ def generate_message(msg: UserMessage):
                 "intent": intent
             }
 
-    # Prompt principale per la generazione della risposta
+    # Prompt principale per la risposta AI
     prompt = f"""
     Sei un assistente AI esperto di viaggi e turismo.
 
@@ -81,10 +88,8 @@ def generate_message(msg: UserMessage):
     Alla fine, se opportuno, poni una sola domanda di follow-up pertinente.
     """
 
-    # Generazione della risposta AI
     try:
         response = travel_model.generate_content(prompt)
-        # Pulizia del testo da markdown e spazi multipli
         cleaned_text = (
             response.text
             .replace("**", "")
@@ -94,13 +99,11 @@ def generate_message(msg: UserMessage):
             .strip()
         )
 
-        # Aggiornamento cronologia dell'utente, con limite massimo di 20 scambi
+        # Aggiornamento cronologia con limite di 20 messaggi
         history.append({"user": msg.message, "ai": cleaned_text})
         chat_history[user_id] = history[-20:]
 
-        # Restituisce la risposta finale e l'intento rilevato
         return {"response": cleaned_text, "intent": intent}
 
     except Exception as e:
-        # Gestione degli errori di rete, timeout o API key
         return {"response": f"Errore nella generazione: {e}", "intent": intent}
