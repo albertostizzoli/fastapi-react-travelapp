@@ -3,17 +3,21 @@ import travellers from "../../store/travellers";
 
 function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <motion.div
+          key="loginModal"
           className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[2000] p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-        >
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{ willChange: "opacity" }}>
+
           {/* Glow morbido dietro al modale */}
           <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
               blur-3xl" />
+
           {/* Contenitore principale */}
           <motion.div
             className="relative rounded-3xl w-full max-w-4xl max-h-[90vh] shadow-2xl border border-white/40 
@@ -22,15 +26,17 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          >
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+            style={{ willChange: "transform, opacity" }}>
+
             {/* Glow di sfondo */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
               <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            blur-3xl top-10 left-10" />
               <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            blur-3xl bottom-10 right-10" />
             </div>
+
             {/* Contenuto scrollabile */}
             <div className="flex-1 p-6 overflow-y-auto scrollbar">
               <h2 className="text-3xl font-extrabold text-white/90 mb-6 drop-shadow-lg text-center">
@@ -62,8 +68,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${selected
                               ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white/90 shadow-lg"
                               : "bg-gradient-to-r from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
-                            }`}
-                        >
+                            }`}>
                           {experience}
                         </button>
                       );
@@ -80,8 +85,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                 className="font-semibold flex justify-center items-center gap-2 px-6 py-2
                   bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
-              >
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-xmark mr-2"></i> Annulla
               </button>
               <button
@@ -89,8 +93,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                 className="font-semibold flex justify-center items-center gap-2 px-6 py-2
                   bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
-              >
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-check mr-2"></i> Salva Esperienze
               </button>
             </div>

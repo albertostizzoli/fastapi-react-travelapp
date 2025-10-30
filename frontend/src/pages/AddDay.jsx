@@ -157,22 +157,26 @@ function AddDay() {
   return (
     <motion.div
       className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 1 }}>
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}>
+        
       {/* Glow morbido dietro al form */}
       <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
        blur-3xl" />
+
       <form
         onSubmit={handleSubmit}
         className="backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 w-full 
         max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]">
+
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
           blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
           <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
           blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
         </div>
+
         {/* Titolo + nota obbligatorio */}
         <div className="flex items-center justify-between md:col-span-2 mb-4">
           <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"> Aggiungi una tappa al viaggio</h2>
@@ -189,8 +193,7 @@ function AddDay() {
               onChange={(e) => setSelectedTravel(e.target.value)}
               className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white
               placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
-              required
-            >
+              required>
               <option value="" className="bg-black text-white">-- Seleziona --</option>
               {travels.map((t) => (
                 <option key={t.id} value={t.id} className="bg-black text-white">
@@ -229,6 +232,8 @@ function AddDay() {
               className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
               placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
             />
+            
+             { /* Suugerimenti */ }
             {suggestions.length > 0 && (
               <ul className="absolute bg-black/80 backdrop-blur-3xl border border-white/40 text-white w-full 
               mt-1 shadow-lg rounded-xl z-10">
@@ -351,7 +356,7 @@ function AddDay() {
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)}
-                      className="fixed inset-0 z-[9999] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
+                      className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
                       <div
                         onClick={(e) => e.stopPropagation()}
                         className="relative w-full max-w-4xl mx-auto">

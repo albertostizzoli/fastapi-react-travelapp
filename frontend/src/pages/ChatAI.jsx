@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Funzione per effetto macchina da scrivere
 function useTypewriterEffect(text, speed = 25) {
@@ -109,7 +110,11 @@ function ChatAI() {
 
 
     return (
-        <div className="flex flex-col h-[80vh] max-w-6xl mx-auto mt-10 
+        <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="flex flex-col h-[80vh] max-w-6xl mx-auto mt-10 
             bg-gradient-to-br from-blue-400/30 via-blue-500/10 to-orange-400/20 backdrop-blur-2xl border border-white/30
             rounded-3xl shadow-2xl overflow-hidden px-6 sm:px-4">
 
@@ -122,39 +127,51 @@ function ChatAI() {
                     </p>
                 )}
 
-                {messages.map((m, i) => (
-                    <div
-                        key={i}
-                        className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
-                    >
-                        {m.role === "user" ? (
-                            // Messaggio utente: fumetto
-                            <div className="bg-gradient-to-r from-blue-400 to-orange-400 text-white px-5 py-3 
-                            rounded-2xl shadow-md max-w-[70%] rounded-br-none hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
-                                {m.text}
-                            </div>
-                        ) : (
-                            //  Risposta AI: paragrafo con effetto macchina da scrivere
-                            <div
-                                className="text-lg leading-relaxed whitespace-pre-wrap"
-                                dangerouslySetInnerHTML={{
-                                    __html:
-                                        i === messages.length - 1 ? formatText(typedResponse) : formatText(m.text),
-                                }}
-                            />
-                        )}
-                    </div>
-                ))}
+                <AnimatePresence>
+                    {messages.map((m, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -40 }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                            {m.role === "user" ? (
+                                // Messaggio utente: fumetto
+                                <div className="bg-gradient-to-r from-blue-400 to-orange-400 text-white px-5 py-3 
+                                rounded-2xl shadow-md max-w-[70%] rounded-br-none hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
+                                    {m.text}
+                                </div>
+                            ) : (
+                                //  Risposta AI: paragrafo con effetto macchina da scrivere
+                                <div
+                                    className="text-lg leading-relaxed whitespace-pre-wrap"
+                                    dangerouslySetInnerHTML={{
+                                        __html:
+                                            i === messages.length - 1 ? formatText(typedResponse) : formatText(m.text),
+                                    }}
+                                />
+                            )}
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+
 
                 {isLoading && (
-                    <p className="text-white animate-pulse">Sto pensando alla risposta...</p>
+                    <motion.p
+                        className="text-white italic"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}>
+                        Sto pensando alla risposta...
+                    </motion.p>
                 )}
+
             </div>
 
             {/*  Input area */}
             <div className="p-4 flex items-end gap-3 border-t border-white/20">
                 <input
-                    className="flex-1 bg-white/20 border border-white/30 rounded-2xl px-4 py-3 text-white
+                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-3 text-white
                     placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300  transition
                     resize-none overflow-y-auto leading-relaxed min-h-[3rem] max-h-[10rem]"
                     value={input}
@@ -163,17 +180,20 @@ function ChatAI() {
                     placeholder="Fammi una domanda..."
                 />
 
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255,255,255,0.3)" }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                     onClick={sendMessage}
                     disabled={isLoading}
                     className={`font-semibold flex justify-center items-center gap-2 px-5 py-3
                     bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
-                  text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+                    text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer `}>
                     Invia
-                </button>
+                </motion.button>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

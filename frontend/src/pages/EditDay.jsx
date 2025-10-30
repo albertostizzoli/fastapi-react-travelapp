@@ -128,9 +128,9 @@ function EditDay() {
   return (
     <motion.div
       className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 1.2 }}>
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}>
 
       {/* Glow morbido dietro al form */}
       <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
@@ -280,10 +280,11 @@ function EditDay() {
                     <i className="fa-solid fa-xmark"></i>
                   </button>
 
+
                   {openImage && (
                     <div
                       onClick={() => setOpenImage(null)}
-                      className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+                      className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
                       <div
                         onClick={(e) => e.stopPropagation()}
                         className="relative w-full max-w-4xl mx-auto">

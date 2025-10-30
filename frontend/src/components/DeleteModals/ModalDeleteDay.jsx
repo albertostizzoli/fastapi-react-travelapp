@@ -1,21 +1,26 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, WillChangeMotionValue } from "framer-motion";
 
 function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
   return (
-    <AnimatePresence>
+
+    // AnimatePresence permette animazioni in uscita di componenti React.
+    <AnimatePresence mode="wait"> { /* wait aspetta che un’animazione finisca prima di mostrare il nuovo elemento.*/}
       {isOpen && (
         <motion.div
+          key="modalDeleteDay" // identifica un componente univoco → utile per triggerare nuove animazioni.
           className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[9999] p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-        >
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{ willChange: "opacity" }}> {/* questa proprietà CSS cambia da transform a opacity e ottimizza la fluidità */}
+
           {/* Sfondo con glow colorato */}
           <div className="absolute inset-0 -z-10 overflow-hidden">
             <div className="absolute w-[22rem] h-[22rem] bg-gradient-to-br from-blue-400/20 to-orange-400/10 rounded-full 
-            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            blur-3xl top-10 left-10" />
             <div className="absolute w-[24rem] h-[24rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            blur-3xl bottom-10 right-10 " />
           </div>
 
           <motion.div
@@ -25,8 +30,9 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          >
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+            style={{ willChange: "transform, opacity" }}>
+
             {/* Titolo */}
             <h2 className="text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
               Vuoi davvero cancellare la tappa?
@@ -34,7 +40,7 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
 
             {/* Descrizione */}
             <p className="text-white/70 mb-8 text-sm">
-              La tappa verrà rimossa <span className="text-rose-400 font-semibold"> definitivamente </span> 
+              La tappa verrà rimossa <span className="text-rose-400 font-semibold"> definitivamente </span>
               dal tuo itinerario. Questa azione non può essere annullata.
             </p>
 

@@ -2,20 +2,23 @@ import { motion, AnimatePresence } from "framer-motion";
 
 function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <motion.div
+          key="modalDeleteProfile"
           className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[9999] p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-        >
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{ willChange: "opacity" }}>
+
           {/* Glow di sfondo animato */}
           <div className="absolute inset-0 -z-10 overflow-hidden">
             <div className="absolute w-[25rem] h-[25rem] bg-gradient-to-br from-blue-400/20 to-orange-400/10 rounded-full 
-            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            blur-3xl top-10 left-10" />
             <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            blur-3xl bottom-10 right-10" />
           </div>
 
           <motion.div
@@ -25,8 +28,9 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          >
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+            style={{ willChange: "opacity" }}>
+
             {/* Titolo */}
             <h2 className="text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
               Vuoi davvero cancellare il tuo profilo?

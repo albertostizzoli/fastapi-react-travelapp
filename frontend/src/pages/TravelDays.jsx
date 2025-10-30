@@ -195,7 +195,7 @@ function TravelDays() {
                          text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                          hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
                       >
-                        <i className="fa-solid fa-book-open"></i> Leggi Tutto
+                        <i className="fa-solid fa-book-open"></i> Scopri di più
                       </button>
 
                       <Link

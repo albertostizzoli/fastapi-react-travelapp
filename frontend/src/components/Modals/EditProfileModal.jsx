@@ -21,15 +21,18 @@ function EditProfileModal({
     }));
   };
 
-    return (
-    <AnimatePresence>
+  return (
+    <AnimatePresence mode="wait">
       {isOpen && (
         <motion.div
+          key="editProfileModal"
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-        >
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{ willChange: "opacity" }}>
+
           <motion.form
             onSubmit={onSubmit}
             encType="multipart/form-data"
@@ -38,14 +41,15 @@ function EditProfileModal({
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-          >
+            transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+            style={{ willChange: "opacity" }}>
+
             {/* Glow animato dietro */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
               <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-400/20 to-orange-400/10 rounded-full 
-              blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              blur-3xl top-10 left-10" />
               <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-              blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              blur-3xl bottom-10 right-10" />
             </div>
 
             <h2 className="text-3xl font-extrabold text-white mb-4 text-center md:col-span-2 drop-shadow-lg">
@@ -99,8 +103,7 @@ function EditProfileModal({
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 text-white hover:text-white cursor-pointer"
-                >
+                  className="absolute top-1/2 right-4 -translate-y-1/2 text-white hover:text-white cursor-pointer">
                   {showPassword ? (
                     <i className="fa-solid fa-eye-slash"></i>
                   ) : (
@@ -126,8 +129,7 @@ function EditProfileModal({
                 }}
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 
                 border border-white/40 text-white focus:ring-2 focus:ring-orange-300 focus:border-transparent transition 
-                cursor-pointer scrollbar"
-              >
+                cursor-pointer scrollbar">
                 <option value="" className="bg-black text-white">
                   Seleziona un’esperienza
                 </option>
@@ -145,8 +147,7 @@ function EditProfileModal({
                     <span
                       key={i}
                       className="bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
-                      flex items-center gap-2 shadow-md"
-                    >
+                      flex items-center gap-2 shadow-md">
                       {interest}
                       <button
                         type="button"
@@ -156,8 +157,7 @@ function EditProfileModal({
                             interests: prev.interests.filter((x) => x !== interest),
                           }))
                         }
-                        className="hover:text-rose-400 transition cursor-pointer"
-                      >
+                        className="hover:text-rose-400 transition cursor-pointer">
                         ✕
                       </button>
                     </span>
@@ -182,16 +182,14 @@ function EditProfileModal({
                 onClick={onClose}
                 className="font-semibold px-6 py-2 bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border 
                 border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
-                hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-              >
+                hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                 <i className="fa-solid fa-xmark mr-2"></i> Annulla
               </button>
               <button
                 type="submit"
                 className="font-semibold px-6 py-2 bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border 
               border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
-                hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-              >
+                hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                 <i className="fa-solid fa-check mr-2"></i> Salva
               </button>
             </div>
