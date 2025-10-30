@@ -53,7 +53,7 @@ function ModalEditTag({ isOpen, onClose, tags, setTags }) {
                                                 className={`font-semibold flex items-center justify-center text-center px-3 py-2 border 
                                                         rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${tags.includes(experience)
                                                         ? "bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                                                        : "bg-gradient-to-r from-white/30 to-white/50 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        : "bg-gradient-to-r from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
 
                                                 <input
