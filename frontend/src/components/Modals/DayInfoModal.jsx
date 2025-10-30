@@ -27,7 +27,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
       {isVisible && (
         <motion.div
           key="dayInfoModal"
-          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4 z-[9999]"
+          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm p-2 sm:p-4 z-9999"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -36,14 +36,14 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
 
           {/* Layer di glow animato dietro */}
           <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
+            <div className="absolute w-120 h-120 bg-linear-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
             blur-3xl top-10 left-10" />
-            <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-400/30 to-pink-400/10 rounded-full 
+            <div className="absolute w-lg h-128 bg-linear-to-br from-orange-400/30 to-pink-400/10 rounded-full 
             blur-3xl bottom-10 right-10" />
           </div>
 
           <motion.div
-            className="backdrop-blur-2xl bg-gradient-to-br from-white/20 via-white/10 to-transparent border border-white/40 
+            className="backdrop-blur-2xl bg-linear-to-br from-white/20 via-white/10 to-transparent border border-white/40 
             rounded-3xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-2xl flex flex-col overflow-hidden relative"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -55,7 +55,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             <div className="flex justify-between items-center p-4 border-b border-white/40 bg-black/10 backdrop-blur-lg">
               <button
                 onClick={handleClose}
-                className="font-semibold px-4 py-2 bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border 
+                className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border 
                 border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                  cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <i className="fa-solid fa-arrow-left mr-2"></i> Torna alle Tappe
@@ -63,7 +63,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
 
               <button
                 onClick={() => setShowMapModal(true)}
-                className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border 
+                className="font-semibold px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border 
               border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <i className="fa-solid fa-map-location-dot mr-2"></i> Vai alla Mappa
@@ -84,7 +84,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                   {selectedDay.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="font-semibold px-4 py-2 bg-gradient-to-r from-orange-600 to-rose-500
+                      className="font-semibold px-4 py-2 bg-linear-to-r from-orange-600 to-rose-500
                         backdrop-blur-md border border-white/40 text-white rounded-full transition-all duration-100 
                         ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                       {tag}
@@ -129,7 +129,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             {openImage && (
               <motion.div
                 key="modalPhoto"
-                className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[10000]"
+                className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-10000"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -165,13 +165,14 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
           <AnimatePresence>
             {showMapModal && (
               <motion.div
-                className="fixed inset-0 bg-black/80 flex items-center justify-center z-[10001]"
+                className="fixed inset-0 bg-black/80 flex items-center justify-center z-10001"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}>
 
                 <motion.div
-                  className="relative sm:w-[70vw] sm:h-[90vh] backdrop-blur-xl bg-white/10 border border-white/40 rounded-3xl overflow-hidden shadow-2xl"
+                  className="relative sm:w-[70vw] sm:h-[90vh] backdrop-blur-xl bg-white/10 border border-white/40 rounded-3xl 
+                  overflow-hidden shadow-2xl"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.8, opacity: 0 }}
@@ -180,7 +181,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                   <div onClick={(e) => e.stopPropagation()} className="relative">
                     <button
                       onClick={() => setShowMapModal(false)}
-                      className="absolute top-4 right-4 bg-red-500 text-white rounded-full p-3 shadow-lg cursor-pointer z-[1000] hover:bg-red-400 transition">
+                      className="absolute top-4 right-4 bg-red-500 text-white rounded-full p-3 shadow-lg cursor-pointer z-1000
+                       hover:bg-red-400 transition">
                       <i className="fa-solid fa-xmark text-lg"></i>
                     </button>
                   </div>

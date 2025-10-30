@@ -51,7 +51,7 @@ function HomePage() {
 
         return (
             <motion.h2
-                className="text-3xl font-bold mb-4 text-gray-900 break-words"
+                className="text-3xl font-bold mb-4 text-gray-900 wrap-break-word"
                 variants={container}
                 initial="hidden"
                 whileInView="visible">
@@ -66,7 +66,7 @@ function HomePage() {
     };
 
     return (
-        <div className="bg-gradient-to-b from-blue-400 to-orange-400 font-sans overflow-y-auto overflow-x-hidden scrollbar">
+        <div className="bg-linear-to-b from-blue-400 to-orange-400 font-sans overflow-y-auto overflow-x-hidden scrollbar">
             {/* Section 1 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>

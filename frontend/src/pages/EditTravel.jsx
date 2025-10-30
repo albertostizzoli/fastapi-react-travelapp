@@ -92,29 +92,29 @@ function EditTravel() {
       transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}>
 
       {/* Glow morbido dietro al form */}
-      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
+      <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-linear-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
        blur-3xl" />
 
       <form
         onSubmit={handleSubmit}
-        className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
+        className="relative backdrop-blur-xl bg-linear-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
         w-full max-w-5xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 
         gap-8 overflow-hidden">
 
         {/* Sfere animate di sfondo */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+          <div className="absolute w-md h-112 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
             blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+          <div className="absolute w-lg h-128 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
             blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
         </div>
 
         {/* INTESTAZIONE */}
-        <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-gradient-to-r from-black/10 to-transparent 
+        <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
           border-b border-white/20 px-6 py-4 rounded-t-3xl flex justify-between items-center">
           <Link
             to="/travels"
-            className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500 
+            className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
             backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-150 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-arrow-left"></i>
@@ -129,7 +129,7 @@ function EditTravel() {
         </div>
 
         {/* Divider verticale desktop */}
-        <div className="hidden md:block absolute left-1/2 top-24 bottom-6 w-[2px] bg-gradient-to-b from-transparent via-white/40 
+        <div className="hidden md:block absolute left-1/2 top-24 bottom-6 w-0.5 bg-linear-to-b from-transparent via-white/40 
           to-transparent rounded-full pointer-events-none" />
 
         {/* COLONNA SINISTRA */}
@@ -242,7 +242,7 @@ function EditTravel() {
 
             <button
               type="submit"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-green-600 to-teal-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <i className="fa-solid fa-edit"></i>
@@ -260,7 +260,7 @@ function EditTravel() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-xl border border-white/40 text-white px-6 py-3 
-          rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500 to-orange-500">
+          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

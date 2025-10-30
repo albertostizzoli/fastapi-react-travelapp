@@ -6,7 +6,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
       {isOpen && (
         <motion.div
           key="modalDeleteProfile"
-          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[9999] p-4"
+          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-9999 p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -15,14 +15,14 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
 
           {/* Glow di sfondo animato */}
           <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute w-[25rem] h-[25rem] bg-gradient-to-br from-blue-400/20 to-orange-400/10 rounded-full 
+            <div className="absolute w-100 h-100 bg-linear-to-br from-blue-400/20 to-orange-400/10 rounded-full 
             blur-3xl top-10 left-10" />
-            <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+            <div className="absolute w-md h-112 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
             blur-3xl bottom-10 right-10" />
           </div>
 
           <motion.div
-            className="relative w-full max-w-md rounded-3xl border border-white/40 bg-gradient-to-br 
+            className="relative w-full max-w-md rounded-3xl border border-white/40 bg-linear-to-br 
             from-white/20 via-white/10 to-transparent backdrop-blur-2xl shadow-2xl text-white 
             p-8 text-center overflow-hidden"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -45,7 +45,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={onConfirm}
-                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r 
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-r 
                 from-green-600 to-teal-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
@@ -55,7 +55,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
 
               <button
                 onClick={onCancel}
-                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-gradient-to-r 
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-r 
                 from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"

@@ -115,7 +115,7 @@ function ChatAI() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="flex flex-col h-[80vh] lg:h-[75vh] sm:h-[80vh] md:h-[90vh] 
             w-[95%] sm:w-[90%] md:max-w-4xl lg:max-w-6xl mx-auto mt-2 sm:mt-8 md:mt-10
-            bg-gradient-to-br from-blue-400/30 via-blue-500/10 to-orange-400/20 
+            bg-linear-to-br from-blue-400/30 via-blue-500/10 to-orange-400/20 
             backdrop-blur-2xl border border-white/30 rounded-3xl shadow-2xl overflow-hidden 
             px-3 sm:px-4 md:px-6">
 
@@ -138,7 +138,7 @@ function ChatAI() {
                             transition={{ duration: 0.4, ease: "easeOut" }}
                             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                             {m.role === "user" ? (
-                                <div className="bg-gradient-to-r from-blue-400 to-orange-400 text-white 
+                                <div className="bg-linear-to-r from-blue-400 to-orange-400 text-white 
                                     px-4 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-md max-w-[80%] sm:max-w-[70%] 
                                     rounded-br-none text-sm sm:text-base md:text-lg 
                                     hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
@@ -174,8 +174,8 @@ function ChatAI() {
                 <input
                     className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-2 sm:py-3 
                   text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300 
-                    transition resize-none overflow-y-auto leading-relaxed min-h-[2.5rem] sm:min-h-[3rem] 
-                    max-h-[10rem] text-sm sm:text-base"
+                    transition resize-none overflow-y-auto leading-relaxed min-h-10 sm:min-h-12
+                    max-h-40 text-sm sm:text-base"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) =>
@@ -191,7 +191,7 @@ function ChatAI() {
                     onClick={sendMessage}
                     disabled={isLoading}
                     className="font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
-                    bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
+                    bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
                   text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer text-sm sm:text-base">
                     Invia

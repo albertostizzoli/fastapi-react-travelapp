@@ -139,15 +139,15 @@ function LoginRegisterPage() {
         </div>
 
         {/* Toggle Login/Registrati */}
-        <div className="relative flex mb-6 bg-gradient-to-br from-white/20 via-white/10 to-transparent
+        <div className="relative flex mb-6 bg-linear-to-br from-white/20 via-white/10 to-transparent
          backdrop-blur-lg border border-white/40 p-1 rounded-full w-64 
         shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
           <motion.div
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={`absolute top-1 bottom-1 w-1/2 rounded-full shadow-md ${isLogin
-              ? "bg-gradient-to-r from-orange-600/70 to-rose-500/60 left-1"
-              : "bg-gradient-to-r from-blue-600/70 to-cyan-500/60 right-1"
+              ? "bg-linear-to-r from-orange-600/70 to-rose-500/60 left-1"
+              : "bg-linear-to-r from-blue-600/70 to-cyan-500/60 right-1"
               }`}
           />
 
@@ -180,13 +180,13 @@ function LoginRegisterPage() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
               className="
-              bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
+              bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
               shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
               md:mx-auto flex flex-col">
               <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+                <div className="absolute w-md h-112 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
                    blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-                <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+                <div className="absolute w-lg h-128 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
                   blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
               </div>
 
@@ -231,7 +231,7 @@ function LoginRegisterPage() {
               <button
                 type="submit"
                 className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
-                bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
@@ -247,13 +247,13 @@ function LoginRegisterPage() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
               className="
-               bg-gradient-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
+               bg-linear-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
               md:mx-auto flex flex-col">
               <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
+                <div className="absolute w-md h-112 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
                   blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-                <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+                <div className="absolute w-lg h-128 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
                   blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
               </div>
 
@@ -327,7 +327,7 @@ function LoginRegisterPage() {
                   type="button"
                   onClick={() => setIsModalOpen(true)}
                   className="flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-gradient-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
+                  bg-linear-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <i className="fa-solid fa-plane mr-2"></i> Esperienze
@@ -337,7 +337,7 @@ function LoginRegisterPage() {
                   type="button"
                   onClick={handlePhotoSelect}
                   className=" flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-gradient-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
+                  bg-linear-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <i className="fa-solid fa-camera mr-2"></i> Foto
@@ -355,7 +355,7 @@ function LoginRegisterPage() {
               <button
                 type="submit"
                 className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
-                bg-gradient-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
+                bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-user mr-2"></i>
@@ -380,7 +380,7 @@ function LoginRegisterPage() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
             className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white 
-            px-6 py-3 rounded-full shadow-xl z-[9999] bg-gradient-to-r from-blue-500 to-orange-500">
+            px-6 py-3 rounded-full shadow-xl z-9999 bg-linear-to-r from-blue-500 to-orange-500">
             <p className="text-lg font-semibold">{message}</p>
           </motion.div>
         )}

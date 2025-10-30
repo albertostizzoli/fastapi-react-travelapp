@@ -82,7 +82,7 @@ function Sidebar() {
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               onClick={toggleSidebar}
-              className="fixed inset-0  z-[9998]"
+              className="fixed inset-0  z-9998"
             />
 
             {/* Sidebar full-screen */}
@@ -91,8 +91,8 @@ function Sidebar() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 140, damping: 30 }}
-              className={`fixed top-0 left-0 w-full h-full z-[9999] flex flex-col justify-between p-6
-                ${isHome ? "bg-gradient-to-br from-blue-400 to-orange-400" : "backdrop-blur-xl bg-gradient-to-br from-blue-400 to-orange-400 text-white"}`}>
+              className={`fixed top-0 left-0 w-full h-full z-9999 flex flex-col justify-between p-6
+                ${isHome ? "bg-linear-to-br from-blue-400 to-orange-400" : "backdrop-blur-xl bg-linear-to-br from-blue-400 to-orange-400 text-white"}`}>
               <div className="flex flex-col gap-6">
                 {/* Chiudi */}
                 <button
@@ -111,7 +111,7 @@ function Sidebar() {
                     <i className="fa-solid fa-user"></i>
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
-                    after:w-0 after:h-[2px] after:bg-current 
+                    after:w-0 after:h-0.5 after:bg-current 
                     after:transition-all after:duration-300 
                     hover:after:w-full">Area Personale
                     </span>
@@ -131,7 +131,7 @@ function Sidebar() {
                     />
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
-                    after:w-0 after:h-[2px] after:bg-current 
+                    after:w-0 after:h-0.5 after:bg-current 
                     after:transition-all after:duration-300 
                     hover:after:w-full">{user.name}
                     </span>
@@ -147,7 +147,7 @@ function Sidebar() {
                     <i className="fa-solid fa-globe"></i>
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
-                    after:w-0 after:h-[2px] after:bg-current 
+                    after:w-0 after:h-0.5 after:bg-current 
                     after:transition-all after:duration-300 
                     hover:after:w-full">I tuoi viaggi
                     </span>
@@ -163,7 +163,7 @@ function Sidebar() {
                     <i className="fa-solid fa-plus"></i>
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
-                    after:w-0 after:h-[2px] after:bg-current 
+                    after:w-0 after:h-0.5 after:bg-current 
                     after:transition-all after:duration-300 
                     hover:after:w-full">Aggiungi Viaggio
                     </span>
@@ -180,7 +180,7 @@ function Sidebar() {
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
-                    after:w-0 after:h-[2px] after:bg-current 
+                    after:w-0 after:h-0.5 after:bg-current 
                     after:transition-all after:duration-300 
                     hover:after:w-full">Esci
                     </span>

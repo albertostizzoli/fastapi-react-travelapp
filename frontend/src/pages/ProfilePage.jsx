@@ -163,9 +163,9 @@ function ProfilePage() {
     <div className="flex flex-col min-h-screen text-white sm:p-8 p-4 relative overflow-hidden">
       {/* Effetto glow dinamico di sfondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 
+        <div className="absolute w-120 h-120 bg-linear-to-br from-blue-500/20 to-orange-400/10 
       rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 
+        <div className="absolute w-md h-112 bg-linear-to-br from-orange-500/20 to-blue-400/10 
       rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
       </div>
 
@@ -174,7 +174,7 @@ function ProfilePage() {
 
           {/*  PROFILO UTENTE */}
           <motion.section
-            className="md:col-span-1 bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+            className="md:col-span-1 bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
             p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center transition-all duration-500 
             hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
             initial={{ x: -100, opacity: 0 }}
@@ -228,7 +228,7 @@ function ProfilePage() {
                   setShowEditModal(true);
                 }}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-gradient-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
+                bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
               text-white rounded-full shadow-md transition-all duration-500 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
@@ -238,7 +238,7 @@ function ProfilePage() {
               <button
                 onClick={() => setDeleteProfileId(user?.id)}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
+                bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
               text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
@@ -248,7 +248,7 @@ function ProfilePage() {
               <button
                 onClick={handleLogout}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
+                bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
               text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
               >
@@ -269,7 +269,7 @@ function ProfilePage() {
           >
             {/* Gestione viaggi */}
             <motion.div
-              className="bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+              className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
               p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col gap-4 transition-all duration-500 
               hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
               variants={{
@@ -288,7 +288,7 @@ function ProfilePage() {
                 <Link
                   to="/travels"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-gradient-to-r from-orange-600 to-rose-500 backdrop-blur-md border border-white/40
+                  bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                 >
@@ -297,7 +297,7 @@ function ProfilePage() {
                 <Link
                   to="/add"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
+                  bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                 >
@@ -306,7 +306,7 @@ function ProfilePage() {
                 <Link
                   to="/chat"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
+                  bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer"
                 >
@@ -317,7 +317,7 @@ function ProfilePage() {
 
             {/* Ultimo viaggio */}
             <motion.div
-              className="bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+              className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
               p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
               hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
               variants={{
@@ -338,7 +338,7 @@ function ProfilePage() {
                   {recentTravels.slice(0, 1).map((travel, idx) => (
                     <li
                       key={idx}
-                      className="p-4 bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
+                      className="p-4 bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
                       rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
                       transition-all duration-100 border border-white/40"
                     >
@@ -372,7 +372,7 @@ function ProfilePage() {
 
           {/*  INTERESSI UTENTE */}
           <motion.div
-            className="bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+            className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
             p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
             hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
             initial={{ x: 80, opacity: 0 }}
@@ -387,7 +387,7 @@ function ProfilePage() {
                 {user.interests.map((interest, idx) => (
                   <span
                     key={idx}
-                    className="font-semibold px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500
+                    className="font-semibold px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500
                     backdrop-blur-md border border-white/40 text-white rounded-full 
                     text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100"
                   >
@@ -428,7 +428,7 @@ function ProfilePage() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white 
-          px-6 py-3 rounded-full shadow-lg z-[9999] bg-gradient-to-r from-blue-500 to-orange-500"
+          px-6 py-3 rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>

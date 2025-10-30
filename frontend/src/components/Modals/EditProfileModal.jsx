@@ -26,7 +26,7 @@ function EditProfileModal({
       {isOpen && (
         <motion.div
           key="editProfileModal"
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -36,7 +36,7 @@ function EditProfileModal({
           <motion.form
             onSubmit={onSubmit}
             encType="multipart/form-data"
-            className="relative border border-white/40 bg-gradient-to-br from-white/20 via-white/10 to-transparent 
+            className="relative border border-white/40 bg-linear-to-br from-white/20 via-white/10 to-transparent 
             backdrop-blur-2xl p-8 rounded-3xl shadow-2xl w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -46,9 +46,9 @@ function EditProfileModal({
 
             {/* Glow animato dietro */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
-              <div className="absolute w-[30rem] h-[30rem] bg-gradient-to-br from-blue-400/20 to-orange-400/10 rounded-full 
+              <div className="absolute w-120 h-120 bg-linear-to-br from-blue-400/20 to-orange-400/10 rounded-full 
               blur-3xl top-10 left-10" />
-              <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+              <div className="absolute w-lg h-128 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
               blur-3xl bottom-10 right-10" />
             </div>
 
@@ -146,7 +146,7 @@ function EditProfileModal({
                   {editForm.interests.map((interest, i) => (
                     <span
                       key={i}
-                      className="bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
+                      className="bg-linear-to-r from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
                       flex items-center gap-2 shadow-md">
                       {interest}
                       <button
@@ -180,14 +180,14 @@ function EditProfileModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border 
+                className="font-semibold px-6 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border 
                 border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                 <i className="fa-solid fa-xmark mr-2"></i> Annulla
               </button>
               <button
                 type="submit"
-                className="font-semibold px-6 py-2 bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border 
+                className="font-semibold px-6 py-2 bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border 
               border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                 <i className="fa-solid fa-check mr-2"></i> Salva

@@ -53,20 +53,21 @@ function Header() {
   return (
     <nav
       className={`hidden sm:flex p-4 gap-4 justify-between items-center 
-        ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
+      ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
       <h1 className="font-bold text-3xl underline">TravelDiary</h1>
+
       <div className="flex gap-6">
         {isHome && (
           <Link
             to="/loginregister"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
             <span><i className="fa-solid fa-user"></i></span>
-            {/* queste classi mi permettono di avere una underline animata da destra a sinistra*/}
             <span className="relative inline-block
-               after:content-[''] after:absolute after:left-0 after:bottom-0 
-               after:w-0 after:h-[2px] after:bg-current 
-               after:transition-all after:duration-300 
-               hover:after:w-full">Area Personale
+            after:content-[''] after:absolute after:left-0 after:bottom-0
+            after:w-0 after:h-0.5 after:bg-current
+            after:transition-all after:duration-300
+            hover:after:w-full">
+              Area Personale
             </span>
           </Link>
         )}
@@ -78,13 +79,13 @@ function Header() {
             <img
               src={user.photo || "/default-avatar.png"}
               alt="Avatar"
-              className="w-8 h-8 rounded-full object-cover border-3 border-white"
+              className="w-8 h-8 rounded-full object-cover border-2 border-current"
             />
             <span className="relative inline-block
-               after:content-[''] after:absolute after:left-0 after:bottom-0 
-               after:w-0 after:h-[2px] after:bg-current 
-               after:transition-all after:duration-300 
-               hover:after:w-full">
+            after:content-[''] after:absolute after:left-0 after:bottom-0
+            after:w-0 after:h-0.5 after:bg-current
+            after:transition-all after:duration-300
+            hover:after:w-full">
               {user.name}
             </span>
           </Link>
@@ -95,12 +96,11 @@ function Header() {
             to="/travels"
             className="flex items-center gap-2 px-4 py-2 font-semibold">
             <span><i className="fa-solid fa-globe"></i></span>
-            <span
-              className="relative inline-block
-               after:content-[''] after:absolute after:left-0 after:bottom-0 
-               after:w-0 after:h-[2px] after:bg-current 
-               after:transition-all after:duration-300 
-               hover:after:w-full">
+            <span className="relative inline-block
+            after:content-[''] after:absolute after:left-0 after:bottom-0
+            after:w-0 after:h-0.5 after:bg-current
+            after:transition-all after:duration-300
+            hover:after:w-full">
               I miei viaggi
             </span>
           </Link>
@@ -112,10 +112,12 @@ function Header() {
             className="px-4 py-2 flex items-center gap-2 font-semibold">
             <span><i className="fa-solid fa-plus"></i></span>
             <span className="relative inline-block
-               after:content-[''] after:absolute after:left-0 after:bottom-0 
-               after:w-0 after:h-[2px] after:bg-current 
-               after:transition-all after:duration-300 
-               hover:after:w-full">Aggiungi Viaggio
+            after:content-[''] after:absolute after:left-0 after:bottom-0
+            after:w-0 after:h-0.5 after:bg-current
+            after:transition-all after:duration-300
+            hover:after:w-full"
+            >
+              Aggiungi Viaggio
             </span>
           </Link>
         )}
@@ -126,16 +128,18 @@ function Header() {
             className="px-4 py-2 flex items-center gap-2 font-semibold cursor-pointer">
             <span><i className="fa-solid fa-right-from-bracket"></i></span>
             <span className="relative inline-block
-               after:content-[''] after:absolute after:left-0 after:bottom-0 
-               after:w-0 after:h-[2px] after:bg-current 
-               after:transition-all after:duration-300 
-               hover:after:w-full">Esci
+            after:content-[''] after:absolute after:left-0 after:bottom-0
+            after:w-0 after:h-0.5 after:bg-current
+            after:transition-all after:duration-300
+            hover:after:w-full">
+              Esci
             </span>
           </button>
         )}
       </div>
     </nav>
   );
+
 }
 
 export default Header;
