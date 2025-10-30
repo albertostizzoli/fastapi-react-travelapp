@@ -108,20 +108,21 @@ function ChatAI() {
         return html; // ritorna testo formattato come HTML
     };
 
-
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex flex-col h-[80vh] max-w-6xl mx-auto mt-10 
-            bg-gradient-to-br from-blue-400/30 via-blue-500/10 to-orange-400/20 backdrop-blur-2xl border border-white/30
-            rounded-3xl shadow-2xl overflow-hidden px-6 sm:px-4">
+            className="flex flex-col h-[80vh] lg:h-[75vh] sm:h-[80vh] md:h-[90vh] 
+            w-[95%] sm:w-[90%] md:max-w-4xl lg:max-w-6xl mx-auto mt-2 sm:mt-8 md:mt-10
+            bg-gradient-to-br from-blue-400/30 via-blue-500/10 to-orange-400/20 
+            backdrop-blur-2xl border border-white/30 rounded-3xl shadow-2xl overflow-hidden 
+            px-3 sm:px-4 md:px-6">
 
-            {/*  Area messaggi */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar text-white">
+            {/* Area messaggi */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5 md:p-6 space-y-4 scrollbar text-white">
                 {messages.length === 0 && !isLoading && (
-                    <p className="text-white italic">
+                    <p className="text-white italic text-sm sm:text-base md:text-lg leading-relaxed">
                         Ciao! Sono il tuo assistente AI di viaggi <br />
                         Chiedimi una meta, un periodo o un consiglio!
                     </p>
@@ -137,18 +138,20 @@ function ChatAI() {
                             transition={{ duration: 0.4, ease: "easeOut" }}
                             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                             {m.role === "user" ? (
-                                // Messaggio utente: fumetto
-                                <div className="bg-gradient-to-r from-blue-400 to-orange-400 text-white px-5 py-3 
-                                rounded-2xl shadow-md max-w-[70%] rounded-br-none hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
+                                <div className="bg-gradient-to-r from-blue-400 to-orange-400 text-white 
+                                    px-4 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-md max-w-[80%] sm:max-w-[70%] 
+                                    rounded-br-none text-sm sm:text-base md:text-lg 
+                                    hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
                                     {m.text}
                                 </div>
                             ) : (
-                                //  Risposta AI: paragrafo con effetto macchina da scrivere
                                 <div
-                                    className="text-lg leading-relaxed whitespace-pre-wrap"
+                                    className="text-sm sm:text-base md:text-lg leading-relaxed whitespace-pre-wrap"
                                     dangerouslySetInnerHTML={{
                                         __html:
-                                            i === messages.length - 1 ? formatText(typedResponse) : formatText(m.text),
+                                            i === messages.length - 1
+                                                ? formatText(typedResponse)
+                                                : formatText(m.text),
                                     }}
                                 />
                             )}
@@ -156,27 +159,28 @@ function ChatAI() {
                     ))}
                 </AnimatePresence>
 
-
                 {isLoading && (
                     <motion.p
-                        className="text-white italic"
+                        className="text-white italic text-sm sm:text-base"
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ duration: 1.5, repeat: Infinity }}>
-                        Sto pensando alla risposta...
+                        Fammi pensare...
                     </motion.p>
                 )}
-
             </div>
 
-            {/*  Input area */}
-            <div className="p-4 flex items-end gap-3 border-t border-white/20">
+            {/* Input area */}
+            <div className="p-3 sm:p-4 flex sm:flex-row items-center sm:items-end gap-3 border-t border-white/20">
                 <input
-                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-3 text-white
-                    placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300  transition
-                    resize-none overflow-y-auto leading-relaxed min-h-[3rem] max-h-[10rem]"
+                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-2 sm:py-3 
+                  text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300 
+                    transition resize-none overflow-y-auto leading-relaxed min-h-[2.5rem] sm:min-h-[3rem] 
+                    max-h-[10rem] text-sm sm:text-base"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), sendMessage())}
+                    onKeyDown={(e) =>
+                        e.key === "Enter" && !e.shiftKey && (e.preventDefault(), sendMessage())
+                    }
                     placeholder="Fammi una domanda..."
                 />
 
@@ -186,15 +190,16 @@ function ChatAI() {
                     transition={{ type: "spring", stiffness: 300 }}
                     onClick={sendMessage}
                     disabled={isLoading}
-                    className={`font-semibold flex justify-center items-center gap-2 px-5 py-3
+                    className="font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
                     bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
-                    text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
-                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer `}>
+                  text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer text-sm sm:text-base">
                     Invia
                 </motion.button>
             </div>
         </motion.div>
     );
+
 }
 
 export default ChatAI;
