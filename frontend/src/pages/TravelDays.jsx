@@ -88,12 +88,11 @@ function TravelDays() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
         {/* Titolo */}
         <motion.h1
-          className="text-4xl font-extrabold text-white flex-1 min-w-[200px] p-3 rounded-3xl
+          className="text-4xl font-extrabold text-white flex-1 min-w-[200px] p-4 rounded-3xl
            bg-white/5 backdrop-blur-md border border-white/40 shadow-lg"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
+          transition={{ duration: 0.8, ease: "easeOut" }}>
           Tappe del viaggio
         </motion.h1>
 
@@ -101,16 +100,15 @@ function TravelDays() {
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
+          transition={{ duration: 0.8, ease: "easeOut" }}>
+
           <Link
             to="/addDay"
             state={{ travelId: id }}
             className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
              bg-gradient-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
              text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
-          >
+             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <i className="fa-solid fa-plus"></i> Aggiungi Tappa
           </Link>
         </motion.div>
@@ -124,14 +122,16 @@ function TravelDays() {
             className="p-6 rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/40 shadow-xl"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-md">
+            transition={{ duration: 0.8, ease: "easeOut" }}>
+
+            <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-2xl">
               {travel.town} - {travel.city}
             </h2>
-            <p className="text-2xl font-semibold text-white mb-2">
+
+            <p className="text-2xl font-semibold text-white mb-2 drop-shadow-2xl">
               {travel.start_date} → {travel.end_date}
             </p>
+
             {travel.title && (
               <p className="text-white/60 italic border-t border-white/10">
                 {travel.title}
@@ -149,26 +149,28 @@ function TravelDays() {
                   visible: { opacity: 1, transition: { staggerChildren: 0.4 } },
                 }}
                 initial="hidden"
-                animate="visible"
-              >
+                animate="visible">
+
                 {travel.days.map((d) => (
                   <motion.div
                     key={d.id}
                     className="group relative backdrop-blur-2xl bg-gradient-to-br from-blue-100/10 via-orange-100/5 to-transparent
-                     border border-white/40 p-5 rounded-3xl shadow-xl flex flex-col justify-between w-full sm:w-64
-                     transition-all duration-500 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]"
+                    border border-white/40 p-5 rounded-3xl shadow-xl flex flex-col justify-between w-full sm:w-64
+                    transition-all duration-500 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]"
                     variants={{
-                      hidden: { scale: 0, opacity: 0 },
+                      hidden: { scale: 0.9, y: 20, opacity: 0 },
                       visible: {
                         scale: 1,
+                        y: 0,
                         opacity: 1,
                         transition: { duration: 0.8, ease: "easeOut" },
                       },
-                    }}
-                  >
+                    }}>
+                      
+                    {/* Titolo e data */}
                     <div className="mb-4">
-                      <p className="text-white font-bold text-xl">{d.title}</p>
-                      <p className="text-white text-2sm font-semibold">{d.date}</p>
+                      <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.title}</p>
+                      <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
                     </div>
 
                     {/* Foto */}
@@ -180,7 +182,8 @@ function TravelDays() {
                             src={p}
                             alt="foto viaggio"
                             loading="lazy"
-                            className="w-20 h-20 object-cover rounded-2xl border border-white/40 shadow-md"
+                            className="w-20 h-20 object-cover rounded-2xl border border-white/40 shadow-md
+                            transition-transform duration-300 group-hover:scale-110 group-hover:brightness-110"
                           />
                         ))}
                       </div>
@@ -191,10 +194,9 @@ function TravelDays() {
                       <button
                         onClick={() => setSelectedDay(d)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                         bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
-                         text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
-                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
-                      >
+                        bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
+                      text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <i className="fa-solid fa-book-open"></i> Scopri di più
                       </button>
 
@@ -202,24 +204,23 @@ function TravelDays() {
                         to={`/days/${d.id}/edit`}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
                         bg-gradient-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
-                         text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
-                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
-                      >
+                      text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <i className="fa-solid fa-pen"></i> Modifica Tappa
                       </Link>
 
                       <button
                         onClick={() => setDeleteDayId(d.id)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                         bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
-                         text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
-                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
-                      >
+                        bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
+                      text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <i className="fa-solid fa-trash"></i> Cancella Tappa
                       </button>
                     </div>
                   </motion.div>
                 ))}
+
               </motion.div>
             ) : (
               <p className="text-white/80 font-semibold text-center mt-6 italic">

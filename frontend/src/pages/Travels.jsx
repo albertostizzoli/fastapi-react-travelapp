@@ -96,18 +96,17 @@ function Travels() {
       </div>
 
       {/* Titolo */}
-      <h1 className="text-4xl font-extrabold text-center text-gray-50/90 drop-shadow-md mb-10">
+      <h1 className="text-4xl font-extrabold text-center text-gray-50/90 drop-shadow-md mb-3">
         I miei viaggi
       </h1>
 
-      {/* Lista viaggi */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 mx-auto"
         initial="hidden"
         animate="visible"
         variants={{
           hidden: {},
-          visible: { transition: { staggerChildren: 0.25 } },
+          visible: { transition: { staggerChildren: 0.2 } },
         }}
       >
         <AnimatePresence>
@@ -115,49 +114,49 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              className="group relative bg-blue-500 backdrop-blur-2xl border border-white/40 rounded-3xl 
-              shadow-2xl overflow-hidden transition-all duration-500 hover:scale-105 
-              hover:shadow-[0_0_30px_rgba(255,255,255,0.35)]"
+              className="group relative bg-gradient-to-br from-blue-600/70 to-cyan-500/40 backdrop-blur-lg border border-white/20 rounded-3xl 
+                   shadow-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl"
               variants={{
-                hidden: { scale: 0.95, opacity: 0 },
-                visible: { scale: 1, opacity: 1 },
+                hidden: { scale: 0.9, y: 20, opacity: 0 },
+                visible: { scale: 1, y: 0, opacity: 1 },
               }}
               initial="hidden"
               animate="visible"
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}>
+
               {/* Immagine */}
               {v.days && v.days[0]?.photo?.[0] && (
-                <img
-                  src={v.days[0].photo[0]}
-                  alt={`Foto di ${v.town}`}
-                  className="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-all duration-100"
-                />
+                <div className="relative overflow-hidden">
+                  <img
+                    src={v.days[0].photo[0]}
+                    alt={`Foto di ${v.town}`}
+                    className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80"></div>
+                </div>
               )}
 
               {/* Contenuto */}
-              <div className="p-8 flex flex-col gap-3">
+              <div className="p-6 flex flex-col gap-3">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-extrabold text-gray-50 drop-shadow-sm">
+                  <h2 className="text-2xl font-extrabold text-white drop-shadow-md">
                     {v.town} - {v.city}
                   </h2>
-                  <h3 className="text-2xl font-extrabold text-gray-50 drop-shadow-sm">
-                    { v.year }
-                  </h3>
+                  <h3 className="text-xl font-bold text-white drop-shadow-md">{v.year}</h3>
                 </div>
-                <p className="text-gray-90 text-xl font-semibold">
+
+                <p className="text-gray-100 text-lg font-medium">
                   {v.start_date} → {v.end_date}
                 </p>
 
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-gray-50 font-medium text-xl"> Media voto:</span>
+                  <span className="text-white font-medium text-lg">Media voto:</span>
                   <StarRating rating={v.general_vote ?? 0} />
                 </div>
 
-                {/* Voti dettagliati */}
                 {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-2sm text-gray-50 mt-2">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
                     {Object.entries(v.votes).map(([key, value]) => (
                       <li key={key} className="flex justify-between items-center">
                         <span className="capitalize">{key}:</span>
@@ -168,14 +167,13 @@ function Travels() {
                 )}
 
                 {/* Pulsanti */}
-                <div className="flex flex-col lg:flex-row justify-center items-center gap-2 mt-5">
+                <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-5">
                   <Link
                     to={`/travels/${v.id}/days`}
                     className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                      bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
-                     text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
-                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
-                  >
+                   text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <i className="fa-solid fa-calendar-day mr-1"></i> Tappe
                   </Link>
 
@@ -183,9 +181,8 @@ function Travels() {
                     to={`/travels/${v.id}/edit`}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                      bg-gradient-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
-                     text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
-                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
-                  >
+                   text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
+                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <i className="fa-solid fa-pen mr-1"></i> Modifica
                   </Link>
 
@@ -193,9 +190,8 @@ function Travels() {
                     onClick={() => setDeleteId(v.id)}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                      bg-gradient-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
-                     text-gray-50/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
-                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
-                  >
+                   text-gray-50/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <i className="fa-solid fa-trash mr-1"></i> Cancella
                   </button>
                 </div>
@@ -204,6 +200,7 @@ function Travels() {
           ))}
         </AnimatePresence>
       </motion.div>
+
 
       {/* Modale eliminazione */}
       <ModalDeleteTravel
