@@ -138,208 +138,217 @@ function EditDay() {
 
       <form
         onSubmit={handleSubmit}
-        className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
-        w-full max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 gap-6">
+        className="relative grid grid-cols-1 md:grid-cols-2 gap-8 backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 
+        to-transparent rounded-3xl p-6 w-full max-w-5xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] 
+        overflow-hidden">
 
-        {/* sfere animate */}
+        {/* Effetto sfondo */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-          blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full
-           blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              blur-3xl top-10 left-10" />
+          <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
+              blur-3xl bottom-10 right-10" />
         </div>
 
-        {/* Titolo + nota obbligatorio */}
-        <div className="flex items-center justify-between md:col-span-2 mb-2">
-          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"> Modifica Tappa</h2>
-          <p className="text-sm italic text-white">* Il campo è obbligatorio</p>
-        </div>
+        {/* HEADER / INTESTAZIONE */}
+        <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-gradient-to-r from-black/10 to-transparent 
+            border-b border-white/20 px-6 py-4 rounded-t-3xl">
+          <div className="flex justify-between items-center gap-4">
+            <Link
+              to={travelId ? `/travels/${travelId}/days` : `/travels`}
+              className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500 
+              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-150 ease-in-out 
+              hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-arrow-left"></i>
+              Torna alle Tappe
+            </Link>
 
-        {/* Data */}
-        <div>
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Data *</label>
-          <input
-            type="text"
-            name="date"
-            value={day.date}
-            onChange={handleChange}
-            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
-            p-2 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
-          />
-        </div>
+            <h2 className="text-2xl text-center font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+              Modifica Tappa
+            </h2>
 
-        {/* Titolo */}
-        <div>
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Titolo *</label>
-          <input
-            type="text"
-            name="title"
-            value={day.title}
-            onChange={handleChange}
-            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
-            p-2 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
-
-        {/* Descrizione */}
-        <div className="md:col-span-2">
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Riassunto della giornata *</label>
-          <textarea
-            name="description"
-            value={day.description}
-            onChange={handleChange}
-            rows="6"
-            className="w-full font-semibold border border-white/40 rounded-3xl bg-white/10 text-white p-3 placeholder-white/70 
-            focus:ring-2 focus:ring-orange-300 focus:border-transparent transition scrollbar"
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
-
-        {/* Pulsanti principali */}
-        <div className="md:col-span-2 flex justify-between gap-4">
-          <button
-            type="button"
-            onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-600 to-rose-500 backdrop-blur-md border 
-            border-white/40 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105 cursor-pointer 
-            flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-list-check"></i> Seleziona Tag
-          </button>
-
-          <button
-            type="button"
-            onClick={handlePhotoSelect}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md border 
-            border-white/40 text-white rounded-full shadow-md transition-all duration-300 hover:scale-105 cursor-pointer 
-            flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-camera"></i> Carica Foto
-          </button>
-        </div>
-
-        {/* Tag selezionati */}
-        {day.tags.length > 0 && (
-          <div className="md:col-span-2 mt-3 flex flex-wrap justify-center gap-3">
-            {day.tags.map((tag, i) => (
-              <span
-                key={i}
-                className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
-                border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold shadow-md transition 
-                hover:scale-105 cursor-pointer">
-                <span>{tag}</span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setDay({
-                      ...day,
-                      tags: day.tags.filter((c) => c !== tag),
-                    })
-                  }
-                  className="ml-3 text-white hover:text-red-400 transition">
-                  <i className="fa-solid fa-xmark text-sm"></i>
-                </button>
-              </span>
-            ))}
+            <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
           </div>
-        )}
+        </div>
 
-        <ModalEditTag
-          isOpen={isTagModalOpen}
-          onClose={() => setIsTagModalOpen(false)}
-          tags={day.tags}
-          setTags={(newTags) => setDay({ ...day, tags: newTags })}
-        />
+        {/* COLONNA SINISTRA */}
+        <div className="flex flex-col gap-6 mt-20"> {/* mt-20 per spazio intestazione */}
+          {/* Data */}
+          <div>
+            <label className="block font-bold text-white mb-2">Data *</label>
+            <input
+              type="text"
+              name="date"
+              value={day.date}
+              onChange={handleChange}
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
+            />
+          </div>
 
-        {/* Foto */}
-        <div className="md:col-span-2">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
-            {day.photo.map((item, index) => {
-              const src =
-                typeof item === "string"
-                  ? item.startsWith("http")
-                    ? item
-                    : `http://127.0.0.1:8000/${item}`
-                  : URL.createObjectURL(item);
-              return (
-                <div key={index} className="relative group">
-                  <img
-                    onClick={() => setOpenImage(src)}
-                    src={src}
-                    alt={`Foto ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
-                  />
+          {/* Titolo */}
+          <div>
+            <label className="block font-bold text-white mb-2">Titolo *</label>
+            <input
+              type="text"
+              name="title"
+              value={day.title}
+              onChange={handleChange}
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
+            />
+          </div>
+
+          {/* Descrizione */}
+          <div>
+            <label className="block font-bold text-white mb-2">Riassunto della giornata *</label>
+            <textarea
+              name="description"
+              value={day.description}
+              onChange={handleChange}
+              rows="4"
+              className="w-full p-2 font-semibold border border-white/40 rounded-3xl bg-white/10 text-white 
+            placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition scrollbar"
+            />
+          </div>
+        </div>
+
+        {/* DIVIDER VERTICALE (solo desktop) */}
+        <div className="hidden md:block absolute left-1/2 top-20 bottom-6 w-[2px] bg-gradient-to-b from-transparent via-white/40 to-transparent rounded-full pointer-events-none" />
+
+        {/* COLONNA DESTRA */}
+        <div className="flex flex-col gap-6 justify-start sm:mt-20 scrollbar overflow-y-auto">
+          {/* Pulsanti principali */}
+          <div className="flex justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => setIsTagModalOpen(true)}
+              className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-600 to-rose-500 backdrop-blur-md 
+              border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
+              hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-list-check"></i> Seleziona Tag
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePhotoSelect}
+              className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
+              border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
+              hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-camera"></i> Carica Foto
+            </button>
+          </div>
+
+          {/* Tag selezionati */}
+          {day.tags.length > 0 && (
+            <div className="mt-3 flex gap-3 w-full justify-center flex-wrap">
+              {day.tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-cyan-500
+                  backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
+                  shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
+                  <span>{tag}</span>
                   <button
                     type="button"
-                    onClick={() => removePhoto(index)}
-                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 
-                    opacity-0 group-hover:opacity-100 transition">
-                    <i className="fa-solid fa-xmark"></i>
+                    onClick={() =>
+                      setDay({
+                        ...day,
+                        tags: day.tags.filter((c) => c !== tag),
+                      })
+                    }
+                    className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
+                    <i className="fa-solid fa-xmark text-sm"></i>
                   </button>
+                </span>
+              ))}
+            </div>
+          )}
 
+          <ModalEditTag
+            isOpen={isTagModalOpen}
+            onClose={() => setIsTagModalOpen(false)}
+            tags={day.tags}
+            setTags={(newTags) => setDay({ ...day, tags: newTags })}
+          />
 
-                  {openImage && (
-                    <div
-                      onClick={() => setOpenImage(null)}
-                      className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-                      <div
-                        onClick={(e) => e.stopPropagation()}
-                        className="relative w-full max-w-4xl mx-auto">
-                        <button
+          {/* Foto */}
+          <div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-2">
+              {day.photo.map((item, index) => {
+                const src =
+                  typeof item === "string"
+                    ? item.startsWith("http")
+                      ? item
+                      : `http://127.0.0.1:8000/${item}`
+                    : URL.createObjectURL(item);
+                return (
+                  <div key={index} className="relative group">
+                    <img
+                      onClick={() => setOpenImage(src)}
+                      src={src}
+                      alt={`Foto ${index + 1}`}
+                      className="w-full mt-3 h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removePhoto(index)}
+                      className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 
+                      group-hover:opacity-100 transition">
+                      <i className="fa-solid fa-xmark"></i>
+
+                      { /* Modale Foto */ }
+                      {openImage && (
+                        <div
                           onClick={() => setOpenImage(null)}
-                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg 
-                          hover:bg-red-400 transition cursor-pointer">
-                          <i className="fa-solid fa-xmark text-lg"></i>
-                        </button>
-                        <img
-                          src={openImage.replace("w=400", "w=1600")}
-                          alt="Immagine ingrandita"
-                          className="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-xl"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                          className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+                          <div
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative w-full max-w-4xl mx-auto bg-black/30 backdrop-blur-xl">
+                            <button
+                              onClick={() => setOpenImage(null)}
+                              className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg 
+                           hover:bg-red-400 transition cursor-pointer">
+                              <i className="fa-solid fa-xmark text-lg"></i>
+                            </button>
+                            <img
+                              src={openImage.replace("w=400", "w=1600")}
+                              alt="Immagine ingrandita"
+                              className="w-full h-auto max-h-[70vh] object-contain rounded-xl shadow-xl"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              multiple
+              style={{ display: "none" }}
+            />
           </div>
 
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            accept="image/*"
-            multiple
-            style={{ display: "none" }}
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
-
-        {/* Pulsanti finali */}
-        <div className="md:col-span-2 flex justify-between gap-2">
-          <Link
-            to={travelId ? `/travels/${travelId}/days` : `/travels`}
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500 
-            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100
-            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-arrow-left"></i>
-            Torna alle Tappe
-          </Link>
-          <button
-            type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
-            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 
-            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-edit"></i>
-            Salva Modifiche
-          </button>
+          {/* Pulsante finale */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
+              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+              hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-edit"></i>
+              Salva Modifiche
+            </button>
+          </div>
         </div>
       </form>
+
 
       {/* Modale di conferma */}
       {message && (

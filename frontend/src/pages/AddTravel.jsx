@@ -116,153 +116,163 @@ function AddTravel() {
       <form
         onSubmit={handleSubmit}
         className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 
-      w-full max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 gap-6">
+        w-full max-w-5xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden">
 
-        {/* sfere animate */}
+        {/* Sfere animate di sfondo */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-        blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              blur-3xl top-10 left-10" />
           <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-        blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              blur-3xl bottom-10 right-10" />
         </div>
 
-        {/* Titolo + nota obbligatorio */}
-        <div className="flex items-center justify-between md:col-span-2 mb-2">
-          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"> Aggiungi un nuovo viaggio</h2>
+        {/* INTESTAZIONE */}
+        <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-gradient-to-r from-black/10 to-transparent 
+            border-b border-white/20 px-6 py-4 rounded-t-3xl flex justify-between items-center">
+          <Link
+            to="/travels"
+            className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500 
+            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-150 ease-in-out 
+            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+            <i className="fa-solid fa-arrow-left"></i>
+            Torna ai Viaggi
+          </Link>
+
+          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] text-center">
+            Aggiungi un nuovo viaggio
+          </h2>
+
           <p className="text-sm italic text-white">* Il campo è obbligatorio</p>
         </div>
 
-        {/* Paese */}
-        <div>
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Paese *</label>
-          <input
-            type="text"
-            name="town"
-            value={form.town}
-            onChange={handleChange}
-            required
-            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
-          p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
-          />
-        </div>
+        {/* Divider verticale desktop */}
+        <div className="hidden md:block absolute left-1/2 top-24 bottom-6 w-[2px] bg-gradient-to-b from-transparent via-white/40 
+            to-transparent rounded-full pointer-events-none" />
 
-        {/* Città */}
-        <div>
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Città *</label>
-          <input
-            type="text"
-            name="city"
-            value={form.city}
-            onChange={handleChange}
-            required
-            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
-          p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
-          />
-        </div>
-
-        {/* Anno */}
-        <div>
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Anno *</label>
-          <input
-            type="number"
-            name="year"
-            value={form.year}
-            onChange={handleChange}
-            required
-            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
-          focus:ring-orange-400 focus:border-transparent transition"
-          />
-        </div>
-
-        {/* Data inizio */}
-        <div>
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Data Inizio *</label>
-          <input
-            type="date"
-            name="start_date"
-            value={form.start_date}
-            onChange={handleChange}
-            required
-            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
-          focus:ring-orange-400 focus:border-transparent transition [color-scheme:dark]"
-          />
-        </div>
-
-        {/* Data fine */}
-        <div>
-          <label className="block font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-2">Data Fine *</label>
-          <input
-            type="date"
-            name="end_date"
-            value={form.end_date}
-            onChange={handleChange}
-            required
-            className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
-          focus:ring-orange-400 focus:border-transparent transition [color-scheme:dark]"
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
-
-        {/* Voti */}
-        <div className="md:col-span-2">
-          <h3 className="font-bold mb-3 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] text-center text-xl"> Voti *</h3>
-          <div className="flex flex-wrap justify-center gap-6">
-            {["cibo", "relax", "prezzo", "attività", "paesaggio"].map((field) => (
-              <div key={field} className="flex flex-col items-center">
-                <label className="capitalize mb-1 font-bold text-white text-center">{field}</label>
-                <input
-                  type="number"
-                  name={field}
-                  min="1"
-                  max="5"
-                  value={form[field]}
-                  onChange={handleChange}
-                  className="w-20 font-semibold p-2 border border-white/40 bg-white/10 text-white rounded-full text-center 
-                focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Media voto */}
-        <div className="md:col-span-2 mt-4 flex justify-center">
-          <div className="flex flex-col items-center">
-            <label className="font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] mb-1">Media Voti</label>
+        {/* COLONNA SINISTRA */}
+        <div className="flex flex-col gap-6 mt-24">
+          {/* Paese */}
+          <div>
+            <label className="block font-bold text-white mb-2">Paese *</label>
             <input
               type="text"
-              value={calculateGeneralVote() ?? "-"}
-              readOnly
-              className="w-20 p-2 font-semibold border border-white/40 bg-white/10 text-white rounded-full text-center"
+              name="town"
+              value={form.town}
+              onChange={handleChange}
+              required
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+            />
+          </div>
+
+          {/* Città */}
+          <div>
+            <label className="block font-bold text-white mb-2">Città *</label>
+            <input
+              type="text"
+              name="city"
+              value={form.city}
+              onChange={handleChange}
+              required
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+            p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+            />
+          </div>
+
+          {/* Anno */}
+          <div>
+            <label className="block font-bold text-white mb-2">Anno *</label>
+            <input
+              type="number"
+              name="year"
+              value={form.year}
+              onChange={handleChange}
+              required
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
+            focus:ring-orange-400 focus:border-transparent transition"
+            />
+          </div>
+
+          {/* Data inizio */}
+          <div>
+            <label className="block font-bold text-white mb-2">Data Inizio *</label>
+            <input
+              type="date"
+              name="start_date"
+              value={form.start_date}
+              onChange={handleChange}
+              required
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
+            focus:ring-orange-400 focus:border-transparent transition [color-scheme:dark]"
+            />
+          </div>
+
+          {/* Data fine */}
+          <div>
+            <label className="block font-bold text-white mb-2">Data Fine *</label>
+            <input
+              type="date"
+              name="end_date"
+              value={form.end_date}
+              onChange={handleChange}
+              required
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
+            focus:ring-orange-400 focus:border-transparent transition [color-scheme:dark]"
             />
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-2"></div>
+        {/* COLONNA DESTRA */}
+        <div className="flex flex-col gap-8 sm:mt-24">
+          {/* Voti */}
+          <div>
+            <h3 className="font-bold mb-4 text-white text-center text-xl">Voti *</h3>
+            <div className="flex flex-wrap justify-center gap-6">
+              {["cibo", "relax", "prezzo", "attività", "paesaggio"].map((field) => (
+                <div key={field} className="flex flex-col items-center">
+                  <label className="capitalize mb-1 font-bold text-white text-center">{field}</label>
+                  <input
+                    type="number"
+                    name={field}
+                    min="1"
+                    max="5"
+                    value={form[field]}
+                    onChange={handleChange}
+                    className="w-20 font-semibold p-2 border border-white/40 bg-white/10 text-white rounded-full text-center 
+                    focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Pulsanti */}
-        <div className="md:col-span-2 flex justify-between gap-2 mt-4">
-          <Link
-            to="/travels"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500 
-          backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out
-          hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-arrow-left"></i>
-            Torna ai Viaggi
-          </Link>
-          <button
-            type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
-          backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out
-          hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-plus"></i>
-            Aggiungi Viaggio
-          </button>
+          {/* Media voto */}
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center">
+              <label className="font-bold text-white mb-1">Media Voti</label>
+              <input
+                type="text"
+                value={calculateGeneralVote() ?? "-"}
+                readOnly
+                className="w-20 p-2 font-semibold border border-white/40 bg-white/10 text-white rounded-full text-center"
+              />
+            </div>
+          </div>
+
+          { /* Azione */ }
+          <div className="flex justify-end mt-20">
+            <button
+              type="submit"
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
+              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out
+              hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-plus"></i>
+              Aggiungi Viaggio
+            </button>
+          </div>
         </div>
       </form>
+
 
       {/* Modale conferma */}
       {message && (

@@ -160,43 +160,56 @@ function AddDay() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}>
-        
+
       {/* Glow morbido dietro al form */}
       <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-gradient-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
        blur-3xl" />
 
       <form
         onSubmit={handleSubmit}
-        className="backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-transparent rounded-3xl p-6 w-full 
-        max-w-4xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]">
-
+        className="relative grid grid-cols-1 md:grid-cols-2 gap-8 backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 
+        to-transparent rounded-3xl p-6 w-full max-w-5xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] 
+        overflow-hidden">
+        {/* Effetto sfondo */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute w-[28rem] h-[28rem] bg-gradient-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-          blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              blur-3xl top-10 left-10" />
           <div className="absolute w-[32rem] h-[32rem] bg-gradient-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-          blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+              blur-3xl bottom-10 right-10" />
         </div>
 
-        {/* Titolo + nota obbligatorio */}
-        <div className="flex items-center justify-between md:col-span-2 mb-4">
-          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"> Aggiungi una tappa al viaggio</h2>
-          <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
+        {/* HEADER / INTESTAZIONE */}
+        <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-gradient-to-r from-black/10 to-transparent 
+        border-b border-white/20 px-6 py-4 rounded-t-3xl">
+          <div className="flex justify-between items-center gap-4">
+            <Link
+              to={`/travels/${selectedTravel}/days`}
+              className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500 
+              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-150 ease-in-out 
+              hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-arrow-left"></i>
+              Torna alle Tappe
+            </Link>
+            <h2 className="text-2xl text-center font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+              Aggiungi Tappa
+            </h2>
+            <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
+          </div>
         </div>
 
-        {/* Griglia a due colonne */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Selezione viaggio */}
+        {/* COLONNA SINISTRA */}
+        <div className="flex flex-col gap-6 mt-20"> {/* mt-20 per lasciare spazio all’intestazione */}
+          {/* Viaggio */}
           <div>
-            <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Viaggio *</label>
+            <label className="block font-bold text-white mb-2">Viaggio *</label>
             <select
               value={selectedTravel}
               onChange={(e) => setSelectedTravel(e.target.value)}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white
-              placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
               required>
-              <option value="" className="bg-black text-white">-- Seleziona --</option>
+              <option value="" className=" text-black">-- Seleziona --</option>
               {travels.map((t) => (
-                <option key={t.id} value={t.id} className="bg-black text-white">
+                <option key={t.id} value={t.id} className=" text-black">
                   {t.city} ({t.year})
                 </option>
               ))}
@@ -205,21 +218,20 @@ function AddDay() {
 
           {/* Data */}
           <div>
-            <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Data *</label>
+            <label className="block font-bold text-white mb-2">Data *</label>
             <input
               type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
               required
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white
-              placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition [color-scheme:dark]"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition [color-scheme:dark]"
             />
           </div>
 
           {/* Titolo */}
-          <div className="md:col-span-2 relative">
-            <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Titolo *</label>
+          <div className="relative">
+            <label className="block font-bold text-white mb-2">Titolo *</label>
             <input
               name="title"
               value={form.title}
@@ -229,14 +241,10 @@ function AddDay() {
                 setQuery(value);
               }}
               required
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
-              placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
             />
-            
-             { /* Suugerimenti */ }
             {suggestions.length > 0 && (
-              <ul className="absolute bg-black/80 backdrop-blur-3xl border border-white/40 text-white w-full 
-              mt-1 shadow-lg rounded-xl z-10">
+              <ul className="absolute bg-black/50 backdrop-blur-3xl border border-white/40 text-white w-full mt-1 shadow-lg rounded-xl z-10">
                 {suggestions.map((s, i) => (
                   <li
                     key={i}
@@ -244,172 +252,161 @@ function AddDay() {
                     onClick={() => {
                       setForm((prev) => ({ ...prev, title: s.name }));
                       setSuggestions([]);
-                    }}
-                  >
+                    }}>
                     {s.name}, {s.city}, {s.country}
                   </li>
                 ))}
               </ul>
             )}
           </div>
-        </div>
 
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-4"></div>
-
-        {/* Descrizione */}
-        <div className="md:col-span-2">
-          <label className="block font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Riassunto della giornata *</label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            required
-            className="w-full p-2 font-semibold border border-white/40 rounded-3xl bg-white/10 text-white
-            placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition scrollbar"
-            rows="6"
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-4"></div>
-
-        {/* Pulsanti principali: Seleziona categorie + Carica foto */}
-        <div className="md:col-span-2 flex justify-between gap-4">
-          <button
-            type="button"
-            onClick={() => setIsTagModalOpen(true)}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-600 to-rose-500 backdrop-blur-md 
-            border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
-            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-list-check"></i> Seleziona Tag
-          </button>
-          <button
-            type="button"
-            onClick={handlePhotoSelect}
-            className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
-            border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
-            hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-camera"></i> Carica Foto
-          </button>
-        </div>
-
-        {/* Mostra i tags selezionati */}
-        {form.tags.length > 0 && (
-          <div className="mt-3 flex gap-3 w-full justify-center flex-wrap">
-            {form.tags.map((tag, i) => (
-              <span
-                key={i}
-                className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-cyan-500
-                backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
-                shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
-                <span>{tag}</span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setForm({
-                      ...form,
-                      tags: form.tags.filter((c) => c !== tag),
-                    })
-                  }
-                  className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
-                  <i className="fa-solid fa-xmark text-sm"></i>
-                </button>
-              </span>
-            ))}
+          {/* Descrizione */}
+          <div>
+            <label className="block font-bold text-white mb-2">Riassunto della giornata *</label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              required
+              className="w-full p-2 font-semibold border border-white/40 rounded-3xl bg-white/10 text-white 
+              placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition scrollbar"
+              rows="4"
+            />
           </div>
-        )}
+        </div>
 
-        <ModalAddTag
-          isOpen={isTagModalOpen}
-          onClose={() => setIsTagModalOpen(false)}
-          form={form}
-          setForm={setForm}
-        />
+        {/* DIVIDER VERTICALE (solo desktop) */}
+        <div className="hidden md:block absolute left-1/2 top-20 bottom-6 w-[2px] bg-gradient-to-b from-transparent via-white/40 to-transparent rounded-full pointer-events-none" />
 
-        {/* Foto */}
-        <div className="md:col-span-2">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-2">
-            {form.photo.map((item, index) => {
-              const src =
-                typeof item === "string"
+        {/* COLONNA DESTRA */}
+        <div className="flex flex-col gap-6 justify-start sm:mt-20 scrollbar overflow-y-auto">
+          {/* Pulsanti principali */}
+          <div className="flex justify-between gap-4">
+            <button
+              type="button"
+              onClick={() => setIsTagModalOpen(true)}
+              className="font-semibold px-6 py-2 bg-gradient-to-r from-orange-600 to-rose-500 backdrop-blur-md 
+              border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
+              hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-list-check"></i> Seleziona Tag
+            </button>
+            <button
+              type="button"
+              onClick={handlePhotoSelect}
+              className="font-semibold px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
+              border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
+              hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-camera"></i> Carica Foto
+            </button>
+          </div>
+
+          {/* Tags selezionati */}
+          {form.tags.length > 0 && (
+            <div className="mt-3 flex gap-3 w-full justify-center flex-wrap">
+              {form.tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-cyan-500
+                  backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
+                  shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
+                  <span>{tag}</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setForm({
+                        ...form,
+                        tags: form.tags.filter((c) => c !== tag),
+                      })
+                    }
+                    className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
+                    <i className="fa-solid fa-xmark text-sm"></i>
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
+          { /* Modale dei Tag */}
+          <ModalAddTag
+            isOpen={isTagModalOpen}
+            onClose={() => setIsTagModalOpen(false)}
+            form={form}
+            setForm={setForm}
+          />
+
+          {/* Foto */}
+          <div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-2">
+              {form.photo.map((item, index) => {
+                const src = typeof item === "string"
                   ? item.startsWith("http")
                     ? item
                     : `http://127.0.0.1:8000/${item}`
                   : URL.createObjectURL(item);
-              return (
-                <div key={index} className="relative group">
-                  <img
-                    onClick={() => setOpenImage(src)}
-                    src={src}
-                    alt={`Foto ${index + 1}`}
-                    className="w-full mt-3 h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removePhoto(index)}
-                    className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 
-                    group-hover:opacity-100 transition">
-                    <i className="fa-solid fa-xmark"></i>
-                  </button>
+                return (
+                  <div key={index} className="relative group">
+                    <img
+                      onClick={() => setOpenImage(src)}
+                      src={src}
+                      alt={`Foto ${index + 1}`}
+                      className="w-full mt-3 h-32 object-cover rounded-3xl border border-white shadow-md cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removePhoto(index)}
+                      className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 
+                      group-hover:opacity-100 transition">
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
 
-                  {openImage && (
-                    <div
-                      onClick={() => setOpenImage(null)}
-                      className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+                    { /* Modale Foto */ }
+                    {openImage && (
                       <div
-                        onClick={(e) => e.stopPropagation()}
-                        className="relative w-full max-w-4xl mx-auto">
-                        <button
-                          onClick={() => setOpenImage(null)}
-                          className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg 
+                        onClick={() => setOpenImage(null)}
+                        className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+                        <div
+                          onClick={(e) => e.stopPropagation()}
+                          className="relative w-full max-w-4xl mx-auto  bg-black/30 backdrop-blur-xl">
+                          <button
+                            onClick={() => setOpenImage(null)}
+                            className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg 
                           hover:bg-red-400 transition cursor-pointer">
-                          <i className="fa-solid fa-xmark text-lg"></i>
-                        </button>
-                        <img
-                          src={openImage.replace("w=400", "w=1600")}
-                          alt="Immagine ingrandita"
-                          className="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-xl"
-                        />
+                            <i className="fa-solid fa-xmark text-lg"></i>
+                          </button>
+                          <img
+                            src={openImage.replace("w=400", "w=1600")}
+                            alt="Immagine ingrandita"
+                            className="w-full h-auto max-h-[70vh] object-contain rounded-xl shadow-xl"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              multiple
+              style={{ display: "none" }}
+            />
           </div>
 
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            accept="image/*"
-            multiple
-            style={{ display: "none" }}
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="md:col-span-2 border-t border-white/40 my-4"></div>
-
-        {/* Pulsante Aggiungi Tappa */}
-        <div className="md:col-span-2 flex justify-between gap-2">
-          <Link
-            to={`/travels/${selectedTravel}/days`}
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-rose-500
-            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
-            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-arrow-left"></i>
-            Torna alle Tappe
-          </Link>
-          <button
-            type="submit"
-            className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
-            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
-            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-plus"></i>
-            Aggiungi Tappa
-          </button>
+          {/* Pulsante finale */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-teal-500 
+              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+              hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+              <i className="fa-solid fa-plus"></i>
+              Aggiungi Tappa
+            </button>
+          </div>
         </div>
       </form>
 
