@@ -16,6 +16,7 @@ function AddDay() {
   const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
   const [query, setQuery] = useState(""); // stato per ottenre i luoghi dall'API  Photon
   const [suggestions, setSuggestions] = useState([]); // stato per i suggerimenti dall'API Photon
+  
 
   const [form, setForm] = useState({ // stato del form
     date: "",
@@ -60,13 +61,52 @@ function AddDay() {
     fileInputRef.current.click(); // simula il click sull’input file nascosto
   };
 
+  // Funzione per ridurre la dimensione dell'immagine per fare un upload più veloce delle foto
+  const resizeImage = (file, maxWidth = 1024, maxHeight = 1024) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+
+    img.onload = () => {
+      let { width, height } = img;
+      if (width > height) {
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width = (width * maxHeight) / height;
+          height = maxHeight;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          const resizedFile = new File([blob], file.name, { type: file.type });
+          resolve(resizedFile);
+        },
+        file.type,
+        0.4 
+      );
+    };
+  });
+};
+
   // Funzione per gestire la selezione delle foto
-  const handleFileChange = (e) => {
+  const handleFileChange = async  (e) => {
     const newFiles = Array.from(e.target.files); // converto FileList in array
     if (newFiles.length > 0) { // se ci sono file selezionati
+      const resizedFiles = await Promise.all(newFiles.map(file => resizeImage(file))); // chiamo la funzione resizeImage
       setForm((prevForm) => ({ // aggiorno lo stato del form
         ...prevForm, // mantengo gli altri campi
-        photo: [...prevForm.photo, ...newFiles], // aggiungo i nuovi file all'array delle foto
+        photo: [...prevForm.photo, ...resizedFiles], // aggiungo i nuovi file all'array delle foto
       }));
     }
     e.target.value = null; // reset input
@@ -364,7 +404,7 @@ function AddDay() {
                       <i className="fa-solid fa-xmark"></i>
                     </button>
 
-                    { /* Modale Foto */ }
+                    { /* Modale Foto */}
                     {openImage && (
                       <div
                         onClick={() => setOpenImage(null)}

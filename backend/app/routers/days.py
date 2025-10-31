@@ -9,6 +9,7 @@ from app.utils.travels import format_date, get_coordinates  # funzioni di utilit
 from app.config import cloudinary   # importo la configurazione di Cloudinary
 import cloudinary.uploader  # per caricare immagini su Cloudinary
 from app.auth import get_current_user # importo la funzione per ottenere l'utente in base al token fornito
+import asyncio
 
 # creo il router per i giorni, con prefisso e tag
 router = APIRouter(prefix="/travels", tags=["days"])
@@ -22,6 +23,11 @@ def get_db():
         yield db  # restituisce la sessione da usare nelle query
     finally:
         db.close()  # chiude la sessione per evitare memory leak
+
+
+async def upload_photo(photo):
+    # Upload su Cloudinary in thread separato
+    return await asyncio.to_thread(cloudinary.uploader.upload, photo.file)
 
 
 #  POST: aggiunge un giorno a un viaggio esistente
@@ -45,12 +51,12 @@ async def add_day_travel(
     # ottengo le coordinate geografiche per il giorno
     lat, lng = get_coordinates(title, travel.city, travel.town)
 
-    # carico le foto su Cloudinary
+    # carico le foto su Cloudinary in parallelo
     photo_urls = []
     if photos:
-        for photo in photos:
-            result = cloudinary.uploader.upload(photo.file)
-            photo_urls.append(result["secure_url"])
+        upload_tasks = [upload_photo(photo) for photo in photos]
+        results = await asyncio.gather(*upload_tasks)
+        photo_urls = [res["secure_url"] for res in results]
 
     # carico i tags
     tags_data = tags or []

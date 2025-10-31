@@ -96,7 +96,7 @@ function Travels() {
       </div>
 
       {/* Titolo */}
-      <h1 className="text-4xl font-extrabold text-center text-gray-50/90 drop-shadow-md mb-3">
+      <h1 className="text-3xl font-extrabold text-center text-gray-50/90 drop-shadow-md mb-3">
         I miei viaggi
       </h1>
 

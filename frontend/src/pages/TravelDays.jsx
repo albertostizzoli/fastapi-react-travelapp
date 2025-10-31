@@ -88,7 +88,7 @@ function TravelDays() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
         {/* Titolo */}
         <motion.h1
-          className="text-4xl font-extrabold text-white flex-1 min-w-[200px] p-4 rounded-3xl
+          className="text-3xl font-extrabold text-white flex-1 min-w-[200px] p-3 rounded-3xl
            bg-white/5 backdrop-blur-md border border-white/40 shadow-lg"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -119,16 +119,16 @@ function TravelDays() {
         <div className="flex-1 flex flex-col h-full">
           {/* Info Viaggio */}
           <motion.div
-            className="p-6 rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/40 shadow-xl"
+            className="p-4 rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/40 shadow-xl"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}>
 
-            <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-2xl">
+            <h2 className="text-2xl font-bold text-white mb-2 drop-shadow-2xl">
               {travel.town} - {travel.city}
             </h2>
 
-            <p className="text-2xl font-semibold text-white mb-2 drop-shadow-2xl">
+            <p className="text-xl font-bold text-white mb-2 drop-shadow-2xl">
               {travel.start_date} → {travel.end_date}
             </p>
 
