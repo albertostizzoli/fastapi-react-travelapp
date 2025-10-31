@@ -230,6 +230,7 @@ function EditDay() {
         {/* HEADER / INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
             border-b border-white/20 px-6 py-4 rounded-t-3xl">
+
           <div className="flex justify-between items-center gap-4">
             <Link
               to={travelId ? `/travels/${travelId}/days` : `/travels`}
@@ -296,6 +297,7 @@ function EditDay() {
 
         {/* COLONNA DESTRA */}
         <div className="flex flex-col gap-6 justify-start sm:mt-20 scrollbar overflow-y-auto">
+
           {/* Pulsanti principali */}
           <div className="flex justify-between gap-4">
             <button
@@ -330,10 +332,7 @@ function EditDay() {
                   <button
                     type="button"
                     onClick={() =>
-                      setDay({
-                        ...day,
-                        tags: day.tags.filter((c) => c !== tag),
-                      })
+                      setDay({ ...day, tags: day.tags.filter((c) => c !== tag), })
                     }
                     className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
                     <i className="fa-solid fa-xmark text-sm"></i>
@@ -343,6 +342,7 @@ function EditDay() {
             </div>
           )}
 
+          { /* Modale di Modifica dei Tag */}
           <ModalEditTag
             isOpen={isTagModalOpen}
             onClose={() => setIsTagModalOpen(false)}
@@ -354,12 +354,11 @@ function EditDay() {
           <div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-2">
               {day.photo.map((item, index) => {
-                const src =
-                  typeof item === "string"
-                    ? item.startsWith("http")
-                      ? item
-                      : `http://127.0.0.1:8000/${item}`
-                    : URL.createObjectURL(item);
+                const src = typeof item === "string"
+                  ? item.startsWith("http")
+                    ? item
+                    : `http://127.0.0.1:8000/${item}`
+                  : URL.createObjectURL(item);
                 return (
                   <div key={index} className="relative group">
                     <img
@@ -413,7 +412,7 @@ function EditDay() {
             />
           </div>
 
-          {/* Pulsante finale */}
+          {/* Pulsante */}
           <div className="flex justify-end">
             <button
               type="submit"
@@ -426,7 +425,6 @@ function EditDay() {
           </div>
         </div>
       </form>
-
 
       {/* Modale di conferma */}
       {message && (

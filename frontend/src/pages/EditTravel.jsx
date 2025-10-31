@@ -112,6 +112,7 @@ function EditTravel() {
         {/* INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
           border-b border-white/20 px-6 py-4 rounded-t-3xl flex justify-between items-center">
+            
           <Link
             to="/travels"
             className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
@@ -142,8 +143,8 @@ function EditTravel() {
               name="town"
               value={travel.town}
               onChange={handleChange}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
-            placeholder-white/70 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
             />
           </div>
 
@@ -155,8 +156,8 @@ function EditTravel() {
               name="city"
               value={travel.city}
               onChange={handleChange}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
-            placeholder-white/70 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
             />
           </div>
 
@@ -168,8 +169,8 @@ function EditTravel() {
               name="year"
               value={travel.year}
               onChange={handleChange}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
-            placeholder-white/70 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
             />
           </div>
 
@@ -181,8 +182,8 @@ function EditTravel() {
               name="start_date"
               value={travel.start_date}
               onChange={handleChange}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
-           placeholder-white/70 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
             />
           </div>
 
@@ -194,8 +195,8 @@ function EditTravel() {
               name="end_date"
               value={travel.end_date}
               onChange={handleChange}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
-            placeholder-white/70 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
             />
           </div>
         </div>

@@ -107,15 +107,15 @@ function Travels() {
         variants={{
           hidden: {},
           visible: { transition: { staggerChildren: 0.2 } },
-        }}
-      >
+        }}>
+
         <AnimatePresence>
           {travels.map((v) => (
             <motion.div
               key={v.id}
               layout
-              className="group relative bg-linear-to-br from-blue-600/70 to-cyan-500/40 backdrop-blur-lg border border-white/20 rounded-3xl 
-                   shadow-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+              className="group relative bg-linear-to-br from-blue-600/70 to-cyan-500/40 backdrop-blur-lg border border-white/20 
+              rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl"
               variants={{
                 hidden: { scale: 0.9, y: 20, opacity: 0 },
                 visible: { scale: 1, y: 0, opacity: 1 },
@@ -171,27 +171,27 @@ function Travels() {
                   <Link
                     to={`/travels/${v.id}/days`}
                     className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
-                   text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
-                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                    bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <i className="fa-solid fa-calendar-day mr-1"></i> Tappe
                   </Link>
 
                   <Link
                     to={`/travels/${v.id}/edit`}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
-                   text-gray-50/90 rounded-full shadow-md transition-all duration-100 hover:scale-105
-                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                    bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <i className="fa-solid fa-pen mr-1"></i> Modifica
                   </Link>
 
                   <button
                     onClick={() => setDeleteId(v.id)}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                     bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
-                   text-gray-50/90 rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
-                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                    bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                    rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <i className="fa-solid fa-trash mr-1"></i> Cancella
                   </button>
                 </div>
@@ -217,7 +217,7 @@ function Travels() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-gray-50/90 px-6 py-3 
-                   rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500/70 to-orange-500/70"
+          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500/70 to-orange-500/70"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>

@@ -79,13 +79,14 @@ function TravelDays() {
       {/* Effetto Glow dinamico di sfondo */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute w-120 h-120 bg-linear-to-br from-blue-400/20 to-cyan-400/10 
-        rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
         <div className="absolute w-lg h-128 bg-linear-to-br from-orange-400/20 to-amber-400/10 
-        rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
+            rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
       </div>
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
+
         {/* Titolo */}
         <motion.h1
           className="text-3xl font-extrabold text-white flex-1 min-w-[200px] p-3 rounded-3xl
@@ -117,6 +118,7 @@ function TravelDays() {
       {/* Layout principale */}
       <div className="flex flex-col lg:flex-row max-w-6xl mx-auto gap-8">
         <div className="flex-1 flex flex-col h-full">
+
           {/* Info Viaggio */}
           <motion.div
             className="p-4 rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/40 shadow-xl"
@@ -141,6 +143,7 @@ function TravelDays() {
 
           {/* Lista Giorni */}
           <div className="flex-1 pr-2 mt-6">
+
             {travel.days?.length > 0 ? (
               <motion.div
                 className="flex flex-wrap gap-6"
@@ -194,8 +197,8 @@ function TravelDays() {
                       <button
                         onClick={() => setSelectedDay(d)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
-                      text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                        rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <i className="fa-solid fa-book-open"></i> Scopri di più
                       </button>
@@ -203,8 +206,8 @@ function TravelDays() {
                       <Link
                         to={`/days/${d.id}/edit`}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40
-                      text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
+                        rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <i className="fa-solid fa-pen"></i> Modifica Tappa
                       </Link>
@@ -212,8 +215,8 @@ function TravelDays() {
                       <button
                         onClick={() => setDeleteDayId(d.id)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
-                      text-white rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                        rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <i className="fa-solid fa-trash"></i> Cancella Tappa
                       </button>
@@ -251,7 +254,7 @@ function TravelDays() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white px-6 py-3
-                   rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500"
+          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500"
         >
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>

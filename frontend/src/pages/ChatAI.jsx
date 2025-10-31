@@ -172,8 +172,8 @@ function ChatAI() {
             {/* Input area */}
             <div className="p-3 sm:p-4 flex sm:flex-row items-center sm:items-end gap-3 border-t border-white/20">
                 <input
-                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-2 sm:py-3 
-                  text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300 
+                    className="flex-1 bg-white/20 border border-white/30 rounded-full px-4 py-2 sm:py-3 text-white placeholder-white 
+                    focus:outline-none focus:ring-2 focus:ring-blue-300 
                     transition resize-none overflow-y-auto leading-relaxed min-h-10 sm:min-h-12
                     max-h-40 text-sm sm:text-base"
                     value={input}
@@ -191,8 +191,8 @@ function ChatAI() {
                     onClick={sendMessage}
                     disabled={isLoading}
                     className="font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
-                    bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40
-                  text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+                    bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                    rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer text-sm sm:text-base">
                     Invia
                 </motion.button>

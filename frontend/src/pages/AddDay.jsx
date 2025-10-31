@@ -196,7 +196,7 @@ function AddDay() {
           },
           // mi permette di vedere i progressi del caricamento
           onUploadProgress: (progressEvent) => {
-            if (progressEvent.total) { 
+            if (progressEvent.total) {
               // viene calcolata la percentuale del caricamento
               const percentCompleted = Math.round(
                 (progressEvent.loaded * 100) / progressEvent.total
@@ -261,6 +261,7 @@ function AddDay() {
         className="relative grid grid-cols-1 md:grid-cols-2 gap-8 backdrop-blur-xl bg-linear-to-br from-white/20 via-white/10 
         to-transparent rounded-3xl p-6 w-full max-w-5xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] 
         overflow-hidden">
+
         {/* Effetto sfondo */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute w-md h-112 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
@@ -271,8 +272,9 @@ function AddDay() {
 
         {/* HEADER / INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
-        border-b border-white/20 px-6 py-4 rounded-t-3xl">
+              border-b border-white/20 px-6 py-4 rounded-t-3xl">
           <div className="flex justify-between items-center gap-4">
+
             <Link
               to={`/travels/${selectedTravel}/days`}
               className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
@@ -281,9 +283,11 @@ function AddDay() {
               <i className="fa-solid fa-arrow-left"></i>
               Torna alle Tappe
             </Link>
+
             <h2 className="text-2xl text-center font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
               Aggiungi Tappa
             </h2>
+
             <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
           </div>
         </div>
@@ -337,6 +341,7 @@ function AddDay() {
               className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white 
               placeholder-white/70 focus:ring-2 focus:ring-orange-300 focus:border-transparent transition"
             />
+             { /* Suggerimenti */ }
             {suggestions.length > 0 && (
               <ul className="absolute bg-black/50 backdrop-blur-3xl border border-white/40 text-white w-full mt-1 
               shadow-lg rounded-xl z-10">
@@ -422,7 +427,7 @@ function AddDay() {
             </div>
           )}
 
-          { /* Modale dei Tag */}
+          { /* Modale di Aggiunta dei Tag */}
           <ModalAddTag
             isOpen={isTagModalOpen}
             onClose={() => setIsTagModalOpen(false)}

@@ -129,6 +129,7 @@ function AddTravel() {
         {/* INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
             border-b border-white/20 px-6 py-4 rounded-t-3xl flex justify-between items-center">
+
           <Link
             to="/travels"
             className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
@@ -175,7 +176,7 @@ function AddTravel() {
               onChange={handleChange}
               required
               className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
-            p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
+              p-2 focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
             />
           </div>
 
@@ -188,8 +189,8 @@ function AddTravel() {
               value={form.year}
               onChange={handleChange}
               required
-              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
-            focus:ring-orange-400 focus:border-transparent transition"
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition"
             />
           </div>
 
@@ -202,8 +203,8 @@ function AddTravel() {
               value={form.start_date}
               onChange={handleChange}
               required
-              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
-            focus:ring-orange-400 focus:border-transparent transition scheme-dark"
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition scheme-dark"
             />
           </div>
 
@@ -216,8 +217,8 @@ function AddTravel() {
               value={form.end_date}
               onChange={handleChange}
               required
-              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 focus:ring-2 
-            focus:ring-orange-400 focus:border-transparent transition scheme-dark"
+              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white p-2 
+              focus:ring-2 focus:ring-orange-400 focus:border-transparent transition scheme-dark"
             />
           </div>
         </div>
@@ -282,7 +283,7 @@ function AddTravel() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-xl border border-white/40 text-white px-6 py-3 rounded-full 
-        shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500">
+          shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}
