@@ -16,8 +16,8 @@ function AddDay() {
   const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
   const [query, setQuery] = useState(""); // stato per ottenre i luoghi dall'API  Photon
   const [suggestions, setSuggestions] = useState([]); // stato per i suggerimenti dall'API Photon
-  
-
+  const [isUploading, setIsUploading] = useState(false); // stato per il caricamento
+  const [uploadProgress, setUploadProgress] = useState(0); // stato per la barra di caricamento
   const [form, setForm] = useState({ // stato del form
     date: "",
     title: "",
@@ -61,46 +61,60 @@ function AddDay() {
     fileInputRef.current.click(); // simula il click sull’input file nascosto
   };
 
-  // Funzione per ridurre la dimensione dell'immagine per fare un upload più veloce delle foto
+  // Funzione per ridurre le dimensioni di un'immagine serve a rendere l'upload più veloce
   const resizeImage = (file, maxWidth = 1024, maxHeight = 1024) => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
+    // restituisce una Promise perché l'operazione è asincrona
+    return new Promise((resolve) => {
 
-    img.onload = () => {
-      let { width, height } = img;
-      if (width > height) {
-        if (width > maxWidth) {
-          height = (height * maxWidth) / width;
-          width = maxWidth;
+      // crea un oggetto immagine temporaneo per poterla caricare nel browser
+      const img = new Image();
+      img.src = URL.createObjectURL(file); // converte il file in un URL locale (blob) visualizzabile
+
+      // quando l'immagine è stata caricata completamente nel browser
+      img.onload = () => {
+        let { width, height } = img; // prendo la larghezza e altezza originali
+
+        // mantiene le proporzioni originali ma limita la larghezza e altezza massima
+        if (width > height) {
+          // se l'immagine è orizzontale e più larga del massimo consentito
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width; // ridimensiona in proporzione
+            width = maxWidth;
+          }
+        } else {
+          // se l'immagine è verticale e più alta del massimo consentito
+          if (height > maxHeight) {
+            width = (width * maxHeight) / height; // ridimensiona in proporzione
+            height = maxHeight;
+          }
         }
-      } else {
-        if (height > maxHeight) {
-          width = (width * maxHeight) / height;
-          height = maxHeight;
-        }
-      }
 
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, width, height);
+        // crea un canvas (un'area di disegno HTML) con le nuove dimensioni calcolate
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
 
-      canvas.toBlob(
-        (blob) => {
-          const resizedFile = new File([blob], file.name, { type: file.type });
-          resolve(resizedFile);
-        },
-        file.type,
-        0.4 
-      );
-    };
-  });
-};
+        // disegna l'immagine originale sul canvas, ma ridotta alle nuove dimensioni
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // converte il contenuto del canvas in un blob (dato binario compresso)
+        canvas.toBlob(
+          (blob) => {
+            // crea un nuovo file immagine ridimensionato da inviare come se fosse un normale file
+            const resizedFile = new File([blob], file.name, { type: file.type });
+            resolve(resizedFile); // restituisce il nuovo file compresso
+          },
+          file.type, // mantiene il formato originale (es: image/jpeg)
+          0.5        // livello di qualità 
+        );
+      };
+    });
+  };
+
 
   // Funzione per gestire la selezione delle foto
-  const handleFileChange = async  (e) => {
+  const handleFileChange = async (e) => {
     const newFiles = Array.from(e.target.files); // converto FileList in array
     if (newFiles.length > 0) { // se ci sono file selezionati
       const resizedFiles = await Promise.all(newFiles.map(file => resizeImage(file))); // chiamo la funzione resizeImage
@@ -168,6 +182,10 @@ function AddDay() {
         formData.append("photos", file);
       });
 
+      // attiva la barra di caricamento
+      setIsUploading(true);
+      setUploadProgress(0);
+
       await axios.post(
         `http://127.0.0.1:8000/travels/${selectedTravel}/days`,
         formData,
@@ -176,8 +194,22 @@ function AddDay() {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          // mi permette di vedere i progressi del caricamento
+          onUploadProgress: (progressEvent) => {
+            if (progressEvent.total) { 
+              // viene calcolata la percentuale del caricamento
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              setUploadProgress(percentCompleted);
+            }
+          },
         }
       );
+
+      // disattiva la barra di caricamento
+      setIsUploading(false);
+      setUploadProgress(0);
 
       setForm({ date: "", title: "", description: "", tags: [], photo: [] }); // resetto il form
       setMessage("✅ Tappa aggiunta!");
@@ -191,6 +223,7 @@ function AddDay() {
     } catch (err) {
       console.error(err);
       setMessage("❌ Errore durante l'aggiunta della tappa.");
+      setIsUploading(false);
     }
   };
 
@@ -204,6 +237,24 @@ function AddDay() {
       {/* Glow morbido dietro al form */}
       <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-linear-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
        blur-3xl" />
+
+      {/* Barra di caricamento durante upload */}
+      {isUploading && (
+        <div className="w-full max-w-4xl mb-6">
+          {/* Percentuale testuale */}
+          <div className="text-right text-white font-semibold mb-1">
+            {uploadProgress}%
+          </div>
+
+          {/* Barra di caricamento */}
+          <div className="w-full bg-gray-300 rounded-full h-3 overflow-hidden">
+            <div
+              className="bg-blue-600 h-3 transition-all duration-300 ease-in-out"
+              style={{ width: `${uploadProgress}%` }}
+            ></div>
+          </div>
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit}

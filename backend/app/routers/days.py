@@ -25,6 +25,7 @@ def get_db():
         db.close()  # chiude la sessione per evitare memory leak
 
 
+# Funzione che mi permette di fare l'upload delle foto in modo asincrono
 async def upload_photo(photo):
     # Upload su Cloudinary in thread separato
     return await asyncio.to_thread(cloudinary.uploader.upload, photo.file)
@@ -122,9 +123,11 @@ async def update_day_travel(
     # gestisco le foto: mantieni quelle esistenti + nuove caricate
     photo_urls = existing_photos or []
     if photos:
-        for photo in photos:
-            result = cloudinary.uploader.upload(photo.file)
-            photo_urls.append(result["secure_url"])
+        # upload in parallelo
+        upload_tasks = [upload_photo(photo) for photo in photos]
+        results = await asyncio.gather(*upload_tasks)
+        photo_urls += [res["secure_url"] for res in results]
+
     db_day.photo = photo_urls
 
     # aggiorno lat/lng

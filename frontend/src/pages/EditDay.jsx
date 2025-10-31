@@ -13,6 +13,8 @@ function EditDay() {
   const fileInputRef = useRef(null); // riferimento all’input nascosto
   const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
   const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
+  const [isUploading, setIsUploading] = useState(false); // stato per il caricamento
+  const [uploadProgress, setUploadProgress] = useState(0); // stato per mostare la barra di caricamento
   const location = useLocation();
   const travelId = location.state?.travelId || day?.travelId; // uso location per tornare alle tappe
 
@@ -56,17 +58,63 @@ function EditDay() {
     fileInputRef.current.click(); // simula il click sull’input file nascosto
   };
 
-  const handleFileChange = (e) => {
-    const newFiles = Array.from(e.target.files);
+  // Ridimensiona e comprime le immagini prima dell'upload
+  const resizeImage = (file, maxWidth = 1024, maxHeight = 1024) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
 
-    if (newFiles.length > 0) {
-      setDay((prevForm) => {
-        const updatedPhotos = [...(prevForm.photo || []), ...newFiles];
-        return { ...prevForm, photo: updatedPhotos };
-      });
-    }
-    e.target.value = null; // reset input
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > height) {
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = (width * maxHeight) / height;
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            const resizedFile = new File([blob], file.name, { type: file.type });
+            resolve(resizedFile);
+          },
+          file.type,
+          0.5
+        );
+      };
+    });
   };
+
+  const handleFileChange = async (e) => {
+    const newFiles = Array.from(e.target.files);
+    if (newFiles.length === 0) return;
+
+    try {
+      // Ridimensiona tutte le immagini in parallelo
+      const resizedFiles = await Promise.all(newFiles.map(file => resizeImage(file)));
+
+      setDay((prevDay) => {
+        const updatedPhotos = [...(prevDay.photo || []), ...resizedFiles];
+        return { ...prevDay, photo: updatedPhotos };
+      });
+    } catch (error) {
+      console.error("Errore nel ridimensionamento immagini:", error);
+    } finally {
+      e.target.value = null; // reset input
+    }
+  };
+
 
   // rimuovi foto
   const removePhoto = (index) => {
@@ -99,6 +147,10 @@ function EditDay() {
     });
 
     try {
+      // Attiva la barra di caricamento
+      setIsUploading(true);
+      setUploadProgress(0);
+
       await axios.put(
         `http://127.0.0.1:8000/travels/${day.travelId}/days/${id}`,
         formData,
@@ -107,9 +159,18 @@ function EditDay() {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
+          onUploadProgress: (progressEvent) => {
+            if (progressEvent.total) {
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              setUploadProgress(percentCompleted);
+            }
+          },
         }
       );
       setMessage("✅ Tappa modificata!");
+      setIsUploading(false);
 
       // reindirizzo alla pagina delle tappe
       setTimeout(() => {
@@ -119,6 +180,7 @@ function EditDay() {
     } catch (error) {
       console.error("Errore nell'aggiornamento:", error);
       setMessage("❌ Errore durante la modifica della tappa.");
+      setIsUploading(false);
     }
   };
 
@@ -135,6 +197,21 @@ function EditDay() {
       {/* Glow morbido dietro al form */}
       <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-linear-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
        blur-3xl" />
+
+      {/* Barra di caricamento */}
+      {isUploading && (
+        <div className="w-full max-w-4xl mb-4">
+          <div className="text-right text-white font-semibold mb-1">
+            {uploadProgress}%
+          </div>
+          <div className="w-full bg-gray-300 rounded-full h-3 overflow-hidden">
+            <div
+              className="bg-blue-600 h-3 transition-all duration-300 ease-in-out"
+              style={{ width: `${uploadProgress}%` }}
+            ></div>
+          </div>
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit}
@@ -298,7 +375,7 @@ function EditDay() {
                       group-hover:opacity-100 transition">
                       <i className="fa-solid fa-xmark"></i>
 
-                      { /* Modale Foto */ }
+                      { /* Modale Foto */}
                       {openImage && (
                         <div
                           onClick={() => setOpenImage(null)}
