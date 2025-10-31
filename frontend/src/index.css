@@ -4,11 +4,11 @@
 
 
 .scrollbar::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  background-color: transparent !important;  /* trasparenza per adattarsi allo sfondo */
+  background-color: transparent;  /* trasparenza per adattarsi allo sfondo */
   border-radius: 8px;
 }
 

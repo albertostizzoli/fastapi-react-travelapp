@@ -380,7 +380,7 @@ function AddDay() {
         rounded-full pointer-events-none" />
 
         {/* COLONNA DESTRA */}
-        <div className="flex flex-col gap-6 justify-start sm:mt-20 scrollbar overflow-y-auto">
+        <div className="flex flex-col gap-6 justify-start sm:mt-20 scrollbar overflow-y-auto p-2">
           {/* Pulsanti principali */}
           <div className="flex justify-between gap-4">
             <button
