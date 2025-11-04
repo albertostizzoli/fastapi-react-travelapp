@@ -37,7 +37,7 @@ function EditProfileModal({
           <motion.form
             onSubmit={onSubmit}
             encType="multipart/form-data"
-            className="relative border border-white/40 bg-linear-to-br from-white/20 via-white/10 to-transparent 
+            className="relative border border-white/40 dark:border-white/10 bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500 
             backdrop-blur-2xl p-8 rounded-3xl shadow-2xl w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -58,7 +58,7 @@ function EditProfileModal({
                 onChange={handleChange}
                 placeholder="Nome"
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white"
+                focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition text-white"
                 required
               />
               <input
@@ -68,7 +68,7 @@ function EditProfileModal({
                 onChange={handleChange}
                 placeholder="Cognome"
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white"
+                focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition text-white"
                 required
               />
               <input
@@ -78,7 +78,7 @@ function EditProfileModal({
                 onChange={handleChange}
                 placeholder="Email"
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white"
+                focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition text-white"
                 required
               />
 
@@ -91,7 +91,7 @@ function EditProfileModal({
                   onChange={handleChange}
                   placeholder="Nuova Password"
                   className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
-                  focus:ring-2 focus:ring-blue-300 focus:border-transparent transition text-white"
+                  focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition text-white"
                 />
                 <button
                   type="button"
@@ -123,11 +123,11 @@ function EditProfileModal({
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 
                 border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
                 cursor-pointer scrollbar">
-                <option value="" className="bg-black text-white">
+                <option value="" className="bg-orange-300 text-black dark:bg-slate-300">
                   Seleziona un’esperienza
                 </option>
                 {allExperiences.map((exp, i) => (
-                  <option key={i} value={exp} className="bg-black to-transparent text-white">
+                  <option key={i} value={exp} className="bg-orange-300 text-black dark:bg-slate-300">
                     {exp}
                   </option>
                 ))}

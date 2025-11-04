@@ -15,9 +15,9 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
 
           {/* Contenitore principale del modale */}
           <motion.div
-            className="relative w-full max-w-md rounded-3xl border border-white/40 bg-linear-to-br 
-            from-white/20 via-white/10 to-transparent backdrop-blur-2xl shadow-2xl text-white 
-             p-8 text-center overflow-hidden"
+            className="relative w-full max-w-md rounded-3xl border border-white/40 dark:border-white/10
+            bg-linear-to-br from-orange-500 to-blue-500 dark:from-slate-500 dark:to-slate-900 
+            backdrop-blur-2xl shadow-2xl p-8 text-center overflow-hidden"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -30,7 +30,7 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
             </h2>
 
             {/* Descrizione */}
-            <p className="text-white/70 mb-8 text-sm">
+            <p className="text-white mb-8 text-2sm drop-shadow-sm">
               Il viaggio verrà cancellato <span className="text-rose-400 font-semibold"> definitivamente </span>
               insieme a tutte le tappe collegate. Questa azione non può essere annullata.
             </p>

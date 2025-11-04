@@ -15,9 +15,9 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
           
           {/* Contenuto del Modal */}
           <motion.div
-            className="relative w-full max-w-md rounded-3xl border border-white/40 bg-linear-to-br 
-            from-white/20 via-white/10 to-transparent backdrop-blur-2xl shadow-2xl text-white 
-            p-8 text-center overflow-hidden"
+            className="relative w-full max-w-md rounded-3xl border border-white/40 dark:border-white/10
+            bg-linear-to-br from-orange-500 to-blue-500 dark:from-slate-500 dark:to-slate-900 
+            backdrop-blur-2xl shadow-2xl p-8 text-center overflow-hidden"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -29,7 +29,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
               Vuoi davvero cancellare il tuo profilo?
             </h2>
 
-            <p className="text-white/70 mb-8 text-sm">
+            <p className="text-white mb-8 text-2sm drop-shadow-sm">
               Questa azione è <span className="text-red-400 font-semibold">irreversibile</span>.<br />
               Tutti i tuoi dati e preferenze verranno rimossi definitivamente.
             </p>
