@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Funzione per effetto macchina da scrivere
@@ -27,10 +28,22 @@ function useTypewriterEffect(text, speed = 25) {
 
 
 function ChatAI() {
-
+    const [user, setUser] = useState(null); // stato per i dati utente
     const [messages, setMessages] = useState([]); // stato per i messaggi tra utente e AI
     const [input, setInput] = useState(""); // stato per l'input dell'utente
     const [isLoading, setIsLoading] = useState(false); // stato caricamento risposta AI
+
+    // uso lo useEffect per ottenere i dati dell'utente
+    useEffect(() => {
+        const userId = localStorage.getItem("userId"); // recupero id utente
+        if (!userId) return; // se non c'è, non faccio nulla
+
+        axios
+            .get(`http://127.0.0.1:8000/users/${userId}`) // recupera i dati dell'utente dal backend
+            .then((res) => setUser(res.data)) // aggiorna lo stato con i dati ricevuti
+            .catch((err) => console.error(err)); // gestisce errori
+    }, []);
+
 
     // prende l'ultimo messaggio dell'AI per applicare l'effetto macchina da scrivere
     const lastAIResponse =
@@ -123,7 +136,7 @@ function ChatAI() {
             <div className="flex-1 overflow-y-auto p-4 sm:p-5 md:p-6 space-y-4 scrollbar text-white">
                 {messages.length === 0 && !isLoading && (
                     <p className="text-white italic text-sm sm:text-base md:text-lg leading-relaxed">
-                        Ciao! Sono il tuo assistente AI di viaggi <br />
+                        Ciao {user?.name} Sono il tuo assistente AI di viaggi <br />
                         Chiedimi una meta, un periodo o un consiglio!
                     </p>
                 )}

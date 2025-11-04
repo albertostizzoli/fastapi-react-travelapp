@@ -92,15 +92,6 @@ function ProfilePage() {
     photo: null,
   });
 
-  // aggiorna i campi del form
-  const handleEditChange = (e) => {
-    const { name, value, files } = e.target;
-    setEditForm((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
-  };
-
   // invia i dati al backend
   const handleUpdateProfile = async (e) => {
     e.preventDefault();

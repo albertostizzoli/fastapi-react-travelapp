@@ -13,6 +13,7 @@ function EditProfileModal({
 }) {
   const allExperiences = travellers.flatMap((t) => t.experiences);
 
+  // aggiorna lo stato del form di modifica
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setEditForm((prev) => ({
