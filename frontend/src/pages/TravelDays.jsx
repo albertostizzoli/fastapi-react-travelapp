@@ -76,13 +76,6 @@ function TravelDays() {
 
   return (
     <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
-      {/* Effetto Glow dinamico di sfondo */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-120 h-120 bg-linear-to-br from-blue-400/20 to-cyan-400/10 
-            rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-lg h-128 bg-linear-to-br from-orange-400/20 to-amber-400/10 
-            rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
-      </div>
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
@@ -109,7 +102,7 @@ function TravelDays() {
             className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
              bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
              text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
-             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+             hover:shadow-[0_0_20px_rgba(255,255,255,0.30)]">
             <i className="fa-solid fa-plus"></i> Aggiungi Tappa
           </Link>
         </motion.div>
@@ -254,8 +247,8 @@ function TravelDays() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white px-6 py-3
-          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500"
-        >
+          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500 
+        dark:from-slate-900 dark:to-slate-500">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

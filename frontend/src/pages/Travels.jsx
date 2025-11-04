@@ -87,13 +87,6 @@ function Travels() {
 
   return (
     <div className="relative min-h-screen p-8 overflow-visible text-gray-50">
-      {/* Glow dinamico di sfondo */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-120 h-120 bg-linear-to-br from-blue-500/20 to-orange-400/10 
-        rounded-full blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        <div className="absolute w-md h-112 bg-linear-to-br from-orange-500/20 to-blue-400/10 
-        rounded-full blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
-      </div>
 
       {/* Titolo */}
       <h1 className="text-3xl font-extrabold text-center text-gray-50/90 drop-shadow-md mb-3">
@@ -114,8 +107,10 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              className="group relative bg-linear-to-br from-blue-600/70 to-cyan-500/40 backdrop-blur-lg border border-white/20 
-              rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+              className="group relative bg-linear-to-br from-blue-500/70 to-cyan-400/40 dark:from-blue-600/70 dark:to-cyan-500/40 
+              backdrop-blur-lg border border-white/20 
+              rounded-3xl shadow-lg overflow-hidden transition-all duration-500 
+              hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
               variants={{
                 hidden: { scale: 0.9, y: 20, opacity: 0 },
                 visible: { scale: 1, y: 0, opacity: 1 },
@@ -217,8 +212,7 @@ function Travels() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-gray-50/90 px-6 py-3 
-          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500/70 to-orange-500/70"
-        >
+          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

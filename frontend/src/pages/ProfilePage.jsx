@@ -152,24 +152,14 @@ function ProfilePage() {
 
   return (
     <div className="flex flex-col min-h-screen text-white sm:p-8 p-4 relative overflow-hidden">
-
-      {/* Effetto glow dinamico di sfondo */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute w-120 h-120 bg-linear-to-br from-blue-500/20 to-orange-400/10 
-            rounded-full blur-3xl top-10 left-10" />
-        <div className="absolute w-md h-112 bg-linear-to-br from-orange-500/20 to-blue-400/10 
-            rounded-full blur-3xl bottom-10 right-10" />
-      </div>
-
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 ">
-        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
 
           {/*  PROFILO UTENTE */}
           <motion.section
             className="md:col-span-1 bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
             p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center transition-all duration-500 
-            hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+            hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}>
@@ -178,12 +168,13 @@ function ProfilePage() {
               <img
                 src={user.photo}
                 alt="Profilo"
-                className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] object-cover border-4 border-blue-600/70"
+                className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] 
+                object-cover border-4 border-blue-600/70 dark:border-blue-500/70"
                 style={{ width: "140px", height: "140px" }}
               />
             ) : (
               <div className="w-36 h-36 mb-6 rounded-full bg-white/10 flex items-center justify-center text-4xl font-bold
-             text-gray-300 border-4 border-blue-600/70">
+             text-gray-300 border-4 border-blue-600/70 dark:border-blue-500/70">
                 {user?.name?.[0]?.toUpperCase() || "?"}
               </div>
             )}
@@ -221,7 +212,8 @@ function ProfilePage() {
                   setShowEditModal(true);
                 }}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
+                bg-linear-to-r from-orange-600 to-yellow-500
+                backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-500 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-pen"></i> Modifica Profilo
@@ -230,7 +222,8 @@ function ProfilePage() {
               <button
                 onClick={() => setDeleteProfileId(user?.id)}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                bg-linear-to-r from-red-600 to-rose-500 
+                backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-trash"></i> Cancella Profilo
@@ -239,7 +232,8 @@ function ProfilePage() {
               <button
                 onClick={handleLogout}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                bg-linear-to-r from-blue-600 to-cyan-500
+                backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <i className="fa-solid fa-right-from-bracket"></i> Esci
@@ -261,7 +255,7 @@ function ProfilePage() {
             <motion.div
               className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
               p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col gap-4 transition-all duration-500 
-              hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+              hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
               variants={{
                 hidden: { scale: 0.9, opacity: 0 },
                 visible: {
@@ -279,7 +273,8 @@ function ProfilePage() {
                 <Link
                   to="/travels"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                  bg-linear-to-r from-orange-600 to-rose-500 
+                  backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                   <i className="fa-solid fa-globe"></i> I miei viaggi
@@ -287,7 +282,8 @@ function ProfilePage() {
                 <Link
                   to="/add"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40 text-white 
+                  bg-linear-to-r from-green-600 to-teal-500
+                  backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                   <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
@@ -307,7 +303,7 @@ function ProfilePage() {
             <motion.div
               className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
               p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
-              hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+              hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
               variants={{
                 hidden: { scale: 0.9, opacity: 0 },
                 visible: {
@@ -326,7 +322,8 @@ function ProfilePage() {
                   {recentTravels.slice(0, 1).map((travel, idx) => (
                     <li
                       key={idx}
-                      className="p-4 bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
+                      className="p-4 bg-linear-to-r from-blue-600 to-cyan-500
+                      backdrop-blur-md 
                       rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
                       transition-all duration-100 border border-white/40">
 
@@ -362,7 +359,7 @@ function ProfilePage() {
           <motion.div
             className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
             p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
-            hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+            hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}>
@@ -377,7 +374,7 @@ function ProfilePage() {
                   <span
                     key={idx}
                     className="font-semibold px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500
-                    backdrop-blur-md border border-white/40 text-white rounded-full 
+                     backdrop-blur-md border border-white/40 text-white rounded-full 
                     text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100">
                     {interest}
                   </span>
@@ -416,7 +413,8 @@ function ProfilePage() {
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white 
-          px-6 py-3 rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500">
+          px-6 py-3 rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500
+        dark:from-slate-900 dark:to-slate-500">
           <p className="text-lg font-semibold">{message}</p>
         </motion.div>
       )}

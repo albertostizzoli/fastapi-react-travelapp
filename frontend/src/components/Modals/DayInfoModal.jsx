@@ -34,14 +34,6 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
           transition={{ duration: 0.4, ease: "easeOut" }}
           style={{ willChange: "opacity" }}>
 
-          {/* Layer di glow animato dietro */}
-          <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute w-120 h-120 bg-linear-to-br from-blue-500/30 to-cyan-400/10 rounded-full 
-            blur-3xl top-10 left-10" />
-            <div className="absolute w-lg h-128 bg-linear-to-br from-orange-400/30 to-pink-400/10 rounded-full 
-            blur-3xl bottom-10 right-10" />
-          </div>
-
           <motion.div
             className="backdrop-blur-2xl bg-linear-to-br from-white/20 via-white/10 to-transparent border border-white/40 
             rounded-3xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-2xl flex flex-col overflow-hidden relative"

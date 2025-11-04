@@ -66,7 +66,7 @@ function HomePage() {
     };
 
     return (
-        <div className="bg-linear-to-b from-blue-400 to-orange-400 dark:from-slate-900 dark:to-slate-500 font-sans overflow-y-auto overflow-x-hidden transition-colors duration-300">
+        <div className="bg-linear-to-b from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500 font-sans overflow-y-auto overflow-x-hidden transition-colors duration-300">
             {/* Section 1 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>

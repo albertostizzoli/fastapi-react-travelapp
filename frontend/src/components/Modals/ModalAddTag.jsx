@@ -29,13 +29,6 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
                         transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
                         style={{ willChange: "transform, opacity" }}>
 
-                        <div className="absolute inset-0 -z-10 overflow-hidden">
-                            <div className="absolute w-md h-112 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-                                blur-3xl top-10 left-10" />
-                            <div className="absolute w-lg h-128 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-                                blur-3xl bottom-10 right-10" />
-                        </div>
-
                         <h2 className="text-white text-2xl font-bold mb-4 text-center drop-shadow-md">
                             Seleziona i tuoi Tag per la Tappa del tuo Viaggio
                         </h2>

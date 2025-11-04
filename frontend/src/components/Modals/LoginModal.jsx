@@ -29,14 +29,6 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
             transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
             style={{ willChange: "transform, opacity" }}>
 
-            {/* Glow di sfondo */}
-            <div className="absolute inset-0 -z-10 overflow-hidden">
-              <div className="absolute w-120 h-120 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-            blur-3xl top-10 left-10" />
-              <div className="absolute w-lg h-128 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-            blur-3xl bottom-10 right-10" />
-            </div>
-
             {/* Contenuto scrollabile */}
             <div className="flex-1 p-6 overflow-y-auto scrollbar">
               <h2 className="text-3xl font-extrabold text-white/90 mb-6 drop-shadow-lg text-center">

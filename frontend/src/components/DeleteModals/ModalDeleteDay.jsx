@@ -15,14 +15,7 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
           transition={{ duration: 0.4, ease: "easeOut" }}
           style={{ willChange: "opacity" }}> {/* questa proprietà CSS cambia da transform a opacity e ottimizza la fluidità */}
 
-          {/* Sfondo con glow colorato */}
-          <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute w-88 h-88 bg-linear-to-br from-blue-400/20 to-orange-400/10 rounded-full 
-            blur-3xl top-10 left-10" />
-            <div className="absolute w-[24rem] h-96 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-            blur-3xl bottom-10 right-10 " />
-          </div>
-
+          {/* Contenuto del Modal */}
           <motion.div
             className="relative w-full max-w-md rounded-3xl border border-white/40 bg-linear-to-br 
             from-white/20 via-white/10 to-transparent backdrop-blur-2xl shadow-2xl text-white 

@@ -151,7 +151,7 @@ function ChatAI() {
                             transition={{ duration: 0.4, ease: "easeOut" }}
                             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                             {m.role === "user" ? (
-                                <div className="bg-linear-to-r from-blue-400 to-orange-400 text-white 
+                                <div className="bg-linear-to-r from-blue-400 to-orange-400 dark:from-slate-900 dark:to-slate-500 text-white 
                                     px-4 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-md max-w-[80%] sm:max-w-[70%] 
                                     rounded-br-none text-sm sm:text-base md:text-lg 
                                     hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">

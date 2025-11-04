@@ -101,14 +101,6 @@ function EditTravel() {
         w-full max-w-5xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] grid grid-cols-1 md:grid-cols-2 
         gap-8 overflow-hidden">
 
-        {/* Sfere animate di sfondo */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute w-md h-112 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-            blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-          <div className="absolute w-lg h-128 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-            blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
-        </div>
-
         {/* INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
           border-b border-white/20 px-6 py-4 rounded-t-3xl flex justify-between items-center">

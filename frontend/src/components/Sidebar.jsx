@@ -79,7 +79,7 @@ function Sidebar() {
       <nav
         className={`p-4 flex justify-between items-center transition-colors duration-300
           ${isHome
-            ? "bg-blue-400 text-white dark:bg-slate-900 dark:text-gray-200"
+            ? "bg-blue-500 text-white dark:bg-slate-900 dark:text-gray-200"
             : "bg-transparent text-white dark:text-gray-200"
           }`}>
         <button
@@ -112,34 +112,37 @@ function Sidebar() {
               transition={{ type: "spring", stiffness: 140, damping: 30 }}
               className={`fixed top-0 left-0 w-full h-full z-9999 flex flex-col justify-between p-6 transition-colors duration-300
                 ${isHome
-                  ? "bg-linear-to-br from-blue-400 to-orange-400 dark:from-slate-900 dark:to-slate-500"
-                  : "backdrop-blur-xl bg-linear-to-br from-blue-400 to-orange-400 text-white dark:from-slate-900 dark:to-slate-500 dark:text-gray-200"}`}>
+                  ? "bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500"
+                  : "backdrop-blur-xl bg-linear-to-br from-blue-500 to-orange-500 text-white dark:from-slate-900 dark:to-slate-500 dark:text-gray-200"}`}>
               <div className="flex flex-col gap-6">
-                {/* Chiudi */}
-                <button
-                  onClick={toggleSidebar}
-                  aria-label="Chiudi il menu"
-                  className="text-white text-2xl self-end cursor-pointer">
-                  <i className="fa-solid fa-xmark"></i>
-                </button>
+                <div className="flex justify-between items-center">
 
-                <button
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="relative w-14 h-7 flex items-center rounded-full border border-gray-400 dark:border-gray-600 
-                  transition-all duration-300 cursor-pointer px-1"
-                  title="Cambia tema">
-                  {/* Icona luna a sinistra */}
-                  <span className="text-xs absolute left-1">🌙</span>
+                  { /* Pulsante Dark Mode */}
+                  <button
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    className="relative w-14 h-7 py-2 flex items-center justify-between rounded-full border border-gray-400 dark:border-gray-600 
+                  transition-all duration-300 cursor-pointer"
+                    title="Cambia tema">
 
-                  {/* Icona sole a destra */}
-                  <span className="text-xs absolute right-1">☀️</span>
+                    {/* Icone */}
+                    <span className="text-xs ml-1">🌙</span>
+                    <span className="text-xs mr-1">☀️</span>
 
-                  {/* Pallina che scorre */}
-                  <span
-                    className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-all duration-300
-                ${theme === "dark" ? "translate-x-6" : "translate-x-0"}`}
-                  ></span>
-                </button>
+                    {/* Pallina */}
+                    <span
+                      className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-transform duration-300
+                  ${theme === "dark" ? "translate-x-7" : "translate-x-0"}`}
+                    ></span>
+                  </button>
+
+                  {/* Pulsante Chiudi Sidebar */}
+                  <button
+                    onClick={toggleSidebar}
+                    aria-label="Chiudi il menu"
+                    className="text-white text-2xl self-end cursor-pointer">
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
 
                 {/* Area Personale */}
                 {isHome && (

@@ -69,7 +69,7 @@ function Header() {
     <nav
       className={`hidden sm:flex p-4 gap-4 justify-between items-center transition-colors duration-300
     ${isHome
-          ? "bg-blue-400 text-white dark:bg-slate-900 dark:text-gray-200"
+          ? "bg-blue-500 text-white dark:bg-slate-900 dark:text-gray-200"
           : "bg-transparent text-white dark:text-gray-200"
         }`}>
       <h1 className="font-bold text-3xl underline">TravelDiary</h1>
@@ -77,23 +77,20 @@ function Header() {
       <div className="flex gap-6 items-center">
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="relative w-14 h-7 flex items-center rounded-full border border-gray-400 dark:border-gray-600 
-             transition-all duration-300 cursor-pointer px-1"
+          className="relative w-14 h-7 flex items-center justify-between rounded-full border border-gray-400 dark:border-gray-600 
+          transition-all duration-300 cursor-pointer"
           title="Cambia tema">
-          {/* Icona luna a sinistra */}
-          <span className="text-xs absolute left-1">🌙</span>
 
-          {/* Icona sole a destra */}
-          <span className="text-xs absolute right-1">☀️</span>
+          {/* Icone */}
+          <span className="text-xs ml-1">🌙</span>
+          <span className="text-xs mr-1">☀️</span>
 
-          {/* Pallina che scorre */}
+          {/* Pallina */}
           <span
-            className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-all duration-300
-                ${theme === "dark" ? "translate-x-6" : "translate-x-0"}`}
+            className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-transform duration-300
+        ${theme === "dark" ? "translate-x-7" : "translate-x-0"}`}
           ></span>
         </button>
-
-
 
         {/*  AREA PERSONALE SE SEI IN HOME */}
         {isHome && (
