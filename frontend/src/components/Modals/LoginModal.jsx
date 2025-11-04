@@ -21,8 +21,8 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
           {/* Contenitore principale */}
           <motion.div
             className="relative rounded-3xl w-full max-w-4xl max-h-[90vh] shadow-2xl border border-white/40 
-            bg-linear-to-br from-white/10 via-white/5 to-transparent backdrop-blur-2xl text-white 
-            flex flex-col overflow-hidden"
+            bg-linear-to-br from-blue-500/40 to-orange-500/30 dark:from-slate-900 dark:to-slate-500
+            backdrop-blur-2xl text-white flex flex-col overflow-hidden"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -58,7 +58,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                           className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 rounded-full 
                             cursor-pointer text-sm transition-all duration-100 ease-in-out border border-white/40 backdrop-blur-md 
                             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${selected
-                              ? "bg-linear-to-r from-blue-600 to-cyan-500 text-white/90 shadow-lg"
+                              ? "bg-linear-to-r from-blue-500 to-orange-500 text-white/90 shadow-lg"
                               : "bg-linear-to-r from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
                             }`}>
                           {experience}

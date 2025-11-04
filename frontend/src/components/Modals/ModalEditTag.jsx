@@ -15,12 +15,10 @@ function ModalEditTag({ isOpen, onClose, tags, setTags }) {
                     transition={{ duration: 0.4, ease: "easeOut" }}
                     style={{ willChange: "opacity" }}>
 
-                    {/* Glow morbido dietro al modale */}
-                    <div className="absolute -z-10 w-[90%] h-[90%] rounded-3xl bg-linear-to-br from-blue-900/30 via-blue-800/10 to-orange-900/20
-                    blur-3xl" />
-
                     <motion.div
-                        className="bg-white/30 backdrop-blur-3xl border border-white rounded-3xl shadow-2xl p-6 w-[90%] 
+                        className="bg-white/30 backdrop-blur-3xl border border-white 
+                        bg-linear-to-br from-blue-500/40 to-orange-500/30 dark:from-slate-900 dark:to-slate-500
+                        rounded-3xl shadow-2xl p-6 w-[90%] 
                         max-w-4xl max-h-[75vh] flex flex-col"
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
@@ -45,7 +43,7 @@ function ModalEditTag({ isOpen, onClose, tags, setTags }) {
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center px-3 py-2 border 
                                                         rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${tags.includes(experience)
-                                                        ? "bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        ? "bg-linear-to-r from-blue-500 to-orange-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                         : "bg-linear-to-r from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
 

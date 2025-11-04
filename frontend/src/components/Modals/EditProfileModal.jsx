@@ -37,7 +37,7 @@ function EditProfileModal({
           <motion.form
             onSubmit={onSubmit}
             encType="multipart/form-data"
-            className="relative border border-white/40 dark:border-white/10 bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500 
+            className="relative border border-white/40 dark:border-white/10 bg-linear-to-br from-blue-500/40 to-orange-500/30 dark:from-slate-900 dark:to-slate-500
             backdrop-blur-2xl p-8 rounded-3xl shadow-2xl w-[95%] max-w-4xl text-white grid grid-cols-1 md:grid-cols-2 gap-6"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
