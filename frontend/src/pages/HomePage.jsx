@@ -51,14 +51,14 @@ function HomePage() {
 
         return (
             <motion.h2
-                className="text-3xl font-bold mb-4 text-gray-900 wrap-break-word"
+                className="text-3xl font-extrabold mb-4 text-gray-100 dark:text-gray-300 wrap-break-word"
                 variants={container}
                 initial="hidden"
                 whileInView="visible">
-                    {/* Mappa ogni carattere in uno span animato */}
-                {letters.map((char, index) => ( 
-                    <motion.span key={index} variants={child}> 
-                        {char === " " ? "\u00A0" : char} 
+                {/* Mappa ogni carattere in uno span animato */}
+                {letters.map((char, index) => (
+                    <motion.span key={index} variants={child}>
+                        {char === " " ? "\u00A0" : char}
                     </motion.span>
                 ))}
             </motion.h2>
@@ -66,12 +66,16 @@ function HomePage() {
     };
 
     return (
-        <div className="bg-linear-to-b from-blue-400 to-orange-400 font-sans overflow-y-auto overflow-x-hidden scrollbar">
+        <div className="bg-linear-to-b from-blue-400 to-orange-400 dark:from-slate-900 dark:to-slate-500 font-sans overflow-y-auto overflow-x-hidden transition-colors duration-300">
             {/* Section 1 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>
                     <Typewriter text="Conserva i tuoi viaggi" />
-                    <motion.p className="text-gray-100 mb-4 text-justify text-lg leading-relaxed" variants={firstBlock} initial="initial" whileInView="animate">
+                    <motion.p
+                        className="text-white dark:text-gray-300 mb-4 text-justify text-lg leading-relaxed"
+                        variants={firstBlock}
+                        initial="initial"
+                        whileInView="animate">
                         Un viaggio non è solo una serie di <strong>tappe</strong>, ma un insieme di emozioni e
                         momenti unici che meritano di essere custoditi. Con la nostra app,
                         puoi creare un vero e proprio <strong>diario digitale</strong> in cui ogni tappa
@@ -83,8 +87,10 @@ function HomePage() {
                 <motion.img
                     src="/images/monte_fuji.jpg"
                     alt="Monte Fuji"
-                    className="rounded-3xl shadow-3xl"
-                    variants={secondBlock} initial="initial" whileInView="animate"
+                    className="rounded-3xl shadow-3xl dark:shadow-gray-900"
+                    variants={secondBlock}
+                    initial="initial"
+                    whileInView="animate"
                 />
             </section>
 
@@ -93,12 +99,18 @@ function HomePage() {
                 <motion.img
                     src="/images/amalfi_2.jpg"
                     alt="Costiera Amalfitana"
-                    className="rounded-3xl shadow-3xl"
-                    variants={firstBlock} initial="initial" whileInView="animate"
+                    className="rounded-3xl shadow-3xl dark:shadow-gray-900"
+                    variants={firstBlock}
+                    initial="initial"
+                    whileInView="animate"
                 />
                 <div>
                     <Typewriter text="Aggiungi le tue tappe" />
-                    <motion.p className="text-gray-100 mb-4 text-justify text-lg leading-relaxed" variants={secondBlock} initial="initial" whileInView="animate">
+                    <motion.p
+                        className="text-white dark:text-gray-300 mb-4 text-justify text-lg leading-relaxed"
+                        variants={secondBlock}
+                        initial="initial"
+                        whileInView="animate">
                         Ogni viaggio può essere suddiviso in tappe, così da ricordare in modo
                         <strong> dettagliato</strong> ogni singolo momento. Puoi <strong>annotare</strong> i luoghi visitati,
                         <strong> inserire</strong> pensieri personali, <strong>arricchire</strong> le tue pagine con foto e
@@ -112,7 +124,11 @@ function HomePage() {
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 p-7 items-center">
                 <div>
                     <Typewriter text="Un diario solo per te" />
-                    <motion.p className="text-gray-100 mb-4 text-justify text-lg leading-relaxed" variants={firstBlock} initial="initial" whileInView="animate">
+                    <motion.p
+                        className="text-white dark:text-gray-300 mb-4 text-justify text-lg leading-relaxed"
+                        variants={firstBlock}
+                        initial="initial"
+                        whileInView="animate">
                         Questo non è un semplice elenco di luoghi, ma uno <strong>spazio</strong> intimo in cui
                         custodire <strong>emozioni</strong> e <strong>pensieri</strong> personali. Ogni tappa racconta una
                         parte di te: i <strong>sorrisi</strong>, le <strong>sfide</strong>, le <strong>scoperte</strong>.
@@ -123,8 +139,10 @@ function HomePage() {
                 <motion.img
                     src="/images/tempio_agrigento.jpg"
                     alt="Tempio di Agrigento"
-                    className="rounded-3xl shadow-3xl"
-                    variants={secondBlock} initial="initial" whileInView="animate"
+                    className="rounded-3xl shadow-3xl dark:shadow-gray-900"
+                    variants={secondBlock}
+                    initial="initial"
+                    whileInView="animate"
                 />
             </section>
 
@@ -133,12 +151,18 @@ function HomePage() {
                 <motion.img
                     src="/images/hollywood.jpg"
                     alt="Hollywood"
-                    className="rounded-3xl shadow-3xl"
-                    variants={firstBlock} initial="initial" whileInView="animate"
+                    className="rounded-3xl shadow-3xl dark:shadow-gray-900"
+                    variants={firstBlock}
+                    initial="initial"
+                    whileInView="animate"
                 />
                 <div>
                     <Typewriter text="Il viaggio scelto per te" />
-                    <motion.p className="text-gray-100 mb-4 text-justify text-lg leading-relaxed" variants={secondBlock} initial="initial" whileInView="animate">
+                    <motion.p
+                        className="text-white dark:text-gray-300 mb-4 text-justify text-lg leading-relaxed"
+                        variants={secondBlock}
+                        initial="initial"
+                        whileInView="animate">
                         Grazie all’<strong>intelligenza artificiale</strong>, l’app può suggerirti la prossima
                         <strong> destinazione</strong> ideale in base ai tuoi viaggi passati, preferenze e interessi.
                         Immagina di scoprire luoghi nuovi e sorprendenti, personalizzati
@@ -149,6 +173,7 @@ function HomePage() {
             </section>
         </div>
     );
+
 }
 
 export default HomePage;

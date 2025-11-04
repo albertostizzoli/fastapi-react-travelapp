@@ -146,8 +146,8 @@ function LoginRegisterPage() {
             layout
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={`absolute top-1 bottom-1 w-1/2 rounded-full shadow-md ${isLogin
-              ? "bg-linear-to-r from-orange-600/70 to-rose-500/60 left-1"
-              : "bg-linear-to-r from-blue-600/70 to-cyan-500/60 right-1"
+              ? "bg-linear-to-r from-orange-600/70 to-rose-500/60 left-1 dark:from-amber-400/60 dark:to-orange-500/50"
+              : "bg-linear-to-r from-blue-600/70 to-cyan-500/60 right-1 dark:from-blue-400/60 dark:to-indigo-500/50"
               }`}
           />
           <button
@@ -182,12 +182,6 @@ function LoginRegisterPage() {
               bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
               shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
               md:mx-auto flex flex-col">
-              <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute w-md h-112 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-                   blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-                <div className="absolute w-lg h-128 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-                  blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
-              </div>
 
               <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Login</h2>
 
@@ -197,7 +191,7 @@ function LoginRegisterPage() {
                 <input
                   type="email"
                   className="w-full font-semibold border bg-white/20 text-white
-                  rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
+                  rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300 dark:focus:ring-slate-500"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -214,7 +208,7 @@ function LoginRegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full font-semibold border bg-white/20 text-white 
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300 dark:focus:ring-slate-500"
                   />
 
                   { /* Pulsante Mostra Password */ }
@@ -253,12 +247,6 @@ function LoginRegisterPage() {
                 bg-linear-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
                 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
                 md:mx-auto flex flex-col">
-              <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute w-md h-112 bg-linear-to-br from-blue-500/20 to-orange-400/10 rounded-full 
-                  blur-3xl top-10 left-10 animate-[pulse_6s_ease-in-out_infinite]" />
-                <div className="absolute w-lg h-128 bg-linear-to-br from-orange-500/20 to-blue-400/10 rounded-full 
-                  blur-3xl bottom-10 right-10 animate-[pulse_6s_ease-in-out_infinite]" />
-              </div>
 
               <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Registrati</h2>
 
@@ -270,7 +258,7 @@ function LoginRegisterPage() {
                   <input
                     type="text"
                     className="w-full font-semibold border  bg-white/20 text-white 
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -283,7 +271,7 @@ function LoginRegisterPage() {
                   <input
                     type="text"
                     className="w-full font-semibold border bg-white/20 text-white  
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
                     required
@@ -296,7 +284,7 @@ function LoginRegisterPage() {
                   <input
                     type="email"
                     className="w-full font-semibold border bg-white/20 text-white
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -312,7 +300,7 @@ function LoginRegisterPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full font-semibold border  bg-white/20 text-white 
-                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300"
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
                       required
                     />
 
@@ -390,7 +378,8 @@ function LoginRegisterPage() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
             className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white 
-            px-6 py-3 rounded-full shadow-xl z-9999 bg-linear-to-r from-blue-500 to-orange-500">
+            px-6 py-3 rounded-full shadow-xl z-9999 bg-linear-to-r from-blue-500 to-orange-500 
+            dark:from-slate-900 dark:to-slate-500">
             <p className="text-lg font-semibold">{message}</p>
           </motion.div>
         )}

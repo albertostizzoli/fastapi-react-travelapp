@@ -6,6 +6,21 @@ function Header() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null); // stato per ottenere i dati dell'utente
 
+  // stato per la dark mode con salvattaggio in localStorage
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "light"
+  );
+
+  // useEffect per applicare la dark mode
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   // Rotte dinamiche della navbar
   const path = location.pathname;
   const isHome = path === "/";
@@ -52,16 +67,40 @@ function Header() {
 
   return (
     <nav
-      className={`hidden sm:flex p-4 gap-4 justify-between items-center 
-      ${isHome ? "bg-blue-400 text-white" : "bg-transparent text-white"}`}>
+      className={`hidden sm:flex p-4 gap-4 justify-between items-center transition-colors duration-300
+    ${isHome
+          ? "bg-blue-400 text-white dark:bg-slate-900 dark:text-gray-200"
+          : "bg-transparent text-white dark:text-gray-200"
+        }`}>
       <h1 className="font-bold text-3xl underline">TravelDiary</h1>
 
-      <div className="flex gap-6">
+      <div className="flex gap-6 items-center">
+        <button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="relative w-14 h-7 flex items-center rounded-full border border-gray-400 dark:border-gray-600 
+             transition-all duration-300 cursor-pointer px-1"
+          title="Cambia tema">
+          {/* Icona luna a sinistra */}
+          <span className="text-xs absolute left-1">🌙</span>
+
+          {/* Icona sole a destra */}
+          <span className="text-xs absolute right-1">☀️</span>
+
+          {/* Pallina che scorre */}
+          <span
+            className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-all duration-300
+                ${theme === "dark" ? "translate-x-6" : "translate-x-0"}`}
+          ></span>
+        </button>
+
+
+
+        {/*  AREA PERSONALE SE SEI IN HOME */}
         {isHome && (
           <Link
             to="/loginregister"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
-            <span><i className="fa-solid fa-user"></i></span>
+            <i className="fa-solid fa-user"></i>
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -72,6 +111,7 @@ function Header() {
           </Link>
         )}
 
+        {/*  LINK PROFILO */}
         {!isHome && !isProfile && user && (
           <Link
             to="/profile"
@@ -91,11 +131,12 @@ function Header() {
           </Link>
         )}
 
+        {/*  LINK VIAGGI */}
         {!isHome && !isTravels && (
           <Link
             to="/travels"
             className="flex items-center gap-2 px-4 py-2 font-semibold">
-            <span><i className="fa-solid fa-globe"></i></span>
+            <i className="fa-solid fa-globe"></i>
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -106,27 +147,28 @@ function Header() {
           </Link>
         )}
 
+        {/*  LINK AGGIUNGI */}
         {!isHome && !isAdd && (
           <Link
             to="/add"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
-            <span><i className="fa-solid fa-plus"></i></span>
+            <i className="fa-solid fa-plus"></i>
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
             after:transition-all after:duration-300
-            hover:after:w-full"
-            >
+            hover:after:w-full">
               Aggiungi Viaggio
             </span>
           </Link>
         )}
 
+        {/*  LOGOUT */}
         {!isHome && (
           <button
             onClick={handleLogout}
             className="px-4 py-2 flex items-center gap-2 font-semibold cursor-pointer">
-            <span><i className="fa-solid fa-right-from-bracket"></i></span>
+            <i className="fa-solid fa-right-from-bracket"></i>
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -139,7 +181,6 @@ function Header() {
       </div>
     </nav>
   );
-
 }
 
 export default Header;

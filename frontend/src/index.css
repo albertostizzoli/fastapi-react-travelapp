@@ -1,4 +1,5 @@
 @import "tailwindcss";  /* TAILWIND PER IL CSS */
+@custom-variant dark (&:where(.dark, .dark *)); /* VARIANTE DARK MODE PER TAILWIND */
 
 @import "leaflet/dist/leaflet.css";  /* LEAFLET PER LA MAPPA */
 
