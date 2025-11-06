@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function useProfilePage() {
+function ProfileController() {
     const [user, setUser] = useState(null); // stato per i dati utente
     const [recentTravels, setRecentTravels] = useState([]) // stato per i viaggi recenti
     const [deleteProfileId, setDeleteProfileId] = useState(null); //  stato per il modale di conferma eliminazione profilo (Apri / Chiudi)
@@ -166,4 +166,4 @@ function useProfilePage() {
 
 }
 
-export default useProfilePage;
+export default ProfileController;

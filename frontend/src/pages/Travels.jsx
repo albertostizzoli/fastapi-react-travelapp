@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
-import useTravelsPage from "../hooks/useTravelsPage"; // importo la logica della pagina viaggi
+import TravelsController from "../hooks/TravelsController"; // importo la logica della pagina viaggi
 
 function Travels() {
 
@@ -12,7 +12,7 @@ function Travels() {
     handleDelete, // funzione per eliminare il viaggio
     message, // messaggio di conferma o errore
     StarRating // componente per visualizzare le stelle
-  } = useTravelsPage(); // uso la logica della pagina viaggi
+  } = TravelsController(); // uso la logica della pagina viaggi
 
   return (
     <div className="relative min-h-screen p-8 overflow-visible text-gray-50">
@@ -80,9 +80,9 @@ function Travels() {
                 </div>
 
                 {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-white mt-2">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white mt-2">
                     {Object.entries(v.votes).map(([key, value]) => (
-                      <li key={key} className="flex justify-between items-center">
+                      <li key={key} className="flex justify-between items-center font-semibold">
                         <span className="capitalize">{key}:</span>
                         <StarRating rating={value} />
                       </li>

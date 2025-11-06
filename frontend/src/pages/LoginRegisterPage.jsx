@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import LoginModal from "../components/modals/LoginModal"; // importo il componente modale per la selezione delle esperienze
-import useAuthForm from "../hooks/useAuthForm"; // importo la logica dei form di login/registrazione
+import FormAuth from "../hooks/FormAuth"; // importo la logica dei form di login/registrazione
 
 function LoginRegisterPage() {
 
@@ -27,7 +27,7 @@ function LoginRegisterPage() {
     handlePhotoSelect, // funzione per gestire la selezione della foto
     handleFileChange, // funzione per gestire il cambiamento del file selezionato
     fileInputRef // riferimento all'input file nascosto
-  } = useAuthForm(); // utilizzo la logica dei form di login/registrazione
+  } = FormAuth(); // utilizzo la logica dei form di login/registrazione
 
   return (
     <div className="h-screen flex flex-col md:flex-row">

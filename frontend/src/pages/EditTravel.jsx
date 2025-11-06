@@ -1,88 +1,19 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import axios from "axios";
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom"; // importo Link per la navigazione interna
+import { motion } from "framer-motion"; // importo framer-motion per le animazioni
+import FormEditTravel from "../hooks/FormEditTravel"; // importo la logica del form di modifica viaggio
 
 function EditTravel() {
-  const { id } = useParams(); // recupero l'ID del viaggio dall'URL
-  const navigate = useNavigate(); // hook per navigare fra le pagine
-  const [travel, setTravel] = useState(null); // per salvare i dati del viaggio
-  const [message, setMessage] = useState(""); // stato per mostrare messaggi di conferma/errore
 
-  // recupero i viaggi dal backend
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    axios
-      .get("http://127.0.0.1:8000/travels", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        const t = res.data.find((tr) => tr.id === parseInt(id));
-        setTravel(t);
-      })
-      .catch((err) => console.error("Errore nel caricamento del viaggio:", err));
-  }, [id]);
-
-
-  // gestisce il cambiamento dei campi principali ( town, city...)
-  const handleChange = (e) => {
-    const { name, value } = e.target; // recupera il nome e il valore del campo modificato
-    setTravel({ ...travel, [name]: value }); // aggiorna lo stato del viaggio
-  };
-
-  // gestisce il cambiamento dei voti (paesaggio, relax...)
-  const handleVoteChange = (e) => {
-    const { name, value } = e.target; // recupera il nome e il valore del voto modificato
-    setTravel({
-      ...travel, // mantiene gli altri dati del viaggio
-      votes: { ...travel.votes, [name]: parseFloat(value) || 0 }, // aggiorna il voto specifico
-    });
-  };
-
-  // calcola la media dei voti
-  const calculateGeneralVote = () => {
-    if (!travel || !travel.votes) return null; // se non ci sono voti, ritorna null
-
-    const votes = Object.values(travel.votes).filter((v) => v > 0); // filtra i voti validi (maggiore di 0)
-    if (votes.length === 0) return null; // se non ci sono voti validi, ritorna null
-
-    const avg = votes.reduce((a, b) => a + b, 0) / votes.length; // calcola la media
-    return avg.toFixed(1); // media con 1 decimale
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-
-    try {
-      const updatedTravel = {
-        ...travel,
-        general_vote: calculateGeneralVote()
-          ? parseFloat(calculateGeneralVote())
-          : null,
-      };
-
-      await axios.put(`http://127.0.0.1:8000/travels/${id}`, updatedTravel, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setMessage("✅ Viaggio aggiornato!");
-
-      setTimeout(() => {
-        setMessage("");
-        navigate("/travels");
-      }, 2000);
-    } catch (err) {
-      console.error("Errore durante l'aggiornamento del viaggio:", err);
-      setMessage("❌ Errore durante l'aggiornamento del viaggio.");
-    }
-  };
-
+  const {
+    travel, // dati del viaggio
+    handleChange, // gestore cambiamenti input
+    handleVoteChange, // gestore cambiamenti voti
+    calculateGeneralVote, // calcolo media voti
+    handleSubmit, // gestore invio form
+    message // messaggio di conferma/errore
+  } = FormEditTravel(); // uso il custom hook del form di modifica viaggio
 
   if (!travel) return <p className="text-center">Caricamento...</p>;
-
 
   return (
     <motion.div
@@ -104,7 +35,7 @@ function EditTravel() {
         {/* INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
           border-b border-white/20 px-6 py-4 rounded-t-3xl flex justify-between items-center">
-            
+
           <Link
             to="/travels"
             className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
@@ -175,7 +106,7 @@ function EditTravel() {
               value={travel.start_date}
               onChange={handleChange}
               className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
-              focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition"
+              focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition "
             />
           </div>
 

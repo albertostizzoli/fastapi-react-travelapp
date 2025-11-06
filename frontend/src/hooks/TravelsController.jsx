@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function useTravelsPage() {
+function TravelsController() {
     const [travels, setTravels] = useState([]); // stato per i viaggi
     const [deleteId, setDeleteId] = useState(null); // stato per l'id del viaggio da eliminare
     const [message, setMessage] = useState(""); // messaggio di successo o errore
@@ -89,4 +89,4 @@ function useTravelsPage() {
     }
 }
 
-export default useTravelsPage;
+export default TravelsController;

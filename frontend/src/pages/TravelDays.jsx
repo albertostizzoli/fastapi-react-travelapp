@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import DayInfoModal from "../components/Modals/DayInfoModal";
-import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay";
-import useTravelDaysPage from "../hooks/useTravelDaysPage";
+import { Link } from "react-router-dom"; // importo Link per la navigazione interna
+import { motion } from "framer-motion"; // importo framer-motion per le animazioni
+import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
+import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // importo il modale di conferma eliminazione tappa
+import TravelDaysController from "../hooks/TravelDaysController"; // importo la logica della pagina TravelDays
 
 function TravelDays() {
 
@@ -15,7 +15,7 @@ function TravelDays() {
     setSelectedDay, // funzione per settare la tappa selezionata
     setDeleteDayId, // funzione per settare l'id della tappa da eliminare
     handleDeleteDay // funzione per eliminare una tappa
-  } = useTravelDaysPage();
+  } = TravelDaysController(); // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 

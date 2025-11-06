@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; // per prendere l'id del viaggio dai parametri URL
 import axios from "axios";
 
-function useTravelDaysPage() {
+function TravelDaysController() {
     const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
     const [travel, setTravel] = useState(null); // stato per ottenere i dati del viaggio
     const [message, setMessage] = useState(""); // messaggio di successo o errore
@@ -81,4 +81,4 @@ function useTravelDaysPage() {
     };
 }
 
-export default useTravelDaysPage;
+export default TravelDaysController;

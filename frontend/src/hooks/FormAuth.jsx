@@ -2,7 +2,7 @@ import { useState, useRef } from "react"; // hook di stato e riferimento
 import axios from "axios"; // libreria per le richieste HTTP
 import { useNavigate } from "react-router-dom"; // hook per la navigazione
 
-function useAuthForm() {
+function FormAuth() {
     const [isLogin, setIsLogin] = useState(true); //  stato per il toggle login/registrazione
     const [name, setName] = useState(""); // stato per il nome
     const [surname, setSurname] = useState(""); // stato per il cognome
@@ -147,4 +147,4 @@ function useAuthForm() {
     };
 }
 
-export default useAuthForm;
+export default FormAuth;

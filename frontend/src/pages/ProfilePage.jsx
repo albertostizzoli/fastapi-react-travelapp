@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"; // importo Link per la navigazione inte
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
 import EditProfileModal from "../components/Modals/EditProfileModal"; // importo il modale di modifica profilo
 import ModalDeleteProfile from "../components/DeleteModals/ModalDeleteProfile"; // importo il modale di conferma eliminazione profilo
-import useProfilePage from "../hooks/useProfilePage"; // importo la logica della pagina profilo
+import ProfileController from "../hooks/ProfileController"; // importo la logica della pagina profilo
 
 function ProfilePage() {
 
@@ -22,7 +22,7 @@ function ProfilePage() {
     setEditForm, // funzione per aggiornare lo stato del form di modifica
     handleUpdateProfile, // funzione per aggiornare il profilo
     StarRating // componente per la valutazione a stelle
-  } = useProfilePage();
+  } = ProfileController(); // utilizzo il controller per ottenere la logica della pagina
 
 
   return (
