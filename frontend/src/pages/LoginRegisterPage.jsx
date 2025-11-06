@@ -1,127 +1,33 @@
-import { useState, useRef } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import LoginModal from "../components/modals/LoginModal";
+import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
+import LoginModal from "../components/modals/LoginModal"; // importo il componente modale per la selezione delle esperienze
+import useAuthForm from "../hooks/useAuthForm"; // importo la logica dei form di login/registrazione
 
 function LoginRegisterPage() {
-  const [isLogin, setIsLogin] = useState(true); //  stato per il toggle login/registrazione
-  const [name, setName] = useState(""); // stato per il nome
-  const [surname, setSurname] = useState(""); // stato per il cognome
-  const [email, setEmail] = useState(""); // stato per l'email
-  const [password, setPassword] = useState(""); // stato per la password
-  const [showPassword, setShowPassword] = useState(false); // stato per nascondere / mostrare la password
-  const [selectedInterests, setSelectedInterests] = useState([]); // stato per gli interessi selezionati
-  const [isModalOpen, setIsModalOpen] = useState(false); // stato per il modale interessi
-  const [photo, setPhoto] = useState(null); // stato per la foto profilo
-  const fileInputRef = useRef(null); // riferimento all’input nascosto
-  const [message, setMessage] = useState(""); // stato per i messaggi di errore/successo
-  const navigate = useNavigate(); // hook per la navigazione
 
-  // Funzione per selezionare/deselezionare un interesse
-  const toggleInterest = (tag) => {
-    if (selectedInterests.includes(tag)) { // se l'interesse è già selezionato lo rimuovo
-      setSelectedInterests(selectedInterests.filter((t) => t !== tag)); // filtro l'array rimuovendo il tag
-    } else {
-      setSelectedInterests([...selectedInterests, tag]); // altrimenti lo aggiungo
-    }
-  };
-
-  // Funzione per gestire la selezione della foto
-  const handlePhotoSelect = () => {
-    fileInputRef.current.click(); // simula il click sull’input file nascosto
-  };
-
-  // Funzione per gestire il cambiamento del file selezionato
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPhoto(file);
-      setMessage(` Foto selezionata: ${file.name}`);
-    }
-  };
-
-  //  LOGIN
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/users/login",
-        null,
-        { params: { email, password } }
-      );
-
-      const token = res.data.access_token;
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", res.data.user_id);
-
-      // Mostra messaggio di successo
-      setMessage("✅ Bentornato!");
-
-      // Dopo 2 secondi naviga alla pagina profilo
-      setTimeout(() => {
-        setMessage(""); // scompare il modale
-        navigate("/profile");
-      }, 2000);
-
-    } catch (err) {
-      if (err.response) {
-        setMessage(`❌ Errore: ${err.response.data.detail}`);
-      } else {
-        setMessage("❌ Errore di connessione al server");
-      }
-      // facciamo sparire il messaggio di errore dopo 3 secondi
-      setTimeout(() => setMessage(""), 3000);
-    }
-  };
-
-
-  //  REGISTRAZIONE
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("surname", surname);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("interests", JSON.stringify(selectedInterests));
-      if (photo) formData.append("photo", photo);
-
-      await axios.post("http://127.0.0.1:8000/users/", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      setMessage("✅ Benvenuto!");
-
-      // Login automatico subito dopo la registrazione
-      const res = await axios.post(
-        "http://127.0.0.1:8000/users/login",
-        null,
-        { params: { email, password } }
-      );
-
-      const token = res.data.access_token;
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", res.data.user_id);
-
-
-      // Dopo 2 secondi resetto il messaggio e passo al profilo
-      setTimeout(() => {
-        setMessage("");
-        navigate("/profile");
-      }, 2000);
-
-    } catch (err) {
-      if (err.response) {
-        setMessage(`❌ Errore: ${err.response.data.detail}`);
-      } else {
-        setMessage("❌ Errore di connessione al server");
-      }
-      setTimeout(() => setMessage(""), 3000);
-    }
-  };
-
+  const {
+    isLogin, // stato per il toggle tra login e registrazione
+    setIsLogin, // funzione per impostare lo stato di isLogin
+    name, // stato per il nome
+    setName, // funzione per impostare il nome
+    surname, // stato per il cognome
+    setSurname, // funzione per impostare il cognome
+    email, // stato per l'email 
+    setEmail, // funzione per impostare l'email
+    password, // stato per la password
+    setPassword, // funzione per impostare la password
+    showPassword, // stato per mostrare/nascondere la password
+    setShowPassword, // funzione per impostare lo stato di showPassword
+    handleSubmit, // funzione per gestire il submit del form di login
+    handleRegister, // funzione per gestire il submit del form di registrazione
+    message, // stato per i messaggi di feedback
+    isModalOpen, // stato per l'apertura/chiusura del modale
+    setIsModalOpen, // funzione per impostare lo stato di isModalOpen
+    selectedInterests, // stato per le esperienze selezionate
+    toggleInterest, // funzione per selezionare/deselezionare un'esperienza
+    handlePhotoSelect, // funzione per gestire la selezione della foto
+    handleFileChange, // funzione per gestire il cambiamento del file selezionato
+    fileInputRef // riferimento all'input file nascosto
+  } = useAuthForm(); // utilizzo la logica dei form di login/registrazione
 
   return (
     <div className="h-screen flex flex-col md:flex-row">
@@ -185,7 +91,7 @@ function LoginRegisterPage() {
 
               <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Login</h2>
 
-              { /* Email */ }
+              { /* Email */}
               <div className="mb-4">
                 <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Email</label>
                 <input
@@ -198,7 +104,7 @@ function LoginRegisterPage() {
                 />
               </div>
 
-              { /* Password */ }
+              { /* Password */}
               <div className="mb-6">
                 <label className="block text-white/90 mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
                 <div className="relative w-full">
@@ -211,7 +117,7 @@ function LoginRegisterPage() {
                     rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300 dark:focus:ring-slate-500"
                   />
 
-                  { /* Pulsante Mostra Password */ }
+                  { /* Pulsante Mostra Password */}
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
@@ -252,7 +158,7 @@ function LoginRegisterPage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
-                { /* Nome */ }
+                { /* Nome */}
                 <div>
                   <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Nome</label>
                   <input
@@ -264,8 +170,8 @@ function LoginRegisterPage() {
                     required
                   />
                 </div>
- 
-                { /* Cognome */ }
+
+                { /* Cognome */}
                 <div>
                   <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Cognome</label>
                   <input
@@ -278,7 +184,7 @@ function LoginRegisterPage() {
                   />
                 </div>
 
-                {/* Email */ }
+                {/* Email */}
                 <div>
                   <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Email</label>
                   <input
@@ -291,7 +197,7 @@ function LoginRegisterPage() {
                   />
                 </div>
 
-                { /* Password */ }
+                { /* Password */}
                 <div>
                   <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
                   <div className="relative w-full">
@@ -304,7 +210,7 @@ function LoginRegisterPage() {
                       required
                     />
 
-                    { /* Pulsante Mostra Password */ }
+                    { /* Pulsante Mostra Password */}
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}

@@ -1,76 +1,21 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import DayInfoModal from "../components/Modals/DayInfoModal";
 import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay";
+import useTravelDaysPage from "../hooks/useTravelDaysPage";
 
 function TravelDays() {
-  const { id } = useParams(); // prendo l'id del viaggio dai parametri URL
-  const [travel, setTravel] = useState(null); // stato per ottenere i dati del viaggio
-  const [message, setMessage] = useState(""); // messaggio di successo o errore
-  const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno (Apri / Chiudi)
-  const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Leggi Tutto (Apri / Chiudi)
 
-  // Fetch dati viaggio all'inizio e quando cambia l'id
-  useEffect(() => {
-    fetchTravel(); // chiamo la funzione per caricare i dati del viaggio
-  }, [id]); // dipendenza sull'id
-
-  // Quando è aperto il modale per leggere le informazioni delle tappe la barra di scorrimento verticale principale viene disattivata
-  useEffect(() => {
-    if (selectedDay) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }, [selectedDay]);
-
-
-  // Funzione per caricare i dati del viaggio
-  const fetchTravel = () => {
-    const token = localStorage.getItem("token"); // prendo il token
-
-    axios
-      .get(`http://127.0.0.1:8000/travels/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setTravel(res.data))
-      .catch((err) => console.error("Errore nel caricamento del viaggio:", err));
-  };
-
-
-  // Funzione per eliminare un giorno
-  const handleDeleteDay = () => {
-    const token = localStorage.getItem("token");
-
-    axios
-      .delete(`http://127.0.0.1:8000/travels/${id}/days/${deleteDayId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(() => {
-        // aggiorna la lista dei giorni nel viaggio
-        setTravel({
-          ...travel,
-          days: travel.days.filter((d) => d.id !== deleteDayId),
-        });
-        setDeleteDayId(null);
-
-        // mostra messaggio di successo
-        setMessage("✅ Tappa cancellata!");
-
-        // fa sparire il messaggio dopo 2 secondi
-        setTimeout(() => {
-          setMessage("");
-        }, 2000);
-      })
-      .catch((err) => {
-        console.error("Errore nell'eliminazione del giorno:", err);
-        // mostra messaggio di errore
-        setMessage("❌ Errore durante la cancellazione della tappa.");
-        setTimeout(() => setMessage(""), 2500);
-      });
-  };
+  const {
+    id, // id del viaggio dai parametri URL
+    travel, // dati del viaggio
+    message, // messaggio di successo o errore
+    deleteDayId, // id della tappa da cancellare
+    selectedDay, // tappa selezionata per il modale Scopri di più
+    setSelectedDay, // funzione per settare la tappa selezionata
+    setDeleteDayId, // funzione per settare l'id della tappa da eliminare
+    handleDeleteDay // funzione per eliminare una tappa
+  } = useTravelDaysPage();
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
@@ -162,7 +107,7 @@ function TravelDays() {
                         transition: { duration: 0.8, ease: "easeOut" },
                       },
                     }}>
-                      
+
                     {/* Titolo e data */}
                     <div className="mb-4">
                       <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.title}</p>
@@ -227,12 +172,13 @@ function TravelDays() {
         </div>
       </div>
 
-      {/* Modali */}
+      {/* Modale Scopri di più */}
       <DayInfoModal
         selectedDay={selectedDay}
         onClose={() => setSelectedDay(null)}
         travelDays={travel.days}
       />
+      {/* Modale Conferma Eliminazione Tappa */}
       <ModalDeleteDay
         isOpen={!!deleteDayId}
         onConfirm={handleDeleteDay}
