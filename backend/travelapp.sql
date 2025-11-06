@@ -34,11 +34,3 @@ CREATE TABLE days (
     travel_id INT NOT NULL,
     FOREIGN KEY (travel_id) REFERENCES travels(id) ON DELETE CASCADE
 );
-
-CREATE TABLE chats(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    messages JSON,
-    user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
