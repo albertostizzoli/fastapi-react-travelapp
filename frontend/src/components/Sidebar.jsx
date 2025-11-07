@@ -122,7 +122,7 @@ function Sidebar() {
                   { /* Pulsante Dark Mode */}
                   <button
                     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="relative w-14 h-7 py-2 flex items-center justify-between rounded-full border border-gray-400 dark:border-gray-600 
+                    className="relative w-14 h-7 py-2 flex items-center justify-between rounded-full text-white border border-gray-400 dark:border-gray-600 
                   transition-all duration-300 cursor-pointer"
                     title="Cambia tema">
 

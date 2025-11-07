@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
+import { faArrowRight, faBookOpen, faCheckCircle, faEdit, faPlus, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
 import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // importo il modale di conferma eliminazione tappa
 import TravelDaysController from "../hooks/TravelDaysController"; // importo la logica della pagina TravelDays
@@ -7,15 +9,15 @@ import TravelDaysController from "../hooks/TravelDaysController"; // importo la 
 function TravelDays() {
 
   const {
-    id, // id del viaggio dai parametri URL
-    travel, // dati del viaggio
-    message, // messaggio di successo o errore
-    deleteDayId, // id della tappa da cancellare
-    selectedDay, // tappa selezionata per il modale Scopri di più
-    setSelectedDay, // funzione per settare la tappa selezionata
-    setDeleteDayId, // funzione per settare l'id della tappa da eliminare
-    handleDeleteDay // funzione per eliminare una tappa
-  } = TravelDaysController(); // utilizzo il controller per ottenere la logica della pagina
+    id,                         // id del viaggio dai parametri URL
+    travel,                     // dati del viaggio
+    message,                    // messaggio di successo o errore
+    deleteDayId,                // id della tappa da cancellare
+    selectedDay,                // tappa selezionata per il modale Scopri di più
+    setSelectedDay,             // funzione per settare la tappa selezionata
+    setDeleteDayId,             // funzione per settare l'id della tappa da eliminare
+    handleDeleteDay             // funzione per eliminare una tappa
+  } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
@@ -48,7 +50,7 @@ function TravelDays() {
              bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
              text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.30)]">
-            <i className="fa-solid fa-plus"></i> Aggiungi Tappa
+            <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
           </Link>
         </motion.div>
       </div>
@@ -69,7 +71,7 @@ function TravelDays() {
             </h2>
 
             <p className="text-xl font-bold text-white mb-2 drop-shadow-2xl">
-              {travel.start_date} → {travel.end_date}
+              {travel.start_date} <FontAwesomeIcon icon={faArrowRight} /> {travel.end_date}
             </p>
 
             {travel.title && (
@@ -138,7 +140,7 @@ function TravelDays() {
                         bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                        <i className="fa-solid fa-book-open"></i> Scopri di più
+                        <FontAwesomeIcon icon={faBookOpen} /> Leggi Tappa
                       </button>
 
                       <Link
@@ -147,7 +149,7 @@ function TravelDays() {
                         bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                        <i className="fa-solid fa-pen"></i> Modifica Tappa
+                        <FontAwesomeIcon icon={faEdit} /> Modifica Tappa
                       </Link>
 
                       <button
@@ -156,7 +158,7 @@ function TravelDays() {
                         bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                        <i className="fa-solid fa-trash"></i> Cancella Tappa
+                        <FontAwesomeIcon icon={faTrash} /> Cancella Tappa
                       </button>
                     </div>
                   </motion.div>
@@ -185,17 +187,23 @@ function TravelDays() {
         onCancel={() => setDeleteDayId(null)}
       />
 
-      {/* Messaggio */}
+      {/* Modale di Conferma */}
       {message && (
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white px-6 py-3
-          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500 
-        dark:from-slate-900 dark:to-slate-500">
-          <p className="text-lg font-semibold">{message}</p>
+          className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+          border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
+          bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          {message.icon === "success" && (
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+          )}
+          {message.icon === "error" && (
+            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+          )}
+          <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>
       )}
     </div>

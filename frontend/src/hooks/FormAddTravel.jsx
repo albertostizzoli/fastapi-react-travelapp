@@ -71,7 +71,7 @@ function FormAddTravel() {
             await axios.post("http://127.0.0.1:8000/travels", newTravel, {
                 headers: { Authorization: `Bearer ${token}` }, //  aggiungo token
             });
-            setMessage("✅ Viaggio aggiunto!");
+            setMessage({ text: "Viaggio Aggiunto!", icon: "success" });
 
             // il form si resetta dopo l'invio
             setForm({
@@ -96,16 +96,16 @@ function FormAddTravel() {
 
         } catch (err) {
             console.error(err);
-            setMessage("❌ Errore durante l'aggiunta del viaggio.");
+            setMessage({ text: "Viaggio Non Aggiunto!", icon: "error" });
         }
     };
 
     return {
-        form,
-        handleChange,
-        handleSubmit,
-        calculateGeneralVote,
-        message,
+        form,                   // stato del form
+        handleChange,           // funzione per gestire i cambiamenti
+        handleSubmit,           // funzione per gestire l'invio
+        calculateGeneralVote,   // funzione per calcolare il voto generale
+        message,                // messaggio di conferma/errore
     }
 }
 

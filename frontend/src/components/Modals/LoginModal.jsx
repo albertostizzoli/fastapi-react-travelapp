@@ -1,4 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import travellers from "../../store/travellers";
 
 function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
@@ -78,7 +80,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                   bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <i className="fa-solid fa-xmark mr-2"></i> Annulla
+                <FontAwesomeIcon icon={faXmark} className="mr-2" /> Annulla
               </button>
               <button
                 onClick={onClose}
@@ -86,7 +88,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
                   bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
                  text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <i className="fa-solid fa-check mr-2"></i> Salva Esperienze
+                <FontAwesomeIcon icon={faCheck} className="mr-2" /> Salva Esperienze
               </button>
             </div>
           </motion.div>

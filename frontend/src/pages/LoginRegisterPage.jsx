@@ -1,33 +1,35 @@
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
+import { faCamera, faCheckCircle, faEye, faEyeSlash, faPlane, faUser, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import LoginModal from "../components/modals/LoginModal"; // importo il componente modale per la selezione delle esperienze
 import FormAuth from "../hooks/FormAuth"; // importo la logica dei form di login/registrazione
 
 function LoginRegisterPage() {
 
   const {
-    isLogin, // stato per il toggle tra login e registrazione
-    setIsLogin, // funzione per impostare lo stato di isLogin
-    name, // stato per il nome
-    setName, // funzione per impostare il nome
-    surname, // stato per il cognome
-    setSurname, // funzione per impostare il cognome
-    email, // stato per l'email 
-    setEmail, // funzione per impostare l'email
-    password, // stato per la password
-    setPassword, // funzione per impostare la password
-    showPassword, // stato per mostrare/nascondere la password
-    setShowPassword, // funzione per impostare lo stato di showPassword
-    handleSubmit, // funzione per gestire il submit del form di login
-    handleRegister, // funzione per gestire il submit del form di registrazione
-    message, // stato per i messaggi di feedback
-    isModalOpen, // stato per l'apertura/chiusura del modale
-    setIsModalOpen, // funzione per impostare lo stato di isModalOpen
-    selectedInterests, // stato per le esperienze selezionate
-    toggleInterest, // funzione per selezionare/deselezionare un'esperienza
-    handlePhotoSelect, // funzione per gestire la selezione della foto
-    handleFileChange, // funzione per gestire il cambiamento del file selezionato
-    fileInputRef // riferimento all'input file nascosto
-  } = FormAuth(); // utilizzo la logica dei form di login/registrazione
+    isLogin,                // stato per il toggle tra login e registrazione
+    setIsLogin,             // funzione per impostare lo stato di isLogin
+    name,                   // stato per il nome
+    setName,                // funzione per impostare il nome
+    surname,                // stato per il cognome
+    setSurname,             // funzione per impostare il cognome
+    email,                  // stato per l'email 
+    setEmail,               // funzione per impostare l'email
+    password,               // stato per la password
+    setPassword,            // funzione per impostare la password
+    showPassword,           // stato per mostrare/nascondere la password
+    setShowPassword,        // funzione per impostare lo stato di showPassword
+    handleSubmit,           // funzione per gestire il submit del form di login
+    handleRegister,         // funzione per gestire il submit del form di registrazione
+    message,                // stato per i messaggi di feedback
+    isModalOpen,            // stato per l'apertura/chiusura del modale
+    setIsModalOpen,         // funzione per impostare lo stato di isModalOpen
+    selectedInterests,      // stato per le esperienze selezionate
+    toggleInterest,         // funzione per selezionare/deselezionare un'esperienza
+    handlePhotoSelect,      // funzione per gestire la selezione della foto
+    handleFileChange,       // funzione per gestire il cambiamento del file selezionato
+    fileInputRef            // riferimento all'input file nascosto
+  } = FormAuth();           // utilizzo la logica dei form di login/registrazione
 
   return (
     <div className="h-screen flex flex-col md:flex-row">
@@ -123,9 +125,9 @@ function LoginRegisterPage() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
                     {showPassword ? (
-                      <i className="fa-solid fa-eye-slash"></i>
+                      <FontAwesomeIcon icon={faEyeSlash} />
                     ) : (
-                      <i className="fa-solid fa-eye"></i>
+                      <FontAwesomeIcon icon={faEye} />
                     )}
                   </button>
                 </div>
@@ -137,7 +139,7 @@ function LoginRegisterPage() {
                 bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <i className="fa-solid fa-user mr-2"></i>
+                <FontAwesomeIcon icon={faUser} className="mr-2" />
                 Accedi
               </button>
             </motion.form>
@@ -216,9 +218,9 @@ function LoginRegisterPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
                       {showPassword ? (
-                        <i className="fa-solid fa-eye-slash"></i>
+                        <FontAwesomeIcon icon={faEyeSlash} />
                       ) : (
-                        <i className="fa-solid fa-eye"></i>
+                        <FontAwesomeIcon icon={faEye} />
                       )}
                     </button>
                   </div>
@@ -234,7 +236,7 @@ function LoginRegisterPage() {
                   bg-linear-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <i className="fa-solid fa-plane mr-2"></i> Esperienze
+                  <FontAwesomeIcon icon={faPlane} className="mr-2" />  Esperienze
                 </button>
 
                 <button
@@ -244,7 +246,7 @@ function LoginRegisterPage() {
                   bg-linear-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <i className="fa-solid fa-camera mr-2"></i> Foto
+                  <FontAwesomeIcon icon={faCamera} className="mr-2" />  Foto
                 </button>
 
                 <input
@@ -262,7 +264,7 @@ function LoginRegisterPage() {
                 bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <i className="fa-solid fa-user mr-2"></i>
+                <FontAwesomeIcon icon={faUser} className="mr-2" />
                 Registrati
               </button>
             </motion.form>
@@ -283,10 +285,16 @@ function LoginRegisterPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
-            className="fixed top-6 right-6 bg-white/10 backdrop-blur-lg border border-white/40 text-white 
-            px-6 py-3 rounded-full shadow-xl z-9999 bg-linear-to-r from-blue-500 to-orange-500 
-            dark:from-slate-900 dark:to-slate-500">
-            <p className="text-lg font-semibold">{message}</p>
+            className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+            border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
+            bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+            {message.icon === "success" && (
+              <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+            )}
+            {message.icon === "error" && (
+              <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+            )}
+            <p className="text-xl font-semibold">{message.text}</p>
           </motion.div>
         )}
       </div>

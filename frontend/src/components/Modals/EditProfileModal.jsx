@@ -1,4 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import travellers from "../../store/travellers";
 
 // Questo è il modale per la modifica del profilo
@@ -98,9 +100,9 @@ function EditProfileModal({
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute top-1/2 right-4 -translate-y-1/2 text-white hover:text-white cursor-pointer">
                   {showPassword ? (
-                    <i className="fa-solid fa-eye-slash"></i>
+                    <FontAwesomeIcon icon={faEyeSlash} />
                   ) : (
-                    <i className="fa-solid fa-eye"></i>
+                    <FontAwesomeIcon icon={faEye} />
                   )}
                 </button>
               </div>
@@ -151,7 +153,7 @@ function EditProfileModal({
                           }))
                         }
                         className="hover:text-rose-400 transition cursor-pointer">
-                        ✕
+                        <FontAwesomeIcon icon={faXmark} />
                       </button>
                     </span>
                   ))}
@@ -176,14 +178,14 @@ function EditProfileModal({
                 className="font-semibold px-6 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border 
                 border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                <i className="fa-solid fa-xmark mr-2"></i> Annulla
+                <FontAwesomeIcon icon={faXmark} className="mr-2" /> Annulla
               </button>
               <button
                 type="submit"
                 className="font-semibold px-6 py-2 bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border 
               border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                <i className="fa-solid fa-check mr-2"></i> Salva
+                <FontAwesomeIcon icon={faCheck} className="mr-2" /> Salva
               </button>
             </div>
           </motion.form>

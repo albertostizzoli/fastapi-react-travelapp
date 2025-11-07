@@ -1,4 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import travellers from "../../store/travellers";
 
 // Modale Glassmorphism per modificare i tag nella pagina EditDay
@@ -73,19 +75,17 @@ function ModalEditTag({ isOpen, onClose, tags, setTags }) {
                                 type="button"
                                 onClick={onClose}
                                 className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border 
-                                border-white text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                                <i className="fa-solid fa-xmark mr-2"></i>
-                                Chiudi
+                                <FontAwesomeIcon icon={faXmark} className="mr-2" />Chiudi
                             </button>
                             <button
                                 type="button"
                                 onClick={onClose}
                                 className="font-semibold px-4 py-2 bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border 
-                                border-white text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
-                                <i className="fa-solid fa-check mr-2"></i>
-                                Conferma
+                                <FontAwesomeIcon icon={faCheck} className="mr-2" />Conferma
                             </button>
                         </div>
                     </motion.div>

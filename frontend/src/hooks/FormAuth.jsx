@@ -54,7 +54,7 @@ function FormAuth() {
             localStorage.setItem("userId", res.data.user_id);
 
             // Mostra messaggio di successo
-            setMessage("✅ Bentornato!");
+            setMessage({ text: "Bentornato!", icon: "success" });
 
             // Dopo 2 secondi naviga alla pagina profilo
             setTimeout(() => {
@@ -66,7 +66,7 @@ function FormAuth() {
             if (err.response) {
                 setMessage(`❌ Errore: ${err.response.data.detail}`);
             } else {
-                setMessage("❌ Errore di connessione al server");
+                setMessage({ text: "Errore di connessione al server!", icon: "error" });
             }
             // facciamo sparire il messaggio di errore dopo 3 secondi
             setTimeout(() => setMessage(""), 3000);
@@ -90,7 +90,7 @@ function FormAuth() {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
-            setMessage("✅ Benvenuto!");
+            setMessage({ text: "Benvenuto!", icon: "success" });
 
             // Login automatico subito dopo la registrazione
             const res = await axios.post(
@@ -112,38 +112,38 @@ function FormAuth() {
 
         } catch (err) {
             if (err.response) {
-                setMessage(`❌ Errore: ${err.response.data.detail}`);
+                setMessage(` Errore: ${err.response.data.detail}`);
             } else {
-                setMessage("❌ Errore di connessione al server");
+                setMessage({ text: "Errore di connessione al server!", icon: "error" });
             }
             setTimeout(() => setMessage(""), 3000);
         }
     };
 
     return {
-        isLogin, // stato per il toggle login/registrazione
-        setIsLogin, // funzione per cambiare stato
-        name, // nome
-        setName, // funzione per cambiare nome
-        surname, // cognome
-        setSurname, // funzione per cambiare cognome
-        email, // email
-        setEmail, // funzione per cambiare email
-        password, // password
-        setPassword, // funzione per cambiare password
-        showPassword, // stato per mostrare/nascondere la password
-        setShowPassword, // funzione per cambiare stato mostra/nascondi password
-        selectedInterests, // interessi selezionati
-        toggleInterest, // funzione per selezionare/deselezionare un interesse
-        isModalOpen, // stato per il modale interessi
-        setIsModalOpen, // funzione per cambiare stato del modale interessi
-        handleSubmit, // funzione per il login
-        handleRegister, // funzione per la registrazione
-        message, // messaggio di errore/successo
-        photo, // foto profilo
-        handlePhotoSelect, // funzione per selezionare la foto
-        handleFileChange, // funzione per gestire il cambiamento del file selezionato
-        fileInputRef // riferimento all’input file nascosto
+        isLogin,                // stato per il toggle login/registrazione
+        setIsLogin,             // funzione per cambiare stato
+        name,                   // nome
+        setName,                // funzione per cambiare nome
+        surname,                // cognome
+        setSurname,             // funzione per cambiare cognome
+        email,                  // email
+        setEmail,               // funzione per cambiare email
+        password,               // password
+        setPassword,            // funzione per cambiare password
+        showPassword,           // stato per mostrare/nascondere la password
+        setShowPassword,        // funzione per cambiare stato mostra/nascondi password
+        selectedInterests,      // interessi selezionati
+        toggleInterest,         // funzione per selezionare/deselezionare un interesse
+        isModalOpen,            // stato per il modale interessi
+        setIsModalOpen,         // funzione per cambiare stato del modale interessi
+        handleSubmit,           // funzione per il login
+        handleRegister,         // funzione per la registrazione
+        message,                // messaggio di errore/successo
+        photo,                  // foto profilo
+        handlePhotoSelect,      // funzione per selezionare la foto
+        handleFileChange,       // funzione per gestire il cambiamento del file selezionato
+        fileInputRef            // riferimento all’input file nascosto
     };
 }
 

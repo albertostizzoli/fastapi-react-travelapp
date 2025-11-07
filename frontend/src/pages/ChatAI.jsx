@@ -1,19 +1,21 @@
 import { motion, AnimatePresence } from "framer-motion"; // per le animazioni
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
+import { faMessage } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ChatAIController from "../hooks/ChatAIController"; // importa il controller della chat AI
 
 
 function ChatAI() {
 
     const {
-        messages,        // messaggi della chat
-        input,           // input dell'utente
-        isLoading,       // stato di caricamento
-        typedTitle,      // titolo con effetto macchina da scrivere
-        typedResponse,   // risposta AI con effetto macchina da scrivere
-        sendMessage,     // funzione per inviare un messaggio
-        formatText,      // funzione per formattare il testo
-        setInput,        // funzione per aggiornare l'input
-    } = ChatAIController();
+        messages,           // messaggi della chat
+        input,              // input dell'utente
+        isLoading,          // stato di caricamento
+        typedTitle,         // titolo con effetto macchina da scrivere
+        typedResponse,      // risposta AI con effetto macchina da scrivere
+        sendMessage,        // funzione per inviare un messaggio
+        formatText,         // funzione per formattare il testo
+        setInput,           // funzione per aggiornare l'input
+    } = ChatAIController(); // uso il controller della chat AI
 
     return (
         <motion.div
@@ -92,6 +94,7 @@ function ChatAI() {
                     bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer text-sm sm:text-base">
+                    <FontAwesomeIcon icon={faMessage} />
                     Invia
                 </motion.button>
             </div>

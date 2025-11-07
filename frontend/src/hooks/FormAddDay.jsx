@@ -210,7 +210,7 @@ function FormAddDay() {
             setUploadProgress(0);
 
             setForm({ date: "", title: "", description: "", tags: [], photo: [] }); // resetto il form
-            setMessage("✅ Tappa aggiunta!");
+            setMessage({ text: "Tappa Aggiunta!", icon: "success" });
 
             // reindirizzo alla pagina delle tappe
             setTimeout(() => {
@@ -220,7 +220,7 @@ function FormAddDay() {
 
         } catch (err) {
             console.error(err);
-            setMessage("❌ Errore durante l'aggiunta della tappa.");
+            setMessage({ text: "Tappa Non Aggiunta!", icon: "error" });
             setIsUploading(false);
         }
     };

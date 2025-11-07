@@ -38,7 +38,7 @@ function TravelsController() {
                 setDeleteId(null);
 
                 // mostra messaggio di successo
-                setMessage("✅ Viaggio eliminato!");
+                setMessage({ text: "Viaggio Cancellato!", icon: "success" });
 
                 // nasconde il messaggio dopo 2 secondi
                 setTimeout(() => setMessage(""), 2000);
@@ -46,7 +46,7 @@ function TravelsController() {
             .catch((err) => {
                 console.error("Errore durante l'eliminazione del viaggio:", err);
                 // mostra messaggio di errore
-                setMessage("❌ Errore durante l'eliminazione del viaggio.");
+                setMessage({ text: "Viaggio Non Cancellato!", icon: "error" });
                 setTimeout(() => setMessage(""), 2500);
             });
     };
@@ -80,12 +80,12 @@ function TravelsController() {
     }
 
     return {
-        travels,
-        deleteId,
-        setDeleteId,
-        handleDelete,
-        message,
-        StarRating
+        travels,        // lista dei viaggi
+        deleteId,       // id del viaggio da eliminare
+        setDeleteId,    // funzione per impostare l'id del viaggio da eliminare
+        handleDelete,   // funzione per eliminare il viaggio
+        message,        // messaggio di successo o errore
+        StarRating      // componente per visualizzare le stelle
     }
 }
 

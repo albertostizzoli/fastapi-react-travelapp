@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"; // per i link di navigazione
 import { motion } from "framer-motion";  // per le animazioni
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
+import { faArrowLeft, faCamera, faCheckCircle, faEdit, faListCheck, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ModalEditTag from "../components/Modals/ModalEditTag"; // modale per modificare i tag
 import FormEditDay from "../hooks/FormEditDay"; // custom hook per la logica del form di modifica tappa
 
@@ -72,7 +74,7 @@ function EditDay() {
               className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-150 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <i className="fa-solid fa-arrow-left"></i>
+              <FontAwesomeIcon icon={faArrowLeft} />
               Torna alle Tappe
             </Link>
 
@@ -141,7 +143,7 @@ function EditDay() {
               className="font-semibold px-6 py-2 bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <i className="fa-solid fa-list-check"></i> Seleziona Tag
+              <FontAwesomeIcon icon={faListCheck} /> Seleziona Tag
             </button>
 
             <button
@@ -150,7 +152,7 @@ function EditDay() {
               className="font-semibold px-6 py-2 bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <i className="fa-solid fa-camera"></i> Carica Foto
+              <FontAwesomeIcon icon={faCamera} /> Carica Foto
             </button>
           </div>
 
@@ -170,7 +172,7 @@ function EditDay() {
                       setDay({ ...day, tags: day.tags.filter((c) => c !== tag), })
                     }
                     className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
-                    <i className="fa-solid fa-xmark text-sm"></i>
+                    <FontAwesomeIcon icon={faXmark} className="text-sm" />
                   </button>
                 </span>
               ))}
@@ -207,7 +209,7 @@ function EditDay() {
                       onClick={() => removePhoto(index)}
                       className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 
                       group-hover:opacity-100 transition">
-                      <i className="fa-solid fa-xmark"></i>
+                      <FontAwesomeIcon icon={faXmark} />
 
                       { /* Modale Foto */}
                       {openImage && (
@@ -221,7 +223,7 @@ function EditDay() {
                               onClick={() => setOpenImage(null)}
                               className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg 
                            hover:bg-red-400 transition cursor-pointer">
-                              <i className="fa-solid fa-xmark text-lg"></i>
+                              <FontAwesomeIcon icon={faXmark} className="text-lg" />
                             </button>
                             <img
                               src={openImage.replace("w=400", "w=1600")}
@@ -254,7 +256,7 @@ function EditDay() {
               className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-green-600 to-teal-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <i className="fa-solid fa-edit"></i>
+              <FontAwesomeIcon icon={faEdit} />
               Salva Modifiche
             </button>
           </div>
@@ -268,9 +270,16 @@ function EditDay() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white text-white px-6 py-3 
-          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
-          <p className="text-lg font-semibold">{message}</p>
+          className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+          border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
+          bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          {message.icon === "success" && (
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+          )}
+          {message.icon === "error" && (
+            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+          )}
+          <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>
       )}
     </motion.div>

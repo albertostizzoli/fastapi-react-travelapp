@@ -54,7 +54,7 @@ function TravelDaysController() {
                 setDeleteDayId(null);
 
                 // mostra messaggio di successo
-                setMessage("✅ Tappa cancellata!");
+                setMessage({ text: "Tappa Cancellata!", icon: "success" });
 
                 // fa sparire il messaggio dopo 2 secondi
                 setTimeout(() => {
@@ -62,22 +62,22 @@ function TravelDaysController() {
                 }, 2000);
             })
             .catch((err) => {
-                console.error("Errore nell'eliminazione del giorno:", err);
+                console.error("Errore nell'eliminazione della tappa:", err);
                 // mostra messaggio di errore
-                setMessage("❌ Errore durante la cancellazione della tappa.");
+                setMessage({ text: "Tappa Non Cancellata!", icon: "error" });
                 setTimeout(() => setMessage(""), 2500);
             });
     };
 
     return { 
-        id, // id del viaggio
-        travel, // dati del viaggio
-        message, // messaggio di successo o errore
-        deleteDayId, // id del giorno da eliminare
-        selectedDay, // giorno selezionato per il modale Scopri di più
-        setSelectedDay, // funzione per aprire/chiudere il modale Scopri di più
-        setDeleteDayId, // funzione per aprire/chiudere il modale di conferma eliminazione giorno
-        handleDeleteDay // funzione per eliminare un giorno
+        id,                // id del viaggio
+        travel,            // dati del viaggio
+        message,           // messaggio di successo o errore
+        deleteDayId,       // id del giorno da eliminare
+        selectedDay,       // giorno selezionato per il modale Scopri di più
+        setSelectedDay,    // funzione per aprire/chiudere il modale Scopri di più
+        setDeleteDayId,    // funzione per aprire/chiudere il modale di conferma eliminazione giorno
+        handleDeleteDay    // funzione per eliminare un giorno
     };
 }
 

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
+import { faCheckCircle, faCompass, faEdit, faGlobe, faPlus, faRightFromBracket, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import EditProfileModal from "../components/Modals/EditProfileModal"; // importo il modale di modifica profilo
 import ModalDeleteProfile from "../components/DeleteModals/ModalDeleteProfile"; // importo il modale di conferma eliminazione profilo
 import ProfileController from "../hooks/ProfileController"; // importo la logica della pagina profilo
@@ -7,22 +9,22 @@ import ProfileController from "../hooks/ProfileController"; // importo la logica
 function ProfilePage() {
 
   const {
-    user, // dati utente
-    recentTravels, // viaggi recenti
-    deleteProfileId, // id del profilo da eliminare
-    message, // messaggi di errore/successo
-    showEditModal, // stato del modale di modifica
-    showPassword, // stato per mostrare/nascondere la password
-    setShowPassword, // funzione per aggiornare lo stato showPassword
-    handleLogout, // funzione per il logout
-    handleDeleteProfile, // funzione per eliminare il profilo
-    setDeleteProfileId, // funzione per aggiornare lo stato deleteProfileId
-    setShowEditModal, // funzione per aggiornare lo stato showEditModal
-    editForm, // stato del form di modifica
-    setEditForm, // funzione per aggiornare lo stato del form di modifica
-    handleUpdateProfile, // funzione per aggiornare il profilo
-    StarRating // componente per la valutazione a stelle
-  } = ProfileController(); // utilizzo il controller per ottenere la logica della pagina
+    user,                      // dati utente
+    recentTravels,             // viaggi recenti
+    deleteProfileId,           // id del profilo da eliminare
+    message,                   // messaggi di errore/successo
+    showEditModal,             // stato del modale di modifica
+    showPassword,              // stato per mostrare/nascondere la password
+    setShowPassword,           // funzione per aggiornare lo stato showPassword
+    handleLogout,              // funzione per il logout
+    handleDeleteProfile,       // funzione per eliminare il profilo
+    setDeleteProfileId,        // funzione per aggiornare lo stato deleteProfileId
+    setShowEditModal,          // funzione per aggiornare lo stato showEditModal
+    editForm,                  // stato del form di modifica
+    setEditForm,               // funzione per aggiornare lo stato del form di modifica
+    handleUpdateProfile,       // funzione per aggiornare il profilo
+    StarRating                 // componente per la valutazione a stelle
+  } = ProfileController();     // utilizzo il controller per ottenere la logica della pagina
 
 
   return (
@@ -91,7 +93,7 @@ function ProfilePage() {
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-500 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <i className="fa-solid fa-pen"></i> Modifica Profilo
+                <FontAwesomeIcon icon={faEdit} /> Modifica Profilo
               </button>
 
               <button
@@ -101,7 +103,7 @@ function ProfilePage() {
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <i className="fa-solid fa-trash"></i> Cancella Profilo
+                <FontAwesomeIcon icon={faTrash} /> Cancella Profilo
               </button>
 
               <button
@@ -111,7 +113,7 @@ function ProfilePage() {
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <i className="fa-solid fa-right-from-bracket"></i> Esci
+                <FontAwesomeIcon icon={faRightFromBracket} /> Esci
               </button>
             </div>
           </motion.section>
@@ -152,7 +154,7 @@ function ProfilePage() {
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                  <i className="fa-solid fa-globe"></i> I miei viaggi
+                  <FontAwesomeIcon icon={faGlobe} /> I miei viaggi
                 </Link>
                 <Link
                   to="/add"
@@ -161,7 +163,7 @@ function ProfilePage() {
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                  <i className="fa-solid fa-plus"></i> Aggiungi Viaggio
+                  <FontAwesomeIcon icon={faPlus} /> Aggiungi Viaggio
                 </Link>
                 <Link
                   to="/chat"
@@ -169,7 +171,7 @@ function ProfilePage() {
                   bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <i className="fa-solid fa-compass"></i> Prossimo Viaggio
+                  <FontAwesomeIcon icon={faCompass} /> Prossimo Viaggio
                 </Link>
               </div>
             </motion.div>
@@ -287,10 +289,16 @@ function ProfilePage() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-white 
-          px-6 py-3 rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500
-        dark:from-slate-900 dark:to-slate-500">
-          <p className="text-lg font-semibold">{message}</p>
+          className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+          border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
+          bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          {message.icon === "success" && (
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+          )}
+          {message.icon === "error" && (
+            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+          )}
+          <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>
       )}
     </div>

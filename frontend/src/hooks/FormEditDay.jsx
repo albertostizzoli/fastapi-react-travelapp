@@ -167,7 +167,7 @@ function FormEditDay() {
                     },
                 }
             );
-            setMessage("✅ Tappa modificata!");
+            setMessage({ text: "Tappa Modificata!", icon: "success" });
             setIsUploading(false);
 
             // reindirizzo alla pagina delle tappe
@@ -177,29 +177,29 @@ function FormEditDay() {
             }, 2000);
         } catch (error) {
             console.error("Errore nell'aggiornamento:", error);
-            setMessage("❌ Errore durante la modifica della tappa.");
+            setMessage({ text: "Tappa Non Modificata!", icon: "error" });
             setIsUploading(false);
         }
     };
 
     return {
-        day,
-        setDay,
-        loading,
-        message,
-        handleChange,
-        fileInputRef,
-        handlePhotoSelect,
-        handleFileChange,
-        removePhoto,
-        handleSubmit,
-        openImage,
-        setOpenImage,
-        isTagModalOpen,
-        setIsTagModalOpen,
-        isUploading,
-        uploadProgress,
-        travelId,
+        day,                    // stato del giorno
+        setDay,                 // funzione per aggiornare il giorno
+        loading,                // stato di caricamento
+        message,                // messaggio di successo o errore
+        handleChange,           // funzione per gestire i cambiamenti dei campi
+        fileInputRef,           // riferimento all’input file nascosto
+        handlePhotoSelect,      // funzione per aprire il selettore di foto
+        handleFileChange,       // funzione per gestire il cambiamento del file selezionato
+        removePhoto,            // funzione per rimuovere una foto
+        handleSubmit,           // funzione per gestire l'invio del form
+        openImage,              // stato per l'immagine ingrandita (Apri / Chiudi)
+        setOpenImage,           // funzione per aggiornare lo stato dell'immagine ingrandita
+        isTagModalOpen,         // stato per il modale dei tags (Apri / Chiudi)
+        setIsTagModalOpen,      // funzione per aggiornare lo stato del modale dei tags
+        isUploading,            // stato per il caricamento
+        uploadProgress,         // stato per mostare la barra di caricamento
+        travelId,               // ID del viaggio per il ritorno alle tappe
     }
 }
 

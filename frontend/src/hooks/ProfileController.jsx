@@ -61,7 +61,7 @@ function ProfileController() {
                 setDeleteProfileId(null); // chiudi modale
 
                 // Mostra messaggio di conferma
-                setMessage("✅ Arrivederci e a presto!");
+                setMessage({ text: "Arrivederci e a Presto!", icon: "success" });
 
                 // Dopo 2 secondi effettua il logout e nasconde il messaggio
                 setTimeout(() => {
@@ -70,10 +70,10 @@ function ProfileController() {
                 }, 2000);
             })
             .catch((err) => {
-                console.error("❌ Errore nell'eliminazione del profilo:", err);
+                console.error(" Errore nell'eliminazione del profilo:", err);
 
                 // Mostra messaggio di errore
-                setMessage("❌ Errore durante l'eliminazione del profilo.");
+                setMessage({ text: "Profilo Non Cancellato", icon: "error" });
                 setTimeout(() => setMessage(""), 3000);
             });
     };
@@ -109,11 +109,11 @@ function ProfileController() {
             });
             setUser(res.data); // aggiorno i dati utente
             setShowEditModal(false);
-            setMessage("✅ Profilo aggiornato!");
+            setMessage({ text: "Profilo Modificato!", icon: "success" });
             setTimeout(() => setMessage(""), 3000);
         } catch (err) {
             console.error("Errore aggiornamento profilo:", err);
-            setMessage("❌ Errore durante l'aggiornamento del profilo.");
+            setMessage({ text: "Profilo Non Modificato", icon: "error" });
             setTimeout(() => setMessage(""), 3000);
         }
     };
@@ -147,21 +147,21 @@ function ProfileController() {
     }
 
     return {
-        user, // dati utente
-        recentTravels, // viaggi recenti
-        deleteProfileId, // id profilo da eliminare
-        message, // messaggi di errore/successo
-        showEditModal, // mostra/nasconde modale di modifica
-        showPassword, // mostra/nasconde password
-        editForm, // dati del form di modifica
-        setEditForm, // funzione per aggiornare i dati del form di modifica
-        setShowEditModal, // funzione per mostrare/nascondere il modale di modifica
-        handleLogout, // funzione di logout
-        handleUpdateProfile, // funzione per aggiornare il profilo
-        handleDeleteProfile, // funzione per eliminare il profilo
-        setDeleteProfileId, // funzione per impostare l'id del profilo da eliminare
-        setShowPassword, // funzione per mostrare/nascondere la password
-        StarRating // componente per le stelle di valutazione
+        user,                    // dati utente
+        recentTravels,           // viaggi recenti
+        deleteProfileId,         // id profilo da eliminare
+        message,                 // messaggi di errore/successo
+        showEditModal,           // mostra/nasconde modale di modifica
+        showPassword,            // mostra/nasconde password
+        editForm,                // dati del form di modifica
+        setEditForm,             // funzione per aggiornare i dati del form di modifica
+        setShowEditModal,        // funzione per mostrare/nascondere il modale di modifica
+        handleLogout,            // funzione di logout
+        handleUpdateProfile,     // funzione per aggiornare il profilo
+        handleDeleteProfile,     // funzione per eliminare il profilo
+        setDeleteProfileId,      // funzione per impostare l'id del profilo da eliminare
+        setShowPassword,         // funzione per mostrare/nascondere la password
+        StarRating               // componente per le stelle di valutazione
     };
 
 }

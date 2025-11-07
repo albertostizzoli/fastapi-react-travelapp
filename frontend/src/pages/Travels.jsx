@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
+import { faArrowRight, faCalendarDay, faCheckCircle, faEdit, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../hooks/TravelsController"; // importo la logica della pagina viaggi
 
 function Travels() {
 
   const {
-    travels, // lista dei viaggi
-    deleteId, // id del viaggio da eliminare
-    setDeleteId, // funzione per settare l'id del viaggio da eliminare
-    handleDelete, // funzione per eliminare il viaggio
-    message, // messaggio di conferma o errore
-    StarRating // componente per visualizzare le stelle
-  } = TravelsController(); // uso la logica della pagina viaggi
+    travels,                 // lista dei viaggi
+    deleteId,                // id del viaggio da eliminare
+    setDeleteId,             // funzione per settare l'id del viaggio da eliminare
+    handleDelete,            // funzione per eliminare il viaggio
+    message,                 // messaggio di conferma o errore
+    StarRating               // funzione per visualizzare le stelle
+  } = TravelsController();   // uso la logica della pagina viaggi
 
   return (
     <div className="relative min-h-screen p-8 overflow-visible text-gray-50">
@@ -70,8 +72,8 @@ function Travels() {
                   <h3 className="text-xl font-bold text-white drop-shadow-md">{v.year}</h3>
                 </div>
 
-                <p className="text-gray-100 text-lg font-medium">
-                  {v.start_date} → {v.end_date}
+                <p className="text-gray-100 text-xl font-medium">
+                  {v.start_date} <FontAwesomeIcon icon={faArrowRight} /> {v.end_date}
                 </p>
 
                 <div className="flex items-center gap-2 mt-1">
@@ -98,7 +100,7 @@ function Travels() {
                     bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
                     rounded-full shadow-md transition-all duration-100 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                    <i className="fa-solid fa-calendar-day mr-1"></i> Tappe
+                    <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
                   </Link>
 
                   <Link
@@ -107,7 +109,7 @@ function Travels() {
                     bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
                     rounded-full shadow-md transition-all duration-100 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                    <i className="fa-solid fa-pen mr-1"></i> Modifica
+                    <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
                   </Link>
 
                   <button
@@ -116,7 +118,7 @@ function Travels() {
                     bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
                     rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                    <i className="fa-solid fa-trash mr-1"></i> Cancella
+                    <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella
                   </button>
                 </div>
               </div>
@@ -140,9 +142,16 @@ function Travels() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-2xl border border-white/40 text-gray-50/90 px-6 py-3 
-          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
-          <p className="text-lg font-semibold">{message}</p>
+          className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+          border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
+          bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          {message.icon === "success" && (
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+          )}
+          {message.icon === "error" && (
+            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+          )}
+          <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>
       )}
     </div>

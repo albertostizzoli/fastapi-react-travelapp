@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
+import { faArrowLeft, faCheckCircle, faEdit, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import FormEditTravel from "../hooks/FormEditTravel"; // importo la logica del form di modifica viaggio
 
 function EditTravel() {
 
   const {
-    travel, // dati del viaggio
-    handleChange, // gestore cambiamenti input
-    handleVoteChange, // gestore cambiamenti voti
-    calculateGeneralVote, // calcolo media voti
-    handleSubmit, // gestore invio form
-    message // messaggio di conferma/errore
-  } = FormEditTravel(); // uso il custom hook del form di modifica viaggio
+    travel,                  // dati del viaggio
+    handleChange,            // gestore cambiamenti input
+    handleVoteChange,        // gestore cambiamenti voti
+    calculateGeneralVote,    // calcolo media voti
+    handleSubmit,            // gestore invio form
+    message                  // messaggio di conferma/errore
+  } = FormEditTravel();      // uso il custom hook del form di modifica viaggio
 
   if (!travel) return <p className="text-center">Caricamento...</p>;
 
@@ -41,7 +43,7 @@ function EditTravel() {
             className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
             backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-150 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <i className="fa-solid fa-arrow-left"></i>
+            <FontAwesomeIcon icon={faArrowLeft} />
             Torna ai Viaggi
           </Link>
 
@@ -169,7 +171,7 @@ function EditTravel() {
               className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-green-600 to-teal-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <i className="fa-solid fa-edit"></i>
+              <FontAwesomeIcon icon={faEdit} />
               Salva Modifiche
             </button>
           </div>
@@ -183,9 +185,16 @@ function EditTravel() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 backdrop-blur-xl border border-white/40 text-white px-6 py-3 
-          rounded-full shadow-lg z-9999 bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
-          <p className="text-lg font-semibold">{message}</p>
+          className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+          border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
+          bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          {message.icon === "success" && (
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+          )}
+          {message.icon === "error" && (
+            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+          )}
+          <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>
       )}
     </motion.div>

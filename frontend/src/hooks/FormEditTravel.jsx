@@ -68,7 +68,7 @@ function FormEditTravel() {
                 headers: { Authorization: `Bearer ${token}` }, // header di autorizzazione
             });
 
-            setMessage("✅ Viaggio aggiornato!"); // mostra messaggio di successo
+            setMessage({ text: "Viaggio Modificato!", icon: "success" }); // mostra messaggio di successo
 
             // dopo 2 secondi, reindirizza alla pagina dei viaggi
             setTimeout(() => {
@@ -77,17 +77,17 @@ function FormEditTravel() {
             }, 2000);
         } catch (err) {
             console.error("Errore durante l'aggiornamento del viaggio:", err); // log dell'errore
-            setMessage("❌ Errore durante l'aggiornamento del viaggio.");
+           setMessage({ text: "Viaggio Non Modificato!", icon: "error" });
         }
     };
 
     return {
-        travel, // dati del viaggio
-        message, // messaggio di stato
-        handleChange,  // funzione per gestire i cambiamenti dei campi 
-        handleVoteChange, // funzione per gestire i cambiamenti dei voti
-        calculateGeneralVote, // funzione per calcolare la media dei voti
-        handleSubmit // funzione per gestire il submit del form
+        travel,                      // dati del viaggio
+        message,                     // messaggio di stato
+        handleChange,                // funzione per gestire i cambiamenti dei campi 
+        handleVoteChange,            // funzione per gestire i cambiamenti dei voti
+        calculateGeneralVote,        // funzione per calcolare la media dei voti
+        handleSubmit                 // funzione per gestire il submit del form
     }
 }
 
