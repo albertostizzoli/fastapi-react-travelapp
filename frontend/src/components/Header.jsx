@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun, faUser, faGlobe, faPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
   const location = useLocation();
@@ -82,8 +84,8 @@ function Header() {
           title="Cambia tema">
 
           {/* Icone */}
-          <span className="text-xs ml-1">🌙</span>
-          <span className="text-xs mr-1">☀️</span>
+          <span className="text-sm ml-1"><FontAwesomeIcon icon={faMoon} /></span>
+          <span className="text-sm mr-1"><FontAwesomeIcon icon={faSun} /></span>
 
           {/* Pallina */}
           <span
@@ -97,7 +99,7 @@ function Header() {
           <Link
             to="/loginregister"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
-            <i className="fa-solid fa-user"></i>
+            <FontAwesomeIcon icon={faUser} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -133,7 +135,7 @@ function Header() {
           <Link
             to="/travels"
             className="flex items-center gap-2 px-4 py-2 font-semibold">
-            <i className="fa-solid fa-globe"></i>
+            <FontAwesomeIcon icon={faGlobe} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -149,7 +151,7 @@ function Header() {
           <Link
             to="/add"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
-            <i className="fa-solid fa-plus"></i>
+            <FontAwesomeIcon icon={faPlus} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -165,7 +167,7 @@ function Header() {
           <button
             onClick={handleLogout}
             className="px-4 py-2 flex items-center gap-2 font-semibold cursor-pointer">
-            <i className="fa-solid fa-right-from-bracket"></i>
+            <FontAwesomeIcon icon={faRightFromBracket} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current

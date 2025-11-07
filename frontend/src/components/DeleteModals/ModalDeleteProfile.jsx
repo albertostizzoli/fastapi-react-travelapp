@@ -1,4 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
   return (
@@ -42,7 +44,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
                 from-green-600 to-teal-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                <i className="fa-solid fa-check mr-2"></i> Sì
+                <FontAwesomeIcon icon={faCheck} className="mr-2" /> Sì
               </button>
 
               <button
@@ -51,7 +53,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
                 from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                <i className="fa-solid fa-xmark mr-2"></i> No
+               <FontAwesomeIcon icon={faXmark} /> No
               </button>
             </div>
           </motion.div>
