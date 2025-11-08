@@ -46,7 +46,7 @@ function TravelsController() {
             .catch((err) => {
                 console.error("Errore durante l'eliminazione del viaggio:", err);
                 // mostra messaggio di errore
-                setMessage({ text: "Viaggio Non Cancellato!", icon: "error" });
+                setMessage({ text: "Errore: Viaggio Non Cancellato!", icon: "error" });
                 setTimeout(() => setMessage(""), 2500);
             });
     };

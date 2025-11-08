@@ -28,171 +28,76 @@ function LoginRegisterPage() {
     toggleInterest,         // funzione per selezionare/deselezionare un'esperienza
     handlePhotoSelect,      // funzione per gestire la selezione della foto
     handleFileChange,       // funzione per gestire il cambiamento del file selezionato
-    fileInputRef            // riferimento all'input file nascosto
+    fileInputRef,           // riferimento all'input file nascosto
+    validation,             // validazioni
+    handlePasswordChange    // funzione per validare la password
   } = FormAuth();           // utilizzo la logica dei form di login/registrazione
 
   return (
-    <div className="h-screen flex flex-col md:flex-row">
-      {/* Sezione form */}
-      <div
-        className="flex-1 flex flex-col items-center justify-center">
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-evenly gap-2 px-4 py-6">
+      {/* Logo a sinistra */}
+      <div className="flex items-center justify-center md:justify-end md:w-auto mb-6 md:mb-0 bg-transparent ">
+        <img
+          src="/images/logo.png"
+          alt="Logo TravelDiary"
+          className="w-48 sm:w-56 md:w-72 lg:w-80 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+        />
+      </div>
 
-        {/* Contenitore logo */}
-        <div className="flex flex-col items-center">
-          <img
-            src="/images/logo.png"
-            alt="Logo TravelDiary"
-            className="w-55 h-55 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
-          />
-        </div>
-
+      {/* Form e toggle a destra */}
+      <div className="flex flex-col items-center justify-center p-6 w-full max-w-lg relative sm:max-w-[500px] 
+            md:max-w-[500px] lg:max-w-[500px] px-2 sm:px-4">
         {/* Toggle Login/Registrati */}
         <div className="relative flex mb-6 bg-linear-to-br from-white/20 via-white/10 to-transparent
-          backdrop-blur-lg border border-white/40 p-1 rounded-full w-64 
-          shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
+            backdrop-blur-lg border border-white/40 p-1 rounded-full w-64 
+            shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 ease-in-out">
           <motion.div
             layout
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className={`absolute top-1 bottom-1 w-1/2 rounded-full shadow-md ${isLogin
-              ? "bg-linear-to-r from-orange-600/70 to-rose-500/60 left-1 dark:from-amber-400/60 dark:to-orange-500/50"
-              : "bg-linear-to-r from-blue-600/70 to-cyan-500/60 right-1 dark:from-blue-400/60 dark:to-indigo-500/50"
+              ? 'bg-linear-to-r from-orange-600/70 to-rose-500/60 left-1 dark:from-amber-400/60 dark:to-orange-500/50'
+              : 'bg-linear-to-r from-blue-600/70 to-cyan-500/60 right-1 dark:from-blue-400/60 dark:to-indigo-500/50'
               }`}
           />
           <button
             onClick={() => setIsLogin(true)}
             className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition 
-              ${isLogin ? "text-gray-900" : "text-white"
-              }`}>
+            ${isLogin ? 'text-gray-900' : 'text-white'}`}>
             Login
           </button>
-
           <button
             onClick={() => setIsLogin(false)}
             className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition 
-              ${!isLogin ? "text-gray-900" : "text-white"
-              }`}>
+            ${!isLogin ? 'text-gray-900' : 'text-white'}`}>
             Registrati
           </button>
         </div>
 
 
         {/* Form di Login e di Registrazione */}
-        <AnimatePresence mode="wait">
-          {isLogin ? (
-            <motion.form
-              key="login"
-              onSubmit={handleSubmit}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4 }}
-              className="
-              bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
-              shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
-              md:mx-auto flex flex-col">
-
-              <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Login</h2>
-
-              { /* Email */}
-              <div className="mb-4">
-                <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Email</label>
-                <input
-                  type="email"
-                  className="w-full font-semibold border bg-white/20 text-white
-                  rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300 dark:focus:ring-slate-500"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-
-              { /* Password */}
-              <div className="mb-6">
-                <label className="block text-white/90 mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
-                <div className="relative w-full">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full font-semibold border bg-white/20 text-white 
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-300 dark:focus:ring-slate-500"
-                  />
-
-                  { /* Pulsante Mostra Password */}
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
-                    {showPassword ? (
-                      <FontAwesomeIcon icon={faEyeSlash} />
-                    ) : (
-                      <FontAwesomeIcon icon={faEye} />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
-                bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
-                rounded-full shadow-md transition-all duration-100 hover:scale-105
-                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <FontAwesomeIcon icon={faUser} className="mr-2" />
-                Accedi
-              </button>
-            </motion.form>
-          ) : (
-            <motion.form
-              key="register"
-              onSubmit={handleRegister}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4 }}
-              className="
-                bg-linear-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
-                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
+        <div className="w-full flex justify-center">
+          <AnimatePresence mode="wait">
+            {isLogin ? (
+              <motion.form
+                key="login"
+                onSubmit={handleSubmit}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+                className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
+                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
                 md:mx-auto flex flex-col">
 
-              <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Registrati</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Login</h2>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-
-                { /* Nome */}
-                <div>
-                  <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Nome</label>
-                  <input
-                    type="text"
-                    className="w-full font-semibold border  bg-white/20 text-white 
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                  />
-                </div>
-
-                { /* Cognome */}
-                <div>
-                  <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Cognome</label>
-                  <input
-                    type="text"
-                    className="w-full font-semibold border bg-white/20 text-white  
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
-                    value={surname}
-                    onChange={(e) => setSurname(e.target.value)}
-                    required
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
+                { /* Email */}
+                <div className="mb-4">
                   <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Email</label>
                   <input
                     type="email"
                     className="w-full font-semibold border bg-white/20 text-white
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -200,16 +105,16 @@ function LoginRegisterPage() {
                 </div>
 
                 { /* Password */}
-                <div>
-                  <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
+                <div className="mb-6">
+                  <label className="block text-white/90 mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
                   <div className="relative w-full">
                     <input
                       type={showPassword ? "text" : "password"}
+                      name="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full font-semibold border  bg-white/20 text-white 
-                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-300 dark:focus:ring-slate-500"
-                      required
+                      className="w-full font-semibold border bg-white/20 text-white 
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400"
                     />
 
                     { /* Pulsante Mostra Password */}
@@ -225,51 +130,158 @@ function LoginRegisterPage() {
                     </button>
                   </div>
                 </div>
-              </div>
-
-              {/* Pulsanti esperienze e foto */}
-              <div className="mt-6 flex md:flex-nowrap items-center gap-4">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(true)}
-                  className="flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40 text-white 
-                  rounded-full shadow-md transition-all duration-100 hover:scale-105
-                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <FontAwesomeIcon icon={faPlane} className="mr-2" />  Esperienze
-                </button>
 
                 <button
-                  type="button"
-                  onClick={handlePhotoSelect}
-                  className=" flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40 text-white 
+                  type="submit"
+                  className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
+                  bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-100 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <FontAwesomeIcon icon={faCamera} className="mr-2" />  Foto
+                  <FontAwesomeIcon icon={faUser} className="mr-2" />
+                  Accedi
                 </button>
+              </motion.form>
+            ) : (
+              <motion.form
+                key="register"
+                onSubmit={handleRegister}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+                className="
+                bg-linear-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
+                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
+                md:mx-auto flex flex-col">
 
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  style={{ display: "none" }}
-                />
-              </div>
+                <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Registrati</h2>
 
-              <button
-                type="submit"
-                className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
-                bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
-                rounded-full shadow-md transition-all duration-100 hover:scale-105
-                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <FontAwesomeIcon icon={faUser} className="mr-2" />
-                Registrati
-              </button>
-            </motion.form>
-          )}
-        </AnimatePresence>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+                  { /* Nome */}
+                  <div>
+                    <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Nome</label>
+                    <input
+                      type="text"
+                      className="w-full font-semibold border  bg-white/20 text-white 
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  { /* Cognome */}
+                  <div>
+                    <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Cognome</label>
+                    <input
+                      type="text"
+                      className="w-full font-semibold border bg-white/20 text-white  
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                      value={surname}
+                      onChange={(e) => setSurname(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Email</label>
+                    <input
+                      type="email"
+                      className="w-full font-semibold border bg-white/20 text-white
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  { /* Password */}
+                  <div>
+                    <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
+                    <div className="relative w-full">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={handlePasswordChange}
+                        className="w-full font-semibold border  bg-white/20 text-white 
+                        rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                        required
+                      />
+
+                      { /* Pulsante Mostra Password */}
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
+                        {showPassword ? (
+                          <FontAwesomeIcon icon={faEyeSlash} />
+                        ) : (
+                          <FontAwesomeIcon icon={faEye} />
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Feedback visivo */}
+                    {password && (
+                      <ul className="text-sm mt-2">
+                        <li style={{ color: validation.errors.length ? "lime" : "white" }}>• Almeno 8 caratteri</li>
+                        <li style={{ color: validation.errors.upper ? "lime" : "white" }}>• Una lettera maiuscola</li>
+                        <li style={{ color: validation.errors.lower ? "lime" : "white" }}>• Una lettera minuscola</li>
+                        <li style={{ color: validation.errors.number ? "lime" : "white" }}>• Un numero</li>
+                        <li style={{ color: validation.errors.special ? "lime" : "white" }}>• Un carattere speciale</li>
+                      </ul>
+                    )}
+
+                  </div>
+                </div>
+
+                {/* Pulsanti esperienze e foto */}
+                <div className="mt-6 flex md:flex-nowrap items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(true)}
+                    className="flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
+                    bg-linear-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40 text-white 
+                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
+                    <FontAwesomeIcon icon={faPlane} className="mr-2" />  Esperienze
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handlePhotoSelect}
+                    className=" flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
+                    bg-linear-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40 text-white 
+                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
+                    <FontAwesomeIcon icon={faCamera} className="mr-2" />  Foto
+                  </button>
+
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    style={{ display: "none" }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
+                  bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
+                  rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
+                  <FontAwesomeIcon icon={faUser} className="mr-2" />
+                  Registrati
+                </button>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </div>
+
 
         {/* Modali */}
         <LoginModal

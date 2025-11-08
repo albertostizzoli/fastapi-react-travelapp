@@ -77,7 +77,7 @@ function FormEditTravel() {
             }, 2000);
         } catch (err) {
             console.error("Errore durante l'aggiornamento del viaggio:", err); // log dell'errore
-           setMessage({ text: "Viaggio Non Modificato!", icon: "error" });
+           setMessage({ text: "Errore: Viaggio Non Modificato!", icon: "error" });
         }
     };
 

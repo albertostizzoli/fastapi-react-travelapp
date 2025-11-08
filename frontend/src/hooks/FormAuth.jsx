@@ -15,6 +15,17 @@ function FormAuth() {
     const fileInputRef = useRef(null); // riferimento all’input nascosto
     const [message, setMessage] = useState(""); // stato per i messaggi di errore/successo
     const navigate = useNavigate(); // hook per la navigazione
+    const [validation, setValidation] = useState({
+        isValid: false,
+        errors: {
+            length: false,
+            upper: false,
+            lower: false,
+            number: false,
+            special: false,
+        },
+    });
+
 
     // Funzione per selezionare/deselezionare un interesse
     const toggleInterest = (tag) => {
@@ -35,8 +46,50 @@ function FormAuth() {
         const file = e.target.files[0];
         if (file) {
             setPhoto(file);
-            setMessage(` Foto selezionata: ${file.name}`);
         }
+    };
+
+    // Funzione per la validazione della password
+    const validatePassword = (password) => {
+        const minLength = 8;
+
+        let hasUpper = false;
+        let hasLower = false;
+        let hasNumber = false;
+        let hasSpecial = false;
+        const specialChars = "!@#$%^&*(),.?\":{}|<>";
+
+        for (const char of password) {
+            if (char >= "A" && char <= "Z") hasUpper = true;
+            else if (char >= "a" && char <= "z") hasLower = true;
+            else if (char >= "0" && char <= "9") hasNumber = true;
+            else if (specialChars.includes(char)) hasSpecial = true;
+        }
+
+        const isValid =
+            password.length >= minLength &&
+            hasUpper &&
+            hasLower &&
+            hasNumber &&
+            hasSpecial;
+
+        return {
+            isValid,
+            errors: {
+                length: password.length >= minLength,
+                upper: hasUpper,
+                lower: hasLower,
+                number: hasNumber,
+                special: hasSpecial,
+            },
+        };
+    }
+
+    // poi quando la password cambia
+    const handlePasswordChange = (e) => {
+        const value = e.target.value;
+        setPassword(value);
+        setValidation(validatePassword(value)); // aggiorna validation
     };
 
     //  LOGIN
@@ -63,11 +116,17 @@ function FormAuth() {
             }, 2000);
 
         } catch (err) {
+            let text = "";
+            let icon = "error";
+
             if (err.response) {
-                setMessage(`❌ Errore: ${err.response.data.detail}`);
+                text = ` Errore: ${err.response.data.detail}`;
             } else {
-                setMessage({ text: "Errore di connessione al server!", icon: "error" });
+                text = "Errore di connessione al server!";
             }
+
+            setMessage({ text, icon });
+
             // facciamo sparire il messaggio di errore dopo 3 secondi
             setTimeout(() => setMessage(""), 3000);
         }
@@ -77,6 +136,20 @@ function FormAuth() {
     //  REGISTRAZIONE
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        const validation = validatePassword(password);
+        if (!validation.isValid) {
+            let errorText = "La password non rispetta i requisiti:\n";
+            if (!validation.errors.length) errorText += "• almeno 8 caratteri\n";
+            if (!validation.errors.upper) errorText += "• almeno una lettera maiuscola\n";
+            if (!validation.errors.lower) errorText += "• almeno una lettera minuscola\n";
+            if (!validation.errors.number) errorText += "• almeno un numero\n";
+            if (!validation.errors.special) errorText += "• almeno un carattere speciale\n";
+
+            setMessage({ text: errorText, icon: "error" });
+            setTimeout(() => setMessage(""), 3000);
+            return; // blocca la registrazione
+        }
         try {
             const formData = new FormData();
             formData.append("name", name);
@@ -111,11 +184,18 @@ function FormAuth() {
             }, 2000);
 
         } catch (err) {
+            let text = "";
+            let icon = "error";
+
             if (err.response) {
-                setMessage(` Errore: ${err.response.data.detail}`);
+                text = ` Errore: ${err.response.data.detail}`;
             } else {
-                setMessage({ text: "Errore di connessione al server!", icon: "error" });
+                text = "Errore di connessione al server!";
             }
+
+            setMessage({ text, icon });
+
+            // facciamo sparire il messaggio di errore dopo 3 secondi
             setTimeout(() => setMessage(""), 3000);
         }
     };
@@ -143,7 +223,10 @@ function FormAuth() {
         photo,                  // foto profilo
         handlePhotoSelect,      // funzione per selezionare la foto
         handleFileChange,       // funzione per gestire il cambiamento del file selezionato
-        fileInputRef            // riferimento all’input file nascosto
+        fileInputRef,           // riferimento all’input file nascosto
+        validation,             // validazioni
+        validatePassword,       // funzione per validare la password
+        handlePasswordChange    // funzione per verificare la validazione della password
     };
 }
 

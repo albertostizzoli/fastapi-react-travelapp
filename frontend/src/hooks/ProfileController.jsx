@@ -113,7 +113,7 @@ function ProfileController() {
             setTimeout(() => setMessage(""), 3000);
         } catch (err) {
             console.error("Errore aggiornamento profilo:", err);
-            setMessage({ text: "Profilo Non Modificato", icon: "error" });
+            setMessage({ text: "Errore: Profilo Non Modificato", icon: "error" });
             setTimeout(() => setMessage(""), 3000);
         }
     };

@@ -96,7 +96,7 @@ function FormAddTravel() {
 
         } catch (err) {
             console.error(err);
-            setMessage({ text: "Viaggio Non Aggiunto!", icon: "error" });
+            setMessage({ text: "Errore: Viaggio Non Aggiunto!", icon: "error" });
         }
     };
 

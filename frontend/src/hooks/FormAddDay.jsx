@@ -220,7 +220,7 @@ function FormAddDay() {
 
         } catch (err) {
             console.error(err);
-            setMessage({ text: "Tappa Non Aggiunta!", icon: "error" });
+            setMessage({ text: "Errore: Tappa Non Aggiunta!", icon: "error" });
             setIsUploading(false);
         }
     };

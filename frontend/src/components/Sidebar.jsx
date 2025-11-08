@@ -128,7 +128,7 @@ function Sidebar() {
 
                     {/* Icone */}
                     <span className="text-sm ml-1"><FontAwesomeIcon icon={faMoon} /></span>
-                    <span className="text-sm mr-1"><FontAwesomeIcon icon={faSun} /></span>
+                    <span className="text-sm mr-1"><FontAwesomeIcon icon={faSun} className="text-yellow-400" /></span>
 
                     {/* Pallina */}
                     <span

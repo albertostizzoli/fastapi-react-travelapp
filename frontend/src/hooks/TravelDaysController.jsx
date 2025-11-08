@@ -64,7 +64,7 @@ function TravelDaysController() {
             .catch((err) => {
                 console.error("Errore nell'eliminazione della tappa:", err);
                 // mostra messaggio di errore
-                setMessage({ text: "Tappa Non Cancellata!", icon: "error" });
+                setMessage({ text: "Errore: Tappa Non Cancellata!", icon: "error" });
                 setTimeout(() => setMessage(""), 2500);
             });
     };
