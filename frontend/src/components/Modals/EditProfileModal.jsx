@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +16,14 @@ function EditProfileModal({
 }) {
   const allExperiences = travellers.flatMap((t) => t.experiences);
 
+  const [password, setPassword] = useState(""); // stato per la password
+  // stato per la validazione della password
+  const [validation, setValidation] = useState({
+    isValid: false,
+    errors: { length: false, upper: false, lower: false, number: false, special: false },
+  });
+
+
   // aggiorna lo stato del form di modifica
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -23,6 +32,59 @@ function EditProfileModal({
       [name]: files ? files[0] : value,
     }));
   };
+
+  // Funzione per la validazione della password
+  const validatePassword = (password) => {
+    const minLength = 8;
+
+    let hasUpper = false;
+    let hasLower = false;
+    let hasNumber = false;
+    let hasSpecial = false;
+    const specialChars = "!@#$%^&*(),.?\":{}|<>";
+
+    for (const char of password) {
+      if (char >= "A" && char <= "Z") hasUpper = true;
+      else if (char >= "a" && char <= "z") hasLower = true;
+      else if (char >= "0" && char <= "9") hasNumber = true;
+      else if (specialChars.includes(char)) hasSpecial = true;
+    }
+
+    const isValid =
+      password.length >= minLength &&
+      hasUpper &&
+      hasLower &&
+      hasNumber &&
+      hasSpecial;
+
+    return {
+      isValid,
+      errors: {
+        length: password.length >= minLength,
+        upper: hasUpper,
+        lower: hasLower,
+        number: hasNumber,
+        special: hasSpecial,
+      },
+    };
+  }
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+
+    // aggiorna la password locale
+    setPassword(value);
+
+    // aggiorna la validazione
+    setValidation(validatePassword(value));
+
+    // aggiorna anche il form principale
+    setEditForm((prev) => ({
+      ...prev,
+      password: value,
+    }));
+  };
+
 
   return (
     <AnimatePresence mode="wait">
@@ -89,8 +151,8 @@ function EditProfileModal({
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  value={editForm.password}
-                  onChange={handleChange}
+                  value={password}
+                  onChange={handlePasswordChange}
                   placeholder="Nuova Password"
                   className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
                   focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition text-white"
@@ -105,6 +167,23 @@ function EditProfileModal({
                     <FontAwesomeIcon icon={faEye} />
                   )}
                 </button>
+              </div>
+              <div className="mt-2 text-sm space-y-1">
+                <p className={`${validation.errors.length ? "text-green-500" : "text-rose-500"}`}>
+                  {validation.errors.length ? "✓" : "✗"} Almeno 8 caratteri
+                </p>
+                <p className={`${validation.errors.upper ? "text-green-500" : "text-rose-500"}`}>
+                  {validation.errors.upper ? "✓" : "✗"} Una lettera maiuscola
+                </p>
+                <p className={`${validation.errors.lower ? "text-green-500" : "text-rose-500"}`}>
+                  {validation.errors.lower ? "✓" : "✗"} Una lettera minuscola
+                </p>
+                <p className={`${validation.errors.number ? "text-green-500" : "text-rose-500"}`}>
+                  {validation.errors.number ? "✓" : "✗"} Un numero
+                </p>
+                <p className={`${validation.errors.special ? "text-green-500" : "text-rose-500"}`}>
+                  {validation.errors.special ? "✓" : "✗"} Un carattere speciale (!@#$…)
+                </p>
               </div>
             </div>
 

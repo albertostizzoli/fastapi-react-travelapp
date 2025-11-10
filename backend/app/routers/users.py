@@ -4,7 +4,7 @@ from app.database import SessionLocal # connessione locale al DB (crea le sessio
 from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
 from app.schemas.users import User, UserCreate # schemi Pydantic per validare input/output
 from app.models.travel_db import TravelDB # modello ORM per la tabella dei viaggi
-from app.utils.users import get_password_hash, verify_password # importo le funzioni per hashare e verificare la password
+from app.utils.users import get_password_hash, verify_password, validate_password # importo le funzioni per hashare, verificare e validare la password
 from app.config import cloudinary  # importo la configurazione di Cloudinary
 import cloudinary.uploader  # per caricare immagini su Cloudinary
 import json # per gestire la conversione da stringa JSON a lista Python
@@ -57,6 +57,18 @@ async def add_user(
     if existing_user:
         raise HTTPException(status_code=400, detail="Email già registrata")
     
+    # validazione password
+    if password:
+        validation = validate_password(password)
+        if not validation["is_valid"]:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "msg": "La password non rispetta i requisiti di sicurezza",
+                    "errors": validation["errors"]
+                }
+            )
+    
      # decodifica la stringa JSON in lista Python
     interests_list = []
     if interests:
@@ -103,6 +115,18 @@ async def update_user(
     user = db.query(UserDB).filter(UserDB.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="Utente non trovato")
+
+    # validazione password
+    if password:
+        validation = validate_password(password)
+        if not validation["is_valid"]:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "msg": "La password non rispetta i requisiti di sicurezza",
+                    "errors": validation["errors"]
+                }
+            )
 
     # decodifica gli interessi da stringa JSON a lista Python
     interests_list = None

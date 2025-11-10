@@ -45,8 +45,8 @@ function LoginRegisterPage() {
       </div>
 
       {/* Form e toggle a destra */}
-      <div className="flex flex-col items-center justify-center p-6 w-full max-w-lg relative sm:max-w-[500px] 
-            md:max-w-[500px] lg:max-w-[500px] px-2 sm:px-4">
+      <div className="flex flex-col items-center justify-center p-6 w-full relative sm:w-[600px] 
+            md:w-[600px] lg:w-[600px] px-2 sm:px-4">
         {/* Toggle Login/Registrati */}
         <div className="relative flex mb-6 bg-linear-to-br from-white/20 via-white/10 to-transparent
             backdrop-blur-lg border border-white/40 p-1 rounded-full w-64 
@@ -86,8 +86,7 @@ function LoginRegisterPage() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4 }}
                 className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
-                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[400px]
-                md:mx-auto flex flex-col">
+                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-[400px] md:mx-auto flex flex-col">
 
                 <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Login</h2>
 
@@ -151,8 +150,7 @@ function LoginRegisterPage() {
                 transition={{ duration: 0.4 }}
                 className="
                 bg-linear-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
-                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-11/12 sm:w-[500px] md:w-[450px] lg:w-[550px]
-                md:mx-auto flex flex-col">
+                shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-[600px] md:mx-auto flex flex-col">
 
                 <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Registrati</h2>
 
@@ -225,15 +223,24 @@ function LoginRegisterPage() {
 
                     {/* Feedback visivo */}
                     {password && (
-                      <ul className="text-sm mt-2">
-                        <li style={{ color: validation.errors.length ? "lime" : "white" }}>• Almeno 8 caratteri</li>
-                        <li style={{ color: validation.errors.upper ? "lime" : "white" }}>• Una lettera maiuscola</li>
-                        <li style={{ color: validation.errors.lower ? "lime" : "white" }}>• Una lettera minuscola</li>
-                        <li style={{ color: validation.errors.number ? "lime" : "white" }}>• Un numero</li>
-                        <li style={{ color: validation.errors.special ? "lime" : "white" }}>• Un carattere speciale</li>
-                      </ul>
+                      <div className="mt-2 text-sm space-y-1">
+                        <p className={`${validation.errors.length ? "text-green-500" : "text-rose-500"}`}>
+                          {validation.errors.length ? "✓" : "✗"} Almeno 8 caratteri
+                        </p>
+                        <p className={`${validation.errors.upper ? "text-green-500" : "text-rose-500"}`}>
+                          {validation.errors.upper ? "✓" : "✗"} Una lettera maiuscola
+                        </p>
+                        <p className={`${validation.errors.lower ? "text-green-500" : "text-rose-500"}`}>
+                          {validation.errors.lower ? "✓" : "✗"} Una lettera minuscola
+                        </p>
+                        <p className={`${validation.errors.number ? "text-green-500" : "text-rose-500"}`}>
+                          {validation.errors.number ? "✓" : "✗"} Un numero
+                        </p>
+                        <p className={`${validation.errors.special ? "text-green-500" : "text-rose-500"}`}>
+                          {validation.errors.special ? "✓" : "✗"} Un carattere speciale (!@#$…)
+                        </p>
+                      </div>
                     )}
-
                   </div>
                 </div>
 
