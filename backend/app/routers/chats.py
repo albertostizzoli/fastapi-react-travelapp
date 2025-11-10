@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session #sessione ORM per interagire con il database
+from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
+from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
 from app.config import UserMessage, travel_model
 
 router = APIRouter(prefix="/chats")
@@ -6,6 +9,7 @@ router = APIRouter(prefix="/chats")
 # Dizionario in memoria per salvare la cronologia delle chat per ogni utente
 chat_history = {}
 
+# funzione per generare il messaggio dall'AI
 @router.post("/")
 def generate_message(msg: UserMessage):
     """
@@ -107,3 +111,49 @@ def generate_message(msg: UserMessage):
 
     except Exception as e:
         return {"response": f"Errore nella generazione: {e}", "intent": intent}
+    
+
+# Dependency: fornisce una sessione di database a ogni richiesta API.
+# La sessione viene creata all'inizio, resa disponibile tramite yield,
+# e chiusa automaticamente alla fine della richiesta (pattern try/finally).
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db  # restituisce la sessione da usare nelle query
+    finally:
+        db.close()  # chiude la sessione per evitare memory leak
+
+
+# funzione per ottenere gli interessi dell'utente
+def get_user_interests(user_id: int, db: Session):
+    user = db.query(UserDB).filter(UserDB.id == user_id).first()
+    return user.interests if user and user.interests else []
+
+
+# funzione per ottenere il messaggio dall'AI in base agli interessi 
+@router.get("/recommendations/{user_id}")
+def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
+    interests = get_user_interests(user_id, db)
+    interests_text = ", ".join(interests) if interests else "nessuna preferenza specificata"
+
+    prompt = f"""
+    Sei un assistente AI esperto di viaggi. L'utente ha i seguenti interessi: {interests_text}.
+    Consiglia 3-5 destinazioni di viaggio che si allineano ai suoi interessi.
+    Rispondi in modo chiaro, pratico e amichevole, suggerendo mete e attività.
+    """
+
+    # Ottieni il testo generato dal modello
+    response = travel_model.generate_content(prompt).text.strip()
+
+    # Pulisci il testo per rimuovere caratteri indesiderati
+    cleaned_text = (
+        response
+        .replace("**", "")
+        .replace("*", "")
+        .replace("###", "")
+        .replace("##", "")
+        .replace("\n\n", "\n")
+        .strip()
+    )
+
+    return {"recommendations": cleaned_text}

@@ -6,6 +6,7 @@ function ChatAIController() {
     const [messages, setMessages] = useState([]); // stato per i messaggi della chat
     const [input, setInput] = useState(""); // stato per l'input dell'utente
     const [isLoading, setIsLoading] = useState(false); // stato per indicare se la risposta AI è in caricamento
+    const [isRecommending, setIsRecommending] = useState(false); // stato per i consigli dell'AI
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, sono il tuo assistente AI. Chiedimi pure!` : "";
@@ -115,10 +116,13 @@ function ChatAIController() {
         isLoading,           // stato di caricamento
         typedTitle,          // titolo con effetto macchina da scrivere
         typedResponse,       // risposta AI con effetto macchina da scrivere
+        isRecommending,      // attesa per il messaggio
+        setIsRecommending,   // stato dell'attesa
         sendMessage,         // funzione per inviare un messaggio
         formatText,          // funzione per formattare il testo
         setInput,            // funzione per aggiornare l'input
-        useTypewriterEffect  // hook effetto macchina da scrivere
+        useTypewriterEffect,  // hook effetto macchina da scrivere
+        setMessages           // messaggi della chat
     }
 }
 

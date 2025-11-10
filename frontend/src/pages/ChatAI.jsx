@@ -1,12 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion"; // per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faMessage } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { faCompass, faMessage } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ChatAIController from "../hooks/ChatAIController"; // importa il controller della chat AI
 
 
 function ChatAI() {
 
     const {
+        user,               // utente
         messages,           // messaggi della chat
         input,              // input dell'utente
         isLoading,          // stato di caricamento
@@ -15,6 +16,9 @@ function ChatAI() {
         sendMessage,        // funzione per inviare un messaggio
         formatText,         // funzione per formattare il testo
         setInput,           // funzione per aggiornare l'input
+        setMessages,         // stato dei messaggi
+        isRecommending,      // attesa dle messaggio
+        setIsRecommending    // stato di attesa
     } = ChatAIController(); // uso il controller della chat AI
 
     return (
@@ -96,6 +100,49 @@ function ChatAI() {
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer text-sm sm:text-base">
                     <FontAwesomeIcon icon={faMessage} />
                     Invia
+                </motion.button>
+
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={async () => {
+                        if (!user) {
+                            alert("Utente non caricato, riprova tra un momento!");
+                            return;
+                        }
+
+                        setIsRecommending(true); // mostra messaggio di attesa
+                        setMessages(prev => [...prev, { role: "ai", text: "🧭 Sto analizzando i tuoi interessi..." }]);
+
+                        try {
+                            const res = await fetch(`http://127.0.0.1:8000/chats/recommendations/${user.id}`);
+                            const data = await res.json();
+
+                            // Rimuove il messaggio di attesa e aggiunge la risposta vera
+                            setMessages(prev => [
+                                ...prev.filter(m => m.text !== " Sto analizzando i tuoi interessi..."),
+                                { role: "ai", text: data.recommendations },
+                            ]);
+                        } catch (err) {
+                            console.error(err);
+                            setMessages(prev => [
+                                ...prev,
+                                { role: "ai", text: "❌ Errore: impossibile ottenere i consigli di viaggio." },
+                            ]);
+                        } finally {
+                            setIsRecommending(false);
+                        }
+                    }}
+                    disabled={isRecommending}
+                    className={`font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
+                    ${isRecommending
+                            ? "bg-gray-500 cursor-not-allowed"
+                            : "bg-linear-to-r from-green-600 to-teal-500 hover:scale-105"}
+                            backdrop-blur-md border border-white/40 text-white 
+                            rounded-full shadow-md transition-all duration-300 
+                            hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-sm sm:text-base`}>
+                    <FontAwesomeIcon icon={faCompass} />
+                    {isRecommending ? "Sto pensando..." : "Ispirami"}
                 </motion.button>
             </div>
         </motion.div>
