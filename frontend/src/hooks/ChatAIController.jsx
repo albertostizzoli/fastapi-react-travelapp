@@ -6,7 +6,7 @@ function ChatAIController() {
     const [messages, setMessages] = useState([]); // stato per i messaggi della chat
     const [input, setInput] = useState(""); // stato per l'input dell'utente
     const [isLoading, setIsLoading] = useState(false); // stato per indicare se la risposta AI è in caricamento
-    const [isRecommending, setIsRecommending] = useState(false); // stato per i consigli dell'AI
+    const [isRecommending, setIsRecommending] = useState(false); // stato per disabilitare il pulsante Ispirami
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, sono il tuo assistente AI. Chiedimi pure!` : "";
@@ -109,6 +109,45 @@ function ChatAIController() {
         return displayedText; // ritorna il testo visualizzato
     }
 
+    // Funzione asincrona che recupera le raccomandazioni personalizzate per l'utente
+    const getRecommendations = async () => {
+
+        // serve per disabilitare il bottone e mostrare un messaggio di attesa
+        setIsRecommending(true);
+        const waitingMsg = "Sto analizzando le tue esperienze preferite..."; // messaggio di attesa
+
+        // aggiunge il messaggio di attesa ai messaggi della chat l'utente vedrà che l'AI sta elaborando
+        setMessages(prev => [...prev, { role: "ai", text: waitingMsg }]);
+
+        try {
+            // richiesta al backend per ottenere le raccomandazioni di viaggio
+            const res = await fetch(`http://127.0.0.1:8000/chats/recommendations/${user.id}`);
+
+            // converte la risposta del server in formato JSON
+            const data = await res.json();
+
+            // aggiorna la chat:
+            setMessages(prev => [
+                ...prev.filter(m => m.text !== waitingMsg), // rimuove il messaggio di attesa
+                { role: "ai", text: data.recommendations },  // aggiunge la risposta AI ricevuta dal backend
+            ]);
+
+        } catch (err) {
+            console.error(err); // stampa l'errore in console per debug
+
+            //  mostra un messaggio di errore nella chat, al posto del messaggio di attesa
+            setMessages(prev => [
+                ...prev.filter(m => m.text !== waitingMsg), // rimuove il messaggio di attesa
+                { role: "ai", text: "❌ Errore: impossibile ottenere i consigli di viaggio." },
+            ]);
+
+        } finally {
+            // disattiva lo stato di caricamento per riattivare il bottone
+            setIsRecommending(false);
+        }
+    };
+
+
     return {
         user,                // dati dell'utente
         messages,            // messaggi della chat
@@ -116,13 +155,14 @@ function ChatAIController() {
         isLoading,           // stato di caricamento
         typedTitle,          // titolo con effetto macchina da scrivere
         typedResponse,       // risposta AI con effetto macchina da scrivere
-        isRecommending,      // attesa per il messaggio
-        setIsRecommending,   // stato dell'attesa
+        isRecommending,      // pulsante Ispirami disabilitato
+        setIsRecommending,   // stato per disabilitare il pulsante Ispirami
         sendMessage,         // funzione per inviare un messaggio
+        getRecommendations,  // funzione per ottenere consigli grazie alle esperienze
         formatText,          // funzione per formattare il testo
         setInput,            // funzione per aggiornare l'input
-        useTypewriterEffect,  // hook effetto macchina da scrivere
-        setMessages           // messaggi della chat
+        useTypewriterEffect, // hook effetto macchina da scrivere
+        setMessages          // messaggi della chat
     }
 }
 

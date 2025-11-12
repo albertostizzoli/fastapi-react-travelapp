@@ -143,7 +143,7 @@ function ProfilePage() {
               }}>
 
               <h3 className="text-2xl font-bold text-white text-center mb-4 drop-shadow">
-                Gestisco i miei viaggi
+                Gestisci i tuoi viaggi
               </h3>
 
               <div className="flex flex-col w-full gap-2 justify-center">
@@ -242,18 +242,18 @@ function ProfilePage() {
             transition={{ duration: 1, ease: "easeOut" }}>
 
             <h3 className="text-2xl font-bold text-white text-center mb-4 drop-shadow">
-              Le mie esperienze preferite
+              Le tue esperienze preferite
             </h3>
 
             {user?.experiences?.length ? (
               <div className="flex flex-wrap justify-center items-center gap-2">
-                {user.experiences.map((interest, idx) => (
+                {user.experiences.map((experience, idx) => (
                   <span
                     key={idx}
                     className="font-semibold px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500
                      backdrop-blur-md border border-white/40 text-white rounded-full 
                     text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100">
-                    {interest}
+                    {experience}
                   </span>
                 ))}
               </div>

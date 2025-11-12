@@ -134,12 +134,22 @@ def get_user_experiences(user_id: int, db: Session):
 @router.get("/recommendations/{user_id}")
 def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
     experiences = get_user_experiences(user_id, db)
-    experiences_text = ", ".join(experiences) if experiences else "nessuna preferenza specificata"
+    experiences_text = ", ".join(experiences) if experiences else "nessuna esperienza specificata"
 
     prompt = f"""
-    Sei un assistente AI esperto di viaggi. L'utente ha le seguenti esperienze: {experiences_text}.
-    Consiglia 10 destinazioni di viaggio con almeno 5 tappe di quelle destinazioni che si allineano alle sue esperienze.
-    Rispondi in modo chiaro, pratico e amichevole, suggerendo mete e attività.
+    Sei un assistente AI esperto di viaggi. 
+    L'utente ha le seguenti esperienze di viaggio: {experiences_text}.
+    Il tuo compito è consigliare 10 destinazioni di viaggio, ciascuna con almeno 5 tappe o attività specifiche, che si allineano alle esperienze dell'utente.
+
+    Requisiti di stile:
+    - Inizia sempre con un saluto cordiale e personalizzato.
+    - Rispondi in modo chiaro, pratico e amichevole.
+    - Le destinazioni devono essere originali e non ripetere luoghi o tappe già suggerite in precedenti risposte.
+    - Se hai già fornito suggerimenti simili in passato, proponi alternative nuove o meno note, anche di nicchia.
+    - Alterna destinazioni di città, natura, cultura, avventura, gastronomia e relax per garantire varietà geografica e tematica.
+
+    Obiettivo:
+    Fornire ispirazione sempre nuova basata sulle preferenze dell'utente, evitando qualsiasi ripetizione di idee già proposte.
     """
 
     # Ottieni il testo generato dal modello

@@ -4,9 +4,7 @@ import { faCompass, faMessage } from "@fortawesome/free-solid-svg-icons"; // imp
 import ChatAIController from "../hooks/ChatAIController"; // importa il controller della chat AI
 
 function ChatAI() {
-
     const {
-        user,               // utente
         messages,           // messaggi della chat
         input,              // input dell'utente
         isLoading,          // stato di caricamento
@@ -15,9 +13,8 @@ function ChatAI() {
         sendMessage,        // funzione per inviare un messaggio
         formatText,         // funzione per formattare il testo
         setInput,           // funzione per aggiornare l'input
-        setMessages,         // stato dei messaggi
-        isRecommending,      // attesa del messaggio
-        setIsRecommending    // stato di attesa
+        isRecommending,     // pulsante Ispirami disabilitato
+        getRecommendations  // funzione per ottenere consigli di viaggio leggendo le esperienze dell'utente
     } = ChatAIController(); // uso il controller della chat AI
 
     return (
@@ -68,7 +65,7 @@ function ChatAI() {
 
                 {isLoading && ( // indicatore di caricamento
                     <motion.p
-                        className="text-white italic text-sm sm:text-base"
+                        className="text-white text-base"
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ duration: 1.5, repeat: Infinity }}>
                         Fammi pensare...
@@ -104,35 +101,8 @@ function ChatAI() {
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={async () => {
-                        if (!user) {
-                            alert("Utente non caricato, riprova tra un momento!");
-                            return;
-                        }
-
-                        setIsRecommending(true); // mostra messaggio di attesa
-                        setMessages(prev => [...prev, { role: "ai", text: "Sto analizzando le tue esperienze..." }]);
-
-                        try {
-                            const res = await fetch(`http://127.0.0.1:8000/chats/recommendations/${user.id}`);
-                            const data = await res.json();
-
-                            // Rimuove il messaggio di attesa e aggiunge la risposta vera
-                            setMessages(prev => [
-                                ...prev.filter(m => m.text !== " Sto analizzando i tuoi interessi..."),
-                                { role: "ai", text: data.recommendations },
-                            ]);
-                        } catch (err) {
-                            console.error(err);
-                            setMessages(prev => [
-                                ...prev,
-                                { role: "ai", text: "❌ Errore: impossibile ottenere i consigli di viaggio." },
-                            ]);
-                        } finally {
-                            setIsRecommending(false);
-                        }
-                    }}
-                    disabled={isRecommending}
+                    onClick={getRecommendations} // invia consigli di viaggio leggendo le esperienze dell'utente
+                    disabled={isRecommending} // disabilita il pulsante se è in caricamento
                     className={`font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
                     ${isRecommending
                             ? "bg-gray-500 cursor-not-allowed"
