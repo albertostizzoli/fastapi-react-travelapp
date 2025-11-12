@@ -189,7 +189,7 @@ function EditProfileModal({
 
             {/* Colonna destra */}
             <div className="space-y-4">
-              {/* Selezione interessi */}
+              {/* Selezione esperienze */}
               <select
                 onChange={(e) => {
                   const selected = e.target.value;

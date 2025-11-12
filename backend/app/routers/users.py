@@ -128,7 +128,7 @@ async def update_user(
                 }
             )
 
-    # decodifica gli interessi da stringa JSON a lista Python
+    # decodifica le esperienze da stringa JSON a lista Python
     experiences_list = None
     if experiences:
         try:
