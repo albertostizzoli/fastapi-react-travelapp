@@ -164,7 +164,7 @@ function HomePage() {
                         initial="initial"
                         whileInView="animate">
                         Grazie all’<strong>intelligenza artificiale</strong>, l’app può suggerirti la prossima
-                        <strong> destinazione</strong> ideale in base ai tuoi viaggi passati, preferenze e interessi.
+                        <strong> destinazione</strong> ideale in base alle tue <strong>esperienze preferite. </strong>
                         Immagina di scoprire luoghi nuovi e sorprendenti, personalizzati
                         per te, senza dover fare ricerche infinite. Il consiglio dell’AI
                         trasforma la tua esperienza di viaggio in un’avventura sempre <strong>unica e stimolante.</strong>

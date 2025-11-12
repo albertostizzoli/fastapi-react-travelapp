@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo Fon
 import { faCompass, faMessage } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ChatAIController from "../hooks/ChatAIController"; // importa il controller della chat AI
 
-
 function ChatAI() {
 
     const {
@@ -17,7 +16,7 @@ function ChatAI() {
         formatText,         // funzione per formattare il testo
         setInput,           // funzione per aggiornare l'input
         setMessages,         // stato dei messaggi
-        isRecommending,      // attesa dle messaggio
+        isRecommending,      // attesa del messaggio
         setIsRecommending    // stato di attesa
     } = ChatAIController(); // uso il controller della chat AI
 
@@ -112,7 +111,7 @@ function ChatAI() {
                         }
 
                         setIsRecommending(true); // mostra messaggio di attesa
-                        setMessages(prev => [...prev, { role: "ai", text: "🧭 Sto analizzando i tuoi interessi..." }]);
+                        setMessages(prev => [...prev, { role: "ai", text: "Sto analizzando le tue esperienze..." }]);
 
                         try {
                             const res = await fetch(`http://127.0.0.1:8000/chats/recommendations/${user.id}`);
@@ -139,7 +138,7 @@ function ChatAI() {
                             ? "bg-gray-500 cursor-not-allowed"
                             : "bg-linear-to-r from-green-600 to-teal-500 hover:scale-105"}
                             backdrop-blur-md border border-white/40 text-white 
-                            rounded-full shadow-md transition-all duration-300 
+                            rounded-full shadow-md transition-all duration-300 cursor-pointer
                             hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-sm sm:text-base`}>
                     <FontAwesomeIcon icon={faCompass} />
                     {isRecommending ? "Sto pensando..." : "Ispirami"}

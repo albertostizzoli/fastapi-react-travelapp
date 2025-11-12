@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"; // per i link di navigazione
 import { motion } from "framer-motion";  // per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faArrowLeft, faCamera, faCheckCircle, faEdit, faListCheck, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
-import ModalEditTag from "../components/Modals/ModalEditTag"; // modale per modificare i tag
+import ModalEditCategory from "../components/Modals/ModalEditCategory"; // modale per modificare le categorie
 import FormEditDay from "../hooks/FormEditDay"; // custom hook per la logica del form di modifica tappa
 
 function EditDay() {
@@ -143,7 +143,7 @@ function EditDay() {
               className="font-semibold px-6 py-2 bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faListCheck} /> Seleziona Tag
+              <FontAwesomeIcon icon={faListCheck} /> Seleziona Categoria
             </button>
 
             <button
@@ -180,7 +180,7 @@ function EditDay() {
           )}
 
           { /* Modale di Modifica dei Tag */}
-          <ModalEditTag
+          <ModalEditCategory
             isOpen={isTagModalOpen}
             onClose={() => setIsTagModalOpen(false)}
             tags={day.tags}

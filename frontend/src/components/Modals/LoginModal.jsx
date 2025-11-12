@@ -34,7 +34,7 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
             {/* Contenuto scrollabile */}
             <div className="flex-1 p-6 overflow-y-auto scrollbar">
               <h2 className="text-3xl font-extrabold text-white/90 mb-6 drop-shadow-lg text-center">
-                Dicci le tue Esperienze
+                Le tue esperienze preferite
               </h2>
 
               {travellers.map((category) => (

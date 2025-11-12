@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"; // importo il componente Link per la na
 import { motion } from "framer-motion"; // importo motion per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faArrowLeft, faCamera, faCheckCircle, faListCheck, faPlus, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
-import ModalAddTag from "../components/Modals/ModalAddTag"; // importo la modale per l'aggiunta dei tag
+import ModalAddCategory from "../components/Modals/ModalAddCategory"; // importo la modale per l'aggiunta delle categorie
 import FormAddDay from "../hooks/FormAddDay"; // importo l'hook personalizzato per la logica del form per aggiungere una tappa
 
 function AddDay() {
@@ -186,7 +186,7 @@ function AddDay() {
               className="font-semibold px-6 py-2 bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faListCheck} /> Seleziona Tag
+              <FontAwesomeIcon icon={faListCheck} /> Seleziona Categoria
             </button>
             <button
               type="button"
@@ -225,7 +225,7 @@ function AddDay() {
           )}
 
           { /* Modale di Aggiunta dei Tag */}
-          <ModalAddTag
+          <ModalAddCategory
             isOpen={isTagModalOpen}
             onClose={() => setIsTagModalOpen(false)}
             form={form}

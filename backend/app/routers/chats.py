@@ -138,7 +138,7 @@ def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
 
     prompt = f"""
     Sei un assistente AI esperto di viaggi. L'utente ha i seguenti interessi: {interests_text}.
-    Consiglia 3-5 destinazioni di viaggio che si allineano ai suoi interessi.
+    Consiglia 10 destinazioni di viaggio con almeno 5 tappe di quelle destinazioni che si allineano ai suoi interessi.
     Rispondi in modo chiaro, pratico e amichevole, suggerendo mete e attività.
     """
 

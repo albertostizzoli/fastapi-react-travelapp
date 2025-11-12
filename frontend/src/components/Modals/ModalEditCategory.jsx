@@ -3,15 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import travellers from "../../store/travellers";
 
-// Questo è il modale per i tag nel form Aggiungi Tappa
-function ModalAddTag({ isOpen, onClose, form, setForm }) {
-
+// Modale Glassmorphism per modificare i tag nella pagina EditDay
+function ModalEditCategory({ isOpen, onClose, tags, setTags }) {
     return (
         <AnimatePresence mode="wait">
             {isOpen && (
                 <motion.div
-                    key="addTagModal"
-                    className=" fixed inset-0 z-9999 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-3xl"
+                    key="editTagModal"
+                    className="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-3xl"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -19,51 +18,46 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
                     style={{ willChange: "opacity" }}>
 
                     <motion.div
-                        className="bg-white/30 backdrop-blur-xl rounded-3xl shadow-2xl 
+                        className="bg-white/30 backdrop-blur-3xl border border-white 
                         bg-linear-to-br from-blue-500/40 to-orange-500/30 dark:from-slate-900 dark:to-slate-500
-                        p-6 w-[90%] max-w-4xl overflow-y-auto 
-                        max-h-[75vh] border border-white flex flex-col"
+                        rounded-3xl shadow-2xl p-6 w-[90%] 
+                        max-w-4xl max-h-[75vh] flex flex-col"
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.8, opacity: 0 }}
                         transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
                         style={{ willChange: "transform, opacity" }}>
 
-                        <h2 className="text-white text-2xl font-bold mb-4 text-center drop-shadow-md">
-                            Seleziona i tuoi Tag per la Tappa del tuo Viaggio
+                        <h2 className="text-white text-2xl font-bold mb-6 text-center drop-shadow-md">
+                            Cambia le Categorie per la Tappa del tuo Viaggio
                         </h2>
 
                         {/* Lista categorie */}
-                        <div className="space-y-5 flex-1 overflow-y-auto pr-2 scrollbar">
+                        <div className="space-y-6 flex-1 overflow-y-auto pr-2 scrollbar">
                             {travellers.map((cat) => (
                                 <div key={cat.category}>
-                                    <h3 className="text-lg font-semibold text-white mb-2 drop-shadow-md">
+                                    <h3 className="text-lg font-semibold text-white mb-2 drop-shadow-sm">
                                         {cat.category}
                                     </h3>
                                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                                         {cat.experiences.map((experience) => (
                                             <label
                                                 key={experience}
-                                                className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 border 
-                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${form.tags.includes(experience)
+                                                className={`font-semibold flex items-center justify-center text-center px-3 py-2 border 
+                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${tags.includes(experience)
                                                         ? "bg-linear-to-r from-blue-500 to-orange-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                         : "bg-linear-to-r from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
+
                                                 <input
                                                     type="checkbox"
-                                                    className="accent-blue-500 hidden"
-                                                    checked={form.tags.includes(experience)}
+                                                    className="hidden"
+                                                    checked={tags.includes(experience)}
                                                     onChange={(e) => {
                                                         if (e.target.checked) {
-                                                            setForm({
-                                                                ...form,
-                                                                tags: [...form.tags, experience],
-                                                            });
+                                                            setTags([...tags, experience]);
                                                         } else {
-                                                            setForm({
-                                                                ...form,
-                                                                tags: form.tags.filter((c) => c !== experience),
-                                                            });
+                                                            setTags(tags.filter((c) => c !== experience));
                                                         }
                                                     }}
                                                 />
@@ -80,17 +74,17 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md text-white 
-                                border border-white/40 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border 
+                                border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                 <FontAwesomeIcon icon={faXmark} className="mr-2" />Chiudi
                             </button>
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md text-white 
-                                border border-white/40 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
-                                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                                className="font-semibold px-4 py-2 bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border 
+                                border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
                                 <FontAwesomeIcon icon={faCheck} className="mr-2" />Conferma
                             </button>
                         </div>
@@ -101,4 +95,4 @@ function ModalAddTag({ isOpen, onClose, form, setForm }) {
     );
 }
 
-export default ModalAddTag;
+export default ModalEditCategory;
