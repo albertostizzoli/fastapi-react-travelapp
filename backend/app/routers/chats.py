@@ -124,21 +124,21 @@ def get_db():
         db.close()  # chiude la sessione per evitare memory leak
 
 
-# funzione per ottenere gli interessi dell'utente
-def get_user_interests(user_id: int, db: Session):
+# funzione per ottenere le esperienze dell'utente
+def get_user_experiences(user_id: int, db: Session):
     user = db.query(UserDB).filter(UserDB.id == user_id).first()
-    return user.interests if user and user.interests else []
+    return user.experiences if user and user.experiences else []
 
 
-# funzione per ottenere il messaggio dall'AI in base agli interessi 
+# funzione per ottenere il messaggio dall'AI in base alle esperienze dell'utente
 @router.get("/recommendations/{user_id}")
 def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
-    interests = get_user_interests(user_id, db)
-    interests_text = ", ".join(interests) if interests else "nessuna preferenza specificata"
+    experiences = get_user_experiences(user_id, db)
+    experiences_text = ", ".join(experiences) if experiences else "nessuna preferenza specificata"
 
     prompt = f"""
-    Sei un assistente AI esperto di viaggi. L'utente ha i seguenti interessi: {interests_text}.
-    Consiglia 10 destinazioni di viaggio con almeno 5 tappe di quelle destinazioni che si allineano ai suoi interessi.
+    Sei un assistente AI esperto di viaggi. L'utente ha le seguenti esperienze: {experiences_text}.
+    Consiglia 10 destinazioni di viaggio con almeno 5 tappe di quelle destinazioni che si allineano alle sue esperienze.
     Rispondi in modo chiaro, pratico e amichevole, suggerendo mete e attività.
     """
 

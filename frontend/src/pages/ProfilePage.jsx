@@ -81,8 +81,8 @@ function ProfilePage() {
                     surname: user?.surname || "",
                     email: user?.email || "",
                     password: "",
-                    interests: Array.isArray(user?.interests)
-                      ? user.interests
+                    experiences: Array.isArray(user?.experiences)
+                      ? user.experiences
                       : [],
                     photo: null,
                   });
@@ -232,7 +232,7 @@ function ProfilePage() {
             </motion.div>
           </motion.section>
 
-          {/*  INTERESSI UTENTE */}
+          {/*  ESPERIENZE UTENTE */}
           <motion.div
             className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
             p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
@@ -245,9 +245,9 @@ function ProfilePage() {
               Le mie esperienze preferite
             </h3>
 
-            {user?.interests?.length ? (
+            {user?.experiences?.length ? (
               <div className="flex flex-wrap justify-center items-center gap-2">
-                {user.interests.map((interest, idx) => (
+                {user.experiences.map((interest, idx) => (
                   <span
                     key={idx}
                     className="font-semibold px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500

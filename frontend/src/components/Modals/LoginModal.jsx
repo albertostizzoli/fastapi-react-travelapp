@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import travellers from "../../store/travellers";
 
-function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
+function LoginModal({ isOpen, onClose, selectedExperiences, toggleExperience }) {
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -51,12 +51,12 @@ function LoginModal({ isOpen, onClose, selectedInterests, toggleInterest }) {
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                     {category.experiences.map((experience) => {
-                      const selected = selectedInterests.includes(experience);
+                      const selected = selectedExperiences.includes(experience);
                       return (
                         <button
                           type="button"
                           key={experience}
-                          onClick={() => toggleInterest(experience)}
+                          onClick={() => toggleExperience(experience)}
                           className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 rounded-full 
                             cursor-pointer text-sm transition-all duration-100 ease-in-out border border-white/40 backdrop-blur-md 
                             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${selected

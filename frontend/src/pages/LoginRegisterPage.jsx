@@ -24,8 +24,8 @@ function LoginRegisterPage() {
     message,                // stato per i messaggi di feedback
     isModalOpen,            // stato per l'apertura/chiusura del modale
     setIsModalOpen,         // funzione per impostare lo stato di isModalOpen
-    selectedInterests,      // stato per le esperienze selezionate
-    toggleInterest,         // funzione per selezionare/deselezionare un'esperienza
+    selectedExperiences,    // stato per le esperienze selezionate
+    toggleExperience,       // funzione per selezionare/deselezionare un'esperienza
     handlePhotoSelect,      // funzione per gestire la selezione della foto
     handleFileChange,       // funzione per gestire il cambiamento del file selezionato
     fileInputRef,           // riferimento all'input file nascosto
@@ -294,8 +294,8 @@ function LoginRegisterPage() {
         <LoginModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          selectedInterests={selectedInterests}
-          toggleInterest={toggleInterest}
+          selectedExperiences={selectedExperiences}
+          toggleExperience={toggleExperience}
         />
 
         {message && (

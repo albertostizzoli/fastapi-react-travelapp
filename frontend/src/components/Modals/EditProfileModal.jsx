@@ -193,10 +193,10 @@ function EditProfileModal({
               <select
                 onChange={(e) => {
                   const selected = e.target.value;
-                  if (selected && !editForm.interests.includes(selected)) {
+                  if (selected && !editForm.experiences.includes(selected)) {
                     setEditForm((prev) => ({
                       ...prev,
-                      interests: [...prev.interests, selected],
+                      experiences: [...prev.experiences, selected],
                     }));
                   }
                   e.target.value = "";
@@ -214,21 +214,21 @@ function EditProfileModal({
                 ))}
               </select>
 
-              {/* Mostra interessi scelti */}
-              {editForm.interests.length > 0 && (
+              {/* Mostra esperienze scelte */}
+              {editForm.experiences.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {editForm.interests.map((interest, i) => (
+                  {editForm.experiences.map((experience, i) => (
                     <span
                       key={i}
                       className="bg-linear-to-r from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
                       flex items-center gap-2 shadow-md">
-                      {interest}
+                      {experience}
                       <button
                         type="button"
                         onClick={() =>
                           setEditForm((prev) => ({
                             ...prev,
-                            interests: prev.interests.filter((x) => x !== interest),
+                            experiences: prev.experiences.filter((x) => x !== experience),
                           }))
                         }
                         className="hover:text-rose-400 transition cursor-pointer">

@@ -11,7 +11,7 @@ class UserDB(Base):
     surname = Column(String, nullable=False)            # cognome
     email = Column(String, nullable=False)              # email
     password = Column(String, nullable=False)           # password
-    interests = Column(JSON, nullable=True)             # interessi
+    experiences = Column(JSON, nullable=True)             # interessi
     photo = Column(String, nullable=True)               # foto profilo
     registration_date = Column(DateTime(timezone=True), server_default=func.now())   # data di registrazione
 

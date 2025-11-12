@@ -9,7 +9,7 @@ function FormAuth() {
     const [email, setEmail] = useState(""); // stato per l'email
     const [password, setPassword] = useState(""); // stato per la password
     const [showPassword, setShowPassword] = useState(false); // stato per nascondere / mostrare la password
-    const [selectedInterests, setSelectedInterests] = useState([]); // stato per gli interessi selezionati
+    const [selectedExperiences, setSelectedExperiences] = useState([]); // stato per le esperienze selezionate
     const [isModalOpen, setIsModalOpen] = useState(false); // stato per il modale interessi
     const [photo, setPhoto] = useState(null); // stato per la foto profilo
     const fileInputRef = useRef(null); // riferimento all’input nascosto
@@ -27,12 +27,12 @@ function FormAuth() {
     });
 
 
-    // Funzione per selezionare/deselezionare un interesse
-    const toggleInterest = (tag) => {
-        if (selectedInterests.includes(tag)) { // se l'interesse è già selezionato lo rimuovo
-            setSelectedInterests(selectedInterests.filter((t) => t !== tag)); // filtro l'array rimuovendo il tag
+    // Funzione per selezionare/deselezionare un'esperienza
+    const toggleExperience = (tag) => {
+        if (selectedExperiences.includes(tag)) { // se l'interesse è già selezionato lo rimuovo
+            setSelectedExperiences(selectedExperiences.filter((t) => t !== tag)); // filtro l'array rimuovendo il tag
         } else {
-            setSelectedInterests([...selectedInterests, tag]); // altrimenti lo aggiungo
+            setSelectedExperiences([...selectedExperiences, tag]); // altrimenti lo aggiungo
         }
     };
 
@@ -156,7 +156,7 @@ function FormAuth() {
             formData.append("surname", surname);
             formData.append("email", email);
             formData.append("password", password);
-            formData.append("interests", JSON.stringify(selectedInterests));
+            formData.append("experiences", JSON.stringify(selectedExperiences));
             if (photo) formData.append("photo", photo);
 
             await axios.post("http://127.0.0.1:8000/users/", formData, {
@@ -213,8 +213,8 @@ function FormAuth() {
         setPassword,            // funzione per cambiare password
         showPassword,           // stato per mostrare/nascondere la password
         setShowPassword,        // funzione per cambiare stato mostra/nascondi password
-        selectedInterests,      // interessi selezionati
-        toggleInterest,         // funzione per selezionare/deselezionare un interesse
+        selectedExperiences,    // esperienze selezionate
+        toggleExperience,       // funzione per selezionare/deselezionare un'esperienza
         isModalOpen,            // stato per il modale interessi
         setIsModalOpen,         // funzione per cambiare stato del modale interessi
         handleSubmit,           // funzione per il login

@@ -48,7 +48,7 @@ async def add_user(
     surname: str = Form(...),
     email: str = Form(...), 
     password: str = Form(...),
-    interests: str = Form(None),  # ricevo gli interessi come stringa JSON
+    experiences: str = Form(None),  # ricevo le esperienze come stringa JSON
     photo: UploadFile = File(None),  # ricevo la foto come file
     db: Session = Depends(get_db)
 ):
@@ -70,12 +70,12 @@ async def add_user(
             )
     
      # decodifica la stringa JSON in lista Python
-    interests_list = []
-    if interests:
+    experiences_list = []
+    if experiences:
         try:
-            interests_list = json.loads(interests) # converto la stringa JSON in lista Python
+            experiences_list = json.loads(experiences) # converto la stringa JSON in lista Python
         except Exception:
-            interests_list = [interests] 
+            experiences_list = [experiences] 
     
     # carico la foto su Cloudinary se presente
     photo_url = None 
@@ -89,7 +89,7 @@ async def add_user(
         surname = surname,
         email = email,
         password=get_password_hash(password),  # salvo password hashata
-        interests = interests_list,  # salvo la lista degli interessi
+        experiences = experiences_list,  # salvo la lista delle esperienze
         photo = photo_url # salvo l'URL della foto 
     )
     db.add(db_user)      # l'utente viene salvato
@@ -107,7 +107,7 @@ async def update_user(
     surname: str = Form(...),
     email: str = Form(...), 
     password: str = Form(...),
-    interests: str = Form(None),
+    experiences: str = Form(None),
     photo: UploadFile = File(None),
     db: Session = Depends(get_db)
 ):
@@ -129,12 +129,12 @@ async def update_user(
             )
 
     # decodifica gli interessi da stringa JSON a lista Python
-    interests_list = None
-    if interests:
+    experiences_list = None
+    if experiences:
         try:
-            interests_list = json.loads(interests)
+            experiences_list = json.loads(experiences)
         except Exception:
-            interests_list = [interests]
+            experiences_list = [experiences]
 
     # carica la foto su Cloudinary se presente
     photo_url = user.photo  # mantieni la vecchia se non viene cambiata
@@ -151,7 +151,7 @@ async def update_user(
     if password:
        user.password = get_password_hash(password)
 
-    user.interests = interests_list
+    user.experiences = experiences_list
     user.photo = photo_url
 
     db.commit()       # modifiche salvate

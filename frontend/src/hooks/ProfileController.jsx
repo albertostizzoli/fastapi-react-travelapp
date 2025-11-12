@@ -84,7 +84,7 @@ function ProfileController() {
         surname: "",
         email: "",
         password: "",
-        interests: "",
+        experiences: "",
         photo: null,
     });
 
@@ -100,7 +100,7 @@ function ProfileController() {
         formData.append("surname", editForm.surname);
         formData.append("email", editForm.email);
         formData.append("password", editForm.password);
-        formData.append("interests", JSON.stringify(editForm.interests));
+        formData.append("experiences", JSON.stringify(editForm.experiences));
         if (editForm.photo) formData.append("photo", editForm.photo);
 
         try {
