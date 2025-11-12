@@ -11,7 +11,7 @@ function FormAddDay() {
     const [selectedTravel, setSelectedTravel] = useState(""); // viaggio selezionato
     const fileInputRef = useRef(null); // riferimento all’input nascosto
     const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
-    const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // apre / chiude il modale delle categorie
     const [query, setQuery] = useState(""); // stato per ottenre i luoghi dall'API  Photon
     const [suggestions, setSuggestions] = useState([]); // stato per i suggerimenti dall'API Photon
     const [isUploading, setIsUploading] = useState(false); // stato per il caricamento
@@ -20,7 +20,7 @@ function FormAddDay() {
         date: "",
         title: "",
         description: "",
-        tags: [], // array di tags
+        categories: [], // array di categorie
         photo: [], // array di foto
     });
 
@@ -37,7 +37,6 @@ function FormAddDay() {
                 console.error(err);
             }
         };
-
         fetchTravels();
     }, []);
 
@@ -170,9 +169,9 @@ function FormAddDay() {
             formData.append("title", form.title);
             formData.append("description", form.description);
 
-            // aggiungo tutti i tags
-            form.tags.forEach((tag) => {
-                formData.append("tags", tag);
+            // aggiungo tutte le categorie
+            form.categories.forEach((category) => {
+                formData.append("categories", category);
             });
 
             // aggiungo tutte le foto
@@ -209,7 +208,7 @@ function FormAddDay() {
             setIsUploading(false);
             setUploadProgress(0);
 
-            setForm({ date: "", title: "", description: "", tags: [], photo: [] }); // resetto il form
+            setForm({ date: "", title: "", description: "", categories: [], photo: [] }); // resetto il form
             setMessage({ text: "Tappa Aggiunta!", icon: "success" });
 
             // reindirizzo alla pagina delle tappe
@@ -240,8 +239,8 @@ function FormAddDay() {
         setQuery,           // funzione per impostare la query
         suggestions,        // stato dei suggerimenti
         setSuggestions,     // funzione per impostare i suggerimenti
-        isTagModalOpen,     // stato per il modale dei tag
-        setIsTagModalOpen,  // funzione per aprire/chiudere il modale dei tag
+        isCategoryModalOpen, // stato per il modale delle categorie
+        setIsCategoryModalOpen,  // funzione per aprire/chiudere il modale delle categorie
         handleSubmit,       // funzione per gestire l'invio del form
         message,            // messaggio di successo o errore
         isUploading,        // stato di caricamento

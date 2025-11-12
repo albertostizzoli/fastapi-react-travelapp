@@ -19,8 +19,8 @@ function EditDay() {
     handleSubmit,       // gestione dell’invio del form
     openImage,          // stato per l’immagine aperta in modale
     setOpenImage,       // funzione per chiudere/aprire l’immagine in modale
-    isTagModalOpen,     // stato per il modale dei tag
-    setIsTagModalOpen,  // funzione per aprire/chiudere il modale dei tag
+    isCategoryModalOpen, // stato per il modale delle categorie
+    setIsCategoryModalOpen, // funzione per aprire/chiudere il modale delle categorie
     isUploading,        // stato per il caricamento
     uploadProgress,     // stato per mostrare la barra di caricamento
     message,            // messaggio di successo o errore
@@ -139,7 +139,7 @@ function EditDay() {
           <div className="flex justify-between gap-4">
             <button
               type="button"
-              onClick={() => setIsTagModalOpen(true)}
+              onClick={() => setIsCategoryModalOpen(true)}
               className="font-semibold px-6 py-2 bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
@@ -156,20 +156,20 @@ function EditDay() {
             </button>
           </div>
 
-          {/* Tag selezionati */}
-          {day.tags.length > 0 && (
+          {/* Categorie selezionate */}
+          {day.categories.length > 0 && (
             <div className="mt-3 flex gap-3 w-full justify-center flex-wrap">
-              {day.tags.map((tag, i) => (
+              {day.categories.map((category, i) => (
                 <span
                   key={i}
                   className="flex items-center justify-between bg-linear-to-r from-blue-600 to-cyan-500
                   backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
                   shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
-                  <span>{tag}</span>
+                  <span>{category}</span>
                   <button
                     type="button"
                     onClick={() =>
-                      setDay({ ...day, tags: day.tags.filter((c) => c !== tag), })
+                      setDay({ ...day, categories: day.categories.filter((c) => c !== category), })
                     }
                     className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
                     <FontAwesomeIcon icon={faXmark} className="text-sm" />
@@ -179,12 +179,12 @@ function EditDay() {
             </div>
           )}
 
-          { /* Modale di Modifica dei Tag */}
+          { /* Modale di Modifica delle Categorie */}
           <ModalEditCategory
-            isOpen={isTagModalOpen}
-            onClose={() => setIsTagModalOpen(false)}
-            tags={day.tags}
-            setTags={(newTags) => setDay({ ...day, tags: newTags })}
+            isOpen={isCategoryModalOpen}
+            onClose={() => setIsCategoryModalOpen(false)}
+            categories={day.categories}
+            setCategories={(newCategories) => setDay({ ...day, categories: newCategories })}
           />
 
           {/* Foto */}

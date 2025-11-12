@@ -10,7 +10,7 @@ function FormEditDay() {
     const [loading, setLoading] = useState(true); // stato di caricamento
     const fileInputRef = useRef(null); // riferimento all’input nascosto
     const [openImage, setOpenImage] = useState(null); // stato per l'immagine ingrandita (Apri / Chiudi)
-    const [isTagModalOpen, setIsTagModalOpen] = useState(false); // apre / chiude il modale dei tags
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // apre / chiude il modale delle categorie
     const [isUploading, setIsUploading] = useState(false); // stato per il caricamento
     const [uploadProgress, setUploadProgress] = useState(0); // stato per mostare la barra di caricamento
     const location = useLocation();
@@ -41,7 +41,6 @@ function FormEditDay() {
                 setLoading(false);
             }
         };
-
         fetchDay();
     }, [id, token]);
 
@@ -130,9 +129,9 @@ function FormEditDay() {
         formData.append("title", day.title);
         formData.append("description", day.description);
 
-        // aggiungo tutti i tags
-        day.tags.forEach((tag) => {
-            formData.append("tags", tag);
+        // aggiungo tutte le categorie
+        day.categories.forEach((category) => {
+            formData.append("categories", category);
         });
 
         // foto già esistenti
@@ -195,8 +194,8 @@ function FormEditDay() {
         handleSubmit,           // funzione per gestire l'invio del form
         openImage,              // stato per l'immagine ingrandita (Apri / Chiudi)
         setOpenImage,           // funzione per aggiornare lo stato dell'immagine ingrandita
-        isTagModalOpen,         // stato per il modale dei tags (Apri / Chiudi)
-        setIsTagModalOpen,      // funzione per aggiornare lo stato del modale dei tags
+        isCategoryModalOpen,    // stato per il modale delle categorie (Apri / Chiudi)
+        setIsCategoryModalOpen, // funzione per aggiornare lo stato del modale delle categorie
         isUploading,            // stato per il caricamento
         uploadProgress,         // stato per mostare la barra di caricamento
         travelId,               // ID del viaggio per il ritorno alle tappe

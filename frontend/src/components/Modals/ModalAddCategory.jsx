@@ -45,24 +45,24 @@ function ModalAddCategory({ isOpen, onClose, form, setForm }) {
                                             <label
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 border 
-                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${form.tags.includes(experience)
+                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${form.categories.includes(experience)
                                                         ? "bg-linear-to-r from-blue-500 to-orange-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                         : "bg-linear-to-r from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
                                                 <input
                                                     type="checkbox"
                                                     className="accent-blue-500 hidden"
-                                                    checked={form.tags.includes(experience)}
+                                                    checked={form.categories.includes(experience)}
                                                     onChange={(e) => {
                                                         if (e.target.checked) {
                                                             setForm({
                                                                 ...form,
-                                                                tags: [...form.tags, experience],
+                                                                categories: [...form.categories, experience],
                                                             });
                                                         } else {
                                                             setForm({
                                                                 ...form,
-                                                                tags: form.tags.filter((c) => c !== experience),
+                                                                categories: form.categories.filter((c) => c !== experience),
                                                             });
                                                         }
                                                     }}

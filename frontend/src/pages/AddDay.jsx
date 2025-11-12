@@ -21,8 +21,8 @@ function AddDay() {
     setQuery,            // Funzione per impostare la query di ricerca dei suggerimenti
     suggestions,         // Suggerimenti per il titolo basati sulla query
     setSuggestions,      // Funzione per impostare i suggerimenti
-    isTagModalOpen,      // Stato della modale dei tag
-    setIsTagModalOpen,   // Funzione per impostare lo stato della modale dei tag
+    isCategoryModalOpen, // Stato della modale delle categorie
+    setIsCategoryModalOpen, // Funzione per impostare lo stato della modale delle categorie
     handleSubmit,        // Gestore per la sottomissione del form
     message,             // Messaggio di conferma o errore
     isUploading,         // Stato di caricamento durante l'upload
@@ -182,7 +182,7 @@ function AddDay() {
           <div className="flex justify-between gap-4">
             <button
               type="button"
-              onClick={() => setIsTagModalOpen(true)}
+              onClick={() => setIsCategoryModalOpen(true)}
               className="font-semibold px-6 py-2 bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
@@ -198,22 +198,22 @@ function AddDay() {
             </button>
           </div>
 
-          {/* Tags selezionati */}
-          {form.tags.length > 0 && (
+          {/* categorie selezionate */}
+          {form.categories.length > 0 && (
             <div className="mt-3 flex gap-3 w-full justify-center flex-wrap">
-              {form.tags.map((tag, i) => (
+              {form.categories.map((category, i) => (
                 <span
                   key={i}
                   className="flex items-center justify-between bg-linear-to-r from-blue-600 to-cyan-500
                   backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
                   shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
-                  <span>{tag}</span>
+                  <span>{category}</span>
                   <button
                     type="button"
                     onClick={() =>
                       setForm({
                         ...form,
-                        tags: form.tags.filter((c) => c !== tag),
+                        categories: form.categories.filter((c) => c !== category),
                       })
                     }
                     className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
@@ -224,10 +224,10 @@ function AddDay() {
             </div>
           )}
 
-          { /* Modale di Aggiunta dei Tag */}
+          { /* Modale di Aggiunta delle Categorie */}
           <ModalAddCategory
-            isOpen={isTagModalOpen}
-            onClose={() => setIsTagModalOpen(false)}
+            isOpen={isCategoryModalOpen}
+            onClose={() => setIsCategoryModalOpen(false)}
             form={form}
             setForm={setForm}
           />

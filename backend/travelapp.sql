@@ -27,7 +27,7 @@ CREATE TABLE days (
     date VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    tags JSON,
+    categories JSON,
     photo JSON,
     lat FLOAT,
     lng FLOAT,

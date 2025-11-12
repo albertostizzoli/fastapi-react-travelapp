@@ -4,7 +4,7 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import travellers from "../../store/travellers";
 
 // Modale Glassmorphism per modificare i tag nella pagina EditDay
-function ModalEditCategory({ isOpen, onClose, tags, setTags }) {
+function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
     return (
         <AnimatePresence mode="wait">
             {isOpen && (
@@ -44,7 +44,7 @@ function ModalEditCategory({ isOpen, onClose, tags, setTags }) {
                                             <label
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center px-3 py-2 border 
-                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${tags.includes(experience)
+                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${categories.includes(experience)
                                                         ? "bg-linear-to-r from-blue-500 to-orange-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                         : "bg-linear-to-r from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
@@ -52,12 +52,12 @@ function ModalEditCategory({ isOpen, onClose, tags, setTags }) {
                                                 <input
                                                     type="checkbox"
                                                     className="hidden"
-                                                    checked={tags.includes(experience)}
+                                                    checked={categories.includes(experience)}
                                                     onChange={(e) => {
                                                         if (e.target.checked) {
-                                                            setTags([...tags, experience]);
+                                                            setCategories([...categories, experience]);
                                                         } else {
-                                                            setTags(tags.filter((c) => c !== experience));
+                                                            setCategories(categories.filter((c) => c !== experience));
                                                         }
                                                     }}
                                                 />

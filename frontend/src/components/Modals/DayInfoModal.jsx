@@ -73,16 +73,16 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
               <p className="text-2xl font-bold text-cyan-200/80 mb-4">{selectedDay.date}</p>
               <p className="text-white text-justify font-semibold leading-relaxed mb-6">{selectedDay.description}</p>
 
-              {/* Tags */}
-              {selectedDay.tags?.length > 0 && (
+              {/* Categorie */}
+              {selectedDay.categories?.length > 0 && (
                 <div className="mb-6 flex flex-wrap gap-2">
-                  {selectedDay.tags.map((tag, i) => (
+                  {selectedDay.categories.map((category, i) => (
                     <span
                       key={i}
                       className="font-semibold px-4 py-2 bg-linear-to-r from-orange-600 to-rose-500
                         backdrop-blur-md border border-white/40 text-white rounded-full transition-all duration-100 
                         ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                      {tag}
+                      {category}
                     </span>
                   ))}
                 </div>
