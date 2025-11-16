@@ -30,7 +30,9 @@ function LoginRegisterPage() {
     handleFileChange,       // funzione per gestire il cambiamento del file selezionato
     fileInputRef,           // riferimento all'input file nascosto
     validation,             // validazioni
-    handlePasswordChange    // funzione per validare la password
+    handlePasswordChange,    // funzione per validare la password
+    isFocused,
+    setIsFocused
   } = FormAuth();           // utilizzo la logica dei form di login/registrazione
 
   return (
@@ -206,6 +208,8 @@ function LoginRegisterPage() {
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={handlePasswordChange}
+                        onFocus={() => setIsFocused(true)} // fa sparire e ricomparire il modale della validazione password
+                        onBlur={() => setIsFocused(false)}
                         className="w-full font-semibold border bg-white/20 text-white 
                         rounded-full px-3 py-2 focus:border-transparent focus:ring-2 
                       focus:ring-blue-400 dark:focus:ring-slate-500"
@@ -224,8 +228,8 @@ function LoginRegisterPage() {
                         )}
                       </button>
 
-                      {/* Modal Feedback */}
-                      {password && (
+                      {/* Modale Feedback Password */}
+                      {password && isFocused && (
                         <div className="absolute left-0 right-0 mt-2 bg-gray-200 dark:bg-black/90 border border-white/20 
                             rounded-xl p-3 z-50 shadow-lg">
                           <p className={`${validation.errors.length ? "text-green-500" : "text-red-500"} text-sm`}>

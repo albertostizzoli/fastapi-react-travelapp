@@ -17,6 +17,7 @@ function EditProfileModal({
   const allExperiences = travellers.flatMap((t) => t.experiences);
 
   const [password, setPassword] = useState(""); // stato per la password
+  const [isFocused, setIsFocused] = useState(false); // stato per mostare modale per validazione password
   // stato per la validazione della password
   const [validation, setValidation] = useState({
     isValid: false,
@@ -153,6 +154,8 @@ function EditProfileModal({
                   name="password"
                   value={password}
                   onChange={handlePasswordChange}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
                   placeholder="Nuova Password"
                   className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 border border-white/40 placeholder-white/70 
                   focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition text-white"
@@ -167,23 +170,28 @@ function EditProfileModal({
                     <FontAwesomeIcon icon={faEye} />
                   )}
                 </button>
-              </div>
-              <div className="mt-2 text-sm space-y-1">
-                <p className={`${validation.errors.length ? "text-green-500" : "text-rose-500"}`}>
-                  {validation.errors.length ? "✓" : "✗"} Almeno 8 caratteri
-                </p>
-                <p className={`${validation.errors.upper ? "text-green-500" : "text-rose-500"}`}>
-                  {validation.errors.upper ? "✓" : "✗"} Una lettera maiuscola
-                </p>
-                <p className={`${validation.errors.lower ? "text-green-500" : "text-rose-500"}`}>
-                  {validation.errors.lower ? "✓" : "✗"} Una lettera minuscola
-                </p>
-                <p className={`${validation.errors.number ? "text-green-500" : "text-rose-500"}`}>
-                  {validation.errors.number ? "✓" : "✗"} Un numero
-                </p>
-                <p className={`${validation.errors.special ? "text-green-500" : "text-rose-500"}`}>
-                  {validation.errors.special ? "✓" : "✗"} Un carattere speciale (!@#$…)
-                </p>
+
+                { /* Modale Feedback Password */}
+                {password && isFocused && (
+                  <div className="absolute left-0 right-0 mt-2 bg-gray-200 dark:bg-black/90 border border-white/20 
+                     rounded-xl p-3 z-50 shadow-lg">
+                    <p className={`${validation.errors.length ? "text-green-500" : "text-red-500"} text-sm`}>
+                      {validation.errors.length ? "✓" : "✗"} Almeno 8 caratteri
+                    </p>
+                    <p className={`${validation.errors.upper ? "text-green-500" : "text-red-500"} text-sm`}>
+                      {validation.errors.upper ? "✓" : "✗"} Una lettera maiuscola
+                    </p>
+                    <p className={`${validation.errors.lower ? "text-green-500" : "text-red-500"} text-sm`}>
+                      {validation.errors.lower ? "✓" : "✗"} Una lettera minuscola
+                    </p>
+                    <p className={`${validation.errors.number ? "text-green-500" : "text-red-500"} text-sm`}>
+                      {validation.errors.number ? "✓" : "✗"} Un numero
+                    </p>
+                    <p className={`${validation.errors.special ? "text-green-500" : "text-red-500"} text-sm`}>
+                      {validation.errors.special ? "✓" : "✗"} Un carattere speciale {"!@#$%^&*(),.?\":{}|<>"}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 

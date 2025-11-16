@@ -9,6 +9,7 @@ function FormAuth() {
     const [email, setEmail] = useState(""); // stato per l'email
     const [password, setPassword] = useState(""); // stato per la password
     const [showPassword, setShowPassword] = useState(false); // stato per nascondere / mostrare la password
+    const [isFocused, setIsFocused] = useState(false); // stato per mostare modale per validazione password
     const [selectedExperiences, setSelectedExperiences] = useState([]); // stato per le esperienze selezionate
     const [isModalOpen, setIsModalOpen] = useState(false); // stato per il modale interessi
     const [photo, setPhoto] = useState(null); // stato per la foto profilo
@@ -226,7 +227,9 @@ function FormAuth() {
         fileInputRef,           // riferimento all’input file nascosto
         validation,             // validazioni
         validatePassword,       // funzione per validare la password
-        handlePasswordChange    // funzione per verificare la validazione della password
+        handlePasswordChange,    // funzione per verificare la validazione della password
+        setIsFocused,
+        isFocused
     };
 }
 
