@@ -34,7 +34,7 @@ function ProfilePage() {
 
           {/*  PROFILO UTENTE */}
           <motion.section
-            className="md:col-span-1 bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+            className="md:col-span-1 bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl 
             p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center transition-all duration-500 
             hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
             initial={{ x: -100, opacity: 0 }}
@@ -130,7 +130,7 @@ function ProfilePage() {
 
             {/* Gestione viaggi */}
             <motion.div
-              className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+              className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
               p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col gap-4 transition-all duration-500 
               hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
               variants={{
@@ -178,7 +178,7 @@ function ProfilePage() {
 
             {/* Ultimo viaggio */}
             <motion.div
-              className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+              className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
               p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
               hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
               variants={{
@@ -234,7 +234,7 @@ function ProfilePage() {
 
           {/*  ESPERIENZE UTENTE */}
           <motion.div
-            className="bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent backdrop-blur-2xl 
+            className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
             p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
             hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
             initial={{ x: 80, opacity: 0 }}

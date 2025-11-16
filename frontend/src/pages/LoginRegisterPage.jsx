@@ -149,7 +149,7 @@ function LoginRegisterPage() {
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4 }}
                 className="
-                bg-linear-to-br from-white/20 via-white/10 to-transparentbackdrop-blur-2xl border border-white/40 
+                bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
                 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-[600px] md:mx-auto flex flex-col">
 
                 <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Registrati</h2>

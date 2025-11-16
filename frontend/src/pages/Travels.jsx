@@ -38,7 +38,7 @@ function Travels() {
             <motion.div
               key={v.id}
               layout
-              className="group relative bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent
+              className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
               backdrop-blur-2xl border border-white/20 
               rounded-3xl shadow-lg overflow-hidden transition-all duration-500 
               hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"

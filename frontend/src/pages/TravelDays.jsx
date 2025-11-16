@@ -30,7 +30,8 @@ function TravelDays() {
         {/* Titolo */}
         <motion.h1
           className="text-3xl font-extrabold text-white flex-1 min-w-[200px] p-3 rounded-3xl
-           bg-white/5 backdrop-blur-md border border-white/40 shadow-lg"
+          bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl 
+          border border-white/40 shadow-lg"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}>
@@ -61,7 +62,8 @@ function TravelDays() {
 
           {/* Info Viaggio */}
           <motion.div
-            className="p-4 rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/40 shadow-xl"
+            className="p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent 
+            backdrop-blur-2xl border border-white/40 shadow-xl"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}>
@@ -97,7 +99,7 @@ function TravelDays() {
                 {travel.days.map((d) => (
                   <motion.div
                     key={d.id}
-                    className="group relative backdrop-blur-2xl bg-linear-to-br from-blue-100/10 via-orange-100/5 to-transparent
+                    className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
                     border border-white/40 p-5 rounded-3xl shadow-xl flex flex-col justify-between w-full sm:w-64
                     transition-all duration-500 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]"
                     variants={{

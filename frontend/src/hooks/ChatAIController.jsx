@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 function ChatAIController() {
@@ -7,6 +7,7 @@ function ChatAIController() {
     const [input, setInput] = useState(""); // stato per l'input dell'utente
     const [isLoading, setIsLoading] = useState(false); // stato per indicare se la risposta AI è in caricamento
     const [isRecommending, setIsRecommending] = useState(false); // stato per disabilitare il pulsante Ispirami
+    const [hasStartedChat, setHasStartedChat] = useState(false); // stato per iniziare una chat
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, sono il tuo assistente AI. Chiedimi pure!` : "";
@@ -147,6 +148,28 @@ function ChatAIController() {
         }
     };
 
+    // fa scomparire il titolo quanso si scrive sull'input
+    const handleSend = () => {
+        if (!hasStartedChat) setHasStartedChat(true);
+        sendMessage(); // chiamo la funzione sendMessage
+    };
+
+    // fa scomparire il titolo quando si clicca sul pulsante Ispirami
+    const handleRecommend = () => {
+        if (!hasStartedChat) setHasStartedChat(true);
+        getRecommendations(); // chiamo la funzione getRecommendations
+    };
+
+    const messagesEndRef = useRef(null);
+
+    // funzione per lo scroll automatico
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages, isLoading]);
 
     return {
         user,                // dati dell'utente
@@ -162,7 +185,12 @@ function ChatAIController() {
         formatText,          // funzione per formattare il testo
         setInput,            // funzione per aggiornare l'input
         useTypewriterEffect, // hook effetto macchina da scrivere
-        setMessages          // messaggi della chat
+        setMessages,          // messaggi della chat
+        handleSend,           // indica che è iniziata una chat quando scrive sull'input
+        handleRecommend,      // indica che è iniziata una chat quando si clicca sul pulsante Ispirami
+        hasStartedChat,
+        scrollToBottom,       // funzione per lo scroll automatico
+        messagesEndRef
     }
 }
 

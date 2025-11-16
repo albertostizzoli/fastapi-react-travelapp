@@ -77,22 +77,6 @@ function Header() {
       <h1 className="font-bold text-3xl underline">TravelDiary</h1>
 
       <div className="flex gap-6 items-center">
-        <button
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="relative w-14 h-7 flex items-center justify-between rounded-full border border-gray-400 dark:border-gray-600 
-          transition-all duration-300 cursor-pointer"
-          title="Cambia tema">
-
-          {/* Icone */}
-          <span className="text-sm ml-1"><FontAwesomeIcon icon={faMoon} /></span>
-          <span className="text-sm mr-1"><FontAwesomeIcon icon={faSun} className="text-yellow-400" /></span>
-
-          {/* Pallina */}
-          <span
-            className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-transform duration-300
-        ${theme === "dark" ? "translate-x-7" : "translate-x-0"}`}
-          ></span>
-        </button>
 
         {/*  AREA PERSONALE SE SEI IN HOME */}
         {isHome && (
@@ -177,6 +161,23 @@ function Header() {
             </span>
           </button>
         )}
+
+        <button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="relative w-14 h-7 flex items-center justify-between rounded-full border border-gray-400 dark:border-gray-600 
+          transition-all duration-300 cursor-pointer"
+          title="Cambia tema">
+
+          {/* Icone */}
+          <span className="text-sm ml-1"><FontAwesomeIcon icon={faMoon} /></span>
+          <span className="text-sm mr-1"><FontAwesomeIcon icon={faSun} className="text-yellow-400" /></span>
+
+          {/* Pallina */}
+          <span
+            className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-transform duration-300
+        ${theme === "dark" ? "translate-x-7" : "translate-x-0"}`}
+          ></span>
+        </button>
       </div>
     </nav>
   );
