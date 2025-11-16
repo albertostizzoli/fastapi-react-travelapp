@@ -197,18 +197,22 @@ function LoginRegisterPage() {
 
                   { /* Password */}
                   <div>
-                    <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Password</label>
+                    <label className="block text-white mb-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+                      Password
+                    </label>
+
                     <div className="relative w-full">
                       <input
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={handlePasswordChange}
-                        className="w-full font-semibold border  bg-white/20 text-white 
-                        rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                        className="w-full font-semibold border bg-white/20 text-white 
+                        rounded-full px-3 py-2 focus:border-transparent focus:ring-2 
+                      focus:ring-blue-400 dark:focus:ring-slate-500"
                         required
                       />
 
-                      { /* Pulsante Mostra Password */}
+                      {/* Mostra/Nascondi Password */}
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
@@ -219,29 +223,31 @@ function LoginRegisterPage() {
                           <FontAwesomeIcon icon={faEye} />
                         )}
                       </button>
-                    </div>
 
-                    {/* Feedback visivo */}
-                    {password && (
-                      <div className="mt-2 text-sm space-y-1">
-                        <p className={`${validation.errors.length ? "text-green-500" : "text-rose-500"}`}>
-                          {validation.errors.length ? "✓" : "✗"} Almeno 8 caratteri
-                        </p>
-                        <p className={`${validation.errors.upper ? "text-green-500" : "text-rose-500"}`}>
-                          {validation.errors.upper ? "✓" : "✗"} Una lettera maiuscola
-                        </p>
-                        <p className={`${validation.errors.lower ? "text-green-500" : "text-rose-500"}`}>
-                          {validation.errors.lower ? "✓" : "✗"} Una lettera minuscola
-                        </p>
-                        <p className={`${validation.errors.number ? "text-green-500" : "text-rose-500"}`}>
-                          {validation.errors.number ? "✓" : "✗"} Un numero
-                        </p>
-                        <p className={`${validation.errors.special ? "text-green-500" : "text-rose-500"}`}>
-                          {validation.errors.special ? "✓" : "✗"} Un carattere speciale (!@#$…)
-                        </p>
-                      </div>
-                    )}
+                      {/* Modal Feedback */}
+                      {password && (
+                        <div className="absolute left-0 right-0 mt-2 bg-gray-200 dark:bg-black/90 border border-white/20 
+                            rounded-xl p-3 z-50 shadow-lg">
+                          <p className={`${validation.errors.length ? "text-green-500" : "text-red-500"} text-sm`}>
+                            {validation.errors.length ? "✓" : "✗"} Almeno 8 caratteri
+                          </p>
+                          <p className={`${validation.errors.upper ? "text-green-500" : "text-red-500"} text-sm`}>
+                            {validation.errors.upper ? "✓" : "✗"} Una lettera maiuscola
+                          </p>
+                          <p className={`${validation.errors.lower ? "text-green-500" : "text-red-500"} text-sm`}>
+                            {validation.errors.lower ? "✓" : "✗"} Una lettera minuscola
+                          </p>
+                          <p className={`${validation.errors.number ? "text-green-500" : "text-red-500"} text-sm`}>
+                            {validation.errors.number ? "✓" : "✗"} Un numero
+                          </p>
+                          <p className={`${validation.errors.special ? "text-green-500" : "text-red-500"} text-sm`}>
+                            {validation.errors.special ? "✓" : "✗"} Un carattere speciale {"!@#$%^&*(),.?\":{}|<>"}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
+
                 </div>
 
                 {/* Pulsanti esperienze e foto */}
