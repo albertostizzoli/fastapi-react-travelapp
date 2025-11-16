@@ -199,17 +199,17 @@ function ProfilePage() {
                   {recentTravels.slice(0, 1).map((travel, idx) => (
                     <li
                       key={idx}
-                      className="p-4 bg-linear-to-r from-blue-600 to-cyan-500
+                      className="p-4 bg-linear-to-r from-red-600 to-blue-500
                       backdrop-blur-md 
                       rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
                       transition-all duration-100 border border-white/40">
 
                       <div className="flex justify-between items-center mb-2">
-                        <h4 className="text-lg font-semibold text-white">
+                        <h4 className="text-xl font-bold text-white">
                           <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
                           {travel.town}, {travel.city}
                         </h4>
-                        <span className="text-xs bg-white/20 px-2 py-1 rounded-3xl text-white">
+                        <span className="text-sm bg-white/20 px-2 py-1 rounded-3xl text-white">
                           {travel.start_date} → {travel.end_date}
                         </span>
                       </div>
@@ -250,7 +250,7 @@ function ProfilePage() {
                 {user.experiences.map((experience, idx) => (
                   <span
                     key={idx}
-                    className="font-semibold px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500
+                    className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-blue-500
                      backdrop-blur-md border border-white/40 text-white rounded-full 
                     text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100">
                     {experience}
