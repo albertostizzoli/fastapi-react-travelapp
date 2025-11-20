@@ -88,7 +88,7 @@ function Header() {
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
-            after:transition-all after:duration-300
+            after:transition-all after:duration-500
             hover:after:w-full">
               Area Personale
             </span>
@@ -108,7 +108,7 @@ function Header() {
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
-            after:transition-all after:duration-300
+            after:transition-all after:duration-500
             hover:after:w-full">
               {user.name}
             </span>
@@ -124,7 +124,7 @@ function Header() {
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
-            after:transition-all after:duration-300
+            after:transition-all after:duration-500
             hover:after:w-full">
               I miei viaggi
             </span>
@@ -140,7 +140,7 @@ function Header() {
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
-            after:transition-all after:duration-300
+            after:transition-all after:duration-500
             hover:after:w-full">
               Aggiungi Viaggio
             </span>
@@ -156,7 +156,7 @@ function Header() {
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
-            after:transition-all after:duration-300
+            after:transition-all after:duration-500
             hover:after:w-full">
               Esci
             </span>

@@ -156,7 +156,7 @@ function Sidebar() {
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
-                    after:transition-all after:duration-300 
+                    after:transition-all after:duration-500 
                     hover:after:w-full">Area Personale
                     </span>
                   </Link>
@@ -176,7 +176,7 @@ function Sidebar() {
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
-                    after:transition-all after:duration-300 
+                    after:transition-all after:duration-500 
                     hover:after:w-full">{user.name}
                     </span>
                   </Link>
@@ -192,7 +192,7 @@ function Sidebar() {
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
-                    after:transition-all after:duration-300 
+                    after:transition-all after:duration-500 
                     hover:after:w-full">I tuoi viaggi
                     </span>
                   </Link>
@@ -208,7 +208,7 @@ function Sidebar() {
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
-                    after:transition-all after:duration-300 
+                    after:transition-all after:duration-500 
                     hover:after:w-full">Aggiungi Viaggio
                     </span>
                   </Link>
@@ -225,7 +225,7 @@ function Sidebar() {
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
-                    after:transition-all after:duration-300 
+                    after:transition-all after:duration-500 
                     hover:after:w-full">Esci
                     </span>
                   </button>
