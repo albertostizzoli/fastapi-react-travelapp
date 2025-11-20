@@ -54,7 +54,7 @@ function ChatAI() {
                             transition={{ duration: 0.4, ease: "easeOut" }}
                             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                             {m.role === "user" ? (
-                                <div className="bg-linear-to-r from-blue-500 to-orange-500 
+                                <div className="bg-linear-to-br from-blue-500 to-orange-500 
                                 dark:from-slate-900 dark:to-slate-500 text-white 
                                 px-4 sm:px-5 py-3 rounded-2xl shadow-md max-w-[80%] sm:max-w-[70%]
                                 rounded-br-none text-sm sm:text-base md:text-lg 
@@ -65,7 +65,7 @@ function ChatAI() {
                             ) : (
                                 <div className="text-sm sm:text-base md:text-lg leading-relaxed 
                                     whitespace-pre-wrap bg-white/5 dark:bg-black/10 
-                                    px-4 py-3 rounded-2xl border border-white/10 text-justify
+                                    px-4 py-3 rounded-2xl border border-white text-justify
                                     shadow-inner backdrop-blur-xl max-w-[80%] sm:max-w-[70%]
                                     rounded-bl-none"
                                     dangerouslySetInnerHTML={{
@@ -93,7 +93,7 @@ function ChatAI() {
 
             {/* FOOTER: Input e pulsanti */}
             <div className=" p-3 sm:p-4 flex sm:flex-row items-center gap-3 backdrop-blur-xl">
-                <input className="flex-1 border border-white/30 rounded-full px-4 py-2 sm:py-3 
+                <input className="flex-1 border border-white rounded-full px-4 py-2 sm:py-3 
                     text-white placeholder-white focus:outline-none focus:ring-2 
                     focus:ring-orange-400 dark:focus:ring-blue-400 transition 
                     resize-none overflow-y-auto leading-relaxed min-h-10 sm:min-h-12 
@@ -115,7 +115,7 @@ function ChatAI() {
                     onClick={handleSend}
                     disabled={isLoading}
                     className="font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
-                    bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 
+                    bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 
                   text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer text-sm sm:text-base">
                     <FontAwesomeIcon icon={faMessage} />
@@ -131,7 +131,7 @@ function ChatAI() {
                     className={`font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
                     ${isRecommending
                             ? "bg-gray-500 cursor-not-allowed"
-                            : "bg-linear-to-r from-green-600 to-teal-500 hover:scale-105"}
+                            : "bg-linear-to-br from-green-600 to-teal-500 hover:scale-105"}
                     backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 cursor-pointer
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-sm sm:text-base`}>

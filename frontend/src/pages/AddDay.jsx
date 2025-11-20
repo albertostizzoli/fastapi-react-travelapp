@@ -62,8 +62,8 @@ function AddDay() {
 
       <form
         onSubmit={handleSubmit}
-        className="relative grid grid-cols-1 md:grid-cols-2 gap-8 backdrop-blur-xl rounded-3xl
-        bg-linear-to-br from-blue-500/40 to-orange-500/30 dark:from-slate-900 dark:to-slate-500
+        className="relative grid grid-cols-1 md:grid-cols-2 gap-8 rounded-3xl
+        bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
         p-6 w-full max-w-5xl border border-white/40 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] 
         overflow-hidden">
 
@@ -74,8 +74,8 @@ function AddDay() {
 
             <Link
               to={`/travels/${selectedTravel}/days`}
-              className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-rose-500 
-              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-150 ease-in-out 
+              className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
+              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FontAwesomeIcon icon={faArrowLeft} />
               Torna alle Tappe
@@ -97,8 +97,8 @@ function AddDay() {
             <select
               value={selectedTravel}
               onChange={(e) => setSelectedTravel(e.target.value)}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 focus:ring-2
-               focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition"
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition"
               required>
               <option value="" className=" text-black">-- Seleziona --</option>
               {travels.map((t) => (
@@ -119,7 +119,8 @@ function AddDay() {
               onChange={handleChange}
               required
               className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white
-               placeholder-white/70 focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition scheme-dark"
+               placeholder-white/70 focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent 
+               transition scheme-dark"
             />
           </div>
 
@@ -183,16 +184,16 @@ function AddDay() {
             <button
               type="button"
               onClick={() => setIsCategoryModalOpen(true)}
-              className="font-semibold px-6 py-2 bg-linear-to-r from-orange-600 to-rose-500 backdrop-blur-md 
-              border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
+              className="font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 backdrop-blur-md 
+              border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FontAwesomeIcon icon={faListCheck} /> Seleziona Categoria
             </button>
             <button
               type="button"
               onClick={handlePhotoSelect}
-              className="font-semibold px-6 py-2 bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md 
-              border border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out 
+              className="font-semibold px-6 py-2 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md 
+              border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FontAwesomeIcon icon={faCamera} /> Carica Foto
             </button>
@@ -204,9 +205,9 @@ function AddDay() {
               {form.categories.map((category, i) => (
                 <span
                   key={i}
-                  className="flex items-center justify-between bg-linear-to-r from-blue-600 to-cyan-500
+                  className="flex items-center justify-between bg-linear-to-br from-blue-600 to-cyan-500
                   backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
-                  shadow-md transition-all duration-100 ease-in-out hover:scale-105 cursor-pointer">
+                  shadow-md transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer">
                   <span>{category}</span>
                   <button
                     type="button"
@@ -298,8 +299,8 @@ function AddDay() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-r from-green-600 to-teal-500 
-              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out 
+              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
+              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FontAwesomeIcon icon={faPlus} />
               Aggiungi Tappa
@@ -315,9 +316,9 @@ function AddDay() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+          className="fixed top-6 right-6 flex items-center gap-3 backdrop-blur-lg 
             border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
-            bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+            bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
             <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
           )}

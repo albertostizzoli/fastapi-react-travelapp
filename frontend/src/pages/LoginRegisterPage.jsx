@@ -136,7 +136,7 @@ function LoginRegisterPage() {
                   type="submit"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
                   bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
-                  rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <FontAwesomeIcon icon={faUser} className="mr-2" />
                   Accedi
@@ -261,7 +261,7 @@ function LoginRegisterPage() {
                     onClick={() => setIsModalOpen(true)}
                     className="flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
                     bg-linear-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40 text-white 
-                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                     <FontAwesomeIcon icon={faCompass} className="mr-2" />  Esperienze
                   </button>
@@ -271,7 +271,7 @@ function LoginRegisterPage() {
                     onClick={handlePhotoSelect}
                     className=" flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
                     bg-linear-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40 text-white 
-                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                     <FontAwesomeIcon icon={faCamera} className="mr-2" />  Foto
                   </button>
@@ -289,7 +289,7 @@ function LoginRegisterPage() {
                   type="submit"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
                   bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
-                  rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <FontAwesomeIcon icon={faUser} className="mr-2" />
                   Registrati
@@ -314,9 +314,9 @@ function LoginRegisterPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
-            className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+            className="fixed top-6 right-6 flex items-center gap-3 backdrop-blur-lg 
             border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
-            bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+            bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
             {message.icon === "success" && (
               <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
             )}

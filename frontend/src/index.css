@@ -8,31 +8,19 @@
   width: 8px;
 }
 
-/* LIGHT MODE */
+/* Sfondo della scrollbar (trasparente) */
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --- LIGHT MODE --- */
 .scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #3B82F6, #F97316); /* light mode: blue-500 → orange-500 */
+  background: rgb(249 115 22); /* bg-orange-500 */
   border-radius: 8px;
 }
 
-
-/*  DARK MODE */
+/* --- DARK MODE --- */
 .dark .scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #0F172A, #64748B); /* dark-mode: slate-900 → slate-500 */
+  background: rgb(100 116 139); /* bg-slate-500 */
   border-radius: 8px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -48,8 +48,8 @@ function TravelDays() {
             to="/addDay"
             state={{ travelId: id }}
             className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
-             bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
-             text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+             bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
+             text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
              hover:shadow-[0_0_20px_rgba(255,255,255,0.30)]">
             <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
           </Link>
@@ -128,7 +128,7 @@ function TravelDays() {
                             alt="foto viaggio"
                             loading="lazy"
                             className="w-20 h-20 object-cover rounded-2xl border border-white/40 shadow-md
-                            transition-transform duration-300 group-hover:scale-110 group-hover:brightness-110"
+                            transition-transform duration-300 group-hover:scale-105 group-hover:brightness-100"
                           />
                         ))}
                       </div>
@@ -139,8 +139,8 @@ function TravelDays() {
                       <button
                         onClick={() => setSelectedDay(d)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
-                        rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <FontAwesomeIcon icon={faBookOpen} /> Leggi Tappa
                       </button>
@@ -148,8 +148,8 @@ function TravelDays() {
                       <Link
                         to={`/days/${d.id}/edit`}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
-                        rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
+                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <FontAwesomeIcon icon={faEdit} /> Modifica Tappa
                       </Link>
@@ -157,8 +157,8 @@ function TravelDays() {
                       <button
                         onClick={() => setDeleteDayId(d.id)}
                         className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
-                        rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                        bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                         hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                         <FontAwesomeIcon icon={faTrash} /> Cancella Tappa
                       </button>

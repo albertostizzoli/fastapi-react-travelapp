@@ -46,8 +46,8 @@ function ModalAddCategory({ isOpen, onClose, form, setForm }) {
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 border 
                                                         rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${form.categories.includes(experience)
-                                                        ? "bg-linear-to-r from-blue-500 to-orange-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                                                        : "bg-linear-to-r from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        ? "bg-linear-to-br from-blue-500 to-orange-500 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        : "bg-linear-to-br from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
                                                 <input
                                                     type="checkbox"
@@ -80,16 +80,16 @@ function ModalAddCategory({ isOpen, onClose, form, setForm }) {
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md text-white 
-                                border border-white/40 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md text-white 
+                                border border-white/40 rounded-full transition-all duration-300 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                 <FontAwesomeIcon icon={faXmark} className="mr-2" />Chiudi
                             </button>
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="font-semibold px-4 py-2 bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md text-white 
-                                border border-white/40 rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                                className="font-semibold px-4 py-2 bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md text-white 
+                                border border-white/40 rounded-full transition-all duration-300 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                 <FontAwesomeIcon icon={faCheck} className="mr-2" />Conferma
                             </button>

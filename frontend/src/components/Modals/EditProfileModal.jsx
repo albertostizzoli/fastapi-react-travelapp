@@ -212,11 +212,11 @@ function EditProfileModal({
                 className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 
                 border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
                 cursor-pointer scrollbar">
-                <option value="" className="bg-orange-300 text-black dark:bg-slate-300">
+                <option value="" className="bg-blue-500 text-white dark:bg-slate-500">
                   Seleziona un’esperienza
                 </option>
                 {allExperiences.map((exp, i) => (
-                  <option key={i} value={exp} className="bg-orange-300 text-black dark:bg-slate-300">
+                  <option key={i} value={exp} className="bg-blue-500 text-white dark:bg-slate-500">
                     {exp}
                   </option>
                 ))}
@@ -228,7 +228,7 @@ function EditProfileModal({
                   {editForm.experiences.map((experience, i) => (
                     <span
                       key={i}
-                      className="bg-linear-to-r from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
+                      className="bg-linear-to-br from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
                       flex items-center gap-2 shadow-md">
                       {experience}
                       <button
@@ -262,15 +262,15 @@ function EditProfileModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="font-semibold px-6 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border 
-                border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+                className="font-semibold px-6 py-2 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border 
+                border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                 <FontAwesomeIcon icon={faXmark} className="mr-2" /> Annulla
               </button>
               <button
                 type="submit"
-                className="font-semibold px-6 py-2 bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border 
-              border-white/40 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+                className="font-semibold px-6 py-2 bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border 
+              border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                 <FontAwesomeIcon icon={faCheck} className="mr-2" /> Salva
               </button>

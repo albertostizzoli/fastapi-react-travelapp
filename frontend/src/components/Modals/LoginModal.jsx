@@ -58,10 +58,10 @@ function LoginModal({ isOpen, onClose, selectedExperiences, toggleExperience }) 
                           key={experience}
                           onClick={() => toggleExperience(experience)}
                           className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 rounded-full 
-                            cursor-pointer text-sm transition-all duration-100 ease-in-out border border-white/40 backdrop-blur-md 
+                            cursor-pointer text-sm transition-all duration-300 ease-in-out border border-white/40 backdrop-blur-md 
                             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${selected
-                              ? "bg-linear-to-r from-blue-500 to-orange-500 text-white/90 shadow-lg"
-                              : "bg-linear-to-r from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
+                              ? "bg-linear-to-br from-blue-500 to-orange-500 text-white/90 shadow-lg"
+                              : "bg-linear-to-br from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
                             }`}>
                           {experience}
                         </button>
@@ -77,16 +77,16 @@ function LoginModal({ isOpen, onClose, selectedExperiences, toggleExperience }) 
               <button
                 onClick={onClose}
                 className="font-semibold flex justify-center items-center gap-2 px-6 py-2
-                  bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40
-                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <FontAwesomeIcon icon={faXmark} className="mr-2" /> Annulla
               </button>
               <button
                 onClick={onClose}
                 className="font-semibold flex justify-center items-center gap-2 px-6 py-2
-                  bg-linear-to-r from-green-600 to-teal-500 backdrop-blur-md border border-white/40
-                 text-white rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <FontAwesomeIcon icon={faCheck} className="mr-2" /> Salva Esperienze
               </button>

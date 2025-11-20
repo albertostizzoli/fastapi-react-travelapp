@@ -50,16 +50,16 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             <div className="flex justify-between items-center p-4 border-b border-white/40 bg-black/10 backdrop-blur-lg">
               <button
                 onClick={handleClose}
-                className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border 
-                border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border 
+                border-white/40 text-white rounded-full transition-all duration-300 ease-in-out hover:scale-105 
                  cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                  <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Torna alle Tappe
               </button>
 
               <button
                 onClick={() => setShowMapModal(true)}
-                className="font-semibold px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border 
-              border-white/40 text-white rounded-full transition-all duration-100 ease-in-out hover:scale-105 
+                className="font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border 
+              border-white/40 text-white rounded-full transition-all duration-300 ease-in-out hover:scale-105 
                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                  <FontAwesomeIcon icon={faMapLocationDot} className="mr-2" /> Vai alla Mappa
               </button>
@@ -79,8 +79,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                   {selectedDay.categories.map((category, i) => (
                     <span
                       key={i}
-                      className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-blue-500
-                        backdrop-blur-md border border-white/40 text-white rounded-full transition-all duration-100 
+                      className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-blue-500
+                        backdrop-blur-md border border-white/40 text-white rounded-full transition-all duration-300 
                         ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                       {category}
                     </span>

@@ -42,8 +42,8 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
               <button
                 onClick={onConfirm}
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
-                 bg-linear-to-r from-green-600 to-cyan-500 backdrop-blur-md border border-white/40 
-                text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+                 bg-linear-to-br from-green-600 to-cyan-500 backdrop-blur-md border border-white/40 
+                text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                  hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <FontAwesomeIcon icon={faCheck} className="mr-2" /> Sì
               </button>
@@ -51,8 +51,8 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
               <button
                 onClick={onCancel}
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
-                 bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 
-                 text-white rounded-full shadow-md transition-all duration-100 ease-in-out cursor-pointer
+                 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 
+                 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                  hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <FontAwesomeIcon icon={faXmark} className="mr-2" /> No
               </button>

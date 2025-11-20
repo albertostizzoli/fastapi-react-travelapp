@@ -97,8 +97,8 @@ function Travels() {
                   <Link
                     to={`/travels/${v.id}/days`}
                     className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                    bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                    rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
                   </Link>
@@ -106,8 +106,8 @@ function Travels() {
                   <Link
                     to={`/travels/${v.id}/edit`}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                    bg-linear-to-r from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                    rounded-full shadow-md transition-all duration-100 hover:scale-105
+                    bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                    rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
                   </Link>
@@ -115,8 +115,8 @@ function Travels() {
                   <button
                     onClick={() => setDeleteId(v.id)}
                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                    bg-linear-to-r from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                    rounded-full shadow-md transition-all duration-100 cursor-pointer hover:scale-105
+                    bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                     <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella
                   </button>

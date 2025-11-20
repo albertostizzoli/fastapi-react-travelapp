@@ -46,12 +46,12 @@ function ProfilePage() {
                 src={user.photo}
                 alt="Profilo"
                 className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] 
-                object-cover border-4 border-blue-600/70 dark:border-blue-500/70"
+                object-cover border-4 border-blue-600/70 dark:border-slate-900/70"
                 style={{ width: "140px", height: "140px" }}
               />
             ) : (
               <div className="w-36 h-36 mb-6 rounded-full bg-white/10 flex items-center justify-center text-4xl font-bold
-             text-gray-300 border-4 border-blue-600/70 dark:border-blue-500/70">
+             text-gray-300 border-4 border-blue-600/70 dark:border-slate-900/70">
                 {user?.name?.[0]?.toUpperCase() || "?"}
               </div>
             )}
@@ -89,9 +89,9 @@ function ProfilePage() {
                   setShowEditModal(true);
                 }}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-linear-to-r from-orange-600 to-yellow-500
+                bg-linear-to-br from-orange-600 to-yellow-500
                 backdrop-blur-md border border-white/40 text-white 
-                rounded-full shadow-md transition-all duration-500 hover:scale-105
+                rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <FontAwesomeIcon icon={faEdit} /> Modifica Profilo
               </button>
@@ -99,9 +99,9 @@ function ProfilePage() {
               <button
                 onClick={() => setDeleteProfileId(user?.id)}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-linear-to-r from-red-600 to-rose-500 
+                bg-linear-to-br from-red-600 to-rose-500 
                 backdrop-blur-md border border-white/40 text-white 
-                rounded-full shadow-md transition-all duration-100 hover:scale-105
+                rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <FontAwesomeIcon icon={faTrash} /> Cancella Profilo
               </button>
@@ -109,9 +109,9 @@ function ProfilePage() {
               <button
                 onClick={handleLogout}
                 className="font-semibold w-full flex items-center justify-center gap-2 px-4 py-2
-                bg-linear-to-r from-blue-600 to-cyan-500
+                bg-linear-to-br from-blue-600 to-cyan-500
                 backdrop-blur-md border border-white/40 text-white 
-                rounded-full shadow-md transition-all duration-100 hover:scale-105
+                rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                 <FontAwesomeIcon icon={faRightFromBracket} /> Esci
               </button>
@@ -150,26 +150,26 @@ function ProfilePage() {
                 <Link
                   to="/travels"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-r from-orange-600 to-rose-500 
+                  bg-linear-to-br from-orange-600 to-rose-500 
                   backdrop-blur-md border border-white/40 text-white 
-                  rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                   <FontAwesomeIcon icon={faGlobe} /> I miei viaggi
                 </Link>
                 <Link
                   to="/add"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-r from-green-600 to-teal-500
+                  bg-linear-to-br from-green-600 to-teal-500
                   backdrop-blur-md border border-white/40 text-white 
-                  rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                   <FontAwesomeIcon icon={faPlus} /> Aggiungi Viaggio
                 </Link>
                 <Link
                   to="/chat"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-r from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
-                  rounded-full shadow-md transition-all duration-100 hover:scale-105
+                  bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                  rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <FontAwesomeIcon icon={faCompass} /> Il mio prossimo viaggio
                 </Link>
@@ -199,10 +199,10 @@ function ProfilePage() {
                   {recentTravels.slice(0, 1).map((travel, idx) => (
                     <li
                       key={idx}
-                      className="p-4 bg-linear-to-r from-red-600 to-blue-500
+                      className="p-4 bg-linear-to-br from-red-600 to-blue-500
                       backdrop-blur-md 
                       rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
-                      transition-all duration-100 border border-white/40">
+                      transition-all duration-300 border border-white/40">
 
                       <div className="flex justify-between items-center mb-2">
                         <h4 className="text-xl font-bold text-white">
@@ -250,9 +250,9 @@ function ProfilePage() {
                 {user.experiences.map((experience, idx) => (
                   <span
                     key={idx}
-                    className="font-semibold px-4 py-2 bg-linear-to-r from-red-600 to-blue-500
+                    className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-blue-500
                      backdrop-blur-md border border-white/40 text-white rounded-full 
-                    text-sm sm:text-base shadow-md hover:scale-105 transition-all duration-100">
+                    text-sm sm:text-base shadow-md hover:shadow-[0_0_30px_rgba(255,255,255,0.30)] transition-all duration-300">
                     {experience}
                   </span>
                 ))}
@@ -289,9 +289,9 @@ function ProfilePage() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+          className="fixed top-6 right-6 flex items-center gap-3 backdrop-blur-lg 
           border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
-          bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
             <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
           )}

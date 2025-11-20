@@ -18,7 +18,7 @@ function Layout({ children }) {
 
   return (
     <div
-      className={`overflow-y-auto h-screen bg-linear-to-b from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500 transition-colors duration-300 scrollbar `}>
+      className={`overflow-y-auto h-screen bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500 transition-colors duration-300 scrollbar `}>
       {/* Sidebar sempre visibile */}
       {location.pathname !== "/loginregister" && <Sidebar />}
 
