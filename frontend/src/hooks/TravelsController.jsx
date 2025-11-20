@@ -5,6 +5,7 @@ function TravelsController() {
     const [travels, setTravels] = useState([]); // stato per i viaggi
     const [deleteId, setDeleteId] = useState(null); // stato per l'id del viaggio da eliminare
     const [message, setMessage] = useState(""); // messaggio di successo o errore
+    const [activeCard, setActiveCard] = useState(null); // stato per aprire una card dei viaggi e mostare le altre informazioni
 
     // uso lo useEffect per ottenere i dati dei viaggi
     useEffect(() => {
@@ -85,7 +86,9 @@ function TravelsController() {
         setDeleteId,    // funzione per impostare l'id del viaggio da eliminare
         handleDelete,   // funzione per eliminare il viaggio
         message,        // messaggio di successo o errore
-        StarRating      // componente per visualizzare le stelle
+        StarRating,      // componente per visualizzare le stelle
+        activeCard,      // mostra la card aperta
+        setActiveCard    // stato per indicare la card aperta
     }
 }
 

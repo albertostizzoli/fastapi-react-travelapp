@@ -13,7 +13,9 @@ function Travels() {
     setDeleteId,             // funzione per settare l'id del viaggio da eliminare
     handleDelete,            // funzione per eliminare il viaggio
     message,                 // messaggio di conferma o errore
-    StarRating               // funzione per visualizzare le stelle
+    StarRating,              // funzione per visualizzare le stelle
+    activeCard,              // mostra la card aperta
+    setActiveCard            // stato per indicare la card aperta
   } = TravelsController();   // uso la logica della pagina viaggi
 
   return (
@@ -25,7 +27,8 @@ function Travels() {
       </h1>
 
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 mx-auto"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 mx-auto items-start"
+        layout="position" // siccome uso una grid questo impedisce alle card di avere la stessa altezza al click
         initial="hidden"
         animate="visible"
         variants={{
@@ -37,11 +40,11 @@ function Travels() {
           {travels.map((v) => (
             <motion.div
               key={v.id}
-              layout
+              onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
               className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
-              backdrop-blur-2xl border border-white/20 
+              backdrop-blur-2xl border border-white/20 cursor-pointer
               rounded-3xl shadow-lg overflow-hidden transition-all duration-500 
-              hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
+              hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
               variants={{
                 hidden: { scale: 0.9, y: 20, opacity: 0 },
                 visible: { scale: 1, y: 0, opacity: 1 },
@@ -93,34 +96,44 @@ function Travels() {
                 )}
 
                 {/* Pulsanti */}
-                <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-5">
-                  <Link
-                    to={`/travels/${v.id}/days`}
-                    className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                    bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                    rounded-full shadow-md transition-all duration-300 hover:scale-105
-                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                    <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
-                  </Link>
+                <AnimatePresence>
+                  {activeCard === v.id && (
+                    <motion.div
+                      layout="position"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20, height: 0 }}
+                      transition={{ type: "spring", stiffness: 120, damping: 20 }}
+                      className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-5 overflow-hidden">
+                      <Link
+                        to={`/travels/${v.id}/days`}
+                        className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                        bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                        rounded-full shadow-md transition-all duration-300 hover:scale-105
+                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                        <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
+                      </Link>
 
-                  <Link
-                    to={`/travels/${v.id}/edit`}
-                    className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                    bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                    rounded-full shadow-md transition-all duration-300 hover:scale-105
-                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                    <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
-                  </Link>
+                      <Link
+                        to={`/travels/${v.id}/edit`}
+                        className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                        bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                        rounded-full shadow-md transition-all duration-300 hover:scale-105
+                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                        <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
+                      </Link>
 
-                  <button
-                    onClick={() => setDeleteId(v.id)}
-                    className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                    bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                    <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella
-                  </button>
-                </div>
+                      <button
+                        onClick={() => setDeleteId(v.id)}
+                        className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                        bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                        <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           ))}
