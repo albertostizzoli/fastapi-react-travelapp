@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faArrowRight, faCalendarDay, faCheckCircle, faEdit, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { faArrowDown, faArrowRight, faArrowUp, faCalendarDay, faCheckCircle, faEdit, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../hooks/TravelsController"; // importo la logica della pagina viaggi
 
@@ -40,9 +40,8 @@ function Travels() {
           {travels.map((v) => (
             <motion.div
               key={v.id}
-              onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
               className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
-              backdrop-blur-2xl border border-white/20 cursor-pointer
+              backdrop-blur-2xl border border-white/20 
               rounded-3xl shadow-lg overflow-hidden transition-all duration-500 
               hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
               variants={{
@@ -75,27 +74,48 @@ function Travels() {
                   <h3 className="text-xl font-bold text-white drop-shadow-md">{v.year}</h3>
                 </div>
 
-                <p className="text-gray-100 text-xl font-medium">
-                  {v.start_date} <FontAwesomeIcon icon={faArrowRight} /> {v.end_date}
-                </p>
-
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-white font-medium text-lg">Media voto:</span>
-                  <StarRating rating={v.general_vote ?? 0} />
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="text-gray-100 text-xl font-medium">
+                      {v.start_date} <FontAwesomeIcon icon={faArrowRight} /> {v.end_date}
+                    </p>
+                  </div>
+                    <AnimatePresence mode="wait">
+                      {activeCard !== v.id ? (
+                        // Freccia GIÙ (card chiusa)
+                        <motion.div
+                          key="arrow-down"
+                          onClick={() => setActiveCard(v.id)}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}>
+                          <FontAwesomeIcon
+                            icon={faArrowDown}
+                            className="cursor-pointer border border-white rounded-full p-3 text-white
+                            transition-all duration-300 hover:bg-white hover:text-black"
+                          />
+                        </motion.div>
+                      ) : (
+                        // Freccia SU (card aperta)
+                        <motion.div
+                          key="arrow-up"
+                          onClick={() => setActiveCard(null)} 
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.3 }}>
+                          <FontAwesomeIcon
+                            icon={faArrowUp}
+                            className="cursor-pointer border border-white rounded-full p-3 text-white
+                            transition-all duration-300 hover:bg-white hover:text-black"
+                          />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                 </div>
 
-                {v.votes && (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white mt-2">
-                    {Object.entries(v.votes).map(([key, value]) => (
-                      <li key={key} className="flex justify-between items-center font-semibold">
-                        <span className="capitalize">{key}:</span>
-                        <StarRating rating={value} />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* Pulsanti */}
+                { /* Voti + Pulsanti della Card */}
                 <AnimatePresence>
                   {activeCard === v.id && (
                     <motion.div
@@ -103,34 +123,54 @@ function Travels() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 20, height: 0 }}
-                      transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                      className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-5 overflow-hidden">
-                      <Link
-                        to={`/travels/${v.id}/days`}
-                        className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                        bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                        rounded-full shadow-md transition-all duration-300 hover:scale-105
-                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                        <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
-                      </Link>
+                      transition={{ type: "spring", stiffness: 120, damping: 20 }}>
 
-                      <Link
-                        to={`/travels/${v.id}/edit`}
-                        className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                        bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                        rounded-full shadow-md transition-all duration-300 hover:scale-105
-                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                        <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
-                      </Link>
+                      { /* Voti */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="text-white font-medium text-xl">Media voto:</span>
+                        <span className="ms-2 flex items-center capitalize font-semibold"><StarRating rating={v.general_vote ?? 0} /></span>
+                      </div>
 
-                      <button
-                        onClick={() => setDeleteId(v.id)}
-                        className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                        bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
-                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                        <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella
-                      </button>
+                      {v.votes && (
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-2sm text-white mt-5">
+                          {Object.entries(v.votes).map(([key, value]) => (
+                            <li key={key} className="flex justify-between items-center font-semibold">
+                              <span className="capitalize">{key}:</span>
+                              <StarRating rating={value} />
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {/* Pulsanti */}
+                      <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
+                        <Link
+                          to={`/travels/${v.id}/days`}
+                          className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                          bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                          rounded-full shadow-md transition-all duration-300 hover:scale-105
+                          hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                          <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
+                        </Link>
+
+                        <Link
+                          to={`/travels/${v.id}/edit`}
+                          className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                          bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                          rounded-full shadow-md transition-all duration-300 hover:scale-105
+                          hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                          <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
+                        </Link>
+
+                        <button
+                          onClick={() => setDeleteId(v.id)}
+                          className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                          bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                          rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                          hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                          <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella
+                        </button>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -31,8 +31,8 @@ function LoginRegisterPage() {
     fileInputRef,           // riferimento all'input file nascosto
     validation,             // validazioni
     handlePasswordChange,    // funzione per validare la password
-    isFocused,
-    setIsFocused
+    isFocused,               // fa sparire e ricomparire il modale della validazione password
+    setIsFocused             // stato per il modale validazione password
   } = FormAuth();           // utilizzo la logica dei form di login/registrazione
 
   return (
@@ -98,7 +98,7 @@ function LoginRegisterPage() {
                   <input
                     type="email"
                     className="w-full font-semibold border bg-white/20 text-white
-                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400"
+                    rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-400 dark:focus:ring-amber-400"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -115,7 +115,7 @@ function LoginRegisterPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full font-semibold border bg-white/20 text-white 
-                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400"
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-400 dark:focus:ring-amber-400"
                     />
 
                     { /* Pulsante Mostra Password */}
@@ -164,7 +164,7 @@ function LoginRegisterPage() {
                     <input
                       type="text"
                       className="w-full font-semibold border  bg-white/20 text-white 
-                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-indigo-400"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
@@ -177,7 +177,7 @@ function LoginRegisterPage() {
                     <input
                       type="text"
                       className="w-full font-semibold border bg-white/20 text-white  
-                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-indigo-400"
                       value={surname}
                       onChange={(e) => setSurname(e.target.value)}
                       required
@@ -190,7 +190,7 @@ function LoginRegisterPage() {
                     <input
                       type="email"
                       className="w-full font-semibold border bg-white/20 text-white
-                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-slate-500"
+                      rounded-full px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-400 dark:focus:ring-indigo-400"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -208,11 +208,11 @@ function LoginRegisterPage() {
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={handlePasswordChange}
-                        onFocus={() => setIsFocused(true)} // fa sparire e ricomparire il modale della validazione password
+                        onFocus={() => setIsFocused(true)}
                         onBlur={() => setIsFocused(false)}
                         className="w-full font-semibold border bg-white/20 text-white 
                         rounded-full px-3 py-2 focus:border-transparent focus:ring-2 
-                      focus:ring-blue-400 dark:focus:ring-slate-500"
+                      focus:ring-blue-400 dark:focus:ring-indigo-400"
                         required
                       />
 
