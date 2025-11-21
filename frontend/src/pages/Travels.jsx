@@ -31,10 +31,7 @@ function Travels() {
         layout="position" // siccome uso una grid questo impedisce alle card di avere la stessa altezza al click
         initial="hidden"
         animate="visible"
-        variants={{
-          hidden: {},
-          visible: { transition: { staggerChildren: 0.2 } },
-        }}>
+        variants={{ visible: { transition: { staggerChildren: 0.2 } }}}>
 
         <AnimatePresence>
           {travels.map((v) => (
@@ -42,14 +39,12 @@ function Travels() {
               key={v.id}
               className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
               backdrop-blur-2xl border border-white/20 
-              rounded-3xl shadow-lg overflow-hidden transition-all duration-500 
-              hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
+              rounded-3xl shadow-lg overflow-hidden transition-all duration-300
+              hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
               variants={{
-                hidden: { scale: 0.9, y: 20, opacity: 0 },
-                visible: { scale: 1, y: 0, opacity: 1 },
+                hidden: { opacity: 0, scale: 0.5, y: 20 },
+                visible: { opacity: 1, scale: 1, y: 0 },
               }}
-              initial="hidden"
-              animate="visible"
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}>
 

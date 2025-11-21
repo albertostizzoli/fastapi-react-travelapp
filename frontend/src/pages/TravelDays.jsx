@@ -108,11 +108,15 @@ function TravelDays() {
                         hidden: { opacity: 0, scale: 0.5, y: 20 },
                         visible: { opacity: 1, scale: 1, y: 0 },
                       }}
-                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      animate={{
+                        boxShadow: isOpen
+                          ? "0px 0px 25px rgba(255,255,255,0.30)"
+                          : "0px 0px 0px rgba(255,255,255,0)"
+                      }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
                       className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
-                      transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]
-                      w-full sm:w-[330px]">
+                      transition-all duration-500 w-full sm:w-[330px]">
 
                       {/* Header card */}
                       <div className="flex justify-between items-center gap-3">
