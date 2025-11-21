@@ -17,8 +17,8 @@ function TravelDays() {
     setSelectedDay,             // funzione per settare la tappa selezionata
     setDeleteDayId,             // funzione per settare l'id della tappa da eliminare
     handleDeleteDay,            // funzione per eliminare una tappa
-    openCardId,                  // mostra la card aperta
-    setOpenCardId                // stato per indicare la card aperta
+    openCardId,                 // mostra la card aperta
+    setOpenCardId               // stato per indicare la card aperta
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -86,17 +86,17 @@ function TravelDays() {
           </motion.div>
 
           {/* Lista Giorni */}
-          <div className="flex-1 pr-2 mt-6">
+          <div className="flex-1 mt-6">
 
             {travel.days?.length > 0 ? (
               <motion.div
-                className="flex flex-wrap gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 mx-auto items-start"
                 variants={{
-                  hidden: { opacity: 1 },
-                  visible: { opacity: 1, transition: { staggerChildren: 0.4 } },
+                  visible: { transition: { staggerChildren: 0.2 } },
                 }}
                 initial="hidden"
-                animate="visible">
+                animate="visible"
+                layout="position">
 
                 {travel.days.map((d) => {
                   const isOpen = openCardId === d.id;
@@ -104,29 +104,34 @@ function TravelDays() {
                   return (
                     <motion.div
                       key={d.id}
-                      layout
+                      variants={{
+                        hidden: { opacity: 0, scale: 0.5, y: 20 },
+                        visible: { opacity: 1, scale: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
                       className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
                       transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]
-                      w-full sm:w-[330px] cursor-pointer">
+                      w-full sm:w-[330px]">
 
                       {/* Header card */}
-                      <div
-                        className="flex justify-between items-start gap-3"
-                        onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                      <div className="flex justify-between items-center gap-3">
                         <div>
                           <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.title}</p>
                           <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
                         </div>
 
                         {/* Icona Freccia */}
-                        <motion.div
+                        <motion.button
                           animate={{ rotate: isOpen ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
+                          title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
                           className="cursor-pointer border border-white rounded-full p-3 text-white
-                            transition-all duration-300 hover:bg-white hover:text-black">
+                          transition-all duration-300 hover:bg-white hover:text-black"
+                          onClick={() => setOpenCardId(isOpen ? null : d.id)}>
                           <FontAwesomeIcon icon={faArrowDown} />
-                        </motion.div>
+                        </motion.button>
+
                       </div>
 
                       {/* FOTO PREVIEW */}
@@ -154,9 +159,9 @@ function TravelDays() {
 
                             {/* descrizione */}
                             {d.description && (
-                              <p className="text-white mt-4 text-sm text-justify">
-                                {d.description.length > 120
-                                  ? d.description.slice(0, 120) + "..."
+                              <p className="text-white mt-4 text-sm text-justify font-semibold">
+                                {d.description.length > 100
+                                  ? d.description.slice(0, 100) + "..."
                                   : d.description}
                               </p>
                             )}
@@ -169,7 +174,7 @@ function TravelDays() {
                                 {d.categories.slice(0, 3).map((c, i) => (
                                   <span
                                     key={i}
-                                    className="px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white">
+                                    className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white">
                                     {c}
                                   </span>
                                 ))}
@@ -177,7 +182,7 @@ function TravelDays() {
                                 {/* badge per categorie extra */}
                                 {d.categories.length > 3 && (
                                   <span
-                                    className="px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white italic">
+                                    className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white italic">
                                     +{d.categories.length - 3}
                                   </span>
                                 )}
@@ -186,23 +191,23 @@ function TravelDays() {
 
 
                             {/* BOTTONI */}
-                            <div className="flex flex-col gap-2 mt-6">
+                            <div className="flex flex-col gap-4 mt-6">
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   setSelectedDay(d);
                                 }}
-                                className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                <FontAwesomeIcon icon={faBookOpen} /> Scopri di più
+                                <FontAwesomeIcon icon={faBookOpen} /> Leggi di più
                               </button>
 
                               <Link
                                 to={`/days/${d.id}/edit`}
                                 onClick={(e) => e.stopPropagation()}
-                                className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
@@ -214,7 +219,7 @@ function TravelDays() {
                                   e.stopPropagation();
                                   setDeleteDayId(d.id);
                                 }}
-                                className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
@@ -237,7 +242,7 @@ function TravelDays() {
         </div>
       </div>
 
-      {/* Modale Scopri di più */}
+      {/* Modale Leggi di più */}
       <DayInfoModal
         selectedDay={selectedDay}
         onClose={() => setSelectedDay(null)}

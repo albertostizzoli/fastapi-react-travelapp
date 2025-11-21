@@ -74,21 +74,21 @@ function Travels() {
                   <h3 className="text-xl font-bold text-white drop-shadow-md">{v.year}</h3>
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center gap-3">
                   <div>
                     <p className="text-gray-100 text-xl font-medium">
                       {v.start_date} <FontAwesomeIcon icon={faArrowRight} /> {v.end_date}
                     </p>
                   </div>
-                  <motion.div
+                  <motion.button
                     onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
                     animate={{ rotate: activeCard === v.id ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
+                    title={activeCard ? "Chiudi dettagli" : "Apri dettagli"}
                     className="cursor-pointer border border-white rounded-full p-3 text-white
                     transition-all duration-300 hover:bg-white hover:text-black">
                     <FontAwesomeIcon icon={faArrowDown} />
-                  </motion.div>
-
+                  </motion.button>
                 </div>
 
                 { /* Voti + Pulsanti della Card */}
