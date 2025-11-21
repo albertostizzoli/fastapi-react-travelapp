@@ -18,7 +18,7 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
           {/* Contenitore principale del modale */}
           <motion.div
             className="relative w-full max-w-md rounded-3xl border border-white/40 dark:border-white/10
-            bg-linear-to-br from-blue-500/40 to-orange-500/30 dark:from-slate-900 dark:to-slate-500
+            bg-linear-to-br from-blue-600/40 to-orange-600/40 dark:from-slate-900 dark:to-slate-500
             backdrop-blur-2xl shadow-2xl p-8 text-center overflow-hidden"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}

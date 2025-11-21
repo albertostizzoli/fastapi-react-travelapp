@@ -60,7 +60,7 @@ function LoginModal({ isOpen, onClose, selectedExperiences, toggleExperience }) 
                           className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 rounded-full 
                             cursor-pointer text-sm transition-all duration-300 ease-in-out border border-white/40 backdrop-blur-md 
                             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] ${selected
-                              ? "bg-linear-to-br from-blue-500 to-orange-500 text-white/90 shadow-lg"
+                              ? "bg-linear-to-br from-blue-600 to-orange-600 text-white/90 shadow-lg"
                               : "bg-linear-to-br from-white/10 to-white/20 text-white/90 shadow-md hover:bg-white/20"
                             }`}>
                           {experience}

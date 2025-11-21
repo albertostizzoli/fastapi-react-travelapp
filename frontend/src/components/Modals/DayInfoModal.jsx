@@ -37,7 +37,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
           style={{ willChange: "opacity" }}>
 
           <motion.div
-            className="backdrop-blur-2xl bg-linear-to-br from-blue-500/40 to-orange-500/30 dark:from-slate-900 dark:to-slate-500
+            className="backdrop-blur-2xl bg-linear-to-br from-blue-600/40 to-orange-600/40 dark:from-slate-900 dark:to-slate-500
             border border-white/40 
             rounded-3xl w-full max-w-full sm:max-w-5xl h-[90vh] shadow-2xl flex flex-col overflow-hidden relative"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -79,7 +79,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                   {selectedDay.categories.map((category, i) => (
                     <span
                       key={i}
-                      className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-blue-500
+                      className="font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-red-500
                         backdrop-blur-md border border-white/40 text-white rounded-full transition-all duration-300 
                         ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                       {category}

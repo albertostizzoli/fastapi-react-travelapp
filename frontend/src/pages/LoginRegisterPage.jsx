@@ -316,12 +316,12 @@ function LoginRegisterPage() {
             transition={{ duration: 0.5 }}
             className="fixed top-6 right-6 flex items-center gap-3 backdrop-blur-lg 
             border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
-            bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+            bg-linear-to-br from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
             {message.icon === "success" && (
-              <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+              <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
             )}
             {message.icon === "error" && (
-              <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+              <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
             )}
             <p className="text-xl font-semibold">{message.text}</p>
           </motion.div>

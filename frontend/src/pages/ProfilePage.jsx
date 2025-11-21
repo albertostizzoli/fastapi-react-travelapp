@@ -199,7 +199,7 @@ function ProfilePage() {
                   {recentTravels.slice(0, 1).map((travel, idx) => (
                     <li
                       key={idx}
-                      className="p-4 bg-linear-to-br from-red-600 to-blue-500
+                      className="p-4 bg-linear-to-br from-blue-600 to-red-500
                       backdrop-blur-md 
                       rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
                       transition-all duration-300 border border-white/40">
@@ -250,7 +250,7 @@ function ProfilePage() {
                 {user.experiences.map((experience, idx) => (
                   <span
                     key={idx}
-                    className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-blue-500
+                    className="font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-red-500
                      backdrop-blur-md border border-white/40 text-white rounded-full 
                     text-sm sm:text-base shadow-md hover:shadow-[0_0_30px_rgba(255,255,255,0.30)] transition-all duration-300">
                     {experience}
@@ -291,12 +291,12 @@ function ProfilePage() {
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 flex items-center gap-3 backdrop-blur-lg 
           border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
-          bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          bg-linear-to-br from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
-            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
           )}
           {message.icon === "error" && (
-            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
           )}
           <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>

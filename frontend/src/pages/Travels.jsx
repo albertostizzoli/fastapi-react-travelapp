@@ -85,7 +85,7 @@ function Travels() {
                         // Freccia GIÙ (card chiusa)
                         <motion.div
                           key="arrow-down"
-                          onClick={() => setActiveCard(v.id)}
+                          onClick={() => setActiveCard(v.id)} // apertura della card
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
@@ -117,7 +117,7 @@ function Travels() {
 
                 { /* Voti + Pulsanti della Card */}
                 <AnimatePresence>
-                  {activeCard === v.id && (
+                  {activeCard === v.id && ( // card aperta e mostra i voti e i pulsanti 
                     <motion.div
                       layout="position"
                       initial={{ opacity: 0, y: 20 }}
@@ -197,19 +197,18 @@ function Travels() {
           transition={{ duration: 0.5 }}
           className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
           border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
-          bg-linear-to-r from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500">
+          bg-linear-to-r from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
-            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
           )}
           {message.icon === "error" && (
-            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-500 text-2xl mr-2" />
+            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
           )}
           <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>
       )}
     </div>
   );
-
 }
 
 export default Travels;
