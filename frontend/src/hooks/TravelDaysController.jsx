@@ -8,6 +8,7 @@ function TravelDaysController() {
     const [message, setMessage] = useState(""); // messaggio di successo o errore
     const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno (Apri / Chiudi)
     const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Scopri di più (Apri / Chiudi)
+    const [openCardId, setOpenCardId] = useState(null);  // stato per aprire una card dei viaggi e mostare le altre informazioni
 
     // Fetch dati viaggio all'inizio e quando cambia l'id
     useEffect(() => {
@@ -69,7 +70,7 @@ function TravelDaysController() {
             });
     };
 
-    return { 
+    return {
         id,                // id del viaggio
         travel,            // dati del viaggio
         message,           // messaggio di successo o errore
@@ -77,7 +78,9 @@ function TravelDaysController() {
         selectedDay,       // giorno selezionato per il modale Scopri di più
         setSelectedDay,    // funzione per aprire/chiudere il modale Scopri di più
         setDeleteDayId,    // funzione per aprire/chiudere il modale di conferma eliminazione giorno
-        handleDeleteDay    // funzione per eliminare un giorno
+        handleDeleteDay,   // funzione per eliminare un giorno
+        openCardId,        // mostra la card aperta
+        setOpenCardId      // stato per indicare la card aperta
     };
 }
 

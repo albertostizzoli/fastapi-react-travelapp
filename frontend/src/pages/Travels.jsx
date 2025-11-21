@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faArrowDown, faArrowRight, faArrowUp, faCalendarDay, faCheckCircle, faEdit, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { faArrowDown, faArrowRight, faCalendarDay, faCheckCircle, faEdit, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../hooks/TravelsController"; // importo la logica della pagina viaggi
 
@@ -80,39 +80,15 @@ function Travels() {
                       {v.start_date} <FontAwesomeIcon icon={faArrowRight} /> {v.end_date}
                     </p>
                   </div>
-                    <AnimatePresence mode="wait">
-                      {activeCard !== v.id ? (
-                        // Freccia GIÙ (card chiusa)
-                        <motion.div
-                          key="arrow-down"
-                          onClick={() => setActiveCard(v.id)} // apertura della card
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.3 }}>
-                          <FontAwesomeIcon
-                            icon={faArrowDown}
-                            className="cursor-pointer border border-white rounded-full p-3 text-white
-                            transition-all duration-300 hover:bg-white hover:text-black"
-                          />
-                        </motion.div>
-                      ) : (
-                        // Freccia SU (card aperta)
-                        <motion.div
-                          key="arrow-up"
-                          onClick={() => setActiveCard(null)} 
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{ duration: 0.3 }}>
-                          <FontAwesomeIcon
-                            icon={faArrowUp}
-                            className="cursor-pointer border border-white rounded-full p-3 text-white
-                            transition-all duration-300 hover:bg-white hover:text-black"
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                  <motion.div
+                    onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
+                    animate={{ rotate: activeCard === v.id ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="cursor-pointer border border-white rounded-full p-3 text-white
+                    transition-all duration-300 hover:bg-white hover:text-black">
+                    <FontAwesomeIcon icon={faArrowDown} />
+                  </motion.div>
+
                 </div>
 
                 { /* Voti + Pulsanti della Card */}

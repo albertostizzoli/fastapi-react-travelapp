@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
-import { motion } from "framer-motion"; // importo framer-motion per le animazioni
+import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faArrowRight, faBookOpen, faCheckCircle, faEdit, faPlus, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { faArrowDown, faArrowRight, faBookOpen, faCheckCircle, faEdit, faPlus, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
 import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // importo il modale di conferma eliminazione tappa
 import TravelDaysController from "../hooks/TravelDaysController"; // importo la logica della pagina TravelDays
@@ -16,7 +16,9 @@ function TravelDays() {
     selectedDay,                // tappa selezionata per il modale Scopri di più
     setSelectedDay,             // funzione per settare la tappa selezionata
     setDeleteDayId,             // funzione per settare l'id della tappa da eliminare
-    handleDeleteDay             // funzione per eliminare una tappa
+    handleDeleteDay,            // funzione per eliminare una tappa
+    openCardId,                  // mostra la card aperta
+    setOpenCardId                // stato per indicare la card aperta
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -96,76 +98,135 @@ function TravelDays() {
                 initial="hidden"
                 animate="visible">
 
-                {travel.days.map((d) => (
-                  <motion.div
-                    key={d.id}
-                    className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
-                    border border-white/40 p-5 rounded-3xl shadow-xl flex flex-col justify-between w-full sm:w-64
-                    transition-all duration-500 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]"
-                    variants={{
-                      hidden: { scale: 0.9, y: 20, opacity: 0 },
-                      visible: {
-                        scale: 1,
-                        y: 0,
-                        opacity: 1,
-                        transition: { duration: 0.8, ease: "easeOut" },
-                      },
-                    }}>
+                {travel.days.map((d) => {
+                  const isOpen = openCardId === d.id;
 
-                    {/* Titolo e data */}
-                    <div className="mb-4">
-                      <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.title}</p>
-                      <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
-                    </div>
+                  return (
+                    <motion.div
+                      key={d.id}
+                      layout
+                      className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                      backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
+                      transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]
+                      w-full sm:w-[330px] cursor-pointer">
 
-                    {/* Foto */}
-                    {d.photo.length > 0 && (
-                      <div className="flex gap-2 flex-wrap mb-4">
-                        {d.photo.slice(0, 2).map((p, i) => (
-                          <img
-                            key={i}
-                            src={p}
-                            alt="foto viaggio"
-                            loading="lazy"
-                            className="w-20 h-20 object-cover rounded-2xl border border-white/40 shadow-md
-                            transition-transform duration-300 group-hover:scale-105 group-hover:brightness-100"
-                          />
-                        ))}
+                      {/* Header card */}
+                      <div
+                        className="flex justify-between items-start gap-3"
+                        onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                        <div>
+                          <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.title}</p>
+                          <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
+                        </div>
+
+                        {/* Icona Freccia */}
+                        <motion.div
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="cursor-pointer border border-white rounded-full p-3 text-white
+                            transition-all duration-300 hover:bg-white hover:text-black">
+                          <FontAwesomeIcon icon={faArrowDown} />
+                        </motion.div>
                       </div>
-                    )}
 
-                    {/* Bottoni Card */}
-                    <div className="flex flex-col gap-2 mt-auto">
-                      <button
-                        onClick={() => setSelectedDay(d)}
-                        className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
-                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                        <FontAwesomeIcon icon={faBookOpen} /> Leggi Tappa
-                      </button>
+                      {/* FOTO PREVIEW */}
+                      {d.photo.length > 0 && (
+                        <div className="flex gap-2 flex-wrap mt-4">
+                          {d.photo.slice(0, 2).map((p, i) => (
+                            <img
+                              key={i}
+                              src={p}
+                              className="w-24 h-24 object-cover rounded-2xl border border-white/40 shadow-md"
+                            />
+                          ))}
+                        </div>
+                      )}
 
-                      <Link
-                        to={`/days/${d.id}/edit`}
-                        className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
-                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                        <FontAwesomeIcon icon={faEdit} /> Modifica Tappa
-                      </Link>
+                      {/* CONTENUTO ESPANSO */}
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="overflow-hidden">
 
-                      <button
-                        onClick={() => setDeleteDayId(d.id)}
-                        className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                        bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
-                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                        <FontAwesomeIcon icon={faTrash} /> Cancella Tappa
-                      </button>
-                    </div>
-                  </motion.div>
-                ))}
+                            {/* descrizione */}
+                            {d.description && (
+                              <p className="text-white mt-4 text-sm text-justify">
+                                {d.description.length > 120
+                                  ? d.description.slice(0, 120) + "..."
+                                  : d.description}
+                              </p>
+                            )}
 
+                            {/* categorie */}
+                            {d.categories && d.categories.length > 0 && (
+                              <div className="mt-4 flex flex-wrap gap-2">
+
+                                {/* prime 3 categorie */}
+                                {d.categories.slice(0, 3).map((c, i) => (
+                                  <span
+                                    key={i}
+                                    className="px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white">
+                                    {c}
+                                  </span>
+                                ))}
+
+                                {/* badge per categorie extra */}
+                                {d.categories.length > 3 && (
+                                  <span
+                                    className="px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white italic">
+                                    +{d.categories.length - 3}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+
+
+                            {/* BOTTONI */}
+                            <div className="flex flex-col gap-2 mt-6">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedDay(d);
+                                }}
+                                className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                                rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                <FontAwesomeIcon icon={faBookOpen} /> Scopri di più
+                              </button>
+
+                              <Link
+                                to={`/days/${d.id}/edit`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
+                                rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                <FontAwesomeIcon icon={faEdit} /> Modifica Tappa
+                              </Link>
+
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setDeleteDayId(d.id);
+                                }}
+                                className="font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                                rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                <FontAwesomeIcon icon={faTrash} /> Cancella Tappa
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             ) : (
               <p className="text-white/80 font-semibold text-center mt-6 italic">
