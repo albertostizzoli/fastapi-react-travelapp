@@ -31,7 +31,7 @@ function TravelDays() {
 
         {/* Titolo */}
         <motion.h1
-          className="text-3xl font-extrabold text-white flex-1 min-w-[200px] p-3 rounded-3xl
+          className="text-3xl font-extrabold text-white text-center flex-1 min-w-[200px] p-3 rounded-3xl
           bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl 
           border border-white/40 shadow-lg"
           initial={{ x: -100, opacity: 0 }}
@@ -39,30 +39,12 @@ function TravelDays() {
           transition={{ duration: 0.8, ease: "easeOut" }}>
           Tappe del viaggio
         </motion.h1>
-
-        {/* Link Aggiungi Tappa */}
-        <motion.div
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}>
-
-          <Link
-            to="/addDay"
-            state={{ travelId: id }}
-            className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
-             bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
-             text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
-             hover:shadow-[0_0_15px_rgba(255,255,255,0.30)]">
-            <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
-          </Link>
-        </motion.div>
       </div>
 
       {/* Layout principale */}
-      <div className="flex flex-col lg:flex-row max-w-6xl mx-auto gap-8">
-        <div className="flex-1 flex flex-col h-full">
-
-          {/* Info Viaggio */}
+      <div className="max-w-6xl mx-auto flex flex-col gap-8">
+        
+          {/* Info Viaggio + Aggiungi Tappa */}
           <motion.div
             className="p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent 
             backdrop-blur-2xl border border-white/40 shadow-xl"
@@ -70,27 +52,46 @@ function TravelDays() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}>
 
-            <h2 className="text-2xl font-bold text-white mb-2 drop-shadow-2xl">
-              {travel.town} - {travel.city}
-            </h2>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
-            <p className="text-xl font-bold text-white mb-2 drop-shadow-2xl">
-              {travel.start_date} <FontAwesomeIcon icon={faArrowRight} /> {travel.end_date}
-            </p>
+              {/* Testo */}
+              <div>
+                <h2 className="text-2xl font-extrabold text-white drop-shadow-2xl">
+                  {travel.town} - {travel.city}
+                </h2>
 
-            {travel.title && (
-              <p className="text-white/60 italic border-t border-white/10">
-                {travel.title}
-              </p>
-            )}
+                <p className="text-xl font-bold text-white drop-shadow-2xl mt-2">
+                  {travel.start_date} <FontAwesomeIcon icon={faArrowRight} /> {travel.end_date}
+                </p>
+
+                {travel.title && (
+                  <p className="text-white/60 italic border-t border-white/10 mt-2">
+                    {travel.title}
+                  </p>
+                )}
+              </div>
+
+              {/* Pulsante Aggiungi Tappa */}
+              <Link
+                to="/addDay"
+                state={{ travelId: id }}
+                className="font-semibold px-6 py-2 flex items-center justify-center gap-2
+                bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
+                text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+                hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-auto">
+                <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
+              </Link>
+
+            </div>
           </motion.div>
+
 
           {/* Lista Giorni */}
           <div className="flex-1 mt-6">
 
             {travel.days?.length > 0 ? (
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 mx-auto items-start"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
                 variants={{
                   visible: { transition: { staggerChildren: 0.2 } },
                 }}
@@ -116,7 +117,7 @@ function TravelDays() {
                       transition={{ duration: 0.4, ease: "easeOut" }}
                       className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
-                      transition-all duration-300 w-full sm:w-[330px]">
+                      transition-all duration-300 w-full">
 
                       {/* Header card */}
                       <div className="flex justify-between items-center gap-3">
@@ -243,7 +244,6 @@ function TravelDays() {
               </p>
             )}
           </div>
-        </div>
       </div>
 
       {/* Modale Leggi di più */}
