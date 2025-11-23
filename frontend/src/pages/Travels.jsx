@@ -31,22 +31,24 @@ function Travels() {
         layout="position" // siccome uso una grid questo impedisce alle card di avere la stessa altezza al click
         initial="hidden"
         animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.2 } }}}>
+        variants={{ visible: { transition: { staggerChildren: 0.2 } } }}>
 
         <AnimatePresence>
           {travels.map((v) => (
             <motion.div
               key={v.id}
-              className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
-              backdrop-blur-2xl border border-white/20 
-              rounded-3xl shadow-lg overflow-hidden transition-all duration-300
-              hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
-              variants={{
-                hidden: { opacity: 0, scale: 0.5, y: 20 },
-                visible: { opacity: 1, scale: 1, y: 0 },
+              className={`group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
+              backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
+              transition-all duration-300`}
+              layout="position"
+              initial={{ opacity: 0, scale: 0.5, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0,
+                boxShadow: activeCard === v.id
+                  ? "0px 0px 25px rgba(255,255,255,0.40)"
+                  : "0px 0px 0px rgba(0,0,0,0)"
               }}
-              exit={{ scale: 0.9, y: 20, opacity: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}>
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}>
 
               {/* Immagine */}
               {v.days && v.days[0]?.photo?.[0] && (
@@ -54,7 +56,7 @@ function Travels() {
                   <img
                     src={v.days[0].photo[0]}
                     alt={`Foto di ${v.town}`}
-                    className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-110"
+                    className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-110"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-80"></div>
                 </div>
@@ -78,9 +80,10 @@ function Travels() {
                   <motion.button
                     onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
                     animate={{ rotate: activeCard === v.id ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4 }}
                     title={activeCard ? "Chiudi dettagli" : "Apri dettagli"}
-                    className="cursor-pointer border border-white rounded-full p-3 text-white
+                    className="cursor-pointer border border-white rounded-full w-12 h-12 
+                    flex items-center justify-center text-white
                     transition-all duration-300 hover:bg-white hover:text-black">
                     <FontAwesomeIcon icon={faArrowDown} />
                   </motion.button>
@@ -118,7 +121,7 @@ function Travels() {
                         <Link
                           to={`/travels/${v.id}/days`}
                           className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                          bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                          bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                           <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
@@ -127,7 +130,7 @@ function Travels() {
                         <Link
                           to={`/travels/${v.id}/edit`}
                           className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                          bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                          bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                           <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
@@ -136,7 +139,7 @@ function Travels() {
                         <button
                           onClick={() => setDeleteId(v.id)}
                           className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                          bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-gray-50/90 
+                          bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                           <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella

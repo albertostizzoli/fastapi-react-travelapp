@@ -36,7 +36,7 @@ function ProfilePage() {
           <motion.section
             className="md:col-span-1 bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl 
             p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col items-center text-center transition-all duration-500 
-            hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
+            hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.40)]"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}>
@@ -132,7 +132,7 @@ function ProfilePage() {
             <motion.div
               className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
               p-6 rounded-3xl shadow-2xl border border-white/40 flex flex-col gap-4 transition-all duration-500 
-              hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
+              hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.40)]"
               variants={{
                 hidden: { scale: 0.9, opacity: 0 },
                 visible: {
@@ -180,7 +180,7 @@ function ProfilePage() {
             <motion.div
               className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
               p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
-              hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
+              hover:shadow-[0_0_30px_rgba(255,255,255,0.40)]"
               variants={{
                 hidden: { scale: 0.9, opacity: 0 },
                 visible: {
@@ -236,7 +236,7 @@ function ProfilePage() {
           <motion.div
             className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl
             p-6 rounded-3xl shadow-2xl border border-white/40 transition-all duration-500 hover:scale-105
-            hover:shadow-[0_0_30px_rgba(255,255,255,0.30)]"
+            hover:shadow-[0_0_30px_rgba(255,255,255,0.40)]"
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}>

@@ -52,7 +52,7 @@ function TravelDays() {
             className="font-semibold mt-4 sm:mt-0 px-6 py-2 flex items-center justify-center gap-2
              bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
              text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
-             hover:shadow-[0_0_20px_rgba(255,255,255,0.30)]">
+             hover:shadow-[0_0_15px_rgba(255,255,255,0.30)]">
             <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
           </Link>
         </motion.div>
@@ -110,13 +110,13 @@ function TravelDays() {
                       }}
                       animate={{
                         boxShadow: isOpen
-                          ? "0px 0px 25px rgba(255,255,255,0.30)"
+                          ? "0px 0px 35px rgba(255,255,255,0.40)"
                           : "0px 0px 0px rgba(255,255,255,0)"
                       }}
                       transition={{ duration: 0.4, ease: "easeOut" }}
                       className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
-                      transition-all duration-500 w-full sm:w-[330px]">
+                      transition-all duration-300 w-full sm:w-[330px]">
 
                       {/* Header card */}
                       <div className="flex justify-between items-center gap-3">
@@ -128,14 +128,14 @@ function TravelDays() {
                         {/* Icona Freccia */}
                         <motion.button
                           animate={{ rotate: isOpen ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.4 }}
                           title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
-                          className="cursor-pointer border border-white rounded-full p-3 text-white
+                          className="cursor-pointer border border-white rounded-full w-12 h-12 
+                          flex items-center justify-center text-white
                           transition-all duration-300 hover:bg-white hover:text-black"
                           onClick={() => setOpenCardId(isOpen ? null : d.id)}>
                           <FontAwesomeIcon icon={faArrowDown} />
                         </motion.button>
-
                       </div>
 
                       {/* FOTO PREVIEW */}
