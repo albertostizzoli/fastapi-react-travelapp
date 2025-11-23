@@ -55,7 +55,6 @@ def add_travel(travel: TravelCreate, db: Session = Depends(get_db), current_user
     # creo il record del viaggio
     db_travel = TravelDB(
         town=travel.town,
-        city=travel.city,
         year=travel.year,
         start_date=format_date(travel.start_date),
         end_date=format_date(travel.end_date),
@@ -85,7 +84,6 @@ def update_travel(travel_id: int, updated_travel: TravelCreate, db: Session = De
 
     # aggiorno i campi del viaggio
     travel.town = updated_travel.town
-    travel.city = updated_travel.city
     travel.year = updated_travel.year
     travel.start_date = format_date(updated_travel.start_date)
     travel.end_date = format_date(updated_travel.end_date)

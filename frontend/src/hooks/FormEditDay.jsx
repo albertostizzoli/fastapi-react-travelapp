@@ -126,6 +126,7 @@ function FormEditDay() {
 
         const formData = new FormData();
         formData.append("date", day.date);
+        formData.append("city", day.city);
         formData.append("title", day.title);
         formData.append("description", day.description);
 

@@ -35,6 +35,7 @@ async def upload_photo(photo):
 @router.post("/{travel_id}/days", response_model=Day)
 async def add_day_travel(
     travel_id: int,
+    city: str = Form(...),
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
@@ -50,7 +51,7 @@ async def add_day_travel(
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
     # ottengo le coordinate geografiche per il giorno
-    lat, lng = get_coordinates(title, travel.city, travel.town)
+    lat, lng = get_coordinates(title, city, travel.town)
 
     # carico le foto su Cloudinary in parallelo
     photo_urls = []
@@ -64,6 +65,7 @@ async def add_day_travel(
 
     # creo il giorno nel DB
     db_day = DayDB(
+        city=city,
         date=format_date(date),
         title=title,
         description=description,
@@ -84,6 +86,7 @@ async def add_day_travel(
 async def update_day_travel(
     travel_id: int,
     day_id: int,
+    city: str = Form(...),
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
@@ -115,6 +118,7 @@ async def update_day_travel(
     categories_data = categories or []
 
     # aggiorno i campi
+    db_day.city = city
     db_day.date = format_date(date)
     db_day.title = title
     db_day.description = description
@@ -131,7 +135,7 @@ async def update_day_travel(
     db_day.photo = photo_urls
 
     # aggiorno lat/lng
-    db_day.lat, db_day.lng = get_coordinates(title, travel.city, travel.town)
+    db_day.lat, db_day.lng = get_coordinates(title, city, travel.town)
 
     db.commit()
     db.refresh(db_day)

@@ -30,220 +30,216 @@ function TravelDays() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
 
         {/* Titolo */}
-        <motion.h1
-          className="text-3xl font-extrabold text-white text-center flex-1 min-w-[200px] p-3 rounded-3xl
-          bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl 
-          border border-white/40 shadow-lg"
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}>
-          Tappe del viaggio
-        </motion.h1>
+        <h1 className="text-3xl font-extrabold text-white text-center flex-1 p-3">
+          Le tue tappe
+        </h1>
       </div>
 
       {/* Layout principale */}
       <div className="max-w-6xl mx-auto flex flex-col gap-8">
-        
-          {/* Info Viaggio + Aggiungi Tappa */}
+
+        {/* Info Viaggio + Aggiungi Tappa */}
+        <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-4">
+
+          {/* Titolo + Data */}
           <motion.div
-            className="p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent 
-            backdrop-blur-2xl border border-white/40 shadow-xl"
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}>
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent 
+               backdrop-blur-2xl border border-white/40 shadow-xl w-fit">
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h2 className="text-2xl font-extrabold text-white drop-shadow-2xl">
+              {travel.town} 
+            </h2>
+            <h2 className="text-xl font-extrabold text-white drop-shadow-2xl mt-2">
+              {travel.start_date} <FontAwesomeIcon icon={faArrowRight} /> {travel.end_date}
+            </h2>
 
-              {/* Testo */}
-              <div>
-                <h2 className="text-2xl font-extrabold text-white drop-shadow-2xl">
-                  {travel.town} - {travel.city}
-                </h2>
-
-                <p className="text-xl font-bold text-white drop-shadow-2xl mt-2">
-                  {travel.start_date} <FontAwesomeIcon icon={faArrowRight} /> {travel.end_date}
-                </p>
-
-                {travel.title && (
-                  <p className="text-white/60 italic border-t border-white/10 mt-2">
-                    {travel.title}
-                  </p>
-                )}
-              </div>
-
-              {/* Pulsante Aggiungi Tappa */}
-              <Link
-                to="/addDay"
-                state={{ travelId: id }}
-                className="font-semibold px-6 py-2 flex items-center justify-center gap-2
-                bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
-                text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
-                hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-auto">
-                <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
-              </Link>
-
-            </div>
+            {travel.title && (
+              <p className="text-white/60 italic border-t border-white/10 mt-2">
+                {travel.title}
+              </p>
+            )}
           </motion.div>
 
+          {/* Pulsante Aggiungi Tappa */}
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mt-2">
+            <Link
+              to="/addDay"
+              state={{ travelId: id }}
+              className="font-semibold px-6 py-2 inline-flex items-center justify-center gap-2
+                 bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
+                 text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+                 hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
+              <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
+            </Link>
+          </motion.div>
+        </div>
 
-          {/* Lista Giorni */}
-          <div className="flex-1 mt-6">
 
-            {travel.days?.length > 0 ? (
-              <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
-                variants={{
-                  visible: { transition: { staggerChildren: 0.2 } },
-                }}
-                initial="hidden"
-                animate="visible"
-                layout="position">
+        {/* Lista Giorni */}
+        <div className="flex-1 mt-6">
 
-                {travel.days.map((d) => {
-                  const isOpen = openCardId === d.id;
+          {travel.days?.length > 0 ? (
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
+              variants={{
+                visible: { transition: { staggerChildren: 0.2 } },
+              }}
+              initial="hidden"
+              animate="visible"
+              layout="position">
 
-                  return (
-                    <motion.div
-                      key={d.id}
-                      variants={{
-                        hidden: { opacity: 0, scale: 0.5, y: 20 },
-                        visible: { opacity: 1, scale: 1, y: 0 },
-                      }}
-                      animate={{
-                        boxShadow: isOpen
-                          ? "0px 0px 35px rgba(255,255,255,0.40)"
-                          : "0px 0px 0px rgba(255,255,255,0)"
-                      }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
+              {travel.days.map((d) => {
+                const isOpen = openCardId === d.id;
+
+                return (
+                  <motion.div
+                    key={d.id}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.5, y: 20 },
+                      visible: { opacity: 1, scale: 1, y: 0 },
+                    }}
+                    animate={{
+                      boxShadow: isOpen
+                        ? "0px 0px 35px rgba(255,255,255,0.40)"
+                        : "0px 0px 0px rgba(255,255,255,0)"
+                    }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
                       transition-all duration-300 w-full">
 
-                      {/* Header card */}
-                      <div className="flex justify-between items-center gap-3">
-                        <div>
-                          <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.title}</p>
-                          <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
-                        </div>
-
-                        {/* Icona Freccia */}
-                        <motion.button
-                          animate={{ rotate: isOpen ? 180 : 0 }}
-                          transition={{ duration: 0.4 }}
-                          title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
-                          className="cursor-pointer border border-white rounded-full w-12 h-12 
-                          flex items-center justify-center text-white
-                          transition-all duration-300 hover:bg-white hover:text-black"
-                          onClick={() => setOpenCardId(isOpen ? null : d.id)}>
-                          <FontAwesomeIcon icon={faArrowDown} />
-                        </motion.button>
+                    {/* Header card */}
+                    <div className="flex justify-between items-center gap-3">
+                      <div>
+                        <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.city}, {d.title}</p>
+                        <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
                       </div>
 
-                      {/* FOTO PREVIEW */}
-                      {d.photo.length > 0 && (
-                        <div className="flex gap-2 flex-wrap mt-4">
-                          {d.photo.slice(0, 2).map((p, i) => (
-                            <img
-                              key={i}
-                              src={p}
-                              className="w-24 h-24 object-cover rounded-2xl border border-white/40 shadow-md"
-                            />
-                          ))}
-                        </div>
-                      )}
+                      {/* Icona Freccia */}
+                      <motion.button
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.4 }}
+                        title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
+                        className="cursor-pointer border border-white rounded-full w-12 h-12 
+                          flex items-center justify-center text-white
+                          transition-all duration-300 hover:bg-white hover:text-black"
+                        onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                        <FontAwesomeIcon icon={faArrowDown} />
+                      </motion.button>
+                    </div>
 
-                      {/* CONTENUTO ESPANSO */}
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="overflow-hidden">
+                    {/* FOTO PREVIEW */}
+                    {d.photo.length > 0 && (
+                      <div className="flex gap-2 flex-wrap mt-4">
+                        {d.photo.slice(0, 2).map((p, i) => (
+                          <img
+                            key={i}
+                            src={p}
+                            className="w-24 h-24 object-cover rounded-2xl border border-white/40 shadow-md"
+                          />
+                        ))}
+                      </div>
+                    )}
 
-                            {/* descrizione */}
-                            {d.description && (
-                              <p className="text-white mt-4 text-sm text-justify font-semibold">
-                                {d.description.length > 100
-                                  ? d.description.slice(0, 100) + "..."
-                                  : d.description}
-                              </p>
-                            )}
+                    {/* CONTENUTO ESPANSO */}
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.4 }}
+                          className="overflow-hidden">
 
-                            {/* categorie */}
-                            {d.categories && d.categories.length > 0 && (
-                              <div className="mt-4 flex flex-wrap gap-2">
+                          {/* descrizione */}
+                          {d.description && (
+                            <p className="text-white mt-4 text-sm text-justify font-semibold">
+                              {d.description.length > 100
+                                ? d.description.slice(0, 100) + "..."
+                                : d.description}
+                            </p>
+                          )}
 
-                                {/* prime 3 categorie */}
-                                {d.categories.slice(0, 3).map((c, i) => (
-                                  <span
-                                    key={i}
-                                    className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white">
-                                    {c}
-                                  </span>
-                                ))}
+                          {/* categorie */}
+                          {d.categories && d.categories.length > 0 && (
+                            <div className="mt-4 flex flex-wrap gap-2">
 
-                                {/* badge per categorie extra */}
-                                {d.categories.length > 3 && (
-                                  <span
-                                    className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white italic">
-                                    +{d.categories.length - 3}
-                                  </span>
-                                )}
-                              </div>
-                            )}
+                              {/* prime 3 categorie */}
+                              {d.categories.slice(0, 3).map((c, i) => (
+                                <span
+                                  key={i}
+                                  className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white">
+                                  {c}
+                                </span>
+                              ))}
+
+                              {/* badge per categorie extra */}
+                              {d.categories.length > 3 && (
+                                <span
+                                  className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white italic">
+                                  +{d.categories.length - 3}
+                                </span>
+                              )}
+                            </div>
+                          )}
 
 
-                            {/* BOTTONI */}
-                            <div className="flex flex-col gap-4 mt-6">
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedDay(d);
-                                }}
-                                className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
+                          {/* BOTTONI */}
+                          <div className="flex flex-col gap-4 mt-6">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedDay(d);
+                              }}
+                              className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                <FontAwesomeIcon icon={faBookOpen} /> Leggi di più
-                              </button>
+                              <FontAwesomeIcon icon={faBookOpen} /> Leggi di più
+                            </button>
 
-                              <Link
-                                to={`/days/${d.id}/edit`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
+                            <Link
+                              to={`/days/${d.id}/edit`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                <FontAwesomeIcon icon={faEdit} /> Modifica Tappa
-                              </Link>
+                              <FontAwesomeIcon icon={faEdit} /> Modifica Tappa
+                            </Link>
 
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setDeleteDayId(d.id);
-                                }}
-                                className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setDeleteDayId(d.id);
+                              }}
+                              className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                <FontAwesomeIcon icon={faTrash} /> Cancella Tappa
-                              </button>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  );
-                })}
-              </motion.div>
-            ) : (
-              <p className="text-white/80 font-semibold text-center mt-6 italic">
-                Nessuna tappa presente
-              </p>
-            )}
-          </div>
+                              <FontAwesomeIcon icon={faTrash} /> Cancella Tappa
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          ) : (
+            <p className="text-white/80 font-semibold text-center mt-6 italic">
+              Nessuna tappa presente
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Modale Leggi di più */}

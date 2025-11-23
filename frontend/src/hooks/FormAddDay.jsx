@@ -18,6 +18,7 @@ function FormAddDay() {
     const [uploadProgress, setUploadProgress] = useState(0); // stato per la barra di caricamento
     const [form, setForm] = useState({ // stato del form
         date: "",
+        city: "",
         title: "",
         description: "",
         categories: [], // array di categorie
@@ -166,6 +167,7 @@ function FormAddDay() {
         try {
             const formData = new FormData();
             formData.append("date", form.date);
+            formData.append("city", form.city);
             formData.append("title", form.title);
             formData.append("description", form.description);
 
@@ -208,7 +210,7 @@ function FormAddDay() {
             setIsUploading(false);
             setUploadProgress(0);
 
-            setForm({ date: "", title: "", description: "", categories: [], photo: [] }); // resetto il form
+            setForm({ date: "", city: "", title: "", description: "", categories: [], photo: [] }); // resetto il form
             setMessage({ text: "Tappa Aggiunta!", icon: "success" });
 
             // reindirizzo alla pagina delle tappe

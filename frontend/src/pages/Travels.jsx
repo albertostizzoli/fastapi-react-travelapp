@@ -66,9 +66,9 @@ function Travels() {
               <div className="p-6 flex flex-col gap-3">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-extrabold text-white drop-shadow-md">
-                    {v.town} - {v.city}
+                    {v.town}
                   </h2>
-                  <h3 className="text-xl font-bold text-white drop-shadow-md">{v.year}</h3>
+                  <h3 className="text-2xl font-extrabold text-white drop-shadow-md">{v.year}</h3>
                 </div>
 
                 <div className="flex justify-between items-center gap-3">

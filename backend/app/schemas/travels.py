@@ -6,7 +6,6 @@ from app.schemas.days import Day  # importo il modello Pydantic Day per i giorni
 # definisce i campi comuni a tutti i modelli Pydantic relativi ai viaggi
 class TravelBase(BaseModel):
     town: str               # paese 
-    city: str               # città 
     year: int               # anno 
     start_date: str         # data di inizio 
     end_date: str           # data di fine 

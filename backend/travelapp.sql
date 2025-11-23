@@ -12,7 +12,6 @@ CREATE TABLE users (
 CREATE TABLE travels (
     id INT AUTO_INCREMENT PRIMARY KEY,
     town VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
     year INT NOT NULL,
     start_date VARCHAR(255) NOT NULL,
     end_date VARCHAR(255) NOT NULL,
@@ -24,6 +23,7 @@ CREATE TABLE travels (
 
 CREATE TABLE days (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    city VARCHAR(255) NOT NULL,
     date VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,

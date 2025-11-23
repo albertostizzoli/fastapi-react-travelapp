@@ -9,7 +9,6 @@ function FormAddTravel() {
     // stato del form con tutti i campi del viaggio
     const [form, setForm] = useState({
         town: "",
-        city: "",
         year: "",
         start_date: "",
         end_date: "",
@@ -53,7 +52,6 @@ function FormAddTravel() {
             // creo l'oggetto viaggio da inviare al backend
             const newTravel = {
                 town: form.town,
-                city: form.city,
                 year: parseInt(form.year), // converto in numero
                 start_date: form.start_date,
                 end_date: form.end_date,
@@ -76,7 +74,6 @@ function FormAddTravel() {
             // il form si resetta dopo l'invio
             setForm({
                 town: "",
-                city: "",
                 year: "",
                 start_date: "",
                 end_date: "",

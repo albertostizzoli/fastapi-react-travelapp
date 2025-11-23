@@ -9,7 +9,6 @@ class TravelDB(Base):
     # Colonne della tabella
     id = Column(Integer, primary_key=True, index=True)  # ID univoco del viaggio
     town = Column(String, nullable=False)              # paese
-    city = Column(String, nullable=False)              # città 
     year = Column(Integer, nullable=False)             # anno 
     start_date = Column(String, nullable=False)        # data inizio
     end_date = Column(String, nullable=False)          # data fine

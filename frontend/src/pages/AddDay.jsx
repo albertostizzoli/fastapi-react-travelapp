@@ -103,10 +103,24 @@ function AddDay() {
               <option value="" className=" text-black">-- Seleziona --</option>
               {travels.map((t) => (
                 <option key={t.id} value={t.id} className=" text-black">
-                  {t.city} ({t.year})
+                  {t.town} ({t.year})
                 </option>
               ))}
             </select>
+          </div>
+
+          { /* Città */}
+          <div>
+            <label className="block font-bold text-white mb-2">Città *</label>
+            <input
+              type="text"
+              name="city"
+              value={form.city}
+              onChange={handleChange}
+              required
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white
+               placeholder-white/70 focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent"
+            />
           </div>
 
           {/* Data */}

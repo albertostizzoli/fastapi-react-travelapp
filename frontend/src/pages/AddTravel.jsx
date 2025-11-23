@@ -70,20 +70,6 @@ function AddTravel() {
             />
           </div>
 
-          {/* Città */}
-          <div>
-            <label className="block font-bold text-white mb-2">Città *</label>
-            <input
-              type="text"
-              name="city"
-              value={form.city}
-              onChange={handleChange}
-              required
-              className="w-full font-semibold border border-white/40 rounded-full bg-white/10 text-white
-              p-2 focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition"
-            />
-          </div>
-
           {/* Anno */}
           <div>
             <label className="block font-bold text-white mb-2">Anno *</label>

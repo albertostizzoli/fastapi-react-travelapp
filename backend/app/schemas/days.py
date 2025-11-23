@@ -4,6 +4,7 @@ from typing import List, Optional # tipi generici: List per array tipizzati, Opt
 # classe base per il modello Day
 # serve a definire i campi comuni a tutti i modelli Pydantic relativi ai giorni
 class DayBase(BaseModel):
+    city: str                       # città 
     date: str                       # data
     title: str                      # titolo
     description: str                # descrizione

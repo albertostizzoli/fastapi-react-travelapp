@@ -8,6 +8,7 @@ class DayDB(Base):
 
     # Colonne della tabella
     id = Column(Integer, primary_key=True, index=True)  # ID univoco del giorno
+    city = Column(String, nullable=False)               # città 
     date = Column(String, nullable=False)               # data
     title = Column(String, nullable=False)              # titolo
     description = Column(String, nullable=True)         # descrizione

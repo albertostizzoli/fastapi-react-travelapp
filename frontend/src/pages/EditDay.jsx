@@ -101,6 +101,19 @@ function EditDay() {
             />
           </div>
 
+          {/* Città */}
+          <div>
+            <label className="block font-bold text-white mb-2">Città *</label>
+            <input
+              type="text"
+              name="city"
+              value={day.city}
+              onChange={handleChange}
+              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
+              focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition"
+            />
+          </div>
+
           {/* Titolo */}
           <div>
             <label className="block font-bold text-white mb-2">Titolo *</label>
