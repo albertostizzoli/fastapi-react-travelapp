@@ -39,25 +39,25 @@ function TravelDays() {
       <div className="max-w-6xl mx-auto flex flex-col gap-8">
 
         {/* Info Viaggio + Aggiungi Tappa */}
-        <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between 
+                gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+                backdrop-blur-2xl border border-white/40 shadow-xl w-full">
 
           {/* Titolo + Data */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent 
-               backdrop-blur-2xl border border-white/40 shadow-xl w-fit">
+            transition={{ duration: 0.8, ease: "easeOut" }}>
 
             <h2 className="text-2xl font-extrabold text-white drop-shadow-2xl">
-              {travel.town} 
+              {travel.town}
             </h2>
-            <h2 className="text-xl font-extrabold text-white drop-shadow-2xl mt-2">
+            <h2 className="text-xl font-bold text-white drop-shadow-xl">
               {travel.start_date} <FontAwesomeIcon icon={faArrowRight} /> {travel.end_date}
             </h2>
 
             {travel.title && (
-              <p className="text-white/60 italic border-t border-white/10 mt-2">
+              <p className="text-white/60 italic border-t border-white/10">
                 {travel.title}
               </p>
             )}
