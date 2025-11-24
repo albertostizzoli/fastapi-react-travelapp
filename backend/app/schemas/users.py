@@ -9,7 +9,7 @@ class UserBase(BaseModel):
     name: str                              # nome
     surname: str                           # cognome
     email: str                             # email
-    experiences: Optional[List[str]] = None  # interessi 
+    experiences: Optional[List[str]] = None  # esperienze 
     photo: Optional[str] = None            # foto profilo
     registration_date: datetime                 # data di registrazione
 

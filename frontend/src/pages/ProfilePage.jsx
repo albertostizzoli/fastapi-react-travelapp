@@ -207,7 +207,7 @@ function ProfilePage() {
                       <div className="flex justify-between items-center mb-2">
                         <h4 className="text-xl font-bold text-white">
                           <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
-                          {travel.town}, {travel.city}
+                          {travel.town}
                         </h4>
                         <span className="text-sm bg-white/20 px-2 py-1 rounded-3xl text-white">
                           {travel.start_date} → {travel.end_date}

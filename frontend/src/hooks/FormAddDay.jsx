@@ -21,7 +21,7 @@ function FormAddDay() {
         city: "",
         title: "",
         description: "",
-        categories: [], // array di categorie
+        experiences: [], // array di esperienze
         photo: [], // array di foto
     });
 
@@ -171,9 +171,9 @@ function FormAddDay() {
             formData.append("title", form.title);
             formData.append("description", form.description);
 
-            // aggiungo tutte le categorie
-            form.categories.forEach((category) => {
-                formData.append("categories", category);
+            // aggiungo tutte le esperienze
+            form.experiences.forEach((experience) => {
+                formData.append("experiences", experience);
             });
 
             // aggiungo tutte le foto
@@ -210,7 +210,7 @@ function FormAddDay() {
             setIsUploading(false);
             setUploadProgress(0);
 
-            setForm({ date: "", city: "", title: "", description: "", categories: [], photo: [] }); // resetto il form
+            setForm({ date: "", city: "", title: "", description: "", experiences: [], photo: [] }); // resetto il form
             setMessage({ text: "Tappa Aggiunta!", icon: "success" });
 
             // reindirizzo alla pagina delle tappe

@@ -8,7 +8,7 @@ class DayBase(BaseModel):
     date: str                       # data
     title: str                      # titolo
     description: str                # descrizione
-    categories: List[str] = []      # categorie
+    experiences: List[str] = []     # esperienze
     lat: Optional[float] = None     # latitudine
     lng: Optional[float] = None     # longitudine
 

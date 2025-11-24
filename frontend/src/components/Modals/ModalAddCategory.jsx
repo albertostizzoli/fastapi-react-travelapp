@@ -30,7 +30,7 @@ function ModalAddCategory({ isOpen, onClose, form, setForm }) {
                         style={{ willChange: "transform, opacity" }}>
 
                         <h2 className="text-white text-2xl font-bold mb-4 text-center drop-shadow-md">
-                            Seleziona le Categorie per la Tappa del tuo Viaggio
+                            Aggiungi Esperienze per la Tappa del tuo Viaggio
                         </h2>
 
                         {/* Lista categorie */}
@@ -45,24 +45,24 @@ function ModalAddCategory({ isOpen, onClose, form, setForm }) {
                                             <label
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center gap-2 px-3 py-2 border 
-                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${form.categories.includes(experience)
+                                                        rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${form.experiences.includes(experience)
                                                         ? "bg-linear-to-br from-blue-600 to-orange-600 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                         : "bg-linear-to-br from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
                                                 <input
                                                     type="checkbox"
                                                     className="accent-blue-500 hidden"
-                                                    checked={form.categories.includes(experience)}
+                                                    checked={form.experiences.includes(experience)}
                                                     onChange={(e) => {
                                                         if (e.target.checked) {
                                                             setForm({
                                                                 ...form,
-                                                                categories: [...form.categories, experience],
+                                                                experiences: [...form.experiences, experience],
                                                             });
                                                         } else {
                                                             setForm({
                                                                 ...form,
-                                                                categories: form.categories.filter((c) => c !== experience),
+                                                                experiences: form.experiences.filter((c) => c !== experience),
                                                             });
                                                         }
                                                     }}

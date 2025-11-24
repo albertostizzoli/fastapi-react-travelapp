@@ -167,12 +167,12 @@ function TravelDays() {
                             </p>
                           )}
 
-                          {/* categorie */}
-                          {d.categories && d.categories.length > 0 && (
+                          {/* esperienze */}
+                          {d.experiences && d.experiences.length > 0 && (
                             <div className="mt-4 flex flex-wrap gap-2">
 
-                              {/* prime 3 categorie */}
-                              {d.categories.slice(0, 3).map((c, i) => (
+                              {/* prime 3 esperienze */}
+                              {d.experiences.slice(0, 3).map((c, i) => (
                                 <span
                                   key={i}
                                   className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white">
@@ -180,11 +180,11 @@ function TravelDays() {
                                 </span>
                               ))}
 
-                              {/* badge per categorie extra */}
-                              {d.categories.length > 3 && (
+                              {/* badge per esperienze extra */}
+                              {d.experiences.length > 3 && (
                                 <span
                                   className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white italic">
-                                  +{d.categories.length - 3}
+                                  +{d.experiences.length - 3}
                                 </span>
                               )}
                             </div>

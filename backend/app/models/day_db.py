@@ -12,7 +12,7 @@ class DayDB(Base):
     date = Column(String, nullable=False)               # data
     title = Column(String, nullable=False)              # titolo
     description = Column(String, nullable=True)         # descrizione
-    categories = Column(JSON, nullable=True)            # categorie
+    experiences = Column(JSON, nullable=True)           # esperienze
     photo = Column(JSON, nullable=True)                 # foto
     lat = Column(Float, nullable=True)                  # latitudine
     lng = Column(Float, nullable=True)                  # longitudine

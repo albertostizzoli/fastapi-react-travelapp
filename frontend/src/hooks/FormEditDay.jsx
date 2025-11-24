@@ -130,9 +130,9 @@ function FormEditDay() {
         formData.append("title", day.title);
         formData.append("description", day.description);
 
-        // aggiungo tutte le categorie
-        day.categories.forEach((category) => {
-            formData.append("categories", category);
+        // aggiungo tutte le esperienze
+        day.experiences.forEach((experience) => {
+            formData.append("experiences", experience);
         });
 
         // foto già esistenti

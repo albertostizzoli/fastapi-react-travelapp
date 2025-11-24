@@ -39,7 +39,7 @@ async def add_day_travel(
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
-    categories: Optional[List[str]] = Form(None),
+    experiences: Optional[List[str]] = Form(None),
     photos: List[UploadFile] = None,
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user) 
@@ -60,8 +60,8 @@ async def add_day_travel(
         results = await asyncio.gather(*upload_tasks)
         photo_urls = [res["secure_url"] for res in results]
 
-    # carico le categorie
-    categories_data = categories or []
+    # carico le esperienze
+    experiences_data = experiences or []
 
     # creo il giorno nel DB
     db_day = DayDB(
@@ -69,7 +69,7 @@ async def add_day_travel(
         date=format_date(date),
         title=title,
         description=description,
-        categories=categories_data,
+        experiences=experiences_data,
         photo=photo_urls,
         lat=lat,
         lng=lng,
@@ -90,7 +90,7 @@ async def update_day_travel(
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
-    categories: Optional[List[str]] = Form(None),
+    experiences: Optional[List[str]] = Form(None),
     photos: List[UploadFile] = None,
     existing_photos: List[str] = Form([]),  # URL foto già presenti
     db: Session = Depends(get_db),
@@ -114,15 +114,15 @@ async def update_day_travel(
     if not db_day:
         raise HTTPException(status_code=404, detail="Giorno non trovato")
     
-    # carico le categorie
-    categories_data = categories or []
+    # carico le esperienze
+    experiences_data = experiences or []
 
     # aggiorno i campi
     db_day.city = city
     db_day.date = format_date(date)
     db_day.title = title
     db_day.description = description
-    db_day.categories = categories_data
+    db_day.experiences = experiences_data
 
     # gestisco le foto: mantieni quelle esistenti + nuove caricate
     photo_urls = existing_photos or []

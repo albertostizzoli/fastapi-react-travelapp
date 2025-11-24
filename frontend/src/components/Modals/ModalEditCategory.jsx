@@ -29,7 +29,7 @@ function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
                         style={{ willChange: "transform, opacity" }}>
 
                         <h2 className="text-white text-2xl font-bold mb-6 text-center drop-shadow-md">
-                            Cambia le Categorie per la Tappa del tuo Viaggio
+                            Aggiungi altre Esperienze per la Tappa del tuo Viaggio
                         </h2>
 
                         {/* Lista categorie */}

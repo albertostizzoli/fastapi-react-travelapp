@@ -156,7 +156,7 @@ function EditDay() {
               className="font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faListCheck} /> Seleziona Categoria
+              <FontAwesomeIcon icon={faListCheck} /> Seleziona Esperienza
             </button>
 
             <button
@@ -169,20 +169,20 @@ function EditDay() {
             </button>
           </div>
 
-          {/* Categorie selezionate */}
-          {day.categories.length > 0 && (
+          {/* esperienze selezionate */}
+          {day.experiences.length > 0 && (
             <div className="mt-3 flex gap-3 w-full justify-center flex-wrap">
-              {day.categories.map((category, i) => (
+              {day.experiences.map((experience, i) => (
                 <span
                   key={i}
                   className="flex items-center justify-between bg-linear-to-br from-blue-600 to-cyan-500
                   backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
                   shadow-md transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer">
-                  <span>{category}</span>
+                  <span>{experience}</span>
                   <button
                     type="button"
                     onClick={() =>
-                      setDay({ ...day, categories: day.categories.filter((c) => c !== category), })
+                      setDay({ ...day, experiences: day.experiences.filter((c) => c !== experience), })
                     }
                     className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
                     <FontAwesomeIcon icon={faXmark} className="text-sm" />
@@ -196,9 +196,10 @@ function EditDay() {
           <ModalEditCategory
             isOpen={isCategoryModalOpen}
             onClose={() => setIsCategoryModalOpen(false)}
-            categories={day.categories}
-            setCategories={(newCategories) => setDay({ ...day, categories: newCategories })}
+            categories={day.experiences ?? []}
+            setCategories={(newCategories) => setDay({ ...day, experiences: newCategories })}
           />
+
 
           {/* Foto */}
           <div>
