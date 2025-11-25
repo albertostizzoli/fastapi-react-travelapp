@@ -27,55 +27,55 @@ function TravelDays() {
     <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 max-w-6xl mx-auto gap-4">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-10 gap-4">
 
         {/* Titolo */}
-        <h1 className="text-3xl font-extrabold text-white text-center flex-1 p-3">
-          Le tue tappe
+        <h1 className="text-3xl font-extrabold text-white text-center flex-1 p-3
+            rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+            backdrop-blur-2xl border border-white/40 shadow-xl">
+          Le mie tappe
         </h1>
       </div>
 
       {/* Layout principale */}
-      <div className="max-w-6xl mx-auto flex flex-col gap-8">
+      <div className=" flex flex-col gap-8">
 
         {/* Info Viaggio + Aggiungi Tappa */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between 
-                gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
-                backdrop-blur-2xl border border-white/40 shadow-xl w-full">
+        gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+        backdrop-blur-2xl border border-white/40 shadow-xl w-full">
 
-          {/* Titolo + Data */}
+          {/* Titolo + Date */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}>
-
-            <h2 className="text-2xl font-extrabold text-white drop-shadow-2xl">
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row sm:items-baseline sm:gap-6">
+            {/* Paese */}
+            <h2 className="text-3xl font-extrabold text-white drop-shadow-2xl">
               {travel.town}
             </h2>
-            <h2 className="text-xl font-bold text-white drop-shadow-xl">
-              {travel.start_date} <FontAwesomeIcon icon={faArrowRight} /> {travel.end_date}
-            </h2>
 
-            {travel.title && (
-              <p className="text-white/60 italic border-t border-white/10">
-                {travel.title}
-              </p>
-            )}
+            {/* Date */}
+            <h2 className="text-2xl font-extrabold text-white drop-shadow-xl flex items-center">
+              {travel.start_date}
+              <FontAwesomeIcon className="mx-2" icon={faArrowRight} />
+              {travel.end_date}
+            </h2>
           </motion.div>
 
           {/* Pulsante Aggiungi Tappa */}
           <motion.div
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="mt-2">
+            transition={{ duration: 0.8, ease: "easeOut" }}>
             <Link
               to="/addDay"
               state={{ travelId: id }}
               className="font-semibold px-6 py-2 inline-flex items-center justify-center gap-2
-                 bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
-                 text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
-                 hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
+              bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
+            text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+              hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
               <FontAwesomeIcon icon={faPlus} /> Aggiungi Tappa
             </Link>
           </motion.div>
@@ -113,7 +113,7 @@ function TravelDays() {
                     transition={{ duration: 0.4, ease: "easeOut" }}
                     className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
-                      transition-all duration-300 w-full">
+                      transition-all duration-300">
 
                     {/* Header card */}
                     <div className="flex justify-between items-center gap-3">
@@ -142,7 +142,7 @@ function TravelDays() {
                           <img
                             key={i}
                             src={p}
-                            className="w-24 h-24 object-cover rounded-2xl border border-white/40 shadow-md"
+                            className="w-28 h-28 object-cover rounded-2xl border border-white/40 shadow-md"
                           />
                         ))}
                       </div>
@@ -160,9 +160,9 @@ function TravelDays() {
 
                           {/* descrizione */}
                           {d.description && (
-                            <p className="text-white mt-4 text-sm text-justify font-semibold">
-                              {d.description.length > 100
-                                ? d.description.slice(0, 100) + "..."
+                            <p className="text-white mt-4 text-2sm text-justify font-semibold">
+                              {d.description.length > 120
+                                ? d.description.slice(0, 120) + "..."
                                 : d.description}
                             </p>
                           )}
@@ -175,7 +175,8 @@ function TravelDays() {
                               {d.experiences.slice(0, 3).map((c, i) => (
                                 <span
                                   key={i}
-                                  className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white">
+                                  className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
+                                  bg-linear-to-br from-blue-600 to-red-500 text-white">
                                   {c}
                                 </span>
                               ))}
@@ -183,7 +184,8 @@ function TravelDays() {
                               {/* badge per esperienze extra */}
                               {d.experiences.length > 3 && (
                                 <span
-                                  className="font-semibold px-3 py-1 text-sm rounded-full bg-linear-to-br from-blue-600 to-red-500 text-white italic">
+                                  className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
+                                  bg-linear-to-br from-blue-600 to-red-500 text-white italic">
                                   +{d.experiences.length - 3}
                                 </span>
                               )}
@@ -192,27 +194,27 @@ function TravelDays() {
 
 
                           {/* BOTTONI */}
-                          <div className="flex flex-col gap-4 mt-6">
+                          <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedDay(d);
                               }}
-                              className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
+                              className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                              <FontAwesomeIcon icon={faBookOpen} /> Leggi di più
+                              <FontAwesomeIcon icon={faBookOpen} /> Leggi
                             </button>
 
                             <Link
                               to={`/days/${d.id}/edit`}
                               onClick={(e) => e.stopPropagation()}
-                              className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
+                              className="flex-1 w-full font-semibold px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                              <FontAwesomeIcon icon={faEdit} /> Modifica Tappa
+                              <FontAwesomeIcon icon={faEdit} /> Modifica
                             </Link>
 
                             <button
@@ -220,11 +222,11 @@ function TravelDays() {
                                 e.stopPropagation();
                                 setDeleteDayId(d.id);
                               }}
-                              className="font-semibold mx-2 px-4 py-2 flex items-center justify-center gap-2 
+                              className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                              <FontAwesomeIcon icon={faTrash} /> Cancella Tappa
+                              <FontAwesomeIcon icon={faTrash} /> Cancella
                             </button>
                           </div>
                         </motion.div>

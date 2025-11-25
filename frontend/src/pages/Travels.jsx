@@ -19,15 +19,17 @@ function Travels() {
   } = TravelsController();   // uso la logica della pagina viaggi
 
   return (
-    <div className="relative min-h-screen p-8 overflow-visible text-gray-50">
+    <div className="relative min-h-screen p-8 overflow-visible">
 
       {/* Titolo */}
-      <h1 className="text-3xl font-extrabold text-center text-gray-50/90 drop-shadow-md mb-3">
+      <h1 className="text-3xl font-extrabold text-white text-center flex-1 p-3
+      rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+      backdrop-blur-2xl border border-white/40 shadow-3xl mb-3">
         I miei viaggi
       </h1>
 
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 mx-auto items-start"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4"
         layout="position" // siccome uso una grid questo impedisce alle card di avere la stessa altezza al click
         initial="hidden"
         animate="visible"
@@ -73,7 +75,7 @@ function Travels() {
 
                 <div className="flex justify-between items-center gap-3">
                   <div>
-                    <p className="text-gray-100 text-xl font-medium">
+                    <p className="text-white text-xl font-medium">
                       {v.start_date} <FontAwesomeIcon icon={faArrowRight} /> {v.end_date}
                     </p>
                   </div>
