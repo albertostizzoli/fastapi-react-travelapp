@@ -29,7 +29,7 @@ function Travels() {
       </h1>
 
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
         layout="position" // siccome uso una grid questo impedisce alle card di avere la stessa altezza al click
         initial="hidden"
         animate="visible"
