@@ -22,10 +22,16 @@ function TravelDays() {
     setOpenCardId               // stato per indicare la card aperta
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
-  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
-  const allCities = [...new Set(travel.days.map(d => d.city))];
 
+  // Lista di tutte le città nella select
+  const allCities = [...new Set(travel.days.map(d => d.city?.trim()))];
+
+  // filtro per città
+  const filteredDays = travel.days.filter(d =>
+    selectedCity === "" ? true : d.city?.trim().toLowerCase() === selectedCity.toLowerCase()
+  );
 
   return (
     <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
@@ -70,9 +76,9 @@ function TravelDays() {
             className="w-fit sm:w-56 px-4 py-2 font-semibold rounded-full bg-white/10 
                 border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
                 cursor-pointer scrollbar">
-            <option value="" className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">Tutti i Paesi</option>
-            {allCities.map(c => (
-              <option key={c} value={c} className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">{c}</option>
+            <option value="" className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">Tutte le Città</option>
+            {allCities.map(city => (
+              <option key={city} value={city} className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">{city}</option>
             ))}
           </select>
 
@@ -117,158 +123,152 @@ function TravelDays() {
         <div className="flex-1 mt-6">
 
           {travel.days?.length > 0 ? (
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
-              variants={{
-                visible: { transition: { staggerChildren: 0.2 } },
-              }}
-              initial="hidden"
-              animate="visible"
-              layout="position">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start">
 
+              <AnimatePresence>
+                {filteredDays.map((d) => {
 
-              {travel.days?.filter(d => selectedCity === "" || d.city === selectedCity).map((d) => {
+                  const isOpen = openCardId === d.id;
 
-                const isOpen = openCardId === d.id;
-
-                return (
-                  <motion.div
-                    key={d.id}
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.5, y: 20 },
-                      visible: { opacity: 1, scale: 1, y: 0 },
-                    }}
-                    animate={{
-                      boxShadow: isOpen
-                        ? "0px 0px 35px rgba(255,255,255,0.40)"
-                        : "0px 0px 0px rgba(255,255,255,0)"
-                    }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                  return (
+                    <motion.div
+                      key={d.id}
+                      variants={{
+                        hidden: { opacity: 0, scale: 0.5, y: 20 },
+                        visible: { opacity: 1, scale: 1, y: 0 },
+                      }}
+                      animate={{
+                        boxShadow: isOpen
+                          ? "0px 0px 35px rgba(255,255,255,0.40)"
+                          : "0px 0px 0px rgba(255,255,255,0)"
+                      }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
                       transition-all duration-300">
 
-                    {/* Header card */}
-                    <div className="flex justify-between items-center gap-3">
-                      <div>
-                        <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.city}, {d.title}</p>
-                        <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
-                      </div>
+                      {/* Header card */}
+                      <div className="flex justify-between items-center gap-3">
+                        <div>
+                          <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.city}, {d.title}</p>
+                          <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
+                        </div>
 
-                      {/* Icona Freccia */}
-                      <motion.button
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.4 }}
-                        title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
-                        className="cursor-pointer border border-white rounded-full w-12 h-12 
+                        {/* Icona Freccia */}
+                        <motion.button
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.4 }}
+                          title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
+                          className="cursor-pointer border border-white rounded-full w-12 h-12 
                           flex items-center justify-center text-white
                           transition-all duration-300 hover:bg-white hover:text-black"
-                        onClick={() => setOpenCardId(isOpen ? null : d.id)}>
-                        <FontAwesomeIcon icon={faArrowDown} />
-                      </motion.button>
-                    </div>
-
-                    {/* FOTO PREVIEW */}
-                    {d.photo.length > 0 && (
-                      <div className="flex gap-2 flex-wrap mt-4">
-                        {d.photo.slice(0, 3).map((p, i) => (
-                          <img
-                            key={i}
-                            src={p}
-                            className="w-28 h-28 object-cover rounded-2xl border border-white/40 shadow-md"
-                          />
-                        ))}
+                          onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                          <FontAwesomeIcon icon={faArrowDown} />
+                        </motion.button>
                       </div>
-                    )}
 
-                    {/* CONTENUTO ESPANSO */}
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.4 }}
-                          className="overflow-hidden">
+                      {/* FOTO PREVIEW */}
+                      {d.photo.length > 0 && (
+                        <div className="flex gap-2 flex-wrap mt-4">
+                          {d.photo.slice(0, 3).map((p, i) => (
+                            <img
+                              key={i}
+                              src={p}
+                              className="w-28 h-28 object-cover rounded-2xl border border-white/40 shadow-md"
+                            />
+                          ))}
+                        </div>
+                      )}
 
-                          {/* descrizione */}
-                          {d.description && (
-                            <p className="text-white mt-4 text-2sm text-justify font-semibold">
-                              {d.description.length > 120
-                                ? d.description.slice(0, 120) + "..."
-                                : d.description}
-                            </p>
-                          )}
+                      {/* CONTENUTO ESPANSO */}
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="overflow-hidden">
 
-                          {/* esperienze */}
-                          {d.experiences && d.experiences.length > 0 && (
-                            <div className="mt-4 flex flex-wrap gap-2">
+                            {/* descrizione */}
+                            {d.description && (
+                              <p className="text-white mt-4 text-2sm text-justify font-semibold">
+                                {d.description.length > 120
+                                  ? d.description.slice(0, 120) + "..."
+                                  : d.description}
+                              </p>
+                            )}
 
-                              {/* prime 3 esperienze */}
-                              {d.experiences.slice(0, 3).map((c, i) => (
-                                <span
-                                  key={i}
-                                  className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
+                            {/* esperienze */}
+                            {d.experiences && d.experiences.length > 0 && (
+                              <div className="mt-4 flex flex-wrap gap-2">
+
+                                {/* prime 3 esperienze */}
+                                {d.experiences.slice(0, 3).map((c, i) => (
+                                  <span
+                                    key={i}
+                                    className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
                                   bg-linear-to-br from-blue-600 to-red-500 text-white">
-                                  {c}
-                                </span>
-                              ))}
+                                    {c}
+                                  </span>
+                                ))}
 
-                              {/* badge per esperienze extra */}
-                              {d.experiences.length > 3 && (
-                                <span
-                                  className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
+                                {/* badge per esperienze extra */}
+                                {d.experiences.length > 3 && (
+                                  <span
+                                    className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
                                   bg-linear-to-br from-blue-600 to-red-500 text-white italic">
-                                  +{d.experiences.length - 3}
-                                </span>
-                              )}
-                            </div>
-                          )}
+                                    +{d.experiences.length - 3}
+                                  </span>
+                                )}
+                              </div>
+                            )}
 
 
-                          {/* BOTTONI */}
-                          <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedDay(d);
-                              }}
-                              className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                            {/* BOTTONI */}
+                            <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedDay(d);
+                                }}
+                                className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                              <FontAwesomeIcon icon={faBookOpen} /> Leggi
-                            </button>
+                                <FontAwesomeIcon icon={faBookOpen} /> Leggi
+                              </button>
 
-                            <Link
-                              to={`/days/${d.id}/edit`}
-                              onClick={(e) => e.stopPropagation()}
-                              className="flex-1 w-full font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                              <Link
+                                to={`/days/${d.id}/edit`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex-1 w-full font-semibold px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                              <FontAwesomeIcon icon={faEdit} /> Modifica
-                            </Link>
+                                <FontAwesomeIcon icon={faEdit} /> Modifica
+                              </Link>
 
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setDeleteDayId(d.id);
-                              }}
-                              className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setDeleteDayId(d.id);
+                                }}
+                                className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                              <FontAwesomeIcon icon={faTrash} /> Cancella
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+                                <FontAwesomeIcon icon={faTrash} /> Cancella
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
           ) : (
             <p className="text-white/80 font-semibold text-center mt-6 italic">
               Nessuna tappa presente
