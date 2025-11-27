@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"; // use Navigate serve per il reindirizz
 import { motion } from "framer-motion"; // per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faArrowLeft, faCheckCircle, faPlus, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
-import FormAddTravel from "../hooks/FormAddTravel.jsx"; // custom hook per gestire il form di aggiunta viaggio
+import FormAddTravel from "../controllers/FormAddTravel.jsx"; // controller per gestire il form di aggiunta viaggio
 
 function AddTravel() {
 

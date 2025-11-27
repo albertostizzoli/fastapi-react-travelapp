@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faArrowDown, faArrowLeft, faArrowRight, faBookOpen, faCheckCircle, faEdit, faPlus, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
 import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // importo il modale di conferma eliminazione tappa
-import TravelDaysController from "../hooks/TravelDaysController"; // importo la logica della pagina TravelDays
+import TravelDaysController from "../controllers/TravelDaysController"; // importo la logica della pagina TravelDays
 
 function TravelDays() {
 
@@ -19,19 +18,15 @@ function TravelDays() {
     setDeleteDayId,             // funzione per settare l'id della tappa da eliminare
     handleDeleteDay,            // funzione per eliminare una tappa
     openCardId,                 // mostra la card aperta
-    setOpenCardId               // stato per indicare la card aperta
+    setOpenCardId,              // stato per indicare la card aperta
+    selectedCity,               // indica la città selezionata
+    setSelectedCity,            // stato per indicare la città selezionata
+    allCities,                  // per prendere le città nella select
+    filteredDays,               // funzione per filtrare le tappe in base alla città
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
-  const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
-  // Lista di tutte le città nella select
-  const allCities = [...new Set(travel.days.map(d => d.city?.trim()))];
-
-  // filtro per città
-  const filteredDays = travel.days.filter(d =>
-    selectedCity === "" ? true : d.city?.trim().toLowerCase() === selectedCity.toLowerCase()
-  );
 
   return (
     <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
@@ -65,11 +60,12 @@ function TravelDays() {
       {/* Layout principale */}
       <div className=" flex flex-col gap-8">
 
-        {/* Select + Info Viaggio + Aggiungi Tappa */}
+        {/* Select per Filtro Città + Info Viaggio + Aggiungi Tappa */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between 
         gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
         backdrop-blur-2xl border border-white/40 shadow-xl w-full">
 
+          { /* Select per Filtro Città */}
           <select
             value={selectedCity}
             onChange={(e) => setSelectedCity(e.target.value)}
@@ -123,7 +119,13 @@ function TravelDays() {
         <div className="flex-1 mt-6">
 
           {travel.days?.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start">
+            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
+              variants={{
+                hidden: { opacity: 1 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+              }}
+              initial="hidden"
+              animate="visible">
 
               <AnimatePresence>
                 {filteredDays.map((d) => {
@@ -134,15 +136,14 @@ function TravelDays() {
                     <motion.div
                       key={d.id}
                       variants={{
-                        hidden: { opacity: 0, scale: 0.5, y: 20 },
-                        visible: { opacity: 1, scale: 1, y: 0 },
+                        hidden: { scale: 0, opacity: 0 },
+                        visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
                       }}
-                      animate={{
+                      style={{
                         boxShadow: isOpen
                           ? "0px 0px 35px rgba(255,255,255,0.40)"
-                          : "0px 0px 0px rgba(255,255,255,0)"
+                          : "0px 0px 0px rgba(255,255,255,0)",
                       }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
                       className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
                       transition-all duration-300">
@@ -268,7 +269,7 @@ function TravelDays() {
                   );
                 })}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ) : (
             <p className="text-white/80 font-semibold text-center mt-6 italic">
               Nessuna tappa presente

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";  // per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faArrowLeft, faCamera, faCheckCircle, faEdit, faListCheck, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ModalEditCategory from "../components/Modals/ModalEditCategory"; // modale per modificare le categorie
-import FormEditDay from "../hooks/FormEditDay"; // custom hook per la logica del form di modifica tappa
+import FormEditDay from "../controllers/FormEditDay"; // controller per la logica del form di modifica tappa
 
 function EditDay() {
 

@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"; // per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faCompass, faMessage } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
-import ChatAIController from "../hooks/ChatAIController"; // importa il controller della chat AI
+import ChatAIController from "../controllers/ChatAIController"; // importo il controller della chat AI
 
 function ChatAI() {
 

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo Fon
 import { faCheckCircle, faCompass, faEdit, faGlobe, faPlus, faRightFromBracket, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import EditProfileModal from "../components/Modals/EditProfileModal"; // importo il modale di modifica profilo
 import ModalDeleteProfile from "../components/DeleteModals/ModalDeleteProfile"; // importo il modale di conferma eliminazione profilo
-import ProfileController from "../hooks/ProfileController"; // importo la logica della pagina profilo
+import ProfileController from "../controllers/ProfileController"; // importo la logica della pagina profilo
 
 function ProfilePage() {
 

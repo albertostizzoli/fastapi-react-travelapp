@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion"; // importo framer-motio
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faCamera, faCheckCircle, faCompass, faEye, faEyeSlash, faUser, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import LoginModal from "../components/Modals/LoginModal"; // importo il componente modale per la selezione delle esperienze
-import FormAuth from "../hooks/FormAuth"; // importo la logica dei form di login/registrazione
+import FormAuth from "../controllers/FormAuth"; // importo la logica dei form di login/registrazione
 
 function LoginRegisterPage() {
 

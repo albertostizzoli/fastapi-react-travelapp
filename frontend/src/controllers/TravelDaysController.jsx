@@ -9,6 +9,7 @@ function TravelDaysController() {
     const [deleteDayId, setDeleteDayId] = useState(null); //  stato per il modale di conferma eliminazione giorno (Apri / Chiudi)
     const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Scopri di più (Apri / Chiudi)
     const [openCardId, setOpenCardId] = useState(null);  // stato per aprire una card dei viaggi e mostare le altre informazioni
+    const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
 
     // Fetch dati viaggio all'inizio e quando cambia l'id
     useEffect(() => {
@@ -70,6 +71,16 @@ function TravelDaysController() {
             });
     };
 
+    // Lista di tutte le città nella select
+    const allCities = travel ? [...new Set(travel.days.map(d => d.city?.trim()))] : [];
+
+    // Funzione per filtrare le tappe  per città
+    const filteredDays = travel
+        ? travel.days.filter(d =>
+            selectedCity === "" ? true : d.city?.trim().toLowerCase() === selectedCity.toLowerCase()
+        )
+        : [];
+
     return {
         id,                // id del viaggio
         travel,            // dati del viaggio
@@ -80,7 +91,11 @@ function TravelDaysController() {
         setDeleteDayId,    // funzione per aprire/chiudere il modale di conferma eliminazione giorno
         handleDeleteDay,   // funzione per eliminare un giorno
         openCardId,        // mostra la card aperta
-        setOpenCardId      // stato per indicare la card aperta
+        setOpenCardId,     // stato per indicare la card aperta
+        selectedCity,      // indica la città selezionata
+        setSelectedCity,   // stato per indicare la città selezionata
+        allCities,         // per prendere le città nella select
+        filteredDays,      // funzione per filtrare le tappe in base alla città
     };
 }
 

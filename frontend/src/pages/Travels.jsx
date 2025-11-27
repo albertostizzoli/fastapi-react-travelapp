@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"; // importo framer-motio
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faArrowDown, faArrowRight, faCalendarDay, faCheckCircle, faEdit, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
-import TravelsController from "../hooks/TravelsController"; // importo la logica della pagina viaggi
+import TravelsController from "../controllers/TravelsController"; // importo la logica della pagina viaggi
 
 function Travels() {
 

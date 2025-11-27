@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"; // importo Link per la navigazione inte
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
 import { faArrowLeft, faCheckCircle, faEdit, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
-import FormEditTravel from "../hooks/FormEditTravel"; // importo la logica del form di modifica viaggio
+import FormEditTravel from "../controllers/FormEditTravel"; // importo la logica del form di modifica viaggio
 
 function EditTravel() {
 
