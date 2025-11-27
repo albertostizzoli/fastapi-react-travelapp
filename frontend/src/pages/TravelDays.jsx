@@ -65,26 +65,13 @@ function TravelDays() {
         gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
         backdrop-blur-2xl border border-white/40 shadow-xl w-full">
 
-          { /* Select per Filtro Città */}
-          <select
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.target.value)}
-            className="w-fit sm:w-56 px-4 py-2 font-semibold rounded-full bg-white/10 
-                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
-                cursor-pointer scrollbar">
-            <option value="" className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">Tutte le Città</option>
-            {allCities.map(city => (
-              <option key={city} value={city} className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">{city}</option>
-            ))}
-          </select>
-
-          {/* Titolo + Date */}
+          {/* Paese + Date */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row sm:items-baseline sm:gap-6">
-            {/* Paese */}
+            transition={{ duration: 0.8, ease: "easeOut" }}>
+
+            { /* Paese */}
             <h2 className="text-3xl font-extrabold text-white drop-shadow-2xl">
               {travel.town}
             </h2>
@@ -97,11 +84,26 @@ function TravelDays() {
             </h2>
           </motion.div>
 
-          {/* Pulsante Aggiungi Tappa */}
+          {/* Select Filtro Città + Pulsante Aggiungi Tappa */}
           <motion.div
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}>
+
+            { /* Select Filtro Città */}
+            <select
+              value={selectedCity}
+              onChange={(e) => setSelectedCity(e.target.value)}
+              className="w-fit sm:w-56 px-4 py-2 me-4 font-semibold rounded-full bg-white/10 
+                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
+                cursor-pointer scrollbar">
+              <option value="" className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">Tutte le Città</option>
+              {allCities.map(city => (
+                <option key={city} value={city} className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">{city}</option>
+              ))}
+            </select>
+
+            { /* Pulsante Aggiungi Tappa */}
             <Link
               to="/addDay"
               state={{ travelId: id }}
