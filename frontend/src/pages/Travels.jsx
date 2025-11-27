@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faArrowDown, faArrowRight, faCalendarDay, faCheckCircle, faEdit, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { FaArrowDown, FaArrowRight, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../controllers/TravelsController"; // importo la logica della pagina viaggi
 
@@ -76,7 +75,7 @@ function Travels() {
                 <div className="flex justify-between items-center gap-3">
                   <div>
                     <p className="text-white text-xl font-medium">
-                      {v.start_date} <FontAwesomeIcon icon={faArrowRight} /> {v.end_date}
+                      {v.start_date} → {v.end_date}
                     </p>
                   </div>
                   <motion.button
@@ -87,7 +86,7 @@ function Travels() {
                     className="cursor-pointer border border-white rounded-full w-12 h-12 
                     flex items-center justify-center text-white
                     transition-all duration-300 hover:bg-white hover:text-black">
-                    <FontAwesomeIcon icon={faArrowDown} />
+                    <FaArrowDown size={20} />
                   </motion.button>
                 </div>
 
@@ -126,7 +125,7 @@ function Travels() {
                           bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                          <FontAwesomeIcon icon={faCalendarDay} className="mr-1" /> Tappe
+                          <FaCalendarDay size={20} className="mr-1" /> Tappe
                         </Link>
 
                         <Link
@@ -135,7 +134,7 @@ function Travels() {
                           bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                          <FontAwesomeIcon icon={faEdit} className="mr-1" /> Modifica
+                          <FaEdit size={20} className="mr-1" /> Modifica
                         </Link>
 
                         <button
@@ -144,7 +143,7 @@ function Travels() {
                           bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                          <FontAwesomeIcon icon={faTrash} className="mr-1" /> Cancella
+                          <FaTrash size={20} className="mr-1" /> Cancella
                         </button>
                       </div>
                     </motion.div>
@@ -175,10 +174,10 @@ function Travels() {
           border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
           bg-linear-to-r from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
-            <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
+            <FaCheckCircle size={20} className="text-green-400 text-2xl mr-2" />
           )}
           {message.icon === "error" && (
-            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
+            <FaTimesCircle size={20} className="text-red-400 text-2xl mr-2" />
           )}
           <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>

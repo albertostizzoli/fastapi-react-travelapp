@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faCheckCircle, faCompass, faEdit, faGlobe, faPlus, faRightFromBracket, faTrash, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { FaCheckCircle, FaCompass, FaEdit, FaGlobe, FaPlus, FaSignOutAlt, FaTrash, FaTimesCircle } from "react-icons/fa";
 import EditProfileModal from "../components/Modals/EditProfileModal"; // importo il modale di modifica profilo
 import ModalDeleteProfile from "../components/DeleteModals/ModalDeleteProfile"; // importo il modale di conferma eliminazione profilo
 import ProfileController from "../controllers/ProfileController"; // importo la logica della pagina profilo
@@ -93,7 +92,7 @@ function ProfilePage() {
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <FontAwesomeIcon icon={faEdit} /> Modifica Profilo
+                <FaEdit size={20} /> Modifica Profilo
               </button>
 
               <button
@@ -103,7 +102,7 @@ function ProfilePage() {
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <FontAwesomeIcon icon={faTrash} /> Cancella Profilo
+                <FaTrash size={20} /> Cancella Profilo
               </button>
 
               <button
@@ -113,7 +112,7 @@ function ProfilePage() {
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 hover:scale-105
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                <FontAwesomeIcon icon={faRightFromBracket} /> Esci
+                <FaSignOutAlt size={20} /> Esci
               </button>
             </div>
           </motion.section>
@@ -154,7 +153,7 @@ function ProfilePage() {
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                  <FontAwesomeIcon icon={faGlobe} /> I miei viaggi
+                  <FaGlobe size={20} /> I miei viaggi
                 </Link>
                 <Link
                   to="/add"
@@ -163,7 +162,7 @@ function ProfilePage() {
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                  <FontAwesomeIcon icon={faPlus} /> Aggiungi Viaggio
+                  <FaPlus size={20} /> Aggiungi Viaggio
                 </Link>
                 <Link
                   to="/chat"
@@ -171,7 +170,7 @@ function ProfilePage() {
                   bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <FontAwesomeIcon icon={faCompass} /> Il mio prossimo viaggio
+                  <FaCompass size={20} /> Il mio prossimo viaggio
                 </Link>
               </div>
             </motion.div>
@@ -293,10 +292,10 @@ function ProfilePage() {
           border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
           bg-linear-to-br from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
-            <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
+            <FaCheckCircle size={20} className="text-green-400 text-2xl mr-2" />
           )}
           {message.icon === "error" && (
-            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
+            <FaTimesCircle size={20} className="text-red-400 text-2xl mr-2" />
           )}
           <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>

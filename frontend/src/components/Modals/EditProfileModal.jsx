@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FaCheck, FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 import travellers from "../../store/travellers";
 
 // Questo è il modale per la modifica del profilo
@@ -165,9 +164,9 @@ function EditProfileModal({
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute top-1/2 right-4 -translate-y-1/2 text-white hover:text-white cursor-pointer">
                   {showPassword ? (
-                    <FontAwesomeIcon icon={faEyeSlash} />
+                    <FaEyeSlash size={20} />
                   ) : (
-                    <FontAwesomeIcon icon={faEye} />
+                    <FaEye size={20} />
                   )}
                 </button>
 
@@ -240,7 +239,7 @@ function EditProfileModal({
                           }))
                         }
                         className="hover:text-rose-400 transition cursor-pointer">
-                        <FontAwesomeIcon icon={faXmark} />
+                        <FaTimes size={20} />
                       </button>
                     </span>
                   ))}
@@ -262,17 +261,19 @@ function EditProfileModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="font-semibold px-6 py-2 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border 
-                border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
-                hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                <FontAwesomeIcon icon={faXmark} className="mr-2" /> Annulla
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
+                from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
+                <FaTimes size={20} className="mr-2" /> Annulla
               </button>
               <button
                 type="submit"
-                className="font-semibold px-6 py-2 bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border 
-              border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
-                hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                <FontAwesomeIcon icon={faCheck} className="mr-2" /> Salva
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
+                from-green-600 to-teal-500 backdrop-blur-md border border-white/40 text-white 
+                rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
+                <FaCheck size={20} className="mr-2" /> Salva
               </button>
             </div>
           </motion.form>

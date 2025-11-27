@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"; // per le animazioni
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faCompass, faMessage } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { FaCompass } from "react-icons/fa";
+import { FaMessage } from "react-icons/fa6";
 import ChatAIController from "../controllers/ChatAIController"; // importo il controller della chat AI
 
 function ChatAI() {
@@ -118,7 +118,7 @@ function ChatAI() {
                     bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 
                   text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer text-sm sm:text-base">
-                    <FontAwesomeIcon icon={faMessage} />
+                    <FaMessage size={20} />
                     Invia
                 </motion.button>
 
@@ -135,7 +135,7 @@ function ChatAI() {
                     backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 cursor-pointer
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-sm sm:text-base`}>
-                    <FontAwesomeIcon icon={faCompass} />
+                    <FaCompass size={20} />
                     {isRecommending ? "Sto pensando..." : "Ispirami"}
                 </motion.button>
             </div>

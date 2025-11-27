@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faMoon, faSun, faXmark, faUser, faGlobe, faPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FaBars, FaMoon, FaSun, FaTimes, FaUser, FaGlobe, FaPlus, FaSignOutAlt } from "react-icons/fa";
 
 function Sidebar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false); // stato per aprire / chiudere la sidebar
@@ -88,7 +87,7 @@ function Sidebar() {
           onClick={toggleSidebar}
           aria-label="Apri il menu"
           className="text-white text-3xl font-bold p-2 cursor-pointer">
-          <FontAwesomeIcon icon={faBars} />
+          <FaBars size={20} />
         </button>
         <h1 className="font-bold text-3xl underline">TravelDiary</h1>
       </nav>
@@ -127,8 +126,8 @@ function Sidebar() {
                     title="Cambia tema">
 
                     {/* Icone */}
-                    <span className="text-sm ml-1"><FontAwesomeIcon icon={faMoon} /></span>
-                    <span className="text-sm mr-1"><FontAwesomeIcon icon={faSun} className="text-yellow-400" /></span>
+                    <span className="text-sm ml-1"><FaMoon size={20} /></span>
+                    <span className="text-sm mr-1"><FaSun size={20} className="text-yellow-400" /></span>
 
                     {/* Pallina */}
                     <span
@@ -142,7 +141,7 @@ function Sidebar() {
                     onClick={toggleSidebar}
                     aria-label="Chiudi il menu"
                     className="text-white text-2xl self-end cursor-pointer">
-                    <FontAwesomeIcon icon={faXmark} />
+                    <FaTimes size={20} />
                   </button>
                 </div>
 
@@ -152,7 +151,7 @@ function Sidebar() {
                     to="/loginregister"
                     onClick={toggleSidebar}
                     className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
-                    <FontAwesomeIcon icon={faUser} />
+                    <FaUser size={20} />
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
@@ -188,7 +187,7 @@ function Sidebar() {
                     to="/travels"
                     onClick={toggleSidebar}
                     className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
-                    <FontAwesomeIcon icon={faGlobe} />
+                    <FaGlobe size={20} />
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
@@ -204,7 +203,7 @@ function Sidebar() {
                     to="/add"
                     onClick={toggleSidebar}
                     className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
-                    <FontAwesomeIcon icon={faPlus} />
+                    <FaPlus size={20} />
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
@@ -221,7 +220,7 @@ function Sidebar() {
                   <button
                     onClick={handleLogout}
                     className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">
-                    <FontAwesomeIcon icon={faRightFromBracket} />
+                    <FaSignOutAlt size={20} />
                     <span className="relative inline-block
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 

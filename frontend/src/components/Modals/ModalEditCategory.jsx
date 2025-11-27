@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import travellers from "../../store/travellers";
 
 // Modale Glassmorphism per modificare i tag nella pagina EditDay
@@ -77,7 +76,7 @@ function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
                                 className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border 
                                 border-white/40 text-white rounded-full transition-all duration-300 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                                <FontAwesomeIcon icon={faXmark} className="mr-2" />Chiudi
+                                <FaTimes size={20} className="mr-2" />Chiudi
                             </button>
                             <button
                                 type="button"
@@ -85,7 +84,7 @@ function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
                                 className="font-semibold px-4 py-2 bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border 
                                 border-white/40 text-white rounded-full transition-all duration-300 ease-in-out hover:scale-105 
                                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
-                                <FontAwesomeIcon icon={faCheck} className="mr-2" />Conferma
+                                <FaCheck size={20} className="mr-2" />Conferma
                             </button>
                         </div>
                     </motion.div>

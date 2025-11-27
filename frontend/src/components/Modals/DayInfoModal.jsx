@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faMapLocationDot, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FaArrowLeft, FaMapMarkerAlt, FaTimes } from "react-icons/fa";
 import WorldMap from "../WorldMap";
 
 function DayInfoModal({ selectedDay, onClose, travelDays }) {
@@ -50,18 +49,20 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             <div className="flex justify-between items-center p-4 border-b border-white/40 bg-black/10 backdrop-blur-lg">
               <button
                 onClick={handleClose}
-                className="font-semibold px-4 py-2 bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border 
-                border-white/40 text-white rounded-full transition-all duration-300 ease-in-out hover:scale-105 
-                 cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                 <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Torna alle Tappe
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
+                from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
+                 <FaArrowLeft size={20} className="mr-2" /> Torna alle Tappe
               </button>
 
               <button
                 onClick={() => setShowMapModal(true)}
-                className="font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border 
-              border-white/40 text-white rounded-full transition-all duration-300 ease-in-out hover:scale-105 
-                cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                 <FontAwesomeIcon icon={faMapLocationDot} className="mr-2" /> Vai alla Mappa
+                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
+                from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
+                 <FaMapMarkerAlt size={20} className="mr-2" /> Vai alla Mappa
               </button>
             </div>
 
@@ -143,7 +144,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                   <button
                     onClick={() => setOpenImage(null)}
                     className="absolute -top-4 -right-4 bg-red-500 text-white rounded-full p-2 shadow-lg cursor-pointer">
-                     <FontAwesomeIcon icon={faXmark} className="text-lg" />
+                     <FaTimes size={20} className="text-lg" />
                   </button>
                   <img
                     src={openImage.replace("w=400", "w=1600")}
@@ -178,7 +179,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                       onClick={() => setShowMapModal(false)}
                       className="absolute top-4 right-4 bg-red-500 text-white rounded-full p-3 shadow-lg cursor-pointer z-1000
                        hover:bg-red-400 transition">
-                       <FontAwesomeIcon icon={faXmark} className="text-lg" />
+                       <FaTimes size={20} className="text-lg" />
                     </button>
                   </div>
                   <WorldMap

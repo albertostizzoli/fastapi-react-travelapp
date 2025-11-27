@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
   return (
@@ -45,7 +44,7 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
                  bg-linear-to-br from-green-600 to-cyan-500 backdrop-blur-md border border-white/40 
                 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                  hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                <FontAwesomeIcon icon={faCheck} className="mr-2" /> Sì
+                <FaCheck size={20} className="mr-2" /> Sì
               </button>
 
               <button
@@ -54,7 +53,7 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
                  bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 
                  text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                  hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                <FontAwesomeIcon icon={faXmark} className="mr-2" /> No
+                <FaTimes size={20} className="mr-2" /> No
               </button>
             </div>
           </motion.div>

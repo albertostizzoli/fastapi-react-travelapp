@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"; // importo il componente Link per la navigazione
 import { motion } from "framer-motion"; // importo motion per le animazioni
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faArrowLeft, faCamera, faCheckCircle, faListCheck, faPlus, faXmark, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { FaArrowLeft, FaCamera, FaCheckCircle, FaBars, FaPlus, FaTimes, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
 import ModalAddCategory from "../components/Modals/ModalAddCategory"; // importo la modale per l'aggiunta delle categorie
 import FormAddDay from "../controllers/FormAddDay"; // importo il controller personalizzato per la logica del form per aggiungere una tappa
 
@@ -77,7 +76,7 @@ function AddDay() {
               className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faArrowLeft} />
+              <FaArrowLeft size={20} />
               Torna alle Tappe
             </Link>
 
@@ -201,7 +200,7 @@ function AddDay() {
               className="font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faListCheck} /> Seleziona Esperienza
+              <FaBars size={20} /> Seleziona Esperienza
             </button>
             <button
               type="button"
@@ -209,7 +208,7 @@ function AddDay() {
               className="font-semibold px-6 py-2 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faCamera} /> Carica Foto
+              <FaCamera size={20} /> Carica Foto
             </button>
           </div>
 
@@ -232,7 +231,7 @@ function AddDay() {
                       })
                     }
                     className="ml-3 text-white hover:text-red-400 transition cursor-pointer">
-                    <FontAwesomeIcon icon={faXmark} className="text-sm" />
+                    <FaTimes size={20} className="text-sm" />
                   </button>
                 </span>
               ))}
@@ -269,7 +268,7 @@ function AddDay() {
                       onClick={() => removePhoto(index)}
                       className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white rounded-full p-1 opacity-0 
                       group-hover:opacity-100 transition">
-                      <FontAwesomeIcon icon={faXmark} />
+                      <FaTimes size={20} />
                     </button>
 
                     { /* Modale Foto */}
@@ -284,7 +283,7 @@ function AddDay() {
                             onClick={() => setOpenImage(null)}
                             className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg 
                           hover:bg-red-400 transition cursor-pointer">
-                            <FontAwesomeIcon icon={faXmark} className="text-lg" />
+                            <FaTimes size={20} className="text-lg" />
                           </button>
                           <img
                             src={openImage.replace("w=400", "w=1600")}
@@ -316,7 +315,7 @@ function AddDay() {
               className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faPlus} />
+              <FaPlus size={20} />
               Aggiungi Tappa
             </button>
           </div>
@@ -334,10 +333,10 @@ function AddDay() {
             border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
             bg-linear-to-br from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
-            <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
+            <FaCheckCircle size={20} className="text-green-400 text-2xl mr-2" />
           )}
           {message.icon === "error" && (
-            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
+            <FaTimesCircle size={20} className="text-red-400 text-2xl mr-2" />
           )}
           <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>

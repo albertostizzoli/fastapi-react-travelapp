@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon, faSun, faUser, faGlobe, faPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FaMoon, FaSun, FaUser, FaGlobe, FaPlus, FaSignOutAlt } from "react-icons/fa";
 
 function Header() {
   const location = useLocation();
@@ -84,7 +83,7 @@ function Header() {
           <Link
             to="/loginregister"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
-            <FontAwesomeIcon icon={faUser} />
+            <FaUser size={20} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -120,7 +119,7 @@ function Header() {
           <Link
             to="/travels"
             className="flex items-center gap-2 px-4 py-2 font-semibold">
-            <FontAwesomeIcon icon={faGlobe} />
+            <FaGlobe size={20} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -136,7 +135,7 @@ function Header() {
           <Link
             to="/add"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
-            <FontAwesomeIcon icon={faPlus} />
+            <FaPlus size={20} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -152,7 +151,7 @@ function Header() {
           <button
             onClick={handleLogout}
             className="px-4 py-2 flex items-center gap-2 font-semibold cursor-pointer">
-            <FontAwesomeIcon icon={faRightFromBracket} />
+            <FaSignOutAlt size={20} />
             <span className="relative inline-block
             after:content-[''] after:absolute after:left-0 after:bottom-0
             after:w-0 after:h-0.5 after:bg-current
@@ -170,8 +169,8 @@ function Header() {
           title="Cambia tema">
 
           {/* Icone */}
-          <span className="text-sm ml-1"><FontAwesomeIcon icon={faMoon} /></span>
-          <span className="text-sm mr-1"><FontAwesomeIcon icon={faSun} className="text-yellow-400" /></span>
+          <span className="text-sm ml-1"><FaMoon size={20} /></span>
+          <span className="text-sm mr-1"><FaSun size={20} className="text-yellow-400" /></span>
 
           {/* Pallina */}
           <span

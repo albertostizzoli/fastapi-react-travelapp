@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faArrowLeft, faCheckCircle, faEdit, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { FaArrowLeft, FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
 import FormEditTravel from "../controllers/FormEditTravel"; // importo la logica del form di modifica viaggio
 
 function EditTravel() {
@@ -43,7 +42,7 @@ function EditTravel() {
             className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
             backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <FontAwesomeIcon icon={faArrowLeft} />
+            <FaArrowLeft size={20} />
             Torna ai Viaggi
           </Link>
 
@@ -158,7 +157,7 @@ function EditTravel() {
               className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-              <FontAwesomeIcon icon={faEdit} />
+              <FaEdit size={20} />
               Salva Modifiche
             </button>
           </div>
@@ -176,10 +175,10 @@ function EditTravel() {
           border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
           bg-linear-to-br from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
           {message.icon === "success" && (
-            <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
+            <FaCheckCircle size={20} className="text-green-400 text-2xl mr-2" />
           )}
           {message.icon === "error" && (
-            <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
+            <FaTimesCircle size={20} className="text-red-400 text-2xl mr-2" />
           )}
           <p className="text-xl font-semibold">{message.text}</p>
         </motion.div>

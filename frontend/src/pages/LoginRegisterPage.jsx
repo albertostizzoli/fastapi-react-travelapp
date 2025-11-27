@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // importo FontAwesomeIcon per le icone
-import { faCamera, faCheckCircle, faCompass, faEye, faEyeSlash, faUser, faXmarkCircle } from "@fortawesome/free-solid-svg-icons"; // importo le icone necessarie
+import { FaCamera, FaCheckCircle, FaCompass, FaEye, FaEyeSlash, FaUser, FaTimesCircle } from "react-icons/fa";
 import LoginModal from "../components/Modals/LoginModal"; // importo il componente modale per la selezione delle esperienze
 import FormAuth from "../controllers/FormAuth"; // importo la logica dei form di login/registrazione
 
@@ -124,9 +123,9 @@ function LoginRegisterPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
                       {showPassword ? (
-                        <FontAwesomeIcon icon={faEyeSlash} />
+                        <FaEyeSlash size={20} />
                       ) : (
-                        <FontAwesomeIcon icon={faEye} />
+                        <FaEye size={20} />
                       )}
                     </button>
                   </div>
@@ -138,7 +137,7 @@ function LoginRegisterPage() {
                   bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <FontAwesomeIcon icon={faUser} className="mr-2" />
+                  <FaUser size={20} className="mr-2" />
                   Accedi
                 </button>
               </motion.form>
@@ -222,9 +221,9 @@ function LoginRegisterPage() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute top-1/2 right-3 -translate-y-1/2 text-white cursor-pointer">
                         {showPassword ? (
-                          <FontAwesomeIcon icon={faEyeSlash} />
+                          <FaEyeSlash size={20} />
                         ) : (
-                          <FontAwesomeIcon icon={faEye} />
+                          <FaEye size={20} />
                         )}
                       </button>
 
@@ -263,7 +262,7 @@ function LoginRegisterPage() {
                     bg-linear-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                    <FontAwesomeIcon icon={faCompass} className="mr-2" />  Esperienze
+                    <FaCompass size={20} className="mr-2" />  Esperienze
                   </button>
 
                   <button
@@ -273,7 +272,7 @@ function LoginRegisterPage() {
                     bg-linear-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                    <FontAwesomeIcon icon={faCamera} className="mr-2" />  Foto
+                    <FaCamera size={20} className="mr-2" />  Foto
                   </button>
 
                   <input
@@ -291,7 +290,7 @@ function LoginRegisterPage() {
                   bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <FontAwesomeIcon icon={faUser} className="mr-2" />
+                  <FaUser size={20} className="mr-2" />
                   Registrati
                 </button>
               </motion.form>
@@ -318,10 +317,10 @@ function LoginRegisterPage() {
             border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
             bg-linear-to-br from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
             {message.icon === "success" && (
-              <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-2xl mr-2" />
+              <FaCheckCircle size={20} className="text-green-400 text-2xl mr-2" />
             )}
             {message.icon === "error" && (
-              <FontAwesomeIcon icon={faXmarkCircle} className="text-red-400 text-2xl mr-2" />
+              <FaTimesCircle size={20} className="text-red-400 text-2xl mr-2" />
             )}
             <p className="text-xl font-semibold">{message.text}</p>
           </motion.div>
