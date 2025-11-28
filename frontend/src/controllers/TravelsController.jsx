@@ -7,6 +7,7 @@ function TravelsController() {
     const [deleteId, setDeleteId] = useState(null); // stato per l'id del viaggio da eliminare
     const [message, setMessage] = useState(""); // messaggio di successo o errore
     const [activeCard, setActiveCard] = useState(null); // stato per aprire una card dei viaggi e mostare le altre informazioni
+    const [selectedYear, setSelectedYear] = useState(null); // stato per selezionare un'anno dalla select
 
     // uso lo useEffect per ottenere i dati dei viaggi
     useEffect(() => {
@@ -70,7 +71,7 @@ function TravelsController() {
                             aria-hidden="true">
                             {/* Riempimento giallo */}
                             <span className="absolute inset-0 overflow-hidden" style={{ width }}>
-                                <span className="text-yellow-400 text-xl leading-5 select-none">< FaStar/></span>
+                                <span className="text-yellow-400 text-xl leading-5 select-none">< FaStar /></span>
                             </span>
                         </span>
                     );
@@ -81,15 +82,37 @@ function TravelsController() {
         );
     }
 
+    // Lista di tutte gli anni nella select
+    const allYears = travels
+        ? [...new Set(travels.map(d => d.year))].sort((a, b) => b - a) // anni unici in ordine decrescente
+        : [];
+
+    // converte gli anni (interi) in stringhe
+    const yearOptions = allYears.map(y => ({
+        value: y,
+        label: y.toString(), // la select mostra sempre stringhe
+    }));
+
+    // Funzione per filtrare i viaggi in base agli anni
+    const filteredTravels = selectedYear
+        ? travels.filter(d => d.year === selectedYear)
+        : travels; // se nessun anno selezionato, mostra tutti
+
+
     return {
-        travels,        // lista dei viaggi
-        deleteId,       // id del viaggio da eliminare
-        setDeleteId,    // funzione per impostare l'id del viaggio da eliminare
-        handleDelete,   // funzione per eliminare il viaggio
-        message,        // messaggio di successo o errore
-        StarRating,      // componente per visualizzare le stelle
-        activeCard,      // mostra la card aperta
-        setActiveCard    // stato per indicare la card aperta
+        travels,           // lista dei viaggi
+        deleteId,          // id del viaggio da eliminare
+        setDeleteId,       // funzione per impostare l'id del viaggio da eliminare
+        handleDelete,      // funzione per eliminare il viaggio
+        message,           // messaggio di successo o errore
+        StarRating,        // componente per visualizzare le stelle
+        activeCard,        // mostra la card aperta
+        setActiveCard,     // stato per indicare la card aperta
+        selectedYear,      // anno selezionato
+        setSelectedYear,   // stato per selezionare un anno
+        allYears,          // per avere gli anni nella select
+        yearOptions,       // anni convertiti in stringhe
+        filteredTravels    // funzione per filtrare i viaggi in base agli anni
     }
 }
 

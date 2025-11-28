@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
+import Select from "react-select"; // importo Select per la customizzazione completa delle select
 import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
 import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // importo il modale di conferma eliminazione tappa
 import TravelDaysController from "../controllers/TravelDaysController"; // importo la logica della pagina TravelDays
@@ -28,6 +29,72 @@ function TravelDays() {
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
+
+  // Questo mi permette di vedere tutte le tappe
+  const experienceOptions = [
+    { value: null, label: "Tutte le esperienze" },
+    ...allExperiences.map(exp => ({ value: exp, label: exp }))
+  ];
+
+  const cityOptions = [
+    { value: null, label: "Tutte le città" },
+    ...allCities.map(city => ({ value: city, label: city }))
+  ];
+
+  // Customizzazione delle select
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: 'rgba(255,255,255,0.1)', // bg-white/10
+      borderRadius: '9999px',
+      borderColor: 'rgba(255,255,255,0.25)',
+      padding: '0.16rem',
+      color: 'white',
+      cursor: 'pointer'
+    }),
+    option: (provided, state) => {
+      const isDark = document.documentElement.classList.contains('dark'); // gestione cambio colore da modalità light a dark e viceversa
+      return {
+        ...provided,
+        backgroundColor: state.isFocused
+          ? (isDark ? '#475569' : '#1E40AF')   // hover: slate-600 (dark) o blu scuro (light)
+          : (isDark ? '#64748B' : '#2563EB'),  // normale: slate-500 (dark) o blu (light)
+        color: 'white',
+        padding: '0.5rem 1rem',
+        cursor: 'pointer',
+      };
+    },
+
+    singleValue: (provided) => ({
+      ...provided,
+      color: 'white',
+    }),
+
+    placeholder: (provided) => ({
+      ...provided,
+      color: 'white',
+      opacity: 1
+    }),
+
+    menu: (provided) => {
+      const isDark = document.documentElement.classList.contains('dark');
+      return {
+        ...provided,
+        zIndex: 3000, // z-index alto per stare sopra le card
+        backgroundColor: isDark ? "#334155" : "#1E3A8A", // slate-700 (dark) vs blu (light)
+        backgroundColor: '#1E3A8A', // blu scuro pieno
+        borderRadius: '1rem', // bordo generale del menu
+        overflow: 'hidden', // per non far uscire le rounded
+      }
+
+    },
+    menuList: (provided) => ({
+      ...provided,
+      padding: 0,
+      maxHeight: '200px',
+      overflowY: 'auto',
+    }),
+  };
 
 
   return (
@@ -95,31 +162,31 @@ function TravelDays() {
 
             <div className="flex flex-row justify-between w-full sm:w-auto sm:justify-start sm:gap-4">
 
-              {/* Select Filtro Esperienze */}
-              <select
-                value={selectedExperience}
-                onChange={(e) => setSelectedExperience(e.target.value)}
-                className="w-[48%] sm:w-56 px-4 py-2 font-semibold rounded-full bg-white/10 
-                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent 
-                transition cursor-pointer scrollbar">
-                <option value="" className="bg-blue-500 text-white dark:bg-slate-500">Tutte le Esperienze</option>
-                {allExperiences.map(exp => (
-                  <option key={exp} value={exp} className="bg-blue-500 text-white dark:bg-slate-500">{exp}</option>
-                ))}
-              </select>
+              {/* Select Esperienze */}
+              <Select
+                value={experienceOptions.find(opt => opt.value === selectedExperience) || null}
+                onChange={(option) => setSelectedExperience(option ? option.value : null)}
+                options={experienceOptions}
+                styles={customStyles}
+                isSearchable={false}             // blocca la scrittura sulla select
+                classNamePrefix="custom"         // prefisso per le classi generate (prende le classi custom dall'index.css)
+                menuPortalTarget={document.body} // forza il menu sopra tutto
+                menuPosition="fixed"             // posizione fissa per evitare overflow del container
+                placeholder="Filtra per esperienze"
+              />
 
-              {/* Select Filtro Città */}
-              <select
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
-                className="w-[48%] sm:w-56 px-4 py-2 font-semibold rounded-full bg-white/10 
-                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent 
-                transition cursor-pointer scrollbar">
-                <option value="" className="bg-blue-500 text-white dark:bg-slate-500">Tutte le Città</option>
-                {allCities.map(city => (
-                  <option key={city} value={city} className="bg-blue-500 text-white dark:bg-slate-500">{city}</option>
-                ))}
-              </select>
+              {/* Select Città */}
+              <Select
+                value={cityOptions.find(opt => opt.value === selectedCity) || null}
+                onChange={(option) => setSelectedCity(option ? option.value : null)}
+                options={cityOptions}
+                styles={customStyles}
+                isSearchable={false}
+                classNamePrefix="custom"
+                menuPortalTarget={document.body}
+                menuPosition="fixed"
+                placeholder="Filtra per città"
+              />
             </div>
 
             {/* Pulsante Aggiungi Tappa */}

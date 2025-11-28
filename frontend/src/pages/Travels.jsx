@@ -1,31 +1,123 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowRight, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
+import Select from "react-select";
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../controllers/TravelsController"; // importo la logica della pagina viaggi
 
 function Travels() {
 
   const {
-    travels,                 // lista dei viaggi
     deleteId,                // id del viaggio da eliminare
     setDeleteId,             // funzione per settare l'id del viaggio da eliminare
     handleDelete,            // funzione per eliminare il viaggio
     message,                 // messaggio di conferma o errore
     StarRating,              // funzione per visualizzare le stelle
     activeCard,              // mostra la card aperta
-    setActiveCard            // stato per indicare la card aperta
+    setActiveCard,           // stato per indicare la card aperta
+    selectedYear,            // anno selezionato
+    setSelectedYear,         // stato per selezionare un anno
+    yearOptions,             // anni nella select convertiti in stringhe
+    filteredTravels          // per filtrare i viaggi in base agli anni
   } = TravelsController();   // uso la logica della pagina viaggi
+
+  // Customizzazione della select
+  const customStyles = {
+
+    // CSS generale
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: 'rgba(255,255,255,0.1)', // bg-white/10
+      borderRadius: '9999px',
+      borderColor: 'rgba(255,255,255,0.25)',
+      padding: '0.16rem',
+      color: 'white',
+      cursor: 'pointer'
+    }),
+
+    // CSS delle option
+    option: (provided, state) => {
+      const isDark = document.documentElement.classList.contains('dark'); // gestione cambio colore da modalità light a dark e viceversa
+      return {
+        ...provided,
+        backgroundColor: state.isFocused
+          ? (isDark ? '#475569' : '#1E40AF')   // hover: slate-600 (dark) o blu scuro (light)
+          : (isDark ? '#64748B' : '#2563EB'),  // normale: slate-500 (dark) o blu (light)
+        color: 'white',
+        padding: '0.5rem 1rem',
+        cursor: 'pointer',
+      };
+    },
+
+    // CSS singola option
+    singleValue: (provided) => ({
+      ...provided,
+      color: 'white',
+    }),
+
+    // CSS placeholder
+    placeholder: (provided) => ({
+      ...provided,
+      color: 'white',
+      opacity: 1
+    }),
+
+    // CSS menu
+    menu: (provided) => {
+      const isDark = document.documentElement.classList.contains('dark');
+      return {
+        ...provided,
+        zIndex: 3000, // z-index alto per stare sopra le card
+        backgroundColor: isDark ? "#334155" : "#1E3A8A", // slate-700 (dark) vs blu (light)
+        backgroundColor: '#1E3A8A', // blu scuro pieno
+        borderRadius: '1rem', // bordo generale del menu
+        overflow: 'hidden', // per non far uscire le rounded
+      }
+    },
+    menuList: (provided) => ({
+      ...provided,
+      padding: 0,
+      maxHeight: '200px',
+      overflowY: 'auto',
+    }),
+  };
+
+  // questo mi permette di vedere tutti i viaggi
+  const yearOptionsWithAll = [
+    { value: null, label: "Tutti i viaggi" }, 
+    ...yearOptions
+  ];
+
 
   return (
     <div className="relative min-h-screen p-8 overflow-visible">
 
-      {/* Titolo */}
-      <h1 className="text-4xl font-extrabold text-white text-center flex-1 p-4
-      rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
-      backdrop-blur-2xl border border-white/40 shadow-3xl mb-3">
-        I miei viaggi
-      </h1>
+      {/* Paese + Select */}
+      <div className="relative flex items-center justify-between
+      mb-10 gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+      backdrop-blur-2xl border border-white/40 shadow-xl">
+
+        {/* Paese */}
+        <h1 className="text-4xl font-extrabold text-white text-center
+        absolute md:left-1/2 md:-translate-x-1/2 sm:relative sm:left-auto sm:translate-x-0">
+          I miei viaggi
+        </h1>
+
+        {/* Select Anni */}
+        <div className="ml-auto">
+          <Select
+            value={selectedYear !== null ? { value: selectedYear, label: selectedYear.toString() } : null}
+            onChange={(option) => setSelectedYear(option ? option.value : null)}
+            options={yearOptionsWithAll}
+            styles={customStyles}
+            isSearchable={false}             // blocca la scrittura sulla select
+            classNamePrefix="custom"         // prefisso per le classi generate (prende le classi custom dall'index.css)
+            menuPortalTarget={document.body} // forza il menu sopra tutto
+            menuPosition="fixed"             // posizione fissa per evitare overflow del container
+            placeholder="Filtra per anni"
+          />
+        </div>
+      </div>
 
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
@@ -37,7 +129,7 @@ function Travels() {
         animate="visible">
 
         <AnimatePresence>
-          {travels.map((v) => (
+          {filteredTravels.map((v) => (
             <motion.div
               key={v.id}
               className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 

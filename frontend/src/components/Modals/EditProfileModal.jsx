@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheck, FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
+import Select from "react-select";
 import travellers from "../../store/travellers";
 
 // Questo è il modale per la modifica del profilo
@@ -13,7 +14,7 @@ function EditProfileModal({
   showPassword,
   setShowPassword,
 }) {
-  const allExperiences = travellers.flatMap((t) => t.experiences);
+  const allExperiences = travellers.flatMap((t) => t.experiences); // prendo le esperienze dal file travellers.js
 
   const [password, setPassword] = useState(""); // stato per la password
   const [isFocused, setIsFocused] = useState(false); // stato per mostare modale per validazione password
@@ -84,6 +85,73 @@ function EditProfileModal({
       password: value,
     }));
   };
+
+  // prendo le esperienze da allExperiences
+  const experienceOptions = allExperiences.map(exp => ({
+    value: exp,
+    label: exp
+  }));
+
+
+  // Customizzazione delle select
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: 'rgba(255,255,255,0.1)', // bg-white/10
+      borderRadius: '9999px',
+      borderColor: 'rgba(255,255,255,0.25)',
+      padding: '0.16rem',
+      color: 'white',
+      cursor: 'pointer'
+    }),
+    option: (provided, state) => {
+      const isDark = document.documentElement.classList.contains('dark'); // gestione cambio colore da modalità light a dark e viceversa
+      return {
+        ...provided,
+        backgroundColor: state.isFocused
+          ? (isDark ? '#475569' : '#1E40AF')   // hover: slate-600 (dark) o blu scuro (light)
+          : (isDark ? '#64748B' : '#2563EB'),  // normale: slate-500 (dark) o blu (light)
+        color: 'white',
+        padding: '0.5rem 1rem',
+        cursor: 'pointer',
+      };
+    },
+
+    singleValue: (provided) => ({
+      ...provided,
+      color: 'white',
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: 'white', 
+      opacity: 1       
+    }),
+
+    menu: (provided) => {
+      const isDark = document.documentElement.classList.contains('dark');
+      return {
+        ...provided,
+        zIndex: 3000, // z-index alto per stare sopra le card
+        backgroundColor: isDark ? "#334155" : "#1E3A8A", // slate-700 (dark) vs blu (light)
+        backgroundColor: '#1E3A8A', // blu scuro pieno
+        borderRadius: '1rem', // bordo generale del menu
+        overflow: 'hidden', // per non far uscire le rounded
+      }
+    },
+    menuList: (provided) => ({
+      ...provided,
+      padding: 0,
+      maxHeight: '200px',
+      overflowY: 'auto',
+    }),
+
+    // questo mi serve per i modali
+    menuPortal: (provided) => ({
+      ...provided,
+      zIndex: 99999,
+    }),
+  };
+
 
 
   return (
@@ -197,29 +265,25 @@ function EditProfileModal({
             {/* Colonna destra */}
             <div className="space-y-4">
               {/* Selezione esperienze */}
-              <select
-                onChange={(e) => {
-                  const selected = e.target.value;
-                  if (selected && !editForm.experiences.includes(selected)) {
-                    setEditForm((prev) => ({
+              <Select
+                value={null} // sempre vuota dopo la selezione
+                onChange={(option) => {
+                  if (option && !editForm.experiences.includes(option.value)) {
+                    setEditForm(prev => ({
                       ...prev,
-                      experiences: [...prev.experiences, selected],
+                      experiences: [...prev.experiences, option.value]
                     }));
                   }
-                  e.target.value = "";
                 }}
-                className="w-full px-4 py-2 font-semibold rounded-full bg-white/10 
-                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
-                cursor-pointer scrollbar">
-                <option value="" className="bg-blue-500 text-white dark:bg-slate-500">
-                  Seleziona un’esperienza
-                </option>
-                {allExperiences.map((exp, i) => (
-                  <option key={i} value={exp} className="bg-blue-500 text-white dark:bg-slate-500">
-                    {exp}
-                  </option>
-                ))}
-              </select>
+                options={experienceOptions}
+                styles={customStyles}
+                isSearchable={false}
+                classNamePrefix="custom"
+                menuPortalTarget={document.body}
+                menuPosition="fixed"
+                placeholder="Seleziona un'esperienza"
+              />
+
 
               {/* Mostra esperienze scelte */}
               {editForm.experiences.length > 0 && (
@@ -278,8 +342,9 @@ function EditProfileModal({
             </div>
           </motion.form>
         </motion.div>
-      )}
-    </AnimatePresence>
+      )
+      }
+    </AnimatePresence >
   );
 }
 

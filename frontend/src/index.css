@@ -24,3 +24,24 @@
   background: rgb(100 116 139); /* bg-slate-500 */
   border-radius: 8px;
 }
+
+
+/* queste classi mi servono per le select */
+.custom__menu-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+.custom__menu-list::-webkit-scrollbar {
+  width: 8px;
+}
+.custom__menu-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom__menu-list::-webkit-scrollbar-thumb {
+  background: rgb(249 115 22); /* LIGHT MODE */
+  border-radius: 8px;
+}
+.dark .custom__menu-list::-webkit-scrollbar-thumb {
+  background: rgb(100 116 139); /* DARK MODE */
+}
+

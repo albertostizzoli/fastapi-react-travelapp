@@ -82,17 +82,22 @@ function TravelDaysController() {
 
     // Funzione per filtrare in modo combinato le tappe in base a esperienze e città
     const filteredDays = travel
-        ? travel.days.filter(d => { // filtra le esperienze e le citta nelle tappe
+        ? travel.days.filter(d => {
+
+            // protezione city
+            const city = d.city ?? ""; // fallback su stringa vuota
+            const selectedCityValue = selectedCity ?? "";
 
             const matchCity =
-                selectedCity === "" ||
-                d.city?.toLowerCase() === selectedCity.toLowerCase(); // per vedere se ci sono città scritte in minuscolo
+                selectedCityValue === "" || city.toLowerCase() === selectedCityValue.toLowerCase();
+
+            // protezione esperienze
+            const experienceList = d.experiences ?? [];
+            const selectedExperienceValue = selectedExperience ?? "";
 
             const matchExperience =
-                selectedExperience === "" ||
-                d.experiences?.some(exp =>
-                    exp.toLowerCase() === selectedExperience.toLowerCase() // per vedere se ci sono esperienze scritte in minuscolo
-                );
+                selectedExperienceValue === "" ||
+                experienceList.some(exp => (exp ?? "").toLowerCase() === selectedExperienceValue.toLowerCase());
 
             return matchCity && matchExperience;
         })
