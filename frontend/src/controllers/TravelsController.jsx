@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
 import axios from "axios";
 
 function TravelsController() {
@@ -69,7 +70,7 @@ function TravelsController() {
                             aria-hidden="true">
                             {/* Riempimento giallo */}
                             <span className="absolute inset-0 overflow-hidden" style={{ width }}>
-                                <span className="text-yellow-400 text-xl leading-5 select-none">★</span>
+                                <span className="text-yellow-400 text-xl leading-5 select-none">< FaStar/></span>
                             </span>
                         </span>
                     );

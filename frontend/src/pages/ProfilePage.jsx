@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion } from "framer-motion"; // importo framer-motion per le animazioni
-import { FaCheckCircle, FaCompass, FaEdit, FaGlobe, FaPlus, FaSignOutAlt, FaTrash, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle, FaArrowRight, FaCompass, FaEdit, FaGlobe, FaPlus, FaSignOutAlt, FaTrash, FaTimesCircle } from "react-icons/fa";
 import EditProfileModal from "../components/Modals/EditProfileModal"; // importo il modale di modifica profilo
 import ModalDeleteProfile from "../components/DeleteModals/ModalDeleteProfile"; // importo il modale di conferma eliminazione profilo
 import ProfileController from "../controllers/ProfileController"; // importo la logica della pagina profilo
@@ -46,7 +46,7 @@ function ProfilePage() {
                 alt="Profilo"
                 className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] 
                 object-cover border-4 border-blue-600/70 dark:border-slate-900/70"
-                style={{ width: "140px", height: "140px" }}
+                style={{ width: "152px", height: "152px" }}
               />
             ) : (
               <div className="w-36 h-36 mb-6 rounded-full bg-white/10 flex items-center justify-center text-4xl font-bold
@@ -141,7 +141,7 @@ function ProfilePage() {
                 },
               }}>
 
-              <h3 className="text-2xl font-bold text-white text-center mb-4 drop-shadow">
+              <h3 className="text-2xl font-bold text-white text-center mb-2 drop-shadow">
                 Gestisci i tuoi viaggi
               </h3>
 
@@ -189,7 +189,7 @@ function ProfilePage() {
                 },
               }}>
 
-              <h3 className="text-2xl font-bold text-white text-center mb-4 drop-shadow">
+              <h3 className="text-2xl font-bold text-white text-center mb-3 drop-shadow">
                 Ultimo Viaggio
               </h3>
 
@@ -203,16 +203,16 @@ function ProfilePage() {
                       rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
                       transition-all duration-300 border border-white/40">
 
-                      <div className="flex justify-between items-center mb-2">
+                      <div className="flex justify-between items-center">
                         <h4 className="text-xl font-bold text-white">
                           <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
                           {travel.town}
                         </h4>
-                        <span className="text-sm bg-white/20 px-2 py-1 rounded-3xl text-white">
-                          {travel.start_date} → {travel.end_date}
+                        <span className="text-sm bg-white/20 px-2 py-1 rounded-3xl text-white inline-flex items-center gap-2">
+                          {travel.start_date} <FaArrowRight size={12} /> {travel.end_date}
                         </span>
                       </div>
-                      <div className="border-t border-white/40 my-2" />
+                      <div className="border-t border-white/40 my-2 pt-1" />
                       {travel.general_vote ? (
                         <StarRating rating={travel.general_vote} />
                       ) : (

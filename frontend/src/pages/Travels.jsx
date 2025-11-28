@@ -102,8 +102,8 @@ function Travels() {
 
                       { /* Voti */}
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-white font-medium text-xl">Media voto:</span>
-                        <span className="ms-2 flex items-center capitalize font-semibold"><StarRating rating={v.general_vote ?? 0} /></span>
+                        <span className="text-white font-semibold text-xl">Media voto:</span>
+                        <span className="ms-2 flex items-center capitalize font-semibold text-white text-xl">{v.general_vote ?? 0}</span>
                       </div>
 
                       {v.votes && (

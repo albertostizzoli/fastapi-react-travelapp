@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 
 function ProfileController() {
     const [user, setUser] = useState(null); // stato per i dati utente
@@ -135,7 +136,7 @@ function ProfileController() {
                             aria-hidden="true">
                             {/* Riempimento giallo */}
                             <span className="absolute inset-0 overflow-hidden" style={{ width }}>
-                                <span className="text-yellow-400 text-lg leading-5 select-none">★</span>
+                                <span className="text-yellow-400 text-lg leading-5 select-none"><FaStar /></span>
                             </span>
                         </span>
                     );

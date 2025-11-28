@@ -52,7 +52,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
                 from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
-                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                  <FaArrowLeft size={20} className="mr-2" /> Torna alle Tappe
               </button>
 
@@ -61,7 +61,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
                 from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
-                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)">
+                hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                  <FaMapMarkerAlt size={20} className="mr-2" /> Vai alla Mappa
               </button>
             </div>
@@ -72,7 +72,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                 {selectedDay.city}, {selectedDay.title}
               </h1>
               <p className="text-2xl font-bold text-cyan-200/80 mb-4">{selectedDay.date}</p>
-              <p className="text-white text-justify font-semibold leading-relaxed mb-6">{selectedDay.description}</p>
+              <p className="text-white text-justify font-bold leading-relaxed mb-6">{selectedDay.description}</p>
 
               {/* Esperienze */}
               {selectedDay.experiences?.length > 0 && (
