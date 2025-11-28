@@ -10,6 +10,7 @@ function TravelDaysController() {
     const [selectedDay, setSelectedDay] = useState(null); //  stato per il modale Scopri di più (Apri / Chiudi)
     const [openCardId, setOpenCardId] = useState(null);  // stato per aprire una card dei viaggi e mostare le altre informazioni
     const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
+    const [selectedExperience, setSelectedExperience] = useState(""); // stato per filtrare le tappe in base alle esperienze
 
     // Fetch dati viaggio all'inizio e quando cambia l'id
     useEffect(() => {
@@ -74,28 +75,47 @@ function TravelDaysController() {
     // Lista di tutte le città nella select
     const allCities = travel ? [...new Set(travel.days.map(d => d.city?.trim()))] : [];
 
-    // Funzione per filtrare le tappe  per città
+    // Lista di tutte le esperienze nella select
+    const allExperiences = travel
+        ? [...new Set(travel.days.flatMap(d => d.experiences || []))] // legge tutte le esperienze in tutte le tappe le unisce in un solo array rimuove i duplicati
+        : [];
+
+    // Funzione per filtrare in modo combinato le tappe in base a esperienze e città
     const filteredDays = travel
-        ? travel.days.filter(d =>
-            selectedCity === "" ? true : d.city?.trim().toLowerCase() === selectedCity.toLowerCase()
-        )
+        ? travel.days.filter(d => { // filtra le esperienze e le citta nelle tappe
+
+            const matchCity =
+                selectedCity === "" ||
+                d.city?.toLowerCase() === selectedCity.toLowerCase(); // per vedere se ci sono città scritte in minuscolo
+
+            const matchExperience =
+                selectedExperience === "" ||
+                d.experiences?.some(exp =>
+                    exp.toLowerCase() === selectedExperience.toLowerCase() // per vedere se ci sono esperienze scritte in minuscolo
+                );
+
+            return matchCity && matchExperience;
+        })
         : [];
 
     return {
-        id,                // id del viaggio
-        travel,            // dati del viaggio
-        message,           // messaggio di successo o errore
-        deleteDayId,       // id del giorno da eliminare
-        selectedDay,       // giorno selezionato per il modale Scopri di più
-        setSelectedDay,    // funzione per aprire/chiudere il modale Scopri di più
-        setDeleteDayId,    // funzione per aprire/chiudere il modale di conferma eliminazione giorno
-        handleDeleteDay,   // funzione per eliminare un giorno
-        openCardId,        // mostra la card aperta
-        setOpenCardId,     // stato per indicare la card aperta
-        selectedCity,      // indica la città selezionata
-        setSelectedCity,   // stato per indicare la città selezionata
-        allCities,         // per prendere le città nella select
-        filteredDays,      // funzione per filtrare le tappe in base alla città
+        id,                    // id del viaggio
+        travel,                // dati del viaggio
+        message,               // messaggio di successo o errore
+        deleteDayId,           // id del giorno da eliminare
+        selectedDay,           // giorno selezionato per il modale Scopri di più
+        setSelectedDay,        // funzione per aprire/chiudere il modale Scopri di più
+        setDeleteDayId,        // funzione per aprire/chiudere il modale di conferma eliminazione giorno
+        handleDeleteDay,       // funzione per eliminare un giorno
+        openCardId,            // mostra la card aperta
+        setOpenCardId,         // stato per indicare la card aperta
+        selectedCity,          // indica la città selezionata
+        setSelectedCity,       // stato per indicare la città selezionata
+        allCities,             // per prendere le città nella select
+        filteredDays,          // funzione per filtrare in modo combinato le tappe in base a esperienze e città
+        selectedExperience,    // indica l'esperienza selezionata
+        setSelectedExperience, // stato per indicare l'esperienza selezionata
+        allExperiences,        // per prendere le esperienze nella select
     };
 }
 

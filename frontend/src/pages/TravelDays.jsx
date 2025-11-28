@@ -21,7 +21,10 @@ function TravelDays() {
     selectedCity,               // indica la città selezionata
     setSelectedCity,            // stato per indicare la città selezionata
     allCities,                  // per prendere le città nella select
-    filteredDays,               // funzione per filtrare le tappe in base alla città
+    filteredDays,               // funzione per filtrare in modo combinato le tappe in base a esperienze e città
+    selectedExperience,         // indica l'esperienza selezionata
+    setSelectedExperience,      // stato per indicare l'esperienza selezionata
+    allExperiences,             // per prendere le esperienze nella select
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -32,7 +35,7 @@ function TravelDays() {
 
       {/* Header */}
       <motion.div className="relative flex flex-row items-center justify-between
-        sm:flex-row sm:items-center mb-10 gap-4 flex-1 p-3 rounded-3xl
+        sm:flex-row sm:items-center mb-10 gap-4 flex-1 p-4 rounded-3xl
         bg-linear-to-br from-white/20 via-white/10 to-transparent
         backdrop-blur-2xl border border-white/40 shadow-xl"
         initial={{ x: -100, opacity: 0 }}
@@ -61,7 +64,7 @@ function TravelDays() {
 
         {/* Select per Filtro Città + Info Viaggio + Aggiungi Tappa */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between 
-        gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+        gap-4 p-6 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
         backdrop-blur-2xl border border-white/40 shadow-xl w-full">
 
           {/* Paese + Date */}
@@ -71,7 +74,7 @@ function TravelDays() {
             transition={{ duration: 0.8, ease: "easeOut" }}>
 
             { /* Paese */}
-            <h2 className="text-3xl font-extrabold text-white drop-shadow-2xl">
+            <h2 className="text-3xl font-extrabold text-white drop-shadow-2xl mb-2">
               {travel.town}
             </h2>
 
@@ -83,42 +86,57 @@ function TravelDays() {
             </h2>
           </motion.div>
 
-          {/* Select Filtro Città + Pulsante Aggiungi Tappa */}
+          {/* Select Filtro Esperienze + Select Filtro Città + Pulsante Aggiungi Tappa */}
           <motion.div
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex items-center">
+            className="flex flex-col sm:flex-row sm:items-center">
 
-            { /* Select Filtro Città */}
-            <select
-              value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-fit sm:w-56 px-4 py-2 me-4 font-semibold rounded-full bg-white/10 
-                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent transition 
-                cursor-pointer scrollbar">
-              <option value="" className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">Tutte le Città</option>
-              {allCities.map(city => (
-                <option key={city} value={city} className="bg-blue-500 text-white dark:bg-slate-500 rounded-full">{city}</option>
-              ))}
-            </select>
+            <div className="flex flex-row justify-between w-full sm:w-auto sm:justify-start sm:gap-4">
 
-            { /* Pulsante Aggiungi Tappa */}
+              {/* Select Filtro Esperienze */}
+              <select
+                value={selectedExperience}
+                onChange={(e) => setSelectedExperience(e.target.value)}
+                className="w-[48%] sm:w-56 px-4 py-2 font-semibold rounded-full bg-white/10 
+                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent 
+                transition cursor-pointer scrollbar">
+                <option value="" className="bg-blue-500 text-white dark:bg-slate-500">Tutte le Esperienze</option>
+                {allExperiences.map(exp => (
+                  <option key={exp} value={exp} className="bg-blue-500 text-white dark:bg-slate-500">{exp}</option>
+                ))}
+              </select>
+
+              {/* Select Filtro Città */}
+              <select
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+                className="w-[48%] sm:w-56 px-4 py-2 font-semibold rounded-full bg-white/10 
+                border border-white/40 text-white focus:ring-2 focus:ring-blue-300 focus:border-transparent 
+                transition cursor-pointer scrollbar">
+                <option value="" className="bg-blue-500 text-white dark:bg-slate-500">Tutte le Città</option>
+                {allCities.map(city => (
+                  <option key={city} value={city} className="bg-blue-500 text-white dark:bg-slate-500">{city}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Pulsante Aggiungi Tappa */}
             <Link
               to="/addDay"
               state={{ travelId: id }}
-              className="font-semibold px-6 py-2 inline-flex items-center justify-center gap-2
+              className="font-semibold mt-3 sm:ms-3 sm:mt-0 px-6 py-2 inline-flex items-center justify-center gap-2
               bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
             text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
-              hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
+              hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-56">
               <FaPlus size={20} /> Aggiungi Tappa
             </Link>
           </motion.div>
         </div>
 
-
         {/* Lista Giorni */}
-        <div className="flex-1 mt-6">
+        <div className="flex-1 mt-3">
 
           {travel.days?.length > 0 ? (
             <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
@@ -132,7 +150,7 @@ function TravelDays() {
               <AnimatePresence>
                 {filteredDays.map((d) => {
 
-                  const isOpen = openCardId === d.id;
+                  const isOpen = openCardId === d.id; // questo mi permette di aprire una card e l'ultima si chiude automaticamente
 
                   return (
                     <motion.div
@@ -141,6 +159,7 @@ function TravelDays() {
                         hidden: { scale: 0, opacity: 0 },
                         visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
                       }}
+                      exit={{ opacity: 0, scale: 0.9, y: 20 }}
                       style={{
                         boxShadow: isOpen
                           ? "0px 0px 35px rgba(255,255,255,0.40)"
@@ -150,11 +169,17 @@ function TravelDays() {
                       backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
                       transition-all duration-300">
 
-                      {/* Header card */}
+                      {/* Città + Tappa + Date */}
                       <div className="flex justify-between items-center gap-3">
                         <div>
-                          <p className="text-white font-extrabold text-3xl drop-shadow-xl">{d.city}, {d.title}</p>
-                          <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
+                          <p className="text-white font-extrabold text-2xl drop-shadow-xl">
+                            {d.city},{" "}
+                            {d.title?.length > 15 ? `${d.title.slice(0, 15)}...` : d.title}
+                          </p>
+
+                          <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
+                            {d.date}
+                          </p>
                         </div>
 
                         {/* Icona Freccia */}

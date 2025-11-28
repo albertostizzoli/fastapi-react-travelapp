@@ -21,7 +21,7 @@ function Travels() {
     <div className="relative min-h-screen p-8 overflow-visible">
 
       {/* Titolo */}
-      <h1 className="text-4xl font-extrabold text-white text-center flex-1 p-3
+      <h1 className="text-4xl font-extrabold text-white text-center flex-1 p-4
       rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
       backdrop-blur-2xl border border-white/40 shadow-3xl mb-3">
         I miei viaggi
@@ -29,21 +29,26 @@ function Travels() {
 
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
-        layout="position" // siccome uso una grid questo impedisce alle card di avere la stessa altezza al click
+        variants={{
+          hidden: { opacity: 1 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+        }}
         initial="hidden"
-        animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.2 } } }}>
+        animate="visible">
 
         <AnimatePresence>
           {travels.map((v) => (
             <motion.div
               key={v.id}
-              className={`group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
+              className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
               backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
-              transition-all duration-300`}
-              layout="position"
-              initial={{ opacity: 0, scale: 0.5, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0,
+              transition-all duration-300"
+              variants={{
+                hidden: { scale: 0, opacity: 0 },
+                visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+              }}
+              animate={{
+                opacity: 1, scale: 1, y: 0,
                 boxShadow: activeCard === v.id
                   ? "0px 0px 25px rgba(255,255,255,0.40)"
                   : "0px 0px 0px rgba(0,0,0,0)"
@@ -72,7 +77,7 @@ function Travels() {
                   <h3 className="text-3xl font-extrabold text-white drop-shadow-md">{v.year}</h3>
                 </div>
 
-                <div className="flex justify-between items-center gap-3">
+                <div className="flex justify-between items-center gap-3 mt-2">
                   <div>
                     <p className="text-white text-2xl font-semibold inline-flex items-center gap-2">
                       {v.start_date} <FaArrowRight size={20} /> {v.end_date}
