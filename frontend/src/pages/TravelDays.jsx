@@ -50,7 +50,7 @@ function TravelDays() {
         </Link>
 
         {/* Titolo */}
-        <h1 className="text-3xl font-extrabold text-white text-center
+        <h1 className="text-4xl font-extrabold text-white text-center
             md:absolute md:left-1/2 md:-translate-x-1/2">
           Le mie tappe
         </h1>
@@ -76,7 +76,7 @@ function TravelDays() {
             </h2>
 
             {/* Date */}
-            <h2 className="text-2xl font-extrabold text-white drop-shadow-xl flex items-center">
+            <h2 className="text-2xl font-bold text-white drop-shadow-xl flex items-center">
               {travel.start_date}
               <FaArrowRight size={20} className="mx-2" />
               {travel.end_date}
@@ -87,7 +87,8 @@ function TravelDays() {
           <motion.div
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}>
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex items-center">
 
             { /* Select Filtro Città */}
             <select
@@ -152,8 +153,8 @@ function TravelDays() {
                       {/* Header card */}
                       <div className="flex justify-between items-center gap-3">
                         <div>
-                          <p className="text-white font-extrabold text-2xl drop-shadow-xl">{d.city}, {d.title}</p>
-                          <p className="text-white text-xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
+                          <p className="text-white font-extrabold text-3xl drop-shadow-xl">{d.city}, {d.title}</p>
+                          <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">{d.date}</p>
                         </div>
 
                         {/* Icona Freccia */}
@@ -209,7 +210,7 @@ function TravelDays() {
                                 {d.experiences.slice(0, 3).map((c, i) => (
                                   <span
                                     key={i}
-                                    className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
+                                    className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
                                   bg-linear-to-br from-blue-600 to-red-500 text-white">
                                     {c}
                                   </span>
@@ -218,7 +219,7 @@ function TravelDays() {
                                 {/* badge per esperienze extra */}
                                 {d.experiences.length > 3 && (
                                   <span
-                                    className="font-semibold px-4 py-2 backdrop-blur-md text-sm rounded-full 
+                                    className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
                                   bg-linear-to-br from-blue-600 to-red-500 text-white italic">
                                     +{d.experiences.length - 3}
                                   </span>

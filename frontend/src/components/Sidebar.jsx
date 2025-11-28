@@ -87,7 +87,7 @@ function Sidebar() {
           onClick={toggleSidebar}
           aria-label="Apri il menu"
           className="text-white text-3xl font-bold p-2 cursor-pointer">
-          <FaBars size={20} />
+          <FaBars size={30} />
         </button>
         <h1 className="font-bold text-3xl underline">TravelDiary</h1>
       </nav>
@@ -141,7 +141,7 @@ function Sidebar() {
                     onClick={toggleSidebar}
                     aria-label="Chiudi il menu"
                     className="text-white text-2xl self-end cursor-pointer">
-                    <FaTimes size={20} />
+                    <FaTimes size={30} />
                   </button>
                 </div>
 

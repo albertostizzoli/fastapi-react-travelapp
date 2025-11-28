@@ -21,7 +21,7 @@ function Travels() {
     <div className="relative min-h-screen p-8 overflow-visible">
 
       {/* Titolo */}
-      <h1 className="text-3xl font-extrabold text-white text-center flex-1 p-3
+      <h1 className="text-4xl font-extrabold text-white text-center flex-1 p-3
       rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
       backdrop-blur-2xl border border-white/40 shadow-3xl mb-3">
         I miei viaggi
@@ -66,16 +66,16 @@ function Travels() {
               {/* Contenuto */}
               <div className="p-6 flex flex-col gap-3">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-extrabold text-white drop-shadow-md">
+                  <h2 className="text-3xl font-extrabold text-white drop-shadow-md">
                     {v.town}
                   </h2>
-                  <h3 className="text-2xl font-extrabold text-white drop-shadow-md">{v.year}</h3>
+                  <h3 className="text-3xl font-extrabold text-white drop-shadow-md">{v.year}</h3>
                 </div>
 
                 <div className="flex justify-between items-center gap-3">
                   <div>
-                    <p className="text-white text-xl font-medium">
-                      {v.start_date} → {v.end_date}
+                    <p className="text-white text-2xl font-semibold inline-flex items-center gap-2">
+                      {v.start_date} <FaArrowRight size={20} /> {v.end_date}
                     </p>
                   </div>
                   <motion.button
