@@ -203,11 +203,12 @@ function ProfilePage() {
                       rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
                       transition-all duration-300 border border-white/40">
 
-                      <div className="flex justify-between items-center">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <h4 className="text-xl font-bold text-white">
                           <i className="fa-solid fa-location-dot mr-2 text-orange-300"></i>
                           {travel.town}
                         </h4>
+
                         <span className="text-sm bg-white/20 px-2 py-1 rounded-3xl text-white inline-flex items-center gap-2">
                           {travel.start_date} <FaArrowRight size={12} /> {travel.end_date}
                         </span>

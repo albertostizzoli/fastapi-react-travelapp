@@ -192,7 +192,7 @@ function Sidebar() {
                     after:content-[''] after:absolute after:left-0 after:bottom-0 
                     after:w-0 after:h-0.5 after:bg-current 
                     after:transition-all after:duration-500 
-                    hover:after:w-full">I tuoi viaggi
+                    hover:after:w-full">I miei viaggi
                     </span>
                   </Link>
                 )}

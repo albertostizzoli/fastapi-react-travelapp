@@ -100,7 +100,7 @@ function TravelDays() {
     <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
 
       {/* Header */}
-      <div className="relative flex flex-row items-center justify-between
+      <div className="relative flex items-center justify-between
         sm:flex-row sm:items-center mb-10 gap-4 flex-1 p-4 rounded-3xl
         bg-linear-to-br from-white/20 via-white/10 to-transparent
         backdrop-blur-2xl border border-white/40 shadow-xl">
@@ -112,11 +112,11 @@ function TravelDays() {
           transition={{ duration: 0.8, ease: "easeOut" }}>
           <Link
             to="/travels"
-            className="font-semibold px-6 py-2 inline-flex items-center justify-center gap-2
+            className="font-semibold px-4 py-2 sm:px-6 sm:py-3 inline-flex items-center justify-center gap-2
             bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40
           text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
             hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
-            <FaArrowLeft size={20} /> Torna ai Viaggi
+            <FaArrowLeft size={20} className="mr-2 sm:m-auto" /> Torna ai Viaggi
           </Link>
         </motion.div>
 
@@ -164,18 +164,17 @@ function TravelDays() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row sm:items-center">
 
-            <div className="flex flex-row justify-between w-full sm:w-auto sm:justify-start sm:gap-4">
-
+            <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
               {/* Select Esperienze */}
               <Select
                 value={experienceOptions.find(opt => opt.value === selectedExperience) || null}
                 onChange={(option) => setSelectedExperience(option ? option.value : null)}
                 options={experienceOptions}
                 styles={customStyles}
-                isSearchable={false}             // blocca la scrittura sulla select
-                classNamePrefix="custom"         // prefisso per le classi generate (prende le classi custom dall'index.css)
-                menuPortalTarget={document.body} // forza il menu sopra tutto
-                menuPosition="fixed"             // posizione fissa per evitare overflow del container
+                isSearchable={false}
+                classNamePrefix="custom"
+                menuPortalTarget={document.body}
+                menuPosition="fixed"
                 placeholder="Filtra per esperienze"
               />
 
@@ -197,7 +196,7 @@ function TravelDays() {
             <Link
               to="/addDay"
               state={{ travelId: id }}
-              className="font-semibold mt-3 sm:ms-3 sm:mt-0 px-6 py-2 inline-flex items-center justify-center gap-2
+              className="font-semibold mt-4 sm:ms-3 sm:mt-0 px-6 py-2 inline-flex items-center justify-center gap-2
               bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
             text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
               hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-56">
@@ -241,7 +240,7 @@ function TravelDays() {
                       transition-all duration-300">
 
                       {/* Città + Tappa + Date */}
-                      <div className="flex justify-between items-center gap-3">
+                      <div className="flex justify-between items-center gap-1.5">
                         <div>
                           <p className="text-white font-extrabold text-2xl drop-shadow-xl">
                             {d.city},{" "}
@@ -269,7 +268,7 @@ function TravelDays() {
                       {/* FOTO PREVIEW */}
                       {d.photo.length > 0 ? (
                         <div className="flex gap-2 flex-wrap mt-4">
-                          {d.photo.slice(0, 3).map((p, i) => (
+                          {d.photo.slice(0, 2).map((p, i) => (
                             <img
                               key={i}
                               src={p}
@@ -279,7 +278,7 @@ function TravelDays() {
                         </div>
                       ) : (
                         <div className="flex gap-2 flex-wrap mt-4">
-                          {[1, 2, 3].map((_, i) => (
+                          {[1, 2].map((_, i) => (
                             <div
                               key={i}
                               className="w-28 h-28 rounded-2xl border border-white/40 shadow-md

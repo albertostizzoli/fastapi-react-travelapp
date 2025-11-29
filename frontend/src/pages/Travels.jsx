@@ -93,13 +93,13 @@ function Travels() {
     <div className="relative min-h-screen p-8 overflow-visible">
 
       {/* Paese + Select */}
-      <div className="relative flex items-center justify-between
+      <div className="relative flex sm:flex-row flex-col items-center justify-between
           mb-10 gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
           backdrop-blur-2xl border border-white/40 shadow-xl">
 
         {/* Paese */}
-        <motion.h1 className="text-4xl font-extrabold text-white text-center
-        absolute md:left-1/2 md:-translate-x-1/2 sm:relative sm:left-auto sm:translate-x-0"
+        <motion.h1 className="text-4xl font-extrabold text-white text-center relative
+        sm:absolute md:left-1/2 md:-translate-x-1/2  sm:left-auto sm:translate-x-0"
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}>
@@ -107,7 +107,7 @@ function Travels() {
         </motion.h1>
 
         {/* Select Anni */}
-        <motion.div className="ml-auto"
+        <motion.div className="sm:ml-auto sm:w-auto w-full"
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}>
@@ -126,7 +126,7 @@ function Travels() {
       </div>
 
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 items-start"
         variants={{
           hidden: { opacity: 1 },
           visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
@@ -181,9 +181,9 @@ function Travels() {
                   <h3 className="text-3xl font-extrabold text-white drop-shadow-md">{v.year}</h3>
                 </div>
 
-                <div className="flex justify-between items-center gap-3 mt-2">
+                <div className="flex flex-col sm:flex-row justify-between sm:items-center items-start gap-3 mt-2">
                   <div>
-                    <p className="text-white text-2xl font-semibold inline-flex items-center gap-2">
+                    <p className="text-white sm:text-2xl text-xl font-semibold inline-flex items-center gap-2">
                       {v.start_date} <FaArrowRight size={20} /> {v.end_date}
                     </p>
                   </div>
