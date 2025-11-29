@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
-import { FaArrowDown, FaArrowRight, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
+import { FaArrowDown, FaArrowRight, FaRegImage, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
 import Select from "react-select";
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../controllers/TravelsController"; // importo la logica della pagina viaggi
@@ -84,7 +84,7 @@ function Travels() {
 
   // questo mi permette di vedere tutti i viaggi
   const yearOptionsWithAll = [
-    { value: null, label: "Tutti i viaggi" }, 
+    { value: null, label: "Tutti i viaggi" },
     ...yearOptions
   ];
 
@@ -94,17 +94,23 @@ function Travels() {
 
       {/* Paese + Select */}
       <div className="relative flex items-center justify-between
-      mb-10 gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
-      backdrop-blur-2xl border border-white/40 shadow-xl">
+          mb-10 gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+          backdrop-blur-2xl border border-white/40 shadow-xl">
 
         {/* Paese */}
-        <h1 className="text-4xl font-extrabold text-white text-center
-        absolute md:left-1/2 md:-translate-x-1/2 sm:relative sm:left-auto sm:translate-x-0">
+        <motion.h1 className="text-4xl font-extrabold text-white text-center
+        absolute md:left-1/2 md:-translate-x-1/2 sm:relative sm:left-auto sm:translate-x-0"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}>
           I miei viaggi
-        </h1>
+        </motion.h1>
 
         {/* Select Anni */}
-        <div className="ml-auto">
+        <motion.div className="ml-auto"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}>
           <Select
             value={selectedYear !== null ? { value: selectedYear, label: selectedYear.toString() } : null}
             onChange={(option) => setSelectedYear(option ? option.value : null)}
@@ -116,7 +122,7 @@ function Travels() {
             menuPosition="fixed"             // posizione fissa per evitare overflow del container
             placeholder="Filtra per anni"
           />
-        </div>
+        </motion.div>
       </div>
 
       <motion.div
@@ -149,7 +155,7 @@ function Travels() {
               transition={{ duration: 0.4, ease: "easeOut" }}>
 
               {/* Immagine */}
-              {v.days && v.days[0]?.photo?.[0] && (
+              {v.days && v.days[0]?.photo?.[0] ? (
                 <div className="relative overflow-hidden">
                   <img
                     src={v.days[0].photo[0]}
@@ -157,6 +163,12 @@ function Travels() {
                     className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-110"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-80"></div>
+                </div>
+              ) : (
+                <div className="w-full h-52 bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                  dark:from-slate-700/40 dark:to-slate-600/40 flex flex-col items-center justify-center text-gray-200">
+                  <FaRegImage className="text-4xl opacity-60" />
+                  <span className="text-xl opacity-70">Nessuna Foto</span>
                 </div>
               )}
 

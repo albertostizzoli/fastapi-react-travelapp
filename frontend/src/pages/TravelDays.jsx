@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
-import { FaArrowDown, FaArrowLeft, FaArrowRight, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
+import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
 import Select from "react-select"; // importo Select per la customizzazione completa delle select
 import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
 import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // importo il modale di conferma eliminazione tappa
@@ -82,7 +82,6 @@ function TravelDays() {
         ...provided,
         zIndex: 3000, // z-index alto per stare sopra le card
         backgroundColor: isDark ? "#334155" : "#1E3A8A", // slate-700 (dark) vs blu (light)
-        backgroundColor: '#1E3A8A', // blu scuro pieno
         borderRadius: '1rem', // bordo generale del menu
         overflow: 'hidden', // per non far uscire le rounded
       }
@@ -101,30 +100,35 @@ function TravelDays() {
     <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
 
       {/* Header */}
-      <motion.div className="relative flex flex-row items-center justify-between
+      <div className="relative flex flex-row items-center justify-between
         sm:flex-row sm:items-center mb-10 gap-4 flex-1 p-4 rounded-3xl
         bg-linear-to-br from-white/20 via-white/10 to-transparent
-        backdrop-blur-2xl border border-white/40 shadow-xl"
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}>
+        backdrop-blur-2xl border border-white/40 shadow-xl">
 
         {/* Pulsante Torna ai Viaggi */}
-        <Link
-          to="/travels"
-          className="font-semibold px-6 py-2 inline-flex items-center justify-center gap-2
-          bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40
-        text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
-          hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
-          <FaArrowLeft size={20} /> Torna ai Viaggi
-        </Link>
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}>
+          <Link
+            to="/travels"
+            className="font-semibold px-6 py-2 inline-flex items-center justify-center gap-2
+            bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40
+          text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+            hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
+            <FaArrowLeft size={20} /> Torna ai Viaggi
+          </Link>
+        </motion.div>
 
         {/* Titolo */}
-        <h1 className="text-4xl font-extrabold text-white text-center
-            md:absolute md:left-1/2 md:-translate-x-1/2">
+        <motion.h1 className="text-4xl font-extrabold text-white text-center
+            md:absolute md:left-1/2 md:-translate-x-1/2"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}>
           Le mie tappe
-        </h1>
-      </motion.div>
+        </motion.h1>
+      </div>
 
       {/* Layout principale */}
       <div className=" flex flex-col gap-8">
@@ -241,7 +245,7 @@ function TravelDays() {
                         <div>
                           <p className="text-white font-extrabold text-2xl drop-shadow-xl">
                             {d.city},{" "}
-                            {d.title?.length > 15 ? `${d.title.slice(0, 15)}...` : d.title}
+                            {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title}
                           </p>
 
                           <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
@@ -263,7 +267,7 @@ function TravelDays() {
                       </div>
 
                       {/* FOTO PREVIEW */}
-                      {d.photo.length > 0 && (
+                      {d.photo.length > 0 ? (
                         <div className="flex gap-2 flex-wrap mt-4">
                           {d.photo.slice(0, 3).map((p, i) => (
                             <img
@@ -271,6 +275,19 @@ function TravelDays() {
                               src={p}
                               className="w-28 h-28 object-cover rounded-2xl border border-white/40 shadow-md"
                             />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex gap-2 flex-wrap mt-4">
+                          {[1, 2, 3].map((_, i) => (
+                            <div
+                              key={i}
+                              className="w-28 h-28 rounded-2xl border border-white/40 shadow-md
+                              bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                            dark:from-slate-700/40 dark:to-slate-600/40
+                              flex items-center justify-center text-white/70">
+                              <FaRegImage className="text-2xl" />
+                            </div>
                           ))}
                         </div>
                       )}
@@ -295,7 +312,7 @@ function TravelDays() {
                             )}
 
                             {/* esperienze */}
-                            {d.experiences && d.experiences.length > 0 && (
+                            {d.experiences && d.experiences.length > 0 ? (
                               <div className="mt-4 flex flex-wrap gap-2">
 
                                 {/* prime 3 esperienze */}
@@ -303,7 +320,7 @@ function TravelDays() {
                                   <span
                                     key={i}
                                     className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                  bg-linear-to-br from-blue-600 to-red-500 text-white">
+                                    bg-linear-to-br from-blue-600 to-red-500 text-white">
                                     {c}
                                   </span>
                                 ))}
@@ -312,13 +329,22 @@ function TravelDays() {
                                 {d.experiences.length > 3 && (
                                   <span
                                     className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                  bg-linear-to-br from-blue-600 to-red-500 text-white italic">
+                                    bg-linear-to-br from-blue-600 to-red-500 text-white italic">
                                     +{d.experiences.length - 3}
                                   </span>
                                 )}
                               </div>
+                            ) : (
+                              <div className="mt-4 flex flex-wrap gap-2">
+                                <span
+                                  className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                                  bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                                dark:from-slate-700/40 dark:to-slate-600/40 
+                                text-white/70 italic">
+                                  Nessuna esperienza
+                                </span>
+                              </div>
                             )}
-
 
                             {/* BOTTONI */}
                             <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
