@@ -233,7 +233,8 @@ function Travels() {
                           <Link
                             to={`/travels/${v.id}/days`}
                             className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                          bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                          bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                          backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                             <FaCalendarDay size={20} className="mr-1" /> Tappe
@@ -242,7 +243,8 @@ function Travels() {
                           <Link
                             to={`/travels/${v.id}/edit`}
                             className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                          bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white
+                          bg-linear-to-br from-orange-600 to-yellow-500 dark:form-orange-600/70 dark:to-yellow-500/70
+                          backdrop-blur-md border border-white/40 text-white
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                             <FaEdit size={20} className="mr-1" /> Modifica
@@ -251,7 +253,8 @@ function Travels() {
                           <button
                             onClick={() => setDeleteId(v.id)}
                             className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                          bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                          bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
+                          backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                             <FaTrash size={20} className="mr-1" /> Cancella

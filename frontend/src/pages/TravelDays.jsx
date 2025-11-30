@@ -112,9 +112,10 @@ function TravelDays() {
           transition={{ duration: 0.8, ease: "easeOut" }}>
           <Link
             to="/travels"
-            className="font-semibold px-4 py-2 sm:px-6 sm:py-3 inline-flex items-center justify-center gap-2
-            bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40
-          text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+            className="font-semibold px-2 py-2 sm:px-4 sm:py-2 inline-flex items-center justify-center gap-2
+            bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
+            backdrop-blur-md border border-white/40
+            text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
             hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
             <FaArrowLeft size={20} className="mr-2 sm:m-auto" /> Torna ai Viaggi
           </Link>
@@ -197,8 +198,9 @@ function TravelDays() {
               to="/addDay"
               state={{ travelId: id }}
               className="font-semibold mt-4 sm:ms-3 sm:mt-0 px-6 py-2 inline-flex items-center justify-center gap-2
-              bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40
-            text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+              bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70
+              backdrop-blur-md border border-white/40
+              text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
               hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-56">
               <FaPlus size={20} /> Aggiungi Tappa
             </Link>
@@ -319,7 +321,8 @@ function TravelDays() {
                                   <span
                                     key={i}
                                     className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                    bg-linear-to-br from-blue-600 to-red-500 text-white">
+                                    bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 
+                                    text-white">
                                     {c}
                                   </span>
                                 ))}
@@ -328,7 +331,8 @@ function TravelDays() {
                                 {d.experiences.length > 3 && (
                                   <span
                                     className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                    bg-linear-to-br from-blue-600 to-red-500 text-white italic">
+                                    bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 
+                                    text-white italic">
                                     +{d.experiences.length - 3}
                                   </span>
                                 )}
@@ -353,7 +357,8 @@ function TravelDays() {
                                   setSelectedDay(d);
                                 }}
                                 className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
-                                bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                                bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                                backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                                 <FaBookOpen size={20} /> Leggi
@@ -363,7 +368,8 @@ function TravelDays() {
                                 to={`/days/${d.id}/edit`}
                                 onClick={(e) => e.stopPropagation()}
                                 className="flex-1 w-full font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                                bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white 
+                                bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
+                                backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                                 <FaEdit size={20} /> Modifica
@@ -375,7 +381,8 @@ function TravelDays() {
                                   setDeleteDayId(d.id);
                                 }}
                                 className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
-                                bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                                bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
+                                backdrop-blur-md border border-white/40 text-white 
                                 rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                                 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                                 <FaTrash size={20} /> Cancella

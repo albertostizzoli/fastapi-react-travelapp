@@ -50,7 +50,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
               <button
                 onClick={handleClose}
                 className="font-semibold flex items-center justify-center gap-2 px-2 py-2 sm:px-4 sm:py-2 bg-linear-to-br 
-                from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70 
+                backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                  <FaArrowLeft size={20} className="mr-2" /> Torna alle Tappe
@@ -59,7 +60,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
               <button
                 onClick={() => setShowMapModal(true)}
                 className="font-semibold flex items-center justify-center gap-2 px-2 py-2 sm:px-4 sm:py-2 bg-linear-to-br 
-                from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
+                from-blue-600 to-cyan-500 dark:form-blue-600/70 dark:to-cyan-500/70 
+                backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                  <FaMapMarkerAlt size={20} className="mr-2" /> Vai alla Mappa
@@ -81,7 +83,8 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
                     <span
                       key={i}
                       className="font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-red-500
-                        backdrop-blur-md border border-white/40 text-white rounded-full transition-all duration-300 
+                        dark:from-blue-600/70 dark:to-red-500/70 backdrop-blur-md border border-white/40 
+                        text-white rounded-full transition-all duration-300 
                         ease-in-out hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                       {experience}
                     </span>

@@ -44,7 +44,7 @@ function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
                                                 key={experience}
                                                 className={`font-semibold flex items-center justify-center text-center px-3 py-2 border 
                                                         rounded-2xl cursor-pointer text-sm transition-all backdrop-blur-md ${categories.includes(experience)
-                                                        ? "bg-linear-to-br from-blue-600 to-orange-600 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                        ? "bg-linear-to-br from-blue-600 to-orange-600 dark:from-blue-600/70 dark:to-orange-500/70 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                         : "bg-linear-to-br from-white/10 to-white/20 backdrop-blur-md border border-white text-white shadow-lg transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                                     }`}>
 
@@ -74,8 +74,9 @@ function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
                                 type="button"
                                 onClick={onClose}
                                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
-                                bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 
-                              text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
+                                bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70 
+                                backdrop-blur-md border border-white/40 
+                                text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                 <FaTimes size={20} className="mr-2" />Chiudi
                             </button>
@@ -83,8 +84,9 @@ function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
                                 type="button"
                                 onClick={onClose}
                                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
-                                bg-linear-to-br from-green-600 to-teal-500 backdrop-blur-md border border-white/40 
-                              text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
+                                bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70 
+                                backdrop-blur-md border border-white/40 
+                                text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
                                 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)])">
                                 <FaCheck size={20} className="mr-2" />Conferma
                             </button>

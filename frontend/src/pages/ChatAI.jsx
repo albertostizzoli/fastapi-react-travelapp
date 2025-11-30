@@ -115,7 +115,7 @@ function ChatAI() {
                     onClick={handleRecommend}
                     disabled={isRecommending}
                     className={`w-full sm:w-auto font-semibold flex justify-center items-center gap-2 px-4 sm:px-5 py-2 sm:py-3
-                    ${isRecommending ? "bg-gray-500 cursor-not-allowed" : "bg-linear-to-br from-green-600 to-teal-500 hover:scale-105"}
+                    ${isRecommending ? "bg-gray-500 cursor-not-allowed" : "bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70 hover:scale-105"}
                     backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 cursor-pointer
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-sm sm:text-base`}>

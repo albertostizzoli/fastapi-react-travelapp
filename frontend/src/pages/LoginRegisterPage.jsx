@@ -134,7 +134,8 @@ function LoginRegisterPage() {
                 <button
                   type="submit"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
-                  bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
+                  bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70 
+                  backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <FaUser size={20} className="mr-2" />
@@ -259,7 +260,8 @@ function LoginRegisterPage() {
                     type="button"
                     onClick={() => setIsModalOpen(true)}
                     className="flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
-                    bg-linear-to-r from-orange-600/70 to-rose-500/60 backdrop-blur-md border border-white/40 text-white 
+                    bg-linear-to-br from-orange-600 to-rose-500 dark:from-orange-600/70 dark:to-rose-500/70 
+                    backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                     <FaCompass size={20} className="mr-2" />  Esperienze
@@ -269,7 +271,8 @@ function LoginRegisterPage() {
                     type="button"
                     onClick={handlePhotoSelect}
                     className=" flex-1 font-semibold flex justify-center items-center gap-2 px-4 py-2
-                    bg-linear-to-r from-green-600/70 to-teal-500/60 backdrop-blur-md border border-white/40 text-white 
+                    bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70 
+                    backdrop-blur-md border border-white/40 text-white 
                     rounded-full shadow-md transition-all duration-300 hover:scale-105
                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                     <FaCamera size={20} className="mr-2" />  Foto
@@ -287,7 +290,8 @@ function LoginRegisterPage() {
                 <button
                   type="submit"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2 mt-4
-                  bg-linear-to-r from-blue-600/70 to-cyan-500/60 backdrop-blur-md border border-white/40 text-white 
+                  bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                  backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
                   <FaUser size={20} className="mr-2" />

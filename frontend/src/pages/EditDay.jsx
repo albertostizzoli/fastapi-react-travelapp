@@ -71,7 +71,7 @@ function EditDay() {
             <Link
               to={travelId ? `/travels/${travelId}/days` : `/travels`}
               className="font-semibold px-2 py-2 sm:px-4 sm:py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
-              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
+              dark:from-red-600/70 dark:to-rose-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaArrowLeft size={20} />
               Torna alle Tappe
@@ -154,8 +154,8 @@ function EditDay() {
             <button
               type="button"
               onClick={() => setIsCategoryModalOpen(true)}
-              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 backdrop-blur-md 
-              border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
+              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 dark:from-orange-600/70 dark:to-rose-500/70
+              backdrop-blur-md border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaBars size={20} /> Seleziona Esperienza
             </button>
@@ -163,8 +163,8 @@ function EditDay() {
             <button
               type="button"
               onClick={handlePhotoSelect}
-              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md 
-              border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
+              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+              backdrop-blur-md border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaCamera size={20} /> Carica Foto
             </button>
@@ -176,7 +176,7 @@ function EditDay() {
               {day.experiences.map((experience, i) => (
                 <span
                   key={i}
-                  className="flex items-center justify-between bg-linear-to-br from-blue-600 to-cyan-500
+                  className="flex items-center justify-between bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
                   backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
                   shadow-md transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer">
                   <span>{experience}</span>
@@ -269,7 +269,7 @@ function EditDay() {
             <button
               type="submit"
               className="w-full sm:w-auto font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
-              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
+              dark:from-green-600/70 dark:to-teal-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaEdit size={20} />
               Salva Modifiche

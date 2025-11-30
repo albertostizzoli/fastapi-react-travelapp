@@ -36,7 +36,7 @@ function AddTravel() {
           <Link
             to="/travels"
             className="font-semibold px-2 py-2 sm:px-4 sm:py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
-            backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
+            dark:from-red-600/70 dark:to-rose-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <FaArrowLeft size={20} />
             Torna ai Viaggi
@@ -155,7 +155,7 @@ function AddTravel() {
             <button
               type="submit"
               className="w-full sm:w-auto font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
-              backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out
+              dark:from-green-600/70 dark:to-teal-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaPlus size={20} />
               Aggiungi Viaggio

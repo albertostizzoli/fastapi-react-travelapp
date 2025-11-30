@@ -151,8 +151,6 @@ function EditProfileModal({
     }),
   };
 
-
-
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -290,8 +288,8 @@ function EditProfileModal({
                   {editForm.experiences.map((experience, i) => (
                     <span
                       key={i}
-                      className="bg-linear-to-br from-blue-600 to-cyan-500 px-3 py-1 rounded-full text-sm text-white 
-                      flex items-center gap-2 shadow-md">
+                      className="bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70 
+                      px-3 py-1 rounded-full text-sm text-white flex items-center gap-2 shadow-md">
                       {experience}
                       <button
                         type="button"
@@ -325,7 +323,8 @@ function EditProfileModal({
                 type="button"
                 onClick={onClose}
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
-                from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
+                from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70 
+                backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <FaTimes size={20} className="mr-2" /> Annulla
@@ -333,7 +332,8 @@ function EditProfileModal({
               <button
                 type="submit"
                 className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
-                from-green-600 to-teal-500 backdrop-blur-md border border-white/40 text-white 
+                from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70 
+                backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <FaCheck size={20} className="mr-2" /> Salva
