@@ -135,132 +135,135 @@ function Travels() {
         animate="visible">
 
         <AnimatePresence>
-          {filteredTravels.map((v) => (
-            <motion.div
-              key={v.id}
-              className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
-              backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
-              transition-all duration-300"
-              variants={{
-                hidden: { scale: 0, opacity: 0 },
-                visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
-              }}
-              animate={{
-                opacity: 1, scale: 1, y: 0,
-                boxShadow: activeCard === v.id
-                  ? "0px 0px 25px rgba(255,255,255,0.40)"
-                  : "0px 0px 0px rgba(0,0,0,0)"
-              }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}>
+          {filteredTravels.map((v) => {
 
-              {/* Immagine */}
-              {v.days && v.days[0]?.photo?.[0] ? (
-                <div className="relative overflow-hidden">
-                  <img
-                    src={v.days[0].photo[0]}
-                    alt={`Foto di ${v.town}`}
-                    className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-110"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-80"></div>
-                </div>
-              ) : (
-                <div className="w-full h-52 bg-linear-to-br from-blue-200/40 to-orange-200/40 
-                  dark:from-slate-700/40 dark:to-slate-600/40 flex flex-col items-center justify-center text-gray-200">
-                  <FaRegImage className="text-4xl opacity-60" />
-                  <span className="text-xl opacity-70">Nessuna Foto</span>
-                </div>
-              )}
+            const isOpen = activeCard === v.id;  // questo mi permette di aprire una card e l'ultima si chiude automaticamente
 
-              {/* Contenuto */}
-              <div className="p-6 flex flex-col gap-3">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-3xl font-extrabold text-white drop-shadow-md">
-                    {v.town}
-                  </h2>
-                  <h3 className="text-3xl font-extrabold text-white drop-shadow-md">{v.year}</h3>
-                </div>
+            return (
+              <motion.div
+                key={v.id}
+                className="group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
+                transition-all duration-300"
+                variants={{
+                  hidden: { scale: 0, opacity: 0 },
+                  visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+                }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                style={{
+                  boxShadow: isOpen
+                    ? "0px 0px 35px rgba(255,255,255,0.40)"
+                    : "0px 0px 0px rgba(255,255,255,0)",
+                }}>
 
-                <div className="flex flex-col sm:flex-row justify-between sm:items-center items-start gap-3 mt-2">
-                  <div>
-                    <p className="text-white sm:text-2xl text-xl font-semibold inline-flex items-center gap-2">
-                      {v.start_date} <FaArrowRight size={20} /> {v.end_date}
-                    </p>
+                {/* Immagine */}
+                {v.days && v.days[0]?.photo?.[0] ? (
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={v.days[0].photo[0]}
+                      alt={`Foto di ${v.town}`}
+                      className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:brightness-110"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-80"></div>
                   </div>
-                  <motion.button
-                    onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
-                    animate={{ rotate: activeCard === v.id ? 180 : 0 }}
-                    transition={{ duration: 0.4 }}
-                    title={activeCard ? "Chiudi dettagli" : "Apri dettagli"}
-                    className="cursor-pointer border border-white rounded-full w-12 h-12 
-                    flex items-center justify-center text-white
-                    transition-all duration-300 hover:bg-white hover:text-black">
-                    <FaArrowDown size={20} />
-                  </motion.button>
-                </div>
+                ) : (
+                  <div className="w-full h-52 bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                  dark:from-slate-700/40 dark:to-slate-600/40 flex flex-col items-center justify-center text-gray-200">
+                    <FaRegImage className="text-4xl opacity-60" />
+                    <span className="text-xl opacity-70">Nessuna Foto</span>
+                  </div>
+                )}
 
-                { /* Voti + Pulsanti della Card */}
-                <AnimatePresence>
-                  {activeCard === v.id && ( // card aperta e mostra i voti e i pulsanti 
-                    <motion.div
-                      layout="position"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20, height: 0 }}
-                      transition={{ type: "spring", stiffness: 120, damping: 20 }}>
+                {/* Contenuto */}
+                <div className="p-6 flex flex-col gap-3">
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-3xl font-extrabold text-white drop-shadow-md">
+                      {v.town}
+                    </h2>
+                    <h3 className="text-3xl font-extrabold text-white drop-shadow-md">{v.year}</h3>
+                  </div>
 
-                      { /* Voti */}
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="text-white font-semibold text-xl">Media voto:</span>
-                        <span className="ms-2 flex items-center capitalize font-semibold text-white text-xl">{v.general_vote ?? 0}</span>
-                      </div>
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center items-start gap-3 mt-2">
+                    <div>
+                      <p className="text-white sm:text-2xl text-xl font-semibold inline-flex items-center gap-2">
+                        {v.start_date} <FaArrowRight size={20} /> {v.end_date}
+                      </p>
+                    </div>
+                    <motion.button
+                      onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
+                      animate={{ rotate: activeCard === v.id ? 180 : 0 }}
+                      transition={{ duration: 0.4 }}
+                      title={activeCard ? "Chiudi dettagli" : "Apri dettagli"}
+                      className="cursor-pointer border border-white rounded-full w-12 h-12 
+                      flex items-center justify-center text-white
+                      transition-all duration-300 hover:bg-white hover:text-black">
+                      <FaArrowDown size={20} />
+                    </motion.button>
+                  </div>
 
-                      {v.votes && (
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-2sm text-white mt-5">
-                          {Object.entries(v.votes).map(([key, value]) => (
-                            <li key={key} className="flex justify-between items-center font-semibold">
-                              <span className="capitalize">{key}:</span>
-                              <StarRating rating={value} />
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                  { /* Voti + Pulsanti della Card */}
+                  <AnimatePresence>
+                    {activeCard === v.id && ( // card aperta e mostra i voti e i pulsanti 
+                      <motion.div
+                        layout="position"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20, height: 0 }}
+                        transition={{ type: "spring", stiffness: 120, damping: 20 }}>
 
-                      {/* Pulsanti */}
-                      <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
-                        <Link
-                          to={`/travels/${v.id}/days`}
-                          className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                        { /* Voti */}
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-white font-semibold text-xl">Media voto:</span>
+                          <span className="ms-2 flex items-center capitalize font-semibold text-white text-xl">{v.general_vote ?? 0}</span>
+                        </div>
+
+                        {v.votes && (
+                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-2sm text-white mt-5">
+                            {Object.entries(v.votes).map(([key, value]) => (
+                              <li key={key} className="flex justify-between items-center font-semibold">
+                                <span className="capitalize">{key}:</span>
+                                <StarRating rating={value} />
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {/* Pulsanti */}
+                        <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
+                          <Link
+                            to={`/travels/${v.id}/days`}
+                            className=" flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                           bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                          <FaCalendarDay size={20} className="mr-1" /> Tappe
-                        </Link>
+                            <FaCalendarDay size={20} className="mr-1" /> Tappe
+                          </Link>
 
-                        <Link
-                          to={`/travels/${v.id}/edit`}
-                          className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                          <Link
+                            to={`/travels/${v.id}/edit`}
+                            className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                           bg-linear-to-br from-orange-600 to-yellow-500 backdrop-blur-md border border-white/40 text-white
                           rounded-full shadow-md transition-all duration-300 hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                          <FaEdit size={20} className="mr-1" /> Modifica
-                        </Link>
+                            <FaEdit size={20} className="mr-1" /> Modifica
+                          </Link>
 
-                        <button
-                          onClick={() => setDeleteId(v.id)}
-                          className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
+                          <button
+                            onClick={() => setDeleteId(v.id)}
+                            className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                           bg-linear-to-br from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                           rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
                           hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                          <FaTrash size={20} className="mr-1" /> Cancella
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          ))}
+                            <FaTrash size={20} className="mr-1" /> Cancella
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </motion.div>
 

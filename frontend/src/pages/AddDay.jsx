@@ -69,27 +69,28 @@ function AddDay() {
         {/* HEADER / INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
               border-b border-white/20 px-6 py-4 rounded-t-3xl">
-          <div className="flex justify-between items-center gap-4">
-
+          <div className="relative flex sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
             <Link
               to={`/travels/${selectedTravel}/days`}
-              className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
+              className="font-semibold px-2 py-2 sm:px-4 sm:py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaArrowLeft size={20} />
               Torna alle Tappe
             </Link>
 
-            <h2 className="text-2xl text-center font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+            <h2 className="text-2xl text-center font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]
+                sm:absolute md:left-1/2 md:-translate-x-1/2  sm:left-auto sm:translate-x-0">
               Aggiungi Tappa
             </h2>
-
-            <p className="text-white text-sm italic">* Il campo è obbligatorio</p>
           </div>
         </div>
 
         {/* COLONNA SINISTRA */}
-        <div className="flex flex-col gap-6 mt-20"> {/* mt-20 per lasciare spazio all’intestazione */}
+        <div className="flex flex-col gap-6 mt-22 sm:mt-20"> {/* mt-20 per lasciare spazio all’intestazione */}
+
+          <p className="text-white text-sm italic text-right">* Il campo è obbligatorio</p>
+
           {/* Viaggio */}
           <div>
             <label className="block font-bold text-white mb-2">Viaggio *</label>
@@ -193,11 +194,11 @@ function AddDay() {
         {/* COLONNA DESTRA */}
         <div className="flex flex-col gap-6 justify-start sm:mt-20 scrollbar overflow-y-auto p-2">
           {/* Pulsanti principali */}
-          <div className="flex justify-between gap-4">
+          <div className="flex flex-col sm:flex-row justify-between gap-4">
             <button
               type="button"
               onClick={() => setIsCategoryModalOpen(true)}
-              className="font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 backdrop-blur-md 
+              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaBars size={20} /> Seleziona Esperienza
@@ -205,7 +206,7 @@ function AddDay() {
             <button
               type="button"
               onClick={handlePhotoSelect}
-              className="font-semibold px-6 py-2 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md 
+              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-blue-600 to-cyan-500 backdrop-blur-md 
               border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaCamera size={20} /> Carica Foto
@@ -312,7 +313,7 @@ function AddDay() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
+              className=" w-full sm:w-auto font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaPlus size={20} />

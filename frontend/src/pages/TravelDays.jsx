@@ -97,7 +97,7 @@ function TravelDays() {
 
 
   return (
-    <div className="min-h-screen bg-transparent sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
+    <div className="min-h-screen bg-transparent mt-6 sm:mt-0 sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
 
       {/* Header */}
       <div className="relative flex items-center justify-between
@@ -272,7 +272,7 @@ function TravelDays() {
                             <img
                               key={i}
                               src={p}
-                              className="w-28 h-28 object-cover rounded-2xl border border-white/40 shadow-md"
+                              className="w-40 h-28 sm:w-48 object-cover rounded-2xl border border-white/40 shadow-md"
                             />
                           ))}
                         </div>
@@ -281,9 +281,9 @@ function TravelDays() {
                           {[1, 2].map((_, i) => (
                             <div
                               key={i}
-                              className="w-28 h-28 rounded-2xl border border-white/40 shadow-md
+                              className="w-40 h-28 sm:w-48 rounded-2xl border border-white/40 shadow-md
                               bg-linear-to-br from-blue-200/40 to-orange-200/40 
-                            dark:from-slate-700/40 dark:to-slate-600/40
+                              dark:from-slate-700/40 dark:to-slate-600/40
                               flex items-center justify-center text-white/70">
                               <FaRegImage className="text-2xl" />
                             </div>

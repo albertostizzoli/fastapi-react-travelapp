@@ -35,18 +35,17 @@ function AddTravel() {
 
           <Link
             to="/travels"
-            className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
+            className="font-semibold px-2 py-2 sm:px-4 sm:py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
             backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <FaArrowLeft size={20} />
             Torna ai Viaggi
           </Link>
 
-          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] text-center">
-            Aggiungi un nuovo viaggio
+          <h2 className="text-2xl text-center font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]
+            sm:absolute md:left-1/2 md:-translate-x-1/2 sm:left-auto sm:translate-x-0">
+            Aggiungi Viaggio
           </h2>
-
-          <p className="text-sm italic text-white">* Il campo è obbligatorio</p>
         </div>
 
         {/* Divider verticale desktop */}
@@ -54,7 +53,9 @@ function AddTravel() {
             to-transparent rounded-full pointer-events-none" />
 
         {/* COLONNA SINISTRA */}
-        <div className="flex flex-col gap-6 mt-24">
+        <div className="flex flex-col gap-6 mt-22">
+
+          <p className="text-sm italic text-white text-right">* Il campo è obbligatorio</p>
           {/* Paese */}
           <div>
             <label className="block font-bold text-white mb-2">Paese *</label>
@@ -113,7 +114,7 @@ function AddTravel() {
         </div>
 
         {/* COLONNA DESTRA */}
-        <div className="flex flex-col gap-8 sm:mt-24">
+        <div className="flex flex-col gap-8 sm:mt-22">
           {/* Voti */}
           <div>
             <h3 className="font-bold mb-4 text-white text-center text-xl">Voti *</h3>
@@ -150,10 +151,10 @@ function AddTravel() {
           </div>
 
           { /* Azione */}
-          <div className="flex justify-end mt-20">
+          <div className="flex justify-end mt-6.5">
             <button
               type="submit"
-              className="font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
+              className="w-full sm:w-auto font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
               backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-100 ease-in-out
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaPlus size={20} />

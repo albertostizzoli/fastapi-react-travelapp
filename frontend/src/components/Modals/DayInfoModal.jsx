@@ -49,7 +49,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             <div className="flex justify-between items-center p-4 border-b border-white/40 bg-black/10 backdrop-blur-lg">
               <button
                 onClick={handleClose}
-                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
+                className="font-semibold flex items-center justify-center gap-2 px-2 py-2 sm:px-4 sm:py-2 bg-linear-to-br 
                 from-red-600 to-rose-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
@@ -58,7 +58,7 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
 
               <button
                 onClick={() => setShowMapModal(true)}
-                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
+                className="font-semibold flex items-center justify-center gap-2 px-2 py-2 sm:px-4 sm:py-2 bg-linear-to-br 
                 from-blue-600 to-cyan-500 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
