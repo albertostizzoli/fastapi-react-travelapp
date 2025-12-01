@@ -69,7 +69,6 @@ function Travels() {
         ...provided,
         zIndex: 3000, // z-index alto per stare sopra le card
         backgroundColor: isDark ? "#334155" : "#1E3A8A", // slate-700 (dark) vs blu (light)
-        backgroundColor: '#1E3A8A', // blu scuro pieno
         borderRadius: '1rem', // bordo generale del menu
         overflow: 'hidden', // per non far uscire le rounded
       }

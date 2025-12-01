@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
@@ -7,6 +8,8 @@ import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // impor
 import TravelDaysController from "../controllers/TravelDaysController"; // importo la logica della pagina TravelDays
 
 function TravelDays() {
+
+  const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
 
   const {
     id,                         // id del viaggio dai parametri URL
@@ -211,191 +214,207 @@ function TravelDays() {
         <div className="flex-1 mt-3">
 
           {travel.days?.length > 0 ? (
-            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4 items-start"
-              variants={{
-                hidden: { opacity: 1 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-              }}
-              initial="hidden"
-              animate="visible">
+            <div className="relative w-full overflow-hidden">
 
-              <AnimatePresence>
-                {filteredDays.map((d) => {
+              {/* CAROSELLO */}
+              <motion.div
+                ref={scrollRef}
+                className="flex gap-6 overflow-x-auto px-6 py-4 scroll-smooth snap-x snap-mandatory"
+                style={{ scrollbarWidth: "none" }}
+                variants={{
+                  hidden: { opacity: 1 },
+                  visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+                }}
+                initial="hidden"
+                animate="visible">
+                <AnimatePresence>
+                  {filteredDays.map((d) => {
 
-                  const isOpen = openCardId === d.id; // questo mi permette di aprire una card e l'ultima si chiude automaticamente
+                    const isOpen = openCardId === d.id;
 
-                  return (
-                    <motion.div
-                      key={d.id}
-                      variants={{
-                        hidden: { scale: 0, opacity: 0 },
-                        visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
-                      }}
-                      exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                      style={{
-                        boxShadow: isOpen
-                          ? "0px 0px 35px rgba(255,255,255,0.40)"
-                          : "0px 0px 0px rgba(255,255,255,0)",
-                      }}
-                      className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
-                      backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
-                      transition-all duration-300">
+                    return (
+                      <motion.div
+                        key={d.id}
+                        variants={{
+                          hidden: { scale: 0.7, opacity: 0 },
+                          visible: {
+                            scale: 1,
+                            opacity: 1,
+                            transition: { duration: 0.5, ease: "easeOut" }
+                          },
+                        }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        className=" min-w-[320px] sm:min-w-[450px] lg:min-w-[450px]">
 
-                      {/* Città + Tappa + Date */}
-                      <div className="flex justify-between items-center gap-1.5">
-                        <div>
-                          <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                            {d.city},{" "}
-                            {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title}
-                          </p>
+                        {/* CARD */}
+                        <motion.div
+                          style={{
+                            boxShadow: isOpen
+                              ? "0px 0px 35px rgba(255,255,255,0.35)"
+                              : "0px 0px 0px rgba(255,255,255,0)",
+                          }}
+                          className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                          backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
+                          transition-all duration-300">
 
-                          <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
-                            {d.date}
-                          </p>
-                        </div>
-
-                        {/* Icona Freccia */}
-                        <motion.button
-                          animate={{ rotate: isOpen ? 180 : 0 }}
-                          transition={{ duration: 0.4 }}
-                          title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
-                          className="cursor-pointer border border-white rounded-full w-12 h-12 
-                          flex items-center justify-center text-white
-                          transition-all duration-300 hover:bg-white hover:text-black"
-                          onClick={() => setOpenCardId(isOpen ? null : d.id)}>
-                          <FaArrowDown size={20} />
-                        </motion.button>
-                      </div>
-
-                      {/* FOTO PREVIEW */}
-                      {d.photo.length > 0 ? (
-                        <div className="flex gap-2 flex-wrap mt-4">
-                          {d.photo.slice(0, 2).map((p, i) => (
-                            <img
-                              key={i}
-                              src={p}
-                              className="w-40 h-28 sm:w-48 object-cover rounded-2xl border border-white/40 shadow-md"
-                            />
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="flex gap-2 flex-wrap mt-4">
-                          {[1, 2].map((_, i) => (
-                            <div
-                              key={i}
-                              className="w-40 h-28 sm:w-48 rounded-2xl border border-white/40 shadow-md
-                              bg-linear-to-br from-blue-200/40 to-orange-200/40 
-                              dark:from-slate-700/40 dark:to-slate-600/40
-                              flex items-center justify-center text-white/70">
-                              <FaRegImage className="text-2xl" />
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* CONTENUTO ESPANSO */}
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="overflow-hidden">
-
-                            {/* descrizione */}
-                            {d.description && (
-                              <p className="text-white mt-4 text-2sm text-justify font-semibold">
-                                {d.description.length > 120
-                                  ? d.description.slice(0, 120) + "..."
-                                  : d.description}
+                          {/* Città + Tappa + Date */}
+                          <div className="flex justify-between items-center gap-1.5">
+                            <div>
+                              <p className="text-white font-extrabold text-2xl drop-shadow-xl">
+                                {d.city},{" "}
                               </p>
-                            )}
+                              <p className="text-white font-extrabold text-2xl drop-shadow-xl">
+                                {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title}
+                              </p>
 
-                            {/* esperienze */}
-                            {d.experiences && d.experiences.length > 0 ? (
-                              <div className="mt-4 flex flex-wrap gap-2">
-
-                                {/* prime 3 esperienze */}
-                                {d.experiences.slice(0, 3).map((c, i) => (
-                                  <span
-                                    key={i}
-                                    className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                    bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 
-                                    text-white">
-                                    {c}
-                                  </span>
-                                ))}
-
-                                {/* badge per esperienze extra */}
-                                {d.experiences.length > 3 && (
-                                  <span
-                                    className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                    bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 
-                                    text-white italic">
-                                    +{d.experiences.length - 3}
-                                  </span>
-                                )}
-                              </div>
-                            ) : (
-                              <div className="mt-4 flex flex-wrap gap-2">
-                                <span
-                                  className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                  bg-linear-to-br from-blue-200/40 to-orange-200/40 
-                                dark:from-slate-700/40 dark:to-slate-600/40 
-                                text-white/70 italic">
-                                  Nessuna esperienza
-                                </span>
-                              </div>
-                            )}
-
-                            {/* BOTTONI */}
-                            <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedDay(d);
-                                }}
-                                className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
-                                bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
-                                backdrop-blur-md border border-white/40 text-white 
-                                rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                <FaBookOpen size={20} /> Leggi
-                              </button>
-
-                              <Link
-                                to={`/days/${d.id}/edit`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="flex-1 w-full font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                                bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
-                                backdrop-blur-md border border-white/40 text-white 
-                                rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                <FaEdit size={20} /> Modifica
-                              </Link>
-
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setDeleteDayId(d.id);
-                                }}
-                                className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
-                                bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
-                                backdrop-blur-md border border-white/40 text-white 
-                                rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                <FaTrash size={20} /> Cancella
-                              </button>
+                              <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
+                                {d.date}
+                              </p>
                             </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </motion.div>
+
+                            {/* Icona Freccia */}
+                            <motion.button
+                              animate={{ rotate: isOpen ? 180 : 0 }}
+                              transition={{ duration: 0.4 }}
+                              title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
+                              className="cursor-pointer border border-white rounded-full w-12 h-12 
+                              flex items-center justify-center text-white
+                              transition-all duration-300 hover:bg-white hover:text-black"
+                              onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                              <FaArrowDown size={20} />
+                            </motion.button>
+                          </div>
+
+                          {/* FOTO PREVIEW */}
+                          {d.photo.length > 0 ? (
+                            <div className="flex gap-2 mt-4">
+                              {d.photo.slice(0, 2).map((p, i) => (
+                                <img
+                                  key={i}
+                                  src={p}
+                                  className="w-35 h-28 sm:w-48 object-cover rounded-2xl border border-white/40 shadow-md"
+                                />
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="flex gap-2 mt-4">
+                              {[1, 2].map((_, i) => (
+                                <div
+                                  key={i}
+                                  className="w-35 h-28 sm:w-45 rounded-2xl border border-white/40 shadow-md
+                                  bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                                dark:from-slate-700/40 dark:to-slate-600/40
+                                  flex items-center justify-center text-white/70">
+                                  <FaRegImage className="text-2xl" />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* CONTENUTO ESPANSO */}
+                          <AnimatePresence>
+                            {isOpen && (
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.4 }}
+                                className="overflow-hidden" >
+
+                                {/* descrizione */}
+                                {d.description && (
+                                  <p className="text-white mt-4 text-2sm text-justify font-semibold">
+                                    {d.description.length > 120
+                                      ? d.description.slice(0, 120) + "..."
+                                      : d.description}
+                                  </p>
+                                )}
+
+                                {/* esperienze */}
+                                {d.experiences && d.experiences.length > 0 ? (
+                                  <div className="mt-4 flex flex-wrap gap-2">
+
+                                    {/* prime 3 esperienze */}
+                                    {d.experiences.slice(0, 3).map((c, i) => (
+                                      <span
+                                        key={i}
+                                        className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                                        bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 text-white">
+                                        {c}
+                                      </span>
+                                    ))}
+
+                                    {/* badge per esperienze extra */}
+                                    {d.experiences.length > 3 && (
+                                      <span
+                                        className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                                        bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 
+                                      text-white italic">
+                                        +{d.experiences.length - 3}
+                                      </span>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <div className="mt-4 flex flex-wrap gap-2">
+                                    <span
+                                      className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                                      bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                                    dark:from-slate-700/40 dark:to-slate-600/40 
+                                    text-white/70 italic">
+                                      Nessuna esperienza
+                                    </span>
+                                  </div>
+                                )}
+
+                                {/* BOTTONI */}
+                                <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setSelectedDay(d);
+                                    }}
+                                    className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                                    bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                                    backdrop-blur-md border border-white/40 text-white 
+                                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                    hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                    <FaBookOpen size={20} /> Leggi
+                                  </button>
+
+                                  <Link
+                                    to={`/days/${d.id}/edit`}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="flex-1 w-full font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                    bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
+                                    backdrop-blur-md border border-white/40 text-white 
+                                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                    hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                    <FaEdit size={20} /> Modifica
+                                  </Link>
+
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setDeleteDayId(d.id);
+                                    }}
+                                    className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                                    bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
+                                    backdrop-blur-md border border-white/40 text-white 
+                                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                    hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                    <FaTrash size={20} /> Cancella
+                                  </button>
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
+              </motion.div>
+            </div>
           ) : (
             <p className="text-white/80 font-semibold text-center mt-6 italic">
               Nessuna tappa presente
