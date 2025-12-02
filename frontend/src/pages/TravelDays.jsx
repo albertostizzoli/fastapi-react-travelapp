@@ -214,8 +214,32 @@ function TravelDays() {
         <div className="flex-1 mt-3">
 
           {travel.days?.length > 0 ? (
-            <div className="relative w-full overflow-hidden">
+            <div className="relative w-full overflow-hidden group">
 
+               { /* Le freccie scompaiono quando una card è aperta */ }
+              <div className={`hidden lg:block absolute inset-0 pointer-events-none ${openCardId ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}>
+                {/* FRECCIA SINISTRA */}
+                <button
+                  onClick={() => scrollRef.current.scrollBy({ left: -475, behavior: "smooth" })} // scrolla a sinistra di 460px
+                  className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
+                  opacity-0 group-hover:opacity-100 transition-all duration-300
+                bg-white/20 hover:bg-white backdrop-blur-xl cursor-pointer
+                text-white hover:text-black border border-white/50
+                  w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                  <FaArrowLeft size={20} />
+                </button>
+
+                {/* FRECCIA DESTRA */}
+                <button
+                  onClick={() => scrollRef.current.scrollBy({ left: 475, behavior: "smooth" })} // scrolla a destra di 460px
+                  className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
+                  opacity-0 group-hover:opacity-100 transition-all duration-300
+                bg-white/20 hover:bg-white backdrop-blur-xl cursor-pointer
+                text-white hover:text-black border border-white/50
+                  w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                  <FaArrowRight size={20} />
+                </button>
+              </div>
               {/* CAROSELLO */}
               <motion.div
                 ref={scrollRef}
@@ -244,7 +268,7 @@ function TravelDays() {
                           },
                         }}
                         exit={{ opacity: 0, scale: 0.9 }}
-                        className=" min-w-[320px] sm:min-w-[450px] lg:min-w-[450px]">
+                        className="min-w-[370px] sm:min-w-[450px] lg:min-w-[450px]">
 
                         {/* CARD */}
                         <motion.div
@@ -257,18 +281,18 @@ function TravelDays() {
                           backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
                           transition-all duration-300">
 
-                          {/* Città + Tappa + Date */}
+                          {/* Città + Tappa + Data */}
                           <div className="flex justify-between items-center gap-1.5">
                             <div>
                               <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                                {d.city},{" "}
+                                {d.city},{" "} {/* Città */ }
                               </p>
                               <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                                {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title}
+                                {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title} {/* Tappa */ }
                               </p>
 
                               <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
-                                {d.date}
+                                {d.date} {/* Data */}
                               </p>
                             </div>
 
