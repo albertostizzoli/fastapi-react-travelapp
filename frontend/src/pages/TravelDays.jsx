@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
@@ -10,6 +10,7 @@ import TravelDaysController from "../controllers/TravelDaysController"; // impor
 function TravelDays() {
 
   const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
+  const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
 
   const {
     id,                         // id del viaggio dai parametri URL
@@ -30,6 +31,24 @@ function TravelDays() {
     setSelectedExperience,      // stato per indicare l'esperienza selezionata
     allExperiences,             // per prendere le esperienze nella select
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
+
+  // Effetto per lo scroll alla card aperta o in alto quando si chiude
+  useEffect(() => {
+    if (openCardId && cardRefs.current[openCardId]) {
+      // scroll verso la card aperta
+      cardRefs.current[openCardId].scrollIntoView({
+        behavior: "smooth",
+        bottom: 0
+      });
+    } else if (openCardId === null) {
+      // scroll verso l'alto dopo breve ritardo
+      const timeout = setTimeout(() => {
+        window.scrollIntoView({ behavior: "smooth", top: 0 });
+      }, 350); // adatta 350ms alla durata della exit animation
+
+      return () => clearTimeout(timeout);
+    }
+  }, [openCardId]);
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
@@ -259,12 +278,13 @@ function TravelDays() {
                     return (
                       <motion.div
                         key={d.id}
+                        ref={(el) => (cardRefs.current[d.id] = el)} // assegno il ref 
                         variants={{
                           hidden: { scale: 0.7, opacity: 0 },
                           visible: {
                             scale: 1,
                             opacity: 1,
-                            transition: { duration: 0.5, ease: "easeOut" }
+                            transition: { duration: 0.35, ease: "easeOut" }
                           },
                         }}
                         exit={{ opacity: 0, scale: 0.9 }}

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
@@ -9,6 +9,7 @@ import TravelsController from "../controllers/TravelsController"; // importo la 
 function Travels() {
 
   const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
+  const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
 
   const {
     deleteId,                // id del viaggio da eliminare
@@ -23,6 +24,26 @@ function Travels() {
     yearOptions,             // anni nella select convertiti in stringhe
     filteredTravels          // per filtrare i viaggi in base agli anni
   } = TravelsController();   // uso la logica della pagina viaggi
+
+  // Effetto per lo scroll alla card aperta o in alto quando si chiude
+  useEffect(() => {
+    if (activeCard && cardRefs.current[activeCard]) {
+      // scroll verso la card aperta
+      cardRefs.current[activeCard].scrollIntoView({
+        behavior: "smooth",
+        bottom: 0,
+      });
+    } else if (activeCard === null) {
+      // scroll verso l'alto dopo breve ritardo
+      const timeout = setTimeout(() => {
+        window.scrollIntoView({ top: 0, behavior: "smooth" });
+      }, 350); // adatta 350ms alla durata della exit animation
+
+      return () => clearTimeout(timeout);
+    }
+  }, [activeCard]);
+
+
 
   // Customizzazione della select
   const customStyles = {
@@ -177,13 +198,14 @@ function Travels() {
               return (
                 <motion.div
                   key={v.id}
+                  ref={(el) => (cardRefs.current[v.id] = el)} // assegno il ref 
                   className="min-w-[350px] sm:min-w-[460px] lg:min-w-[460px] snap-center
                   group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
                   backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
                   transition-all duration-300"
                   variants={{
                     hidden: { scale: 0, opacity: 0 },
-                    visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+                    visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
                   }}
                   exit={{ opacity: 0, scale: 0.9, y: 20 }}
                   style={{
