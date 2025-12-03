@@ -22,28 +22,16 @@ function TravelDays() {
     setOpenCardId,              // stato per indicare la card aperta
     selectedCity,               // indica la città selezionata
     setSelectedCity,            // stato per indicare la città selezionata
-    allCities,                  // per prendere le città nella select
+    cityOptions,                // opzioni per la select delle città
     filteredDays,               // funzione per filtrare in modo combinato le tappe in base a esperienze e città
     selectedExperience,         // indica l'esperienza selezionata
     setSelectedExperience,      // stato per indicare l'esperienza selezionata
-    allExperiences,             // per prendere le esperienze nella select
+    experienceOptions,          // opzioni per la select delle esperienze
     scrollRef,                  // ref per lo scroll del carosello
     cardRefs,                   // ref per tutte le card
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
-
-  // Questo mi permette di vedere tutte le esperienze e città disponibili per le select
-  const experienceOptions = [
-    { value: null, label: "Tutte le esperienze" },
-    ...allExperiences.map(exp => ({ value: exp, label: exp }))
-  ];
-
-  const cityOptions = [
-    { value: null, label: "Tutte le città" },
-    ...allCities.map(city => ({ value: city, label: city }))
-  ];
-
  
   return (
     <div className="min-h-screen bg-transparent mt-6 sm:mt-0 sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">

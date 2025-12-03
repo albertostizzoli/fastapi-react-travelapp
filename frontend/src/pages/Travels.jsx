@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
-import YearSelect from "../components/Selects/YearSelect";
+import YearSelect from "../components/Selects/YearSelect"; // importo la select per gli anni
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../controllers/TravelsController"; // importo la logica della pagina viaggi
 

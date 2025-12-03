@@ -94,6 +94,17 @@ function TravelDaysController() {
         ? [...new Set(travel.days.flatMap(d => d.experiences || []))] // legge tutte le esperienze in tutte le tappe le unisce in un solo array rimuove i duplicati
         : [];
 
+    // Questo mi permette di vedere tutte le esperienze e città disponibili per le select
+    const experienceOptions = [
+        { value: null, label: "Tutte le esperienze" },
+        ...allExperiences.map(exp => ({ value: exp, label: exp }))
+    ];
+
+    const cityOptions = [
+        { value: null, label: "Tutte le città" },
+        ...allCities.map(city => ({ value: city, label: city }))
+    ];
+
     // Funzione per filtrare in modo combinato le tappe in base a esperienze e città
     const filteredDays = travel
         ? travel.days.filter(d => {
@@ -130,13 +141,13 @@ function TravelDaysController() {
         setOpenCardId,         // stato per indicare la card aperta
         selectedCity,          // indica la città selezionata
         setSelectedCity,       // stato per indicare la città selezionata
-        allCities,             // per prendere le città nella select
         filteredDays,          // funzione per filtrare in modo combinato le tappe in base a esperienze e città
         selectedExperience,    // indica l'esperienza selezionata
         setSelectedExperience, // stato per indicare l'esperienza selezionata
-        allExperiences,        // per prendere le esperienze nella select
-        scrollRef,               // ref per lo scroll del carosello
-        cardRefs,                // ref per tutte le card
+        experienceOptions,     // opzioni per la select delle esperienze
+        cityOptions,           // opzioni per la select delle città
+        scrollRef,             // ref per lo scroll del carosello
+        cardRefs,              // ref per tutte le card
     };
 }
 
