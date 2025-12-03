@@ -1,11 +1,7 @@
 import Select from "react-select";
 import { FaTimes } from "react-icons/fa";
 
-export default function ExperienceSelect({
-  allExperiences,
-  selectedExperiences,
-  setEditForm
-}) {
+function ExperienceSelect({ allExperiences, selectedExperiences, setEditForm}) {
   
   const experienceOptions = allExperiences.map((exp) => ({
     value: exp,
@@ -95,8 +91,7 @@ export default function ExperienceSelect({
             <span
               key={index}
               className="bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70 
-              px-3 py-1 rounded-full text-sm text-white flex items-center gap-2 shadow-md"
-            >
+              px-3 py-1 rounded-full text-sm text-white flex items-center gap-2 shadow-md">
               {exp}
               <button
                 type="button"
@@ -106,8 +101,7 @@ export default function ExperienceSelect({
                     experiences: prev.experiences.filter((x) => x !== exp),
                   }))
                 }
-                className="hover:text-rose-400 transition cursor-pointer"
-              >
+                className="hover:text-rose-400 transition cursor-pointer">
                 <FaTimes size={20} />
               </button>
             </span>
@@ -117,3 +111,5 @@ export default function ExperienceSelect({
     </div>
   );
 }
+
+export default ExperienceSelect;

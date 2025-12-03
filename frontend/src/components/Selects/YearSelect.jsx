@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 function YearSelect({ selectedYear, setSelectedYear, yearOptions }) {
   
-  // customStyles spostato qui
   const customStyles = {
     control: (provided) => ({ // stile del controllo principale
       ...provided, // mantiene gli stili di default
