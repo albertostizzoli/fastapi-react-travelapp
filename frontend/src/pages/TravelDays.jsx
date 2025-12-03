@@ -29,6 +29,7 @@ function TravelDays() {
     experienceOptions,          // opzioni per la select delle esperienze
     scrollRef,                  // ref per lo scroll del carosello
     cardRefs,                   // ref per tutte le card
+    getCountryPreposition       // funzione per ottenere la preposizione corretta per i paesi in italiano
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -49,7 +50,7 @@ function TravelDays() {
           transition={{ duration: 0.8, ease: "easeOut" }}>
           <Link
             to="/travels"
-            className="font-semibold px-2 py-2 sm:px-4 sm:py-2 inline-flex items-center justify-center gap-2
+            className="font-semibold px-3 py-2 sm:px-4 sm:py-2 inline-flex items-center justify-center gap-2
             bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
             backdrop-blur-md border border-white/40
             text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
@@ -64,7 +65,7 @@ function TravelDays() {
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}>
-          Le mie tappe
+          {travel.town}
         </motion.h1>
       </div>
 
@@ -73,7 +74,7 @@ function TravelDays() {
 
         {/* Select per Filtro Città + Info Viaggio + Aggiungi Tappa */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between 
-        gap-4 p-6 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+        gap-4 p-7 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
         backdrop-blur-2xl border border-white/40 shadow-xl w-full">
 
           {/* Paese + Date */}
@@ -81,11 +82,6 @@ function TravelDays() {
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}>
-
-            { /* Paese */}
-            <h2 className="text-3xl font-extrabold text-white drop-shadow-2xl mb-2">
-              {travel.town}
-            </h2>
 
             {/* Date */}
             <h2 className="text-2xl font-bold text-white drop-shadow-xl flex items-center">
