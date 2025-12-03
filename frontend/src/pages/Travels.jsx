@@ -83,7 +83,8 @@ function Travels() {
         {/* LISTA SCORREVOLE */}
         <motion.div
           ref={scrollRef}
-          className="flex items-start gap-6 overflow-x-auto no-scrollbar px-6 py-4 scroll-smooth snap-x snap-mandatory"
+          className={`flex items-start gap-6 overflow-x-auto no-scrollbar px-6 py-4 scroll-smooth snap-x snap-mandatory
+            ${activeCard ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
           variants={{
             hidden: { opacity: 1 },
             visible: { opacity: 1, transition: { staggerChildren: 0.2 } },

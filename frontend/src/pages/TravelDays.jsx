@@ -32,7 +32,7 @@ function TravelDays() {
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
- 
+
   return (
     <div className="min-h-screen bg-transparent mt-6 sm:mt-0 sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
 
@@ -165,7 +165,8 @@ function TravelDays() {
               {/* CAROSELLO */}
               <motion.div
                 ref={scrollRef}
-                className="flex gap-6 overflow-x-auto px-6 py-4 scroll-smooth snap-x snap-mandatory"
+                className={`flex gap-6 px-6 py-4 scroll-smooth snap-x snap-mandatory
+              ${openCardId ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
                 style={{ scrollbarWidth: "none" }}
                 variants={{
                   hidden: { opacity: 1 },
@@ -314,13 +315,13 @@ function TravelDays() {
                                 )}
 
                                 {/* BOTTONI */}
-                                <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
+                                <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7 px-3">
                                   <button
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       setSelectedDay(d);
                                     }}
-                                    className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                                    className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                     bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
                                     backdrop-blur-md border border-white/40 text-white 
                                     rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
@@ -331,7 +332,7 @@ function TravelDays() {
                                   <Link
                                     to={`/days/${d.id}/edit`}
                                     onClick={(e) => e.stopPropagation()}
-                                    className="flex-1 w-full font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                    className="w-full flex-1 font-semibold px-4 py-2 flex items-center justify-center gap-2 
                                     bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
                                     backdrop-blur-md border border-white/40 text-white 
                                     rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
@@ -344,7 +345,7 @@ function TravelDays() {
                                       e.stopPropagation();
                                       setDeleteDayId(d.id);
                                     }}
-                                    className="flex-1 w-full font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                                    className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                     bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
                                     backdrop-blur-md border border-white/40 text-white 
                                     rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
