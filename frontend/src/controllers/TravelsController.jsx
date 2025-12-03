@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 
@@ -8,6 +8,20 @@ function TravelsController() {
     const [message, setMessage] = useState(""); // messaggio di successo o errore
     const [activeCard, setActiveCard] = useState(null); // stato per aprire una card dei viaggi e mostare le altre informazioni
     const [selectedYear, setSelectedYear] = useState(null); // stato per selezionare un'anno dalla select
+
+    const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
+    const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
+
+    // Effetto per lo scroll alla card aperta 
+    useEffect(() => {
+        if (activeCard && cardRefs.current[activeCard]) {
+            // scroll verso la card aperta
+            cardRefs.current[activeCard].scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
+    }, [activeCard]);
 
     // uso lo useEffect per ottenere i dati dei viaggi
     useEffect(() => {
@@ -112,7 +126,9 @@ function TravelsController() {
         setSelectedYear,   // stato per selezionare un anno
         allYears,          // per avere gli anni nella select
         yearOptions,       // anni convertiti in stringhe
-        filteredTravels    // funzione per filtrare i viaggi in base agli anni
+        filteredTravels,   // funzione per filtrare i viaggi in base agli anni
+        scrollRef,         // ref per lo scroll del carosello
+        cardRefs,          // ref per tutte le card
     }
 }
 

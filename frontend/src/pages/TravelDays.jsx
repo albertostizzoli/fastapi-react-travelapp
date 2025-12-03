@@ -1,16 +1,13 @@
-import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
-import Select from "react-select"; // importo Select per la customizzazione completa delle select
+import CitySelect from "../components/Selects/CitySelect"; // importo il componente per la select delle città
+import DaysExperiencesSelect from "../components/Selects/DaysExperiencesSelect"; // importo il componente per la select delle esperienze
 import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
 import ModalDeleteDay from "../components/DeleteModals/ModalDeleteDay"; // importo il modale di conferma eliminazione tappa
 import TravelDaysController from "../controllers/TravelDaysController"; // importo la logica della pagina TravelDays
 
 function TravelDays() {
-
-  const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
-  const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
 
   const {
     id,                         // id del viaggio dai parametri URL
@@ -30,29 +27,13 @@ function TravelDays() {
     selectedExperience,         // indica l'esperienza selezionata
     setSelectedExperience,      // stato per indicare l'esperienza selezionata
     allExperiences,             // per prendere le esperienze nella select
+    scrollRef,                  // ref per lo scroll del carosello
+    cardRefs,                   // ref per tutte le card
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
-
-  // Effetto per lo scroll alla card aperta o in alto quando si chiude
-  useEffect(() => {
-    if (openCardId && cardRefs.current[openCardId]) {
-      // scroll verso la card aperta
-      cardRefs.current[openCardId].scrollIntoView({
-        behavior: "smooth",
-        bottom: 0
-      });
-    } else if (openCardId === null) {
-      // scroll verso l'alto dopo breve ritardo
-      const timeout = setTimeout(() => {
-        window.scrollIntoView({ behavior: "smooth", top: 0 });
-      }, 350); // adatta 350ms alla durata della exit animation
-
-      return () => clearTimeout(timeout);
-    }
-  }, [openCardId]);
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
 
-  // Questo mi permette di vedere tutte le tappe
+  // Questo mi permette di vedere tutte le esperienze e città disponibili per le select
   const experienceOptions = [
     { value: null, label: "Tutte le esperienze" },
     ...allExperiences.map(exp => ({ value: exp, label: exp }))
@@ -63,61 +44,7 @@ function TravelDays() {
     ...allCities.map(city => ({ value: city, label: city }))
   ];
 
-  // Customizzazione delle select
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      backgroundColor: 'rgba(255,255,255,0.1)', // bg-white/10
-      borderRadius: '9999px',
-      borderColor: 'rgba(255,255,255,0.25)',
-      padding: '0.16rem',
-      color: 'white',
-      cursor: 'pointer'
-    }),
-    option: (provided, state) => {
-      const isDark = document.documentElement.classList.contains('dark'); // gestione cambio colore da modalità light a dark e viceversa
-      return {
-        ...provided,
-        backgroundColor: state.isFocused
-          ? (isDark ? '#475569' : '#1E40AF')   // hover: slate-600 (dark) o blu scuro (light)
-          : (isDark ? '#64748B' : '#2563EB'),  // normale: slate-500 (dark) o blu (light)
-        color: 'white',
-        padding: '0.5rem 1rem',
-        cursor: 'pointer',
-      };
-    },
-
-    singleValue: (provided) => ({
-      ...provided,
-      color: 'white',
-    }),
-
-    placeholder: (provided) => ({
-      ...provided,
-      color: 'white',
-      opacity: 1
-    }),
-
-    menu: (provided) => {
-      const isDark = document.documentElement.classList.contains('dark');
-      return {
-        ...provided,
-        zIndex: 3000, // z-index alto per stare sopra le card
-        backgroundColor: isDark ? "#334155" : "#1E3A8A", // slate-700 (dark) vs blu (light)
-        borderRadius: '1rem', // bordo generale del menu
-        overflow: 'hidden', // per non far uscire le rounded
-      }
-
-    },
-    menuList: (provided) => ({
-      ...provided,
-      padding: 0,
-      maxHeight: '200px',
-      overflowY: 'auto',
-    }),
-  };
-
-
+ 
   return (
     <div className="min-h-screen bg-transparent mt-6 sm:mt-0 sm:p-12 overflow-x-hidden px-2 sm:px-12 relative">
 
@@ -189,29 +116,17 @@ function TravelDays() {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
               {/* Select Esperienze */}
-              <Select
-                value={experienceOptions.find(opt => opt.value === selectedExperience) || null}
-                onChange={(option) => setSelectedExperience(option ? option.value : null)}
-                options={experienceOptions}
-                styles={customStyles}
-                isSearchable={false}
-                classNamePrefix="custom"
-                menuPortalTarget={document.body}
-                menuPosition="fixed"
-                placeholder="Filtra per esperienze"
+              <DaysExperiencesSelect
+                selectedExperience={selectedExperience}
+                setSelectedExperience={setSelectedExperience}
+                experienceOptions={experienceOptions}
               />
 
               {/* Select Città */}
-              <Select
-                value={cityOptions.find(opt => opt.value === selectedCity) || null}
-                onChange={(option) => setSelectedCity(option ? option.value : null)}
-                options={cityOptions}
-                styles={customStyles}
-                isSearchable={false}
-                classNamePrefix="custom"
-                menuPortalTarget={document.body}
-                menuPosition="fixed"
-                placeholder="Filtra per città"
+              <CitySelect
+                selectedCity={selectedCity}
+                setSelectedCity={setSelectedCity}
+                cityOptions={cityOptions}
               />
             </div>
 
@@ -235,7 +150,7 @@ function TravelDays() {
           {travel.days?.length > 0 ? (
             <div className="relative w-full overflow-hidden group">
 
-               { /* Le freccie scompaiono quando una card è aperta */ }
+              { /* Le freccie scompaiono quando una card è aperta */}
               <div className={`hidden lg:block absolute inset-0 pointer-events-none ${openCardId ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}>
                 {/* FRECCIA SINISTRA */}
                 <button
@@ -294,7 +209,7 @@ function TravelDays() {
                         <motion.div
                           style={{
                             boxShadow: isOpen
-                              ? "0px 0px 35px rgba(255,255,255,0.35)"
+                              ? "0px 0px 25px rgba(255,255,255,0.30)"
                               : "0px 0px 0px rgba(255,255,255,0)",
                           }}
                           className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
@@ -305,10 +220,10 @@ function TravelDays() {
                           <div className="flex justify-between items-center gap-1.5">
                             <div>
                               <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                                {d.city},{" "} {/* Città */ }
+                                {d.city},{" "} {/* Città */}
                               </p>
                               <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                                {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title} {/* Tappa */ }
+                                {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title} {/* Tappa */}
                               </p>
 
                               <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">

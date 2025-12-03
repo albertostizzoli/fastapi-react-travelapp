@@ -1,15 +1,11 @@
-import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
-import Select from "react-select";
+import YearSelect from "../components/Selects/YearSelect";
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../controllers/TravelsController"; // importo la logica della pagina viaggi
 
 function Travels() {
-
-  const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
-  const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
 
   const {
     deleteId,                // id del viaggio da eliminare
@@ -22,94 +18,10 @@ function Travels() {
     selectedYear,            // anno selezionato
     setSelectedYear,         // stato per selezionare un anno
     yearOptions,             // anni nella select convertiti in stringhe
-    filteredTravels          // per filtrare i viaggi in base agli anni
+    filteredTravels,         // per filtrare i viaggi in base agli anni
+    scrollRef,               // ref per lo scroll del carosello
+    cardRefs,                // ref per tutte le card
   } = TravelsController();   // uso la logica della pagina viaggi
-
-  // Effetto per lo scroll alla card aperta o in alto quando si chiude
-  useEffect(() => {
-    if (activeCard && cardRefs.current[activeCard]) {
-      // scroll verso la card aperta
-      cardRefs.current[activeCard].scrollIntoView({
-        behavior: "smooth",
-        bottom: 0,
-      });
-    } else if (activeCard === null) {
-      // scroll verso l'alto dopo breve ritardo
-      const timeout = setTimeout(() => {
-        window.scrollIntoView({ top: 0, behavior: "smooth" });
-      }, 350); // adatta 350ms alla durata della exit animation
-
-      return () => clearTimeout(timeout);
-    }
-  }, [activeCard]);
-
-
-
-  // Customizzazione della select
-  const customStyles = {
-
-    // CSS generale
-    control: (provided) => ({
-      ...provided,
-      backgroundColor: 'rgba(255,255,255,0.1)', // bg-white/10
-      borderRadius: '9999px',
-      borderColor: 'rgba(255,255,255,0.25)',
-      padding: '0.16rem',
-      color: 'white',
-      cursor: 'pointer'
-    }),
-
-    // CSS delle option
-    option: (provided, state) => {
-      const isDark = document.documentElement.classList.contains('dark'); // gestione cambio colore da modalità light a dark e viceversa
-      return {
-        ...provided,
-        backgroundColor: state.isFocused
-          ? (isDark ? '#475569' : '#1E40AF')   // hover: slate-600 (dark) o blu scuro (light)
-          : (isDark ? '#64748B' : '#2563EB'),  // normale: slate-500 (dark) o blu (light)
-        color: 'white',
-        padding: '0.5rem 1rem',
-        cursor: 'pointer',
-      };
-    },
-
-    // CSS singola option
-    singleValue: (provided) => ({
-      ...provided,
-      color: 'white',
-    }),
-
-    // CSS placeholder
-    placeholder: (provided) => ({
-      ...provided,
-      color: 'white',
-      opacity: 1
-    }),
-
-    // CSS menu
-    menu: (provided) => {
-      const isDark = document.documentElement.classList.contains('dark');
-      return {
-        ...provided,
-        zIndex: 3000, // z-index alto per stare sopra le card
-        backgroundColor: isDark ? "#334155" : "#1E3A8A", // slate-700 (dark) vs blu (light)
-        borderRadius: '1rem', // bordo generale del menu
-        overflow: 'hidden', // per non far uscire le rounded
-      }
-    },
-    menuList: (provided) => ({
-      ...provided,
-      padding: 0,
-      maxHeight: '200px',
-      overflowY: 'auto',
-    }),
-  };
-
-  // questo mi permette di vedere tutti i viaggi
-  const yearOptionsWithAll = [
-    { value: null, label: "Tutti i viaggi" },
-    ...yearOptions
-  ];
 
 
   return (
@@ -130,22 +42,11 @@ function Travels() {
         </motion.h1>
 
         {/* Select Anni */}
-        <motion.div className="sm:ml-auto sm:w-auto w-full"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}>
-          <Select
-            value={selectedYear !== null ? { value: selectedYear, label: selectedYear.toString() } : null}
-            onChange={(option) => setSelectedYear(option ? option.value : null)}
-            options={yearOptionsWithAll}
-            styles={customStyles}
-            isSearchable={false}             // blocca la scrittura sulla select
-            classNamePrefix="custom"         // prefisso per le classi generate (prende le classi custom dall'index.css)
-            menuPortalTarget={document.body} // forza il menu sopra tutto
-            menuPosition="fixed"             // posizione fissa per evitare overflow del container
-            placeholder="Filtra per anni"
-          />
-        </motion.div>
+        <YearSelect
+          selectedYear={selectedYear}
+          setSelectedYear={setSelectedYear}
+          yearOptions={yearOptions}
+        />
       </div>
 
       {/* CAROSELLO DEI VIAGGI */}
@@ -210,7 +111,7 @@ function Travels() {
                   exit={{ opacity: 0, scale: 0.9, y: 20 }}
                   style={{
                     boxShadow: isOpen
-                      ? "0px 0px 35px rgba(255,255,255,0.40)"
+                      ? "0px 0px 25px rgba(255,255,255,0.30)"
                       : "0px 0px 0px rgba(255,255,255,0)",
                   }}>
 
@@ -273,7 +174,7 @@ function Travels() {
                           {/* Media voto */}
                           <div className="flex items-center gap-2 mt-2">
                             <span className="text-white font-semibold text-xl">Media voto:</span>
-                            <span className="ms-2 flex items-center capitalize font-semibold text-white text-xl">
+                            <span className="ms-2 flex items-center capitalize font-bold text-white text-xl">
                               {v.general_vote ?? 0}
                             </span>
                           </div>

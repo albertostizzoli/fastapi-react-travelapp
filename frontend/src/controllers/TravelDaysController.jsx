@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom"; // per prendere l'id del viaggio dai parametri URL
 import axios from "axios";
 
@@ -11,6 +11,20 @@ function TravelDaysController() {
     const [openCardId, setOpenCardId] = useState(null);  // stato per aprire una card dei viaggi e mostare le altre informazioni
     const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
     const [selectedExperience, setSelectedExperience] = useState(""); // stato per filtrare le tappe in base alle esperienze
+
+    const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
+    const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
+
+    // Effetto per lo scroll alla card aperta
+    useEffect(() => {
+        if (openCardId && cardRefs.current[openCardId]) {
+            // scroll verso la card aperta
+            cardRefs.current[openCardId].scrollIntoView({
+                behavior: "smooth",
+                bottom: 0
+            });
+        }
+    }, [openCardId]);
 
     // Fetch dati viaggio all'inizio e quando cambia l'id
     useEffect(() => {
@@ -121,6 +135,8 @@ function TravelDaysController() {
         selectedExperience,    // indica l'esperienza selezionata
         setSelectedExperience, // stato per indicare l'esperienza selezionata
         allExperiences,        // per prendere le esperienze nella select
+        scrollRef,               // ref per lo scroll del carosello
+        cardRefs,                // ref per tutte le card
     };
 }
 
