@@ -60,7 +60,7 @@ function TravelDays() {
         </motion.div>
 
         {/* Titolo */}
-        <motion.h1 className="text-4xl font-extrabold text-white text-center
+        <motion.h1 className="text-3xl sm:text-4xl font-extrabold text-white text-center
             md:absolute md:left-1/2 md:-translate-x-1/2"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -74,17 +74,16 @@ function TravelDays() {
 
         {/* Select per Filtro Città + Info Viaggio + Aggiungi Tappa */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between 
-        gap-4 p-7 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
-        backdrop-blur-2xl border border-white/40 shadow-xl w-full">
+          gap-4 p-7 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+          backdrop-blur-2xl border border-white/40 shadow-xl w-full">
 
-          {/* Paese + Date */}
+          {/* Date */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}>
 
-            {/* Date */}
-            <h2 className="text-2xl font-bold text-white drop-shadow-xl flex items-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-xl flex items-center">
               {travel.start_date}
               <FaArrowRight size={20} className="mx-2" />
               {travel.end_date}
@@ -96,9 +95,9 @@ function TravelDays() {
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row sm:items-center">
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
               {/* Select Esperienze */}
               <DaysExperiencesSelect
                 selectedExperience={selectedExperience}

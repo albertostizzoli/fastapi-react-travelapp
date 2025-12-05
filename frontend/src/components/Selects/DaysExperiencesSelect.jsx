@@ -17,8 +17,8 @@ function DaysExperiencesSelect({ selectedExperience, setSelectedExperience, expe
             return {
                 ...provided, // mantiene gli stili di default
                 backgroundColor: state.isFocused // stile quando l'opzione è evidenziata
-                    ? (isDark ? '#475569' : '#1E40AF')
-                    : (isDark ? '#64748B' : '#2563EB'),
+                    ? (isDark ? '#475569' : '#2563EB')
+                    : (isDark ? '#64748B' : '#3B82F6'),
                 color: 'white',
                 padding: '0.5rem 1rem',
                 cursor: 'pointer',
@@ -31,7 +31,7 @@ function DaysExperiencesSelect({ selectedExperience, setSelectedExperience, expe
             return {
                 ...p, // mantiene gli stili di default
                 zIndex: 3000,
-                backgroundColor: isDark ? "#334155" : "#1E3A8A",
+                backgroundColor: isDark ? "#334155" : "#3B82F6",
                 borderRadius: "1rem",
                 overflow: "hidden",
             };
