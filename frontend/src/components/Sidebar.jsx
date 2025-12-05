@@ -113,8 +113,8 @@ function Sidebar() {
               transition={{ type: "spring", stiffness: 140, damping: 30 }}
               className={`fixed top-0 left-0 w-full h-full z-9999 flex flex-col justify-between p-6 transition-colors duration-300
                 ${isHome
-                  ? "bg-linear-to-br from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500"
-                  : "backdrop-blur-xl bg-linear-to-br from-blue-600 to-orange-600 text-white dark:from-slate-900 dark:to-slate-500 dark:text-gray-200"}`}>
+                  ? "bg-linear-to-br from-blue-500 to-orange-500 dark:from-slate-900 dark:to-slate-500"
+                  : "backdrop-blur-xl bg-linear-to-br from-blue-500 to-orange-500 text-white dark:from-slate-900 dark:to-slate-500 dark:text-gray-200"}`}>
               <div className="flex flex-col gap-6">
                 <div className="flex justify-between items-center">
 

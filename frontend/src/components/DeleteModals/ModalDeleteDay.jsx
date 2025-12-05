@@ -43,7 +43,7 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={onConfirm}
-                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
+                className="font-semibold flex items-center justify-center gap-2 px-4 py-2 
                  bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70 
                  backdrop-blur-md border border-white/40 
                  text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
@@ -53,7 +53,7 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
 
               <button
                 onClick={onCancel}
-                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 
+                className="font-semibold flex items-center justify-center gap-2 px-4 py-2 
                  bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70 
                  backdrop-blur-md border border-white/40 
                  text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer

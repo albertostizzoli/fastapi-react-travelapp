@@ -46,7 +46,7 @@ function ProfilePage() {
                 alt="Profilo"
                 className="rounded-full mb-6 shadow-[0_0_25px_rgba(255,255,255,0.2)] 
                 object-cover border-4 border-blue-600/70 dark:border-slate-900/70"
-                style={{ width: "152px", height: "152px" }}
+                style={{ width: "162px", height: "162px" }}
               />
             ) : (
               <div className="w-36 h-36 mb-6 rounded-full bg-white/10 flex items-center justify-center text-4xl font-bold
@@ -149,7 +149,7 @@ function ProfilePage() {
                 <Link
                   to="/travels"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-br from-orange-600 to-rose-500 dark:from-orange-600/70 dark:from-rose-500/70 
+                  bg-linear-to-br from-amber-600 to-yellow-500 dark:from-amber-600/70 dark:to-yellow-500/70
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
@@ -209,7 +209,7 @@ function ProfilePage() {
                           {travel.town}
                         </h4>
 
-                        <span className="text-sm bg-white/20 px-2 py-1 rounded-3xl text-white inline-flex items-center gap-2">
+                        <span className="text-sm bg-white/20 px-4 py-2 rounded-3xl text-white inline-flex items-center gap-2">
                           {travel.start_date} <FaArrowRight size={12} /> {travel.end_date}
                         </span>
                       </div>
@@ -225,7 +225,10 @@ function ProfilePage() {
                   ))}
                 </ul>
               ) : (
-                <p className="text-center font-semibold text-white/80 italic">
+                <p className="font-semibold text-center px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                  bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                  dark:from-slate-700/40 dark:to-slate-600/40 
+                  text-white/70 italic">
                   Nessun viaggio recente.
                 </p>
               )}
@@ -258,7 +261,10 @@ function ProfilePage() {
                 ))}
               </div>
             ) : (
-              <p className="text-center font-semibold text-white/80 italic">
+              <p className="font-semibold text-center px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                bg-linear-to-br from-blue-200/40 to-orange-200/40 
+                dark:from-slate-700/40 dark:to-slate-600/40 
+                text-white/70 italic">
                 Nessuna esperienza impostata.
               </p>
             )}

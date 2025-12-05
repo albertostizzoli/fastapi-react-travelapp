@@ -30,6 +30,9 @@ function AddDay() {
     setOpenImage,        // Funzione per impostare l'immagine aperta in modale
   } = FormAddDay();      // Custom hook per la logica del form per aggiungere una tappa
 
+  const selected = travels.find((t) => t.id === Number(selectedTravel));
+
+
   return (
     <motion.div
       className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-start bg-transparent sm:p-8 p-4 gap-y-6"
@@ -72,11 +75,11 @@ function AddDay() {
           <div className="relative flex sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
             <Link
               to={`/travels/${selectedTravel}/days`}
-              className="font-semibold px-2 py-2 sm:px-4 sm:py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
+              className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
               dark:from-red-600/70 dark:to-rose-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaArrowLeft size={20} />
-              Torna alle Tappe
+              Tappe
             </Link>
 
             <h2 className="text-2xl text-center font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]
@@ -89,29 +92,9 @@ function AddDay() {
         {/* COLONNA SINISTRA */}
         <div className="flex flex-col gap-6 mt-22 sm:mt-20"> {/* mt-20 per lasciare spazio all’intestazione */}
 
-          <p className="text-white text-sm italic text-right">* Il campo è obbligatorio</p>
-
-          {/* Viaggio */}
-          <div>
-            <label className="block font-bold text-white mb-2">Viaggio *</label>
-            <select
-              value={selectedTravel}
-              onChange={(e) => setSelectedTravel(e.target.value)}
-              className="w-full p-2 font-semibold border border-white/40 rounded-full bg-white/10 text-white placeholder-white/70 
-              focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 focus:border-transparent transition"
-              required>
-              <option value="" className=" text-black">-- Seleziona --</option>
-              {travels.map((t) => (
-                <option key={t.id} value={t.id} className=" text-black">
-                  {t.town} ({t.year})
-                </option>
-              ))}
-            </select>
-          </div>
-
           { /* Città */}
           <div>
-            <label className="block font-bold text-white mb-2">Città *</label>
+            <label className="block font-bold text-white mb-2">Città</label>
             <input
               type="text"
               name="city"
@@ -125,7 +108,7 @@ function AddDay() {
 
           {/* Data */}
           <div>
-            <label className="block font-bold text-white mb-2">Data *</label>
+            <label className="block font-bold text-white mb-2">Data</label>
             <input
               type="date"
               name="date"
@@ -140,7 +123,7 @@ function AddDay() {
 
           {/* Titolo */}
           <div className="relative">
-            <label className="block font-bold text-white mb-2">Titolo *</label>
+            <label className="block font-bold text-white mb-2">Titolo</label>
             <input
               name="title"
               value={form.title}
@@ -174,7 +157,7 @@ function AddDay() {
 
           {/* Descrizione */}
           <div>
-            <label className="block font-bold text-white mb-2">Riassunto della giornata *</label>
+            <label className="block font-bold text-white mb-2">Riassunto della giornata</label>
             <textarea
               name="description"
               value={form.description}
@@ -198,7 +181,7 @@ function AddDay() {
             <button
               type="button"
               onClick={() => setIsCategoryModalOpen(true)}
-              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-orange-600 to-rose-500 dark:from-orange-600/70 dark:to-rose-500/70
+              className="w-full sm:w-auto font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70
               backdrop-blur-md border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaBars size={20} /> Seleziona Esperienza
@@ -206,7 +189,7 @@ function AddDay() {
             <button
               type="button"
               onClick={handlePhotoSelect}
-              className="w-full sm:w-auto font-semibold px-6 py-2 bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70 
+              className="w-full sm:w-auto font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70 
               backdrop-blur-md border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
               hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaCamera size={20} /> Carica Foto
@@ -219,7 +202,7 @@ function AddDay() {
               {form.experiences.map((experience, i) => (
                 <span
                   key={i}
-                  className="flex items-center justify-between bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                  className="flex items-center justify-between bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70
                   backdrop-blur-md border border-white/40 text-white px-4 py-2 rounded-full text-base font-semibold 
                   shadow-md transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer">
                   <span>{experience}</span>
@@ -313,7 +296,7 @@ function AddDay() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className=" w-full sm:w-auto font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
+              className=" w-full sm:w-auto font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
               dark:from-green-600/70 dark:to-teal-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaPlus size={20} />

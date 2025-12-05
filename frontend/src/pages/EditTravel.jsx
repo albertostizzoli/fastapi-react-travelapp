@@ -39,11 +39,11 @@ function EditTravel() {
 
           <Link
             to="/travels"
-            className="font-semibold px-2 py-2 sm:px-4 sm:py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
+            className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
             dark:from-red-600/70 dark:to-rose-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
             hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
             <FaArrowLeft size={20} />
-            Torna ai Viaggi
+            Viaggi
           </Link>
 
           <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] text-center
@@ -57,13 +57,12 @@ function EditTravel() {
           to-transparent rounded-full pointer-events-none" />
 
         {/* COLONNA SINISTRA */}
-        <div className="flex flex-col gap-6 mt-22">
+        <div className="flex flex-col gap-6 mt-24">
 
-          <p className="text-sm italic text-white text-right">* Il campo è obbligatorio</p>
 
           {/* Paese */}
           <div>
-            <label className="block font-bold text-white mb-2">Paese *</label>
+            <label className="block font-bold text-white mb-2">Paese</label>
             <input
               type="text"
               name="town"
@@ -76,7 +75,7 @@ function EditTravel() {
 
           {/* Anno */}
           <div>
-            <label className="block font-bold text-white mb-2">Anno *</label>
+            <label className="block font-bold text-white mb-2">Anno</label>
             <input
               type="number"
               name="year"
@@ -89,7 +88,7 @@ function EditTravel() {
 
           {/* Data Inizio */}
           <div>
-            <label className="block font-bold text-white mb-2">Data Inizio *</label>
+            <label className="block font-bold text-white mb-2">Data Inizio</label>
             <input
               type="text"
               name="start_date"
@@ -102,7 +101,7 @@ function EditTravel() {
 
           {/* Data Fine */}
           <div>
-            <label className="block font-bold text-white mb-2">Data Fine *</label>
+            <label className="block font-bold text-white mb-2">Data Fine</label>
             <input
               type="text"
               name="end_date"
@@ -118,7 +117,7 @@ function EditTravel() {
         <div className="flex flex-col gap-8 sm:mt-24">
           {/* Voti */}
           <div>
-            <h3 className="font-bold mb-4 text-white text-center text-xl">Voti *</h3>
+            <h3 className="font-bold mb-4 text-white text-center text-xl">Voti</h3>
             <div className="flex flex-wrap justify-center gap-6">
               {Object.entries(travel.votes).map(([key, value]) => (
                 <div key={key} className="flex flex-col items-center">
@@ -156,7 +155,7 @@ function EditTravel() {
 
             <button
               type="submit"
-              className="w-full sm:w-auto font-semibold px-6 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
+              className="w-full sm:w-auto font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-green-600 to-teal-500 
               dark:from-green-600/70 dark:to-teal-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
               hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
               <FaEdit size={20} />

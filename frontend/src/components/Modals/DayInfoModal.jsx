@@ -49,29 +49,29 @@ function DayInfoModal({ selectedDay, onClose, travelDays }) {
             <div className="flex justify-between items-center p-4 border-b border-white/40 bg-black/10 backdrop-blur-lg">
               <button
                 onClick={handleClose}
-                className="font-semibold flex items-center justify-center gap-2 px-2 py-2 sm:px-4 sm:py-2 bg-linear-to-br 
+                className="font-semibold flex items-center justify-center gap-2 px-4 py-2  bg-linear-to-br 
                 from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70 
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                 <FaArrowLeft size={20} className="mr-2" /> Torna alle Tappe
+                 <FaArrowLeft size={20} className="mr-2" /> Tappe
               </button>
 
               <button
                 onClick={() => setShowMapModal(true)}
-                className="font-semibold flex items-center justify-center gap-2 px-2 py-2 sm:px-4 sm:py-2 bg-linear-to-br 
+                className="font-semibold flex items-center justify-center gap-2 px-4 py-2 bg-linear-to-br 
                 from-blue-600 to-cyan-500 dark:form-blue-600/70 dark:to-cyan-500/70 
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
                 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                 <FaMapMarkerAlt size={20} className="mr-2" /> Vai alla Mappa
+                 <FaMapMarkerAlt size={20} className="mr-2" /> Mappa
               </button>
             </div>
 
             {/* Contenuto scrollabile */}
             <div className="flex-1 p-6 sm:p-6 overflow-y-auto scrollbar max-h-full text-white">
               <h1 className="text-3xl font-extrabold text-white mb-2 drop-shadow-lg">
-                {selectedDay.city}, {selectedDay.title}
+               {selectedDay.title}
               </h1>
               <p className="text-2xl font-bold text-cyan-200/80 mb-4">{selectedDay.date}</p>
               <p className="text-white text-justify font-bold leading-relaxed mb-6">{selectedDay.description}</p>

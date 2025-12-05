@@ -50,12 +50,12 @@ function TravelDays() {
           transition={{ duration: 0.8, ease: "easeOut" }}>
           <Link
             to="/travels"
-            className="font-semibold px-3 py-2 sm:px-4 sm:py-2 inline-flex items-center justify-center gap-2
+            className="font-semibold px-4 py-2 inline-flex items-center justify-center gap-2
             bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
             backdrop-blur-md border border-white/40
             text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
             hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
-            <FaArrowLeft size={20} className="mr-2 sm:m-auto" /> Torna ai Viaggi
+            <FaArrowLeft size={20} className="mr-2 sm:m-auto" /> Viaggi
           </Link>
         </motion.div>
 
@@ -117,7 +117,7 @@ function TravelDays() {
             <Link
               to="/addDay"
               state={{ travelId: id }}
-              className="font-semibold mt-4 sm:ms-3 sm:mt-0 px-6 py-2 inline-flex items-center justify-center gap-2
+              className="font-semibold mt-4 sm:ms-3 sm:mt-0 px-4 py-2 inline-flex items-center justify-center gap-2
               bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70
               backdrop-blur-md border border-white/40
               text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
@@ -359,7 +359,10 @@ function TravelDays() {
               </motion.div>
             </div>
           ) : (
-            <p className="text-white/80 font-semibold text-center mt-6 italic">
+            <p className="font-semibold text-center px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+              bg-linear-to-br from-blue-200/40 to-orange-200/40 
+              dark:from-slate-700/40 dark:to-slate-600/40 
+              text-white/70 italic">
               Nessuna tappa presente
             </p>
           )}

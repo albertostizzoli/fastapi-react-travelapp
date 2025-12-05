@@ -49,7 +49,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
 
               <button
                 onClick={onCancel}
-                className="font-semibold flex items-center justify-center gap-2 px-6 py-2 bg-linear-to-br 
+                className="font-semibold flex items-center justify-center gap-2 px-4 py-2  
                  bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70  
                 backdrop-blur-md border border-white/40 text-white 
                 rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer hover:scale-105 
