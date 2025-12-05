@@ -21,6 +21,8 @@ function Travels() {
     filteredTravels,         // per filtrare i viaggi in base agli anni
     scrollRef,               // ref per lo scroll del carosello
     cardRefs,                // ref per tutte le card
+    scrollLeft,              // funzione per scrollare a sinistra
+    scrollRight              // funzione per scrollare a destra
   } = TravelsController();   // uso la logica della pagina viaggi
 
 
@@ -58,22 +60,20 @@ function Travels() {
 
             {/* Freccia sinistra */}
             <button
-              onClick={() => scrollRef.current.scrollBy({ left: -450, behavior: "smooth" })}
+              onClick={scrollLeft}
               className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
-              opacity-0 group-hover:opacity-100 transition-all duration-300
-            bg-white/20 hover:bg-white backdrop-blur-xl cursor-pointer
-            text-white hover:text-black border border-white/50
+              opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white
+              backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
               w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
               <FaArrowLeft size={20} />
             </button>
 
             {/* Freccia destra */}
             <button
-              onClick={() => scrollRef.current.scrollBy({ left: 450, behavior: "smooth" })}
+              onClick={scrollRight}
               className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
-              opacity-0 group-hover:opacity-100 transition-all duration-300
-            bg-white/20 hover:bg-white backdrop-blur-xl cursor-pointer
-            text-white hover:text-black border border-white/50
+              opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
+              backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
               w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
               <FaArrowRight size={20} />
             </button>

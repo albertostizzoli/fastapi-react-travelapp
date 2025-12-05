@@ -31,7 +31,7 @@ function ModalDeleteProfile({ isOpen, onConfirm, onCancel }) {
             </h2>
 
             <p className="text-white mb-8 text-2sm drop-shadow-sm">
-              Questa azione è <span className="text-red-400 font-semibold">irreversibile</span>.<br />
+              Questa azione è <span className="text-red-400 dark:text-red-500 font-semibold">irreversibile</span>.<br />
               Tutti i tuoi dati e preferenze verranno rimossi definitivamente.
             </p>
 

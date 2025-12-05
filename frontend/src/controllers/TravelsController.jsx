@@ -113,6 +113,33 @@ function TravelsController() {
         : travels; // se nessun anno selezionato, mostra tutti
 
 
+    // funzione per scrollare il carosello a sinistra o saltare alla fine
+    const scrollLeft = () => {
+        if (!scrollRef.current) return; // verifica che il ref sia definito
+        const scrollContainer = scrollRef.current; // il contenitore scrollabile
+
+        if (scrollContainer.scrollLeft <= 0) {
+            // Se siamo all'inizio, salta alla fine
+            scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: "smooth" }); // scorri alla fine
+        } else {
+            scrollContainer.scrollBy({ left: -475, behavior: "smooth" }); // altrimenti scorri a sinistra di 475px
+        }
+    };
+
+    // funzione per scrollare il carosello a destra o saltare all'inizio
+    const scrollRight = () => {
+        if (!scrollRef.current) return;
+        const scrollContainer = scrollRef.current;
+
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) { // verifica se siamo alla fine
+            // Se siamo alla fine, salta all'inizio
+            scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+            scrollContainer.scrollBy({ left: 475, behavior: "smooth" });
+        }
+    };
+
+
     return {
         travels,           // lista dei viaggi
         deleteId,          // id del viaggio da eliminare
@@ -129,6 +156,8 @@ function TravelsController() {
         filteredTravels,   // funzione per filtrare i viaggi in base agli anni
         scrollRef,         // ref per lo scroll del carosello
         cardRefs,          // ref per tutte le card
+        scrollLeft,            // funzione per scrollare a sinistra
+        scrollRight            // funzione per scrollare a destra
     }
 }
 

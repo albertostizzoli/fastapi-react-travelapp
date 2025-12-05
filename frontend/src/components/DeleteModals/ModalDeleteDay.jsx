@@ -30,12 +30,12 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel, day }) {
 
             {/* Titolo */}
             <h2 className="text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
-               Vuoi davvero cancellare la tappa <span className="text-yellow-500 dark:text-yellow-300">"{day?.title}"</span>?
+               Vuoi davvero cancellare la tappa <span className="text-red-400 dark:text-red-500">"{day?.title}"</span>?
             </h2>
 
             {/* Descrizione */}
             <p className="text-white mb-8 text-2sm drop-shadow-sm">
-              La tappa verrà rimossa <span className="text-red-400 font-semibold">definitivamente</span><br />
+              La tappa verrà rimossa <span className="text-red-400 dark:text-red-500 font-semibold">definitivamente</span><br />
               dal tuo itinerario. Questa azione non può essere annullata.
             </p>
 

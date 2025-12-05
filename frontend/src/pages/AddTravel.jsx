@@ -57,7 +57,7 @@ function AddTravel() {
 
           {/* Paese */}
           <div>
-            <label className="block font-bold text-white mb-2">Paese</label>
+            <label className="block font-bold text-white mb-2">Nazione</label>
             <input
               type="text"
               name="town"

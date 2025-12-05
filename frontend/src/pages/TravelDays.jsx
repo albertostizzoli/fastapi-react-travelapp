@@ -29,6 +29,8 @@ function TravelDays() {
     experienceOptions,          // opzioni per la select delle esperienze
     scrollRef,                  // ref per lo scroll del carosello
     cardRefs,                   // ref per tutte le card
+    scrollLeft,            // funzione per scrollare a sinistra
+    scrollRight            // funzione per scrollare a destra
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -51,8 +53,8 @@ function TravelDays() {
             to="/travels"
             className="font-semibold px-4 py-2 inline-flex items-center justify-center gap-2
             bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
-            backdrop-blur-md border border-white/40
-            text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+            backdrop-blur-md border border-white/40 text-white rounded-full shadow-md 
+            transition-all duration-300 hover:scale-105
             hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-fit">
             <FaArrowLeft size={20} className="mr-2 sm:m-auto" /> Viaggi
           </Link>
@@ -118,8 +120,8 @@ function TravelDays() {
               state={{ travelId: id }}
               className="font-semibold mt-4 sm:ms-3 sm:mt-0 px-4 py-2 inline-flex items-center justify-center gap-2
               bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70
-              backdrop-blur-md border border-white/40
-              text-white rounded-full shadow-md transition-all duration-300 hover:scale-105
+              backdrop-blur-md border border-white/40 text-white rounded-full shadow-md 
+              transition-all duration-300 hover:scale-105
               hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-56">
               <FaPlus size={20} /> Aggiungi Tappa
             </Link>
@@ -136,7 +138,7 @@ function TravelDays() {
               <div className={`hidden lg:block absolute inset-0 pointer-events-none ${openCardId ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}>
                 {/* FRECCIA SINISTRA */}
                 <button
-                  onClick={() => scrollRef.current.scrollBy({ left: -475, behavior: "smooth" })} // scrolla a sinistra di 460px
+                  onClick={scrollLeft}
                   className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
                   opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
                   backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
@@ -146,7 +148,7 @@ function TravelDays() {
 
                 {/* FRECCIA DESTRA */}
                 <button
-                  onClick={() => scrollRef.current.scrollBy({ left: 475, behavior: "smooth" })} // scrolla a destra di 460px
+                  onClick={scrollRight}
                   className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
                   opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
                   backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
@@ -177,7 +179,7 @@ function TravelDays() {
                         ref={(el) => (cardRefs.current[d.id] = el)} // assegno il ref 
                         variants={{
                           hidden: { scale: 0.7, opacity: 0 },
-                          visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" }},
+                          visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
                         }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         className="min-w-[370px] sm:min-w-[450px] lg:min-w-[450px]">
@@ -200,7 +202,6 @@ function TravelDays() {
                               <p className="text-white font-extrabold text-2xl drop-shadow-xl">
                                 {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title} {/* Tappa */}
                               </p>
-
                               <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
                                 {d.date} {/* Data */}
                               </p>
@@ -298,8 +299,10 @@ function TravelDays() {
                                 {/* BOTTONI */}
                                 <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7 px-3">
                                   <button
-                                    onClick={(e) => {e.stopPropagation(); 
-                                    setSelectedDay(d);}}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setSelectedDay(d);
+                                    }}
                                     className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                     bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
                                     backdrop-blur-md border border-white/40 text-white 
@@ -320,9 +323,10 @@ function TravelDays() {
                                   </Link>
 
                                   <button
-                                    onClick={(e) => {e.stopPropagation(); 
-                                    setDeleteDayId(d.id);
-                                  }}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setDeleteDayId(d.id);
+                                    }}
                                     className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                     bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
                                     backdrop-blur-md border border-white/40 text-white 

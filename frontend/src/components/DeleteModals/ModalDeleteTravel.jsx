@@ -27,12 +27,12 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel, travel }) {
               
             {/* Titolo */}
             <h2 className="text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
-              Vuoi davvero cancellare il viaggio <span className="text-yellow-500 dark:text-yellow-300">"{travel?.town}"</span>?
+              Vuoi davvero cancellare il viaggio <span className="text-red-400 dark:text-red-500">"{travel?.town}"</span>?
             </h2>
 
             {/* Descrizione */}
             <p className="text-white mb-8 text-2sm drop-shadow-sm">
-              Il viaggio verrà cancellato <span className="text-rose-400 font-semibold"> definitivamente </span>
+              Il viaggio verrà cancellato <span className="text-red-400 dark:text-red-500 font-semibold"> definitivamente </span>
               insieme a tutte le tappe collegate. Questa azione non può essere annullata.
             </p>
 
