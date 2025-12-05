@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
-function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
+function ModalDeleteDay({ isOpen, onConfirm, onCancel, day }) {
   return (
 
     // AnimatePresence permette animazioni in uscita di componenti React.
@@ -30,7 +30,7 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
 
             {/* Titolo */}
             <h2 className="text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
-              Vuoi davvero cancellare la tappa?
+               Vuoi davvero cancellare la tappa <span className="text-yellow-500 dark:text-yellow-300">"{day?.title}"</span>?
             </h2>
 
             {/* Descrizione */}
@@ -45,8 +45,8 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
                 onClick={onConfirm}
                 className="font-semibold flex items-center justify-center gap-2 px-4 py-2 
                  bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70 
-                 backdrop-blur-md border border-white/40 
-                 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
+                 backdrop-blur-md border border-white/40 text-white rounded-full shadow-md 
+                 transition-all duration-300 ease-in-out cursor-pointer
                  hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <FaCheck size={20} className="mr-2" /> Sì
               </button>
@@ -55,8 +55,8 @@ function ModalDeleteDay({ isOpen, onConfirm, onCancel }) {
                 onClick={onCancel}
                 className="font-semibold flex items-center justify-center gap-2 px-4 py-2 
                  bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70 
-                 backdrop-blur-md border border-white/40 
-                 text-white rounded-full shadow-md transition-all duration-300 ease-in-out cursor-pointer
+                 backdrop-blur-md border border-white/40 text-white rounded-full shadow-md 
+                 transition-all duration-300 ease-in-out cursor-pointer
                  hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                 <FaTimes size={20} className="mr-2" /> No
               </button>

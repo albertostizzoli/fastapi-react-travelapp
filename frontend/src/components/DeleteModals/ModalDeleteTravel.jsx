@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
-function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
+function ModalDeleteTravel({ isOpen, onConfirm, onCancel, travel }) {
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -27,7 +27,7 @@ function ModalDeleteTravel({ isOpen, onConfirm, onCancel }) {
               
             {/* Titolo */}
             <h2 className="text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
-              Vuoi davvero cancellare il viaggio?
+              Vuoi davvero cancellare il viaggio <span className="text-yellow-500 dark:text-yellow-300">"{travel?.town}"</span>?
             </h2>
 
             {/* Descrizione */}

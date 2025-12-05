@@ -241,6 +241,7 @@ function Travels() {
         isOpen={!!deleteId}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
+        travel={filteredTravels?.find(v => v.id === deleteId)} // trova il viaggio dall'id
       />
 
       {/* Messaggio conferma */}

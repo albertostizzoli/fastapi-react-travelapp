@@ -29,7 +29,6 @@ function TravelDays() {
     experienceOptions,          // opzioni per la select delle esperienze
     scrollRef,                  // ref per lo scroll del carosello
     cardRefs,                   // ref per tutte le card
-    getCountryPreposition       // funzione per ottenere la preposizione corretta per i paesi in italiano
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -61,7 +60,7 @@ function TravelDays() {
 
         {/* Titolo */}
         <motion.h1 className="text-3xl sm:text-4xl font-extrabold text-white text-center
-            md:absolute md:left-1/2 md:-translate-x-1/2"
+          md:absolute md:left-1/2 md:-translate-x-1/2"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}>
@@ -139,9 +138,8 @@ function TravelDays() {
                 <button
                   onClick={() => scrollRef.current.scrollBy({ left: -475, behavior: "smooth" })} // scrolla a sinistra di 460px
                   className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
-                  opacity-0 group-hover:opacity-100 transition-all duration-300
-                bg-white/20 hover:bg-white backdrop-blur-xl cursor-pointer
-                text-white hover:text-black border border-white/50
+                  opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
+                  backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
                   w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
                   <FaArrowLeft size={20} />
                 </button>
@@ -150,9 +148,8 @@ function TravelDays() {
                 <button
                   onClick={() => scrollRef.current.scrollBy({ left: 475, behavior: "smooth" })} // scrolla a destra di 460px
                   className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
-                  opacity-0 group-hover:opacity-100 transition-all duration-300
-                bg-white/20 hover:bg-white backdrop-blur-xl cursor-pointer
-                text-white hover:text-black border border-white/50
+                  opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
+                  backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
                   w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
                   <FaArrowRight size={20} />
                 </button>
@@ -161,7 +158,7 @@ function TravelDays() {
               <motion.div
                 ref={scrollRef}
                 className={`flex gap-6 px-6 py-4 scroll-smooth snap-x snap-mandatory
-              ${openCardId ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
+                ${openCardId ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
                 style={{ scrollbarWidth: "none" }}
                 variants={{
                   hidden: { opacity: 1 },
@@ -172,7 +169,7 @@ function TravelDays() {
                 <AnimatePresence>
                   {filteredDays.map((d) => {
 
-                    const isOpen = openCardId === d.id;
+                    const isOpen = openCardId === d.id; // questo mi permette di aprire e chiudere la card una alla volta
 
                     return (
                       <motion.div
@@ -180,11 +177,7 @@ function TravelDays() {
                         ref={(el) => (cardRefs.current[d.id] = el)} // assegno il ref 
                         variants={{
                           hidden: { scale: 0.7, opacity: 0 },
-                          visible: {
-                            scale: 1,
-                            opacity: 1,
-                            transition: { duration: 0.35, ease: "easeOut" }
-                          },
+                          visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" }},
                         }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         className="min-w-[370px] sm:min-w-[450px] lg:min-w-[450px]">
@@ -192,9 +185,7 @@ function TravelDays() {
                         {/* CARD */}
                         <motion.div
                           style={{
-                            boxShadow: isOpen
-                              ? "0px 0px 25px rgba(255,255,255,0.30)"
-                              : "0px 0px 0px rgba(255,255,255,0)",
+                            boxShadow: isOpen ? "0px 0px 25px rgba(255,255,255,0.30)" : "0px 0px 0px rgba(255,255,255,0)",
                           }}
                           className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
                           backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
@@ -245,8 +236,7 @@ function TravelDays() {
                                 <div
                                   key={i}
                                   className="w-35 h-28 sm:w-45 rounded-2xl border border-white/40 shadow-md
-                                  bg-linear-to-br from-blue-200/40 to-orange-200/40 
-                                dark:from-slate-700/40 dark:to-slate-600/40
+                                  bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40
                                   flex items-center justify-center text-white/70">
                                   <FaRegImage className="text-2xl" />
                                 </div>
@@ -267,9 +257,7 @@ function TravelDays() {
                                 {/* descrizione */}
                                 {d.description && (
                                   <p className="text-white mt-4 text-2sm text-justify font-semibold">
-                                    {d.description.length > 120
-                                      ? d.description.slice(0, 120) + "..."
-                                      : d.description}
+                                    {d.description.length > 120 ? d.description.slice(0, 120) + "..." : d.description}
                                   </p>
                                 )}
 
@@ -291,8 +279,7 @@ function TravelDays() {
                                     {d.experiences.length > 3 && (
                                       <span
                                         className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                        bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 
-                                      text-white italic">
+                                        bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 text-white italic">
                                         +{d.experiences.length - 3}
                                       </span>
                                     )}
@@ -300,10 +287,9 @@ function TravelDays() {
                                 ) : (
                                   <div className="mt-4 flex flex-wrap gap-2">
                                     <span
-                                      className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                      bg-linear-to-br from-blue-200/40 to-orange-200/40 
-                                    dark:from-slate-700/40 dark:to-slate-600/40 
-                                    text-white/70 italic">
+                                      className="font-semibold px-4 py-2 backdrop-blur-md rounded-full 
+                                      bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
+                                      text-2sm text-white/70 italic">
                                       Nessuna esperienza
                                     </span>
                                   </div>
@@ -312,10 +298,8 @@ function TravelDays() {
                                 {/* BOTTONI */}
                                 <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7 px-3">
                                   <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setSelectedDay(d);
-                                    }}
+                                    onClick={(e) => {e.stopPropagation(); 
+                                    setSelectedDay(d);}}
                                     className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                     bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
                                     backdrop-blur-md border border-white/40 text-white 
@@ -336,10 +320,9 @@ function TravelDays() {
                                   </Link>
 
                                   <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setDeleteDayId(d.id);
-                                    }}
+                                    onClick={(e) => {e.stopPropagation(); 
+                                    setDeleteDayId(d.id);
+                                  }}
                                     className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
                                     bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
                                     backdrop-blur-md border border-white/40 text-white 
@@ -359,10 +342,9 @@ function TravelDays() {
               </motion.div>
             </div>
           ) : (
-            <p className="font-semibold text-center px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-              bg-linear-to-br from-blue-200/40 to-orange-200/40 
-              dark:from-slate-700/40 dark:to-slate-600/40 
-              text-white/70 italic">
+            <p className="font-semibold text-center px-4 py-2 backdrop-blur-md rounded-full 
+              bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
+              text-2sm text-white/70 italic">
               Nessuna tappa presente
             </p>
           )}
@@ -380,6 +362,7 @@ function TravelDays() {
         isOpen={!!deleteDayId}
         onConfirm={handleDeleteDay}
         onCancel={() => setDeleteDayId(null)}
+        day={travel?.days.find(d => d.id === deleteDayId)} // trova la tappa dall'id
       />
 
       {/* Modale di Conferma */}
