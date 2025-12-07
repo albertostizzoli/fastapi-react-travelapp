@@ -139,7 +139,8 @@ def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
     prompt = f"""
     Sei un assistente AI esperto di viaggi. 
     L'utente ha le seguenti esperienze di viaggio: {experiences_text}.
-    Il tuo compito è consigliare 10 destinazioni di viaggio, ciascuna con almeno 5 tappe o attività specifiche, che si allineano alle esperienze dell'utente.
+    Il tuo compito è consigliare 6 destinazioni di viaggio, 
+    ciascuna con almeno 5 tappe o attività specifiche, che si allineano alle esperienze dell'utente.
 
     Requisiti di stile:
     - Inizia sempre con un saluto cordiale e personalizzato.
@@ -165,5 +166,17 @@ def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
         .replace("\n\n", "\n")
         .strip()
     )
+    # Recupera la history chat
+    history = chat_history.get(user_id, [])
+
+    # Aggiungi finto messaggio: user chiede raccomandazioni e l'AI risponde
+    history.append({
+       "user": "Richiesta raccomandazioni basata sulle mie esperienze",
+       "ai": f"[RACCOMANDAZIONI]\n{cleaned_text}"
+   })
+
+    # Limite della cronologia
+    chat_history[user_id] = history[-20:]
 
     return {"recommendations": cleaned_text}
+

@@ -4,7 +4,7 @@ function Footer({ className = "" }) {
 
     return (
         <footer
-            className={`flex flex-col items-center justify-between gap-2 mt-2 pt-2 backdrop-blur-sm p-4 ${className}`}>
+            className={`flex flex-col items-center justify-between gap-2 backdrop-blur-sm ${className}`}>
 
             <img
                 src="/images/footer_logo.png"
