@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session #sessione ORM per interagire con il database
+from fastapi import APIRouter, Depends # importo APIRouter e Depends per creare router modulari e per la gestione delle dipendenze
+from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
 from app.config import UserMessage, travel_model
@@ -12,14 +12,6 @@ chat_history = {}
 # funzione per generare il messaggio dall'AI
 @router.post("/")
 def generate_message(msg: UserMessage):
-    """
-    Chat AI per viaggi con memoria contestuale e gestione intelligente del contesto.
-    Funzionalità principali:
-    - Memorizza le ultime interazioni per coerenza.
-    - Analizza l'intento dell'utente per rimanere nel dominio "viaggi".
-    - Gestisce messaggi fuori tema e retry prima di rifiutare.
-    - Riconosce se l'utente vuole terminare la conversazione.
-    """
     user_id = getattr(msg, "user_id", "default_user")
     history = chat_history.get(user_id, [])
 
@@ -32,6 +24,9 @@ def generate_message(msg: UserMessage):
     # Prendi l'ultimo messaggio dell'AI per fornire contesto
     last_ai = history[-1]["ai"] if history else ""
 
+    # Riduzione History a 5 messaggi
+    MAX_HISTORY = 5
+
 
     # Controllo se l'utente vuole terminare
     termination_keywords = ["fine conversazione", "grazie", "stop", "è tutto", "basta così"]
@@ -39,7 +34,7 @@ def generate_message(msg: UserMessage):
         farewell = "È stato un piacere aiutarti! Buon viaggio e alla prossima 😊"
         # Salva anche questo nel contesto
         history.append({"user": msg.message, "ai": farewell})
-        chat_history[user_id] = history[-20:]
+        chat_history[user_id] = history[MAX_HISTORY:]
         return {"response": farewell, "intent": "terminazione"}
 
 
@@ -103,9 +98,9 @@ def generate_message(msg: UserMessage):
             .strip()
         )
 
-        # Aggiornamento cronologia con limite di 20 messaggi
+        # Aggiornamento cronologia con limite a 5 messaggi
         history.append({"user": msg.message, "ai": cleaned_text})
-        chat_history[user_id] = history[-20:]
+        chat_history[user_id] = history[-5:]
 
         return {"response": cleaned_text, "intent": intent}
 
@@ -139,8 +134,8 @@ def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
     prompt = f"""
     Sei un assistente AI esperto di viaggi. 
     L'utente ha le seguenti esperienze di viaggio: {experiences_text}.
-    Il tuo compito è consigliare 6 destinazioni di viaggio, 
-    ciascuna con almeno 5 tappe o attività specifiche, che si allineano alle esperienze dell'utente.
+    Il tuo compito è consigliare 3 destinazioni di viaggio, 
+    ciascuna con almeno 4 tappe o attività specifiche, che si allineano alle esperienze dell'utente.
 
     Requisiti di stile:
     - Inizia sempre con un saluto cordiale e personalizzato.
@@ -176,7 +171,7 @@ def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
    })
 
     # Limite della cronologia
-    chat_history[user_id] = history[-20:]
+    chat_history[user_id] = history[-5:]
 
     return {"recommendations": cleaned_text}
 
