@@ -16,3 +16,4 @@ class UserDB(Base):
     registration_date = Column(DateTime(timezone=True), server_default=func.now())   # data di registrazione
 
     travels = relationship("TravelDB", back_populates="user")  # Relazione con la classe TravelDB che si trova nel file travel_db.py
+    chats = relationship("ChatDB", back_populates="user")      # Relazione con la classe ChatDB che si trova nel file chat_db.py

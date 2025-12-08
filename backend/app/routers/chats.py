@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Depends # importo APIRouter e Depends per creare router modulari e per la gestione delle dipendenze
+from fastapi import APIRouter, Depends, HTTPException # strumenti di FastAPI: routing, injection delle dipendenze, gestione errori
 from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
-from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
-from app.config import UserMessage, travel_model
+from app.models.user_db import UserDB # modello ORM per la tabella degli utenti
+from app.models.chat_db import ChatDB # modello ORM per la tabella delle chat
+from app.schemas.chats import Chat, ChatCreate, ChatMessageAdd # schemi Pydantic per validare input/output
+from app.config import UserMessage, travel_model # importo il modello di AI per i viaggi e lo schema per i messaggi utente
+from app.auth import get_current_user # importo la funzione per ottenere l'utente in base al token fornito
 
 router = APIRouter(prefix="/chats")
 
@@ -174,4 +177,62 @@ def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
     chat_history[user_id] = history[-5:]
 
     return {"recommendations": cleaned_text}
+
+
+# GET: Funzione per ottenere tutte le chat
+@router.get("/", response_model=list[Chat])
+def get_chats(db: Session = Depends(get_db)):
+    return db.query(ChatDB).all()  # mi restituisce tutte le chat
+
+
+#  GET: per ottenere una chat singola tramite ID
+@router.get("/{chat_id}", response_model=Chat)
+def get_chat(chat_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)): # ID della chat
+    user_id = current_user["id"]
+    chat = db.query(ChatDB).filter(ChatDB.id == chat_id, ChatDB.user_id == user_id).first() # ottengo la chat
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat non trovata")
+    return chat
+
+
+# POST: Funzione per creare una nuova chat
+@router.post("/", response_model=Chat)
+def add_chat(chat: ChatCreate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user_id = current_user["id"]
+    db_chat = ChatDB(
+        messages=chat.messages,
+        user_id=user_id
+    )
+
+    db.add(db_chat)
+    db.commit()
+    db.refresh(db_chat)
+
+    return db_chat
+
+
+@router.patch("/{chat_id}/messages", response_model=Chat)
+def add_messages_to_chat( chat_id: int, new_data: ChatMessageAdd, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    
+    # Verifica se la chat esiste
+    chat = db.query(ChatDB).filter(ChatDB.id == chat_id).first()
+
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat non trovata")
+
+    # Verifica che la chat appartenga all'utente corrente
+    if chat.user_id != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Non sei autorizzato a modificare questa chat")
+
+    # Aggiungo i nuovi messaggi alla lista esistente
+    chat.messages.extend(new_data.messages)
+
+    # Salvo le modifiche
+    db.commit()
+    db.refresh(chat)
+
+    return chat
+
+
+
 
