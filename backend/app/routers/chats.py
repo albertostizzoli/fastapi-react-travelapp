@@ -3,25 +3,35 @@ from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.user_db import UserDB # modello ORM per la tabella degli utenti
 from app.models.chat_db import ChatDB # modello ORM per la tabella delle chat
-from app.schemas.chats import Chat, ChatCreate, ChatMessageAdd # schemi Pydantic per validare input/output
+from app.schemas.chats import Chat, ChatCreate # schemi Pydantic per validare input/output
 from app.config import UserMessage, travel_model # importo il modello di AI per i viaggi e lo schema per i messaggi utente
 from app.auth import get_current_user # importo la funzione per ottenere l'utente in base al token fornito
 
 router = APIRouter(prefix="/chats")
+
+# Dependency: fornisce una sessione di database a ogni richiesta API.
+# La sessione viene creata all'inizio, resa disponibile tramite yield,
+# e chiusa automaticamente alla fine della richiesta (pattern try/finally).
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db  # restituisce la sessione da usare nelle query
+    finally:
+        db.close()  # chiude la sessione per evitare memory leak
 
 # Dizionario in memoria per salvare la cronologia delle chat per ogni utente
 chat_history = {}
 
 # funzione per generare il messaggio dall'AI
 @router.post("/")
-def generate_message(msg: UserMessage):
-    user_id = getattr(msg, "user_id", "default_user")
+def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user_id = current_user["id"]
     history = chat_history.get(user_id, [])
 
     # Costruzione del contesto della conversazione: ultimi 6 scambi
     conversation_context = "\n".join([
         f"Utente: {ex['user']}\nAssistente: {ex['ai']}"
-        for ex in history[-6:]
+        for ex in history[-3:]
     ])
 
     # Prendi l'ultimo messaggio dell'AI per fornire contesto
@@ -38,6 +48,13 @@ def generate_message(msg: UserMessage):
         # Salva anche questo nel contesto
         history.append({"user": msg.message, "ai": farewell})
         chat_history[user_id] = history[MAX_HISTORY:]
+
+        # Salvataggio nel DB
+        chat_db = ChatDB(messages=history, user_id=user_id)
+        db.add(chat_db)
+        db.commit()
+        db.refresh(chat_db)
+
         return {"response": farewell, "intent": "terminazione"}
 
 
@@ -103,24 +120,19 @@ def generate_message(msg: UserMessage):
 
         # Aggiornamento cronologia con limite a 5 messaggi
         history.append({"user": msg.message, "ai": cleaned_text})
-        chat_history[user_id] = history[-5:]
+        chat_history[user_id] = history[-MAX_HISTORY:]
+
+        # Salvataggio nel DB
+        chat_db = ChatDB(messages=history, user_id=user_id)
+        db.add(chat_db)
+        db.commit()
+        db.refresh(chat_db)
 
         return {"response": cleaned_text, "intent": intent}
 
     except Exception as e:
         return {"response": f"Errore nella generazione: {e}", "intent": intent}
     
-
-# Dependency: fornisce una sessione di database a ogni richiesta API.
-# La sessione viene creata all'inizio, resa disponibile tramite yield,
-# e chiusa automaticamente alla fine della richiesta (pattern try/finally).
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db  # restituisce la sessione da usare nelle query
-    finally:
-        db.close()  # chiude la sessione per evitare memory leak
-
 
 # funzione per ottenere le esperienze dell'utente
 def get_user_experiences(user_id: int, db: Session):
@@ -192,45 +204,6 @@ def get_chat(chat_id: int, db: Session = Depends(get_db), current_user: dict = D
     chat = db.query(ChatDB).filter(ChatDB.id == chat_id, ChatDB.user_id == user_id).first() # ottengo la chat
     if not chat:
         raise HTTPException(status_code=404, detail="Chat non trovata")
-    return chat
-
-
-# POST: Funzione per creare una nuova chat
-@router.post("/", response_model=Chat)
-def add_chat(chat: ChatCreate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
-    user_id = current_user["id"]
-    db_chat = ChatDB(
-        messages=chat.messages,
-        user_id=user_id
-    )
-
-    db.add(db_chat)
-    db.commit()
-    db.refresh(db_chat)
-
-    return db_chat
-
-
-@router.patch("/{chat_id}/messages", response_model=Chat)
-def add_messages_to_chat( chat_id: int, new_data: ChatMessageAdd, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
-    
-    # Verifica se la chat esiste
-    chat = db.query(ChatDB).filter(ChatDB.id == chat_id).first()
-
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat non trovata")
-
-    # Verifica che la chat appartenga all'utente corrente
-    if chat.user_id != current_user["id"]:
-        raise HTTPException(status_code=403, detail="Non sei autorizzato a modificare questa chat")
-
-    # Aggiungo i nuovi messaggi alla lista esistente
-    chat.messages.extend(new_data.messages)
-
-    # Salvo le modifiche
-    db.commit()
-    db.refresh(chat)
-
     return chat
 
 

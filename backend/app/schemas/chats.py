@@ -16,7 +16,3 @@ class Chat(ChatBase):
     class Config:
         # permette a Pydantic di leggere dati direttamente da oggetti SQLAlchemy
         from_attributes = True
-
-# modello per aggiungere messaggi a una chat esistente
-class ChatMessageAdd(BaseModel):
-    messages: List[str]

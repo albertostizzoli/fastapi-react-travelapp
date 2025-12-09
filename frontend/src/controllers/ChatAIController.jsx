@@ -39,9 +39,13 @@ function ChatAIController() {
         setInput(""); // resetta l'input
 
         try {
+            const token = localStorage.getItem("token"); // ottengo il token di autenticazione
             const res = await fetch(`http://127.0.0.1:8000/chats`, { // richiesta al backend per la risposta AI
                 method: "POST", //  metodo POST
-                headers: { "Content-Type": "application/json" }, // intestazioni
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify({ message: input, mode: "chat" }), // corpo della richiesta
             });
 
