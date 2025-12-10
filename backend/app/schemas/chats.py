@@ -21,3 +21,4 @@ class Chat(ChatBase):
 class UserMessage(BaseModel):
     message: str
     mode: str = "chat" 
+    chat_id: int | None = None

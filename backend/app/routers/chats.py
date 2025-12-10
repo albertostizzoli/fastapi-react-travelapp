@@ -28,6 +28,44 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
     user_id = current_user["id"]
     history = chat_history.get(user_id, [])
 
+    #  Gestione creazione nuova chat 
+    if msg.mode == "new_chat":
+        new_chat = ChatDB(
+            user_id=user_id,
+            messages=[]
+        )
+        db.add(new_chat)
+        db.commit()
+        db.refresh(new_chat)
+
+        # reset cronologia in memoria
+        chat_history[user_id] = []
+
+        return {
+            "response": "👌 Nuova chat creata!",
+            "chat_id": new_chat.id
+        }
+
+    # Recupero chat esistente
+    if msg.chat_id:
+        chat_db = db.query(ChatDB).filter(
+            ChatDB.id == msg.chat_id,
+            ChatDB.user_id == user_id
+        ).first()
+    else:
+        # fallback: usa l'ultima chat dell'utente
+        chat_db = db.query(ChatDB).filter(
+            ChatDB.user_id == user_id
+        ).order_by(ChatDB.id.desc()).first()
+
+    # se non esiste ancora nessuna chat, se ne crea una
+    if not chat_db:
+        chat_db = ChatDB(user_id=user_id, messages=[])
+        db.add(chat_db)
+        db.commit()
+        db.refresh(chat_db)
+
+
     # Costruzione del contesto della conversazione: ultimi 6 scambi
     conversation_context = "\n".join([
         f"Utente: {ex['user']}\nAssistente: {ex['ai']}"
@@ -49,11 +87,7 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         history.append({"user": msg.message, "ai": farewell})
         chat_history[user_id] = history[MAX_HISTORY:]
 
-        # Salvataggio nel DB
-        chat_db = db.query(ChatDB).filter(ChatDB.user_id == user_id).first()
-        if not chat_db:
-           chat_db = ChatDB(user_id=user_id, messages=[])
-
+        # salvo la chat nel DB
         chat_db.messages = history
         db.add(chat_db)
         db.commit()
@@ -126,11 +160,7 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         history.append({"user": msg.message, "ai": cleaned_text})
         chat_history[user_id] = history[-MAX_HISTORY:]
 
-        # Salvataggio nel DB
-        chat_db = db.query(ChatDB).filter(ChatDB.user_id == user_id).first()
-        if not chat_db:
-           chat_db = ChatDB(user_id=user_id, messages=[])
-
+        # salvo la chat nel DB
         chat_db.messages = history
         db.add(chat_db)
         db.commit()

@@ -8,6 +8,7 @@ function ChatAIController() {
     const [isLoading, setIsLoading] = useState(false); // stato per indicare se la risposta AI è in caricamento
     const [isRecommending, setIsRecommending] = useState(false); // stato per disabilitare il pulsante Ispirami
     const [hasStartedChat, setHasStartedChat] = useState(false); // stato per iniziare una chat
+    const [currentChatId, setCurrentChatId] = useState(null); // stato per l'ID della chat corrente
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, sono il tuo assistente AI. Chiedimi pure!` : "";
@@ -23,6 +24,13 @@ function ChatAIController() {
             .catch((err) => console.error(err)); // gestisci errori
     }, []); // esegui solo al montaggio
 
+    // resetto la chat all'inizio
+    useEffect(() => {
+        setCurrentChatId(null); // reset ID chat
+        setMessages([]); // reset messaggi
+    }, []);
+
+
     // risposta AI con effetto macchina da scrivere
     const lastAIResponse =
         messages.length && messages[messages.length - 1].role === "ai" //   controlla se l'ultimo messaggio è dell'AI
@@ -33,6 +41,11 @@ function ChatAIController() {
     // funzione per inviare un messaggio
     const sendMessage = async () => {
         if (!input.trim()) return; // se l'input è vuoto, esci
+
+        //  se non c'è una chat, viene creata
+        if (!currentChatId) {
+            await startNewChat();
+        }
         setIsLoading(true); // imposta lo stato di caricamento
         const newUserMsg = { role: "user", text: input }; // crea il messaggio utente
         setMessages((prev) => [...prev, newUserMsg]); // aggiungi il messaggio utente alla lista
@@ -46,10 +59,15 @@ function ChatAIController() {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ message: input, mode: "chat" }), // corpo della richiesta
+                body: JSON.stringify({ message: input, mode: "chat", chat_id: currentChatId }), // corpo della richiesta
             });
 
             const data = await res.json(); // analizza la risposta JSON
+
+            // Se il backend manda un nuovo chat_id (fallback)
+            if (data.chat_id && !currentChatId) { // se non c'è ancora un chat_id
+                setCurrentChatId(data.chat_id); // impostalo dallo stato
+            }
             const clean = data.response // pulisci il testo della risposta
                 .replace(/\*\*/g, "")
                 .replace(/\*/g, "")
@@ -67,6 +85,27 @@ function ChatAIController() {
             setIsLoading(false); // resetta lo stato di caricamento
         }
     };
+
+    // funzione per iniziare una nuova chat
+    const startNewChat = async () => {
+        const token = localStorage.getItem("token"); // ottengo il token di autenticazione
+
+        const res = await fetch(`http://127.0.0.1:8000/chats`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ mode: "new_chat", message: "" }),
+        });
+
+        const data = await res.json();
+
+        setCurrentChatId(data.chat_id);  //  ora la nuova chat esiste!
+        setMessages([]);                 // reset messaggi visivi
+    };
+
+
 
     // funzione per formattare il testo con paragrafi e liste
     const formatText = (text) => {
@@ -192,9 +231,10 @@ function ChatAIController() {
         setMessages,          // messaggi della chat
         handleSend,           // indica che è iniziata una chat quando scrive sull'input
         handleRecommend,      // indica che è iniziata una chat quando si clicca sul pulsante Ispirami
-        hasStartedChat,
+        hasStartedChat,       // per indicare che è iniziata una chat
         scrollToBottom,       // funzione per lo scroll automatico
-        messagesEndRef
+        messagesEndRef,       // riferimento per lo scroll automatico
+        startNewChat          // funzione per iniziare una nuova chat
     }
 }
 

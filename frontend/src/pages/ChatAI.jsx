@@ -16,7 +16,8 @@ function ChatAI() {
         setInput,           // funzione per aggiornare l'input
         isRecommending,     // pulsante Ispirami disabilitato
         hasStartedChat,     // per indicare che è iniziata una chat
-        messagesEndRef       // per fare lo scroll automatico
+        messagesEndRef,     // per fare lo scroll automatico
+        startNewChat        // funzione per iniziare una nuova chat
     } = ChatAIController();  // uso il controller della chat AI
 
 
@@ -122,6 +123,12 @@ function ChatAI() {
                     <FaCompass size={20} />
                     {isRecommending ? "Sto pensando..." : "Consigliami"}
                 </motion.button>
+
+                <button
+                    onClick={startNewChat}
+                    className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full shadow-md text-sm">
+                    + Nuova Chat
+                </button>
             </div>
 
         </motion.div>
