@@ -50,7 +50,11 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         chat_history[user_id] = history[MAX_HISTORY:]
 
         # Salvataggio nel DB
-        chat_db = ChatDB(messages=history, user_id=user_id)
+        chat_db = db.query(ChatDB).filter(ChatDB.user_id == user_id).first()
+        if not chat_db:
+           chat_db = ChatDB(user_id=user_id, messages=[])
+
+        chat_db.messages = history
         db.add(chat_db)
         db.commit()
         db.refresh(chat_db)
@@ -123,7 +127,11 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         chat_history[user_id] = history[-MAX_HISTORY:]
 
         # Salvataggio nel DB
-        chat_db = ChatDB(messages=history, user_id=user_id)
+        chat_db = db.query(ChatDB).filter(ChatDB.user_id == user_id).first()
+        if not chat_db:
+           chat_db = ChatDB(user_id=user_id, messages=[])
+
+        chat_db.messages = history
         db.add(chat_db)
         db.commit()
         db.refresh(chat_db)
