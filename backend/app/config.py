@@ -32,11 +32,6 @@ cloudinary.config(
     api_secret=os.getenv("API_SECRET_CLOUDINARY")
 )
 
-# creo la classe UserMessage per il model
-class UserMessage(BaseModel):
-    message: str
-    mode: str = "chat" 
-
 # configuro la API KEY di Google Gemini
 genai.configure(
     api_key=os.getenv("GOOGLE_API_KEY")

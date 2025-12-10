@@ -16,3 +16,8 @@ class Chat(ChatBase):
     class Config:
         # permette a Pydantic di leggere dati direttamente da oggetti SQLAlchemy
         from_attributes = True
+
+# creo la classe UserMessage per il model
+class UserMessage(BaseModel):
+    message: str
+    mode: str = "chat" 

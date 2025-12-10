@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.user_db import UserDB # modello ORM per la tabella degli utenti
 from app.models.chat_db import ChatDB # modello ORM per la tabella delle chat
-from app.schemas.chats import Chat, ChatCreate # schemi Pydantic per validare input/output
-from app.config import UserMessage, travel_model # importo il modello di AI per i viaggi e lo schema per i messaggi utente
+from app.schemas.chats import Chat, UserMessage # schemi Pydantic per validare input/output
+from app.config import travel_model # importo il modello di AI per i viaggi e lo schema per i messaggi utente
 from app.auth import get_current_user # importo la funzione per ottenere l'utente in base al token fornito
 
 router = APIRouter(prefix="/chats")
