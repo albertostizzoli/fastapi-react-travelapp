@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form # 
 from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.user_db import UserDB # modello ORM per la tabella dei viaggi
-from app.schemas.users import User # schemas Pydantic per validare input/output
+from app.schemas.users import User # classe Pydantic per gli utenti
 from app.models.travel_db import TravelDB # modello ORM per la tabella dei viaggi
 from app.utils.users import get_password_hash, verify_password, validate_password # importo le funzioni per hashare, verificare e validare la password
 from app.config import cloudinary  # importo la configurazione di Cloudinary

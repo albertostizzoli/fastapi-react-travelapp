@@ -3,7 +3,7 @@ from sqlalchemy import func # funzioni SQL generiche (es. per ordinamenti person
 from sqlalchemy.orm import Session # sessione ORM per interagire con il database
 from app.database import SessionLocal # connessione locale al DB (crea le sessioni)
 from app.models.travel_db import TravelDB # modello ORM per la tabella dei viaggi
-from app.schemas.travels import Travel, TravelCreate # schemi Pydantic per validare input/output
+from app.schemas.travels import Travel, TravelCreate # classi Pydantic per i viaggi
 from app.utils.travels import format_date # funzioni di utilità per formattare date
 from app.auth import get_current_user # importo la funzione per ottenere l'utente in base al token fornito
 
