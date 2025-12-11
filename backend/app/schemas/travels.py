@@ -2,8 +2,7 @@ from pydantic import BaseModel # definire schemi di dati con controlli di valida
 from typing import List, Optional # tipi generici: List per array tipizzati, Optional per valori facoltativi
 from app.schemas.days import Day  # importo il modello Pydantic Day per i giorni
 
-# classe base per il modello Travel
-# definisce i campi comuni a tutti i modelli Pydantic relativi ai viaggi
+# modello Pydantic che rappresenta la tabella travels
 class TravelBase(BaseModel):
     town: str               # paese 
     year: int               # anno 
@@ -13,13 +12,11 @@ class TravelBase(BaseModel):
     votes: Optional[dict] = None            # voti (giorno, paesaggio, attività relax, prezzo)
     user_id: Optional[int] = None  
 
-# modello per creare un nuovo viaggio
-# aggiunge il campo 'days', lista di oggetti Day
+# modello Pydantic per creare un nuovo viaggio
 class TravelCreate(TravelBase):
     days: List[Day] = []  # lista delle tappe del viaggio, default vuota
 
-# modello per leggere un viaggio dal database
-# aggiunge il campo 'id' generato dal DB
+# modello Pydantic per restituire i viaggi e le loro tappe dal database. Necessario se vuoi fare response_model=Travel
 class Travel(TravelBase):
     id: int              # ID univoco del viaggio
     days: List[Day] = [] # Lista delle tappe associate al viaggio

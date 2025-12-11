@@ -164,11 +164,20 @@ function ChatAIController() {
         setMessages(prev => [...prev, { role: "ai", text: waitingMsg }]);
 
         try {
+            const token = localStorage.getItem("token"); // ottengo il token di autenticazione
             // richiesta al backend per ottenere le raccomandazioni di viaggio
-            const res = await fetch(`http://127.0.0.1:8000/chats/recommendations/${user.id}`);
+            const res = await fetch(`http://127.0.0.1:8000/chats/recommendations/${user.id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ chat_id: currentChatId })
+            });
 
             // converte la risposta del server in formato JSON
             const data = await res.json();
+            setCurrentChatId(data.chat_id); // aggiorna chat_id se viene creato nuovo
 
             // aggiorna la chat:
             setMessages(prev => [

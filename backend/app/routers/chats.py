@@ -19,6 +19,21 @@ def get_db():
     finally:
         db.close()  # chiude la sessione per evitare memory leak
 
+# GET: Funzione per ottenere tutte le chat
+@router.get("/", response_model=list[Chat])
+def get_chats(db: Session = Depends(get_db)):
+    return db.query(ChatDB).all()  # mi restituisce tutte le chat
+
+
+#  GET: per ottenere una chat singola tramite ID
+@router.get("/{chat_id}", response_model=Chat)
+def get_chat(chat_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)): # ID della chat
+    user_id = current_user["id"]
+    chat = db.query(ChatDB).filter(ChatDB.id == chat_id, ChatDB.user_id == user_id).first() # ottengo la chat
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat non trovata")
+    return chat
+
 # Dizionario in memoria per salvare la cronologia delle chat per ogni utente
 chat_history = {}
 
@@ -29,41 +44,42 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
     history = chat_history.get(user_id, [])
 
     #  Gestione creazione nuova chat 
-    if msg.mode == "new_chat":
+    if msg.mode == "new_chat": # se la modalità è nuova chat
+        # creo una nuova chat nel DB
         new_chat = ChatDB(
-            user_id=user_id,
-            messages=[]
+            user_id=user_id, # ID dell'utente
+            messages=[] # nessun messaggio iniziale
         )
-        db.add(new_chat)
-        db.commit()
-        db.refresh(new_chat)
+        db.add(new_chat) # aggiungo la nuova chat alla sessione
+        db.commit() # salvo la chat nel DB
+        db.refresh(new_chat) # aggiorno l'istanza con i dati dal DB
 
         # reset cronologia in memoria
         chat_history[user_id] = []
 
         return {
-            "response": "👌 Nuova chat creata!",
+            "response": "Nuova chat creata!",
             "chat_id": new_chat.id
         }
 
-    # Recupero chat esistente
+    # recupero chat esistente
     if msg.chat_id:
-        chat_db = db.query(ChatDB).filter(
-            ChatDB.id == msg.chat_id,
-            ChatDB.user_id == user_id
-        ).first()
+        chat_db = db.query(ChatDB).filter( # filtro per ID chat e utente
+            ChatDB.id == msg.chat_id, # ID della chat
+            ChatDB.user_id == user_id # ID dell'utente
+        ).first() # ottengo la chat
     else:
         # fallback: usa l'ultima chat dell'utente
-        chat_db = db.query(ChatDB).filter(
-            ChatDB.user_id == user_id
-        ).order_by(ChatDB.id.desc()).first()
+        chat_db = db.query(ChatDB).filter( # filtro per utente
+            ChatDB.user_id == user_id # ID dell'utente
+        ).order_by(ChatDB.id.desc()).first() # prendo l'ultima chat
 
     # se non esiste ancora nessuna chat, se ne crea una
     if not chat_db:
-        chat_db = ChatDB(user_id=user_id, messages=[])
-        db.add(chat_db)
-        db.commit()
-        db.refresh(chat_db)
+        chat_db = ChatDB(user_id=user_id, messages=[]) # creo nuova chat
+        db.add(chat_db) # aggiungo alla sessione
+        db.commit() # salvo nel DB
+        db.refresh(chat_db) # aggiorno l'istanza
 
 
     # Costruzione del contesto della conversazione: ultimi 6 scambi
@@ -72,18 +88,18 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         for ex in history[-3:]
     ])
 
-    # Prendi l'ultimo messaggio dell'AI per fornire contesto
+    # prendo l'ultimo messaggio dell'AI per fornire contesto
     last_ai = history[-1]["ai"] if history else ""
 
-    # Riduzione History a 5 messaggi
+    # riduzione History a 5 messaggi
     MAX_HISTORY = 5
 
 
-    # Controllo se l'utente vuole terminare
+    # controllo se l'utente vuole terminare
     termination_keywords = ["fine conversazione", "grazie", "stop", "è tutto", "basta così"]
     if any(kw in msg.message.lower() for kw in termination_keywords):
         farewell = "È stato un piacere aiutarti! Buon viaggio e alla prossima 😊"
-        # Salva anche questo nel contesto
+        # aggiorno la cronologia
         history.append({"user": msg.message, "ai": farewell})
         chat_history[user_id] = history[MAX_HISTORY:]
 
@@ -110,17 +126,17 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
     intent = travel_model.generate_content(intent_prompt).text.strip().lower()
 
     # Gestione messaggi fuori tema con retry
-    if intent == "fuori_tema":
-        retry_prompt = f"""
+    if intent == "fuori_tema": # se l'intento è fuori tema
+        retry_prompt = f""" 
         Ecco la conversazione recente:
-        {conversation_context}
+        {conversation_context} 
 
         L'utente ora dice: "{msg.message}"
 
         Questa frase è collegata alla conversazione precedente?
         Se sì, spiega brevemente come. Se no, rispondi "fuori_tema".
         """
-        retry = travel_model.generate_content(retry_prompt).text.strip().lower()
+        retry = travel_model.generate_content(retry_prompt).text.strip().lower() # ottengo il risultato
         if "fuori_tema" in retry:
             return {
                 "response": "Posso aiutarti solo con argomenti legati ai viaggi 😊. "
@@ -146,17 +162,12 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
     """
 
     try:
-        response = travel_model.generate_content(prompt)
-        cleaned_text = (
-            response.text
-            .replace("**", "")
-            .replace("*", "")
-            .replace("###", "")
-            .replace("\n\n", "\n")
-            .strip()
-        )
+        response = travel_model.generate_content(prompt) # ottengo la risposta dall'AI
 
-        # Aggiornamento cronologia con limite a 5 messaggi
+        # pulisco il testo rimuovendo caratteri indesiderati
+        cleaned_text = (response.text.replace("**", "").replace("*", "").replace("###", "").replace("\n\n", "\n").strip())
+
+        # aggiornamento cronologia con limite a 5 messaggi
         history.append({"user": msg.message, "ai": cleaned_text})
         chat_history[user_id] = history[-MAX_HISTORY:]
 
@@ -179,9 +190,22 @@ def get_user_experiences(user_id: int, db: Session):
 
 
 # funzione per ottenere il messaggio dall'AI in base alle esperienze dell'utente
-@router.get("/recommendations/{user_id}")
-def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
-    experiences = get_user_experiences(user_id, db)
+@router.post("/recommendations/{user_id}")
+def get_travel_recommendations(user_id: int, chat_id: int = None, db: Session = Depends(get_db)):
+
+    # recupera o creo una chat
+    if chat_id:
+        chat = db.query(ChatDB).filter(ChatDB.id == chat_id).first() # ottengo la chat
+        if not chat:
+            raise HTTPException(status_code=404, detail="Chat non trovata")
+    else:
+        chat = ChatDB(user_id=user_id) # creo nuova chat
+        db.add(chat) # aggiungo alla sessione
+        db.commit() # salvo nel DB
+        db.refresh(chat) # aggiorno l'istanza
+
+    # recupero le esperienze di viaggio dell'utente    
+    experiences = get_user_experiences(user_id, db) 
     experiences_text = ", ".join(experiences) if experiences else "nessuna esperienza specificata"
 
     prompt = f"""
@@ -201,48 +225,24 @@ def get_travel_recommendations(user_id: int, db: Session = Depends(get_db)):
     Fornire ispirazione sempre nuova basata sulle preferenze dell'utente, evitando qualsiasi ripetizione di idee già proposte.
     """
 
-    # Ottieni il testo generato dal modello
+    # ottengo il testo generato dall'AI
     response = travel_model.generate_content(prompt).text.strip()
 
-    # Pulisci il testo per rimuovere caratteri indesiderati
-    cleaned_text = (
-        response
-        .replace("**", "")
-        .replace("*", "")
-        .replace("###", "")
-        .replace("##", "")
-        .replace("\n\n", "\n")
-        .strip()
-    )
-    # Recupera la history chat
+    # pulisco il testo per rimuovere caratteri indesiderati
+    cleaned_text = (response.replace("**", "").replace("*", "").replace("###", "").replace("##", "").replace("\n\n", "\n").strip())
+
+    # aggiorna cronologia in memoria e DB
     history = chat_history.get(user_id, [])
+    history.append({"user": "Richiesta raccomandazioni basata sulle esperienze", "ai": cleaned_text})
+    chat_history[user_id] = history[-5:]  # limita a 5 messaggi
 
-    # Aggiungi finto messaggio: user chiede raccomandazioni e l'AI risponde
-    history.append({
-       "user": "Richiesta raccomandazioni basata sulle mie esperienze",
-       "ai": f"[RACCOMANDAZIONI]\n{cleaned_text}"
-   })
+    chat.messages = chat_history[user_id]  # salva l'intera cronologia nel DB
+    db.add(chat)
+    db.commit()
+    db.refresh(chat)
 
-    # Limite della cronologia
-    chat_history[user_id] = history[-5:]
+    return {"recommendations": cleaned_text, "chat_id": chat.id }  # ritorna chat_id per continuare la conversazione
 
-    return {"recommendations": cleaned_text}
-
-
-# GET: Funzione per ottenere tutte le chat
-@router.get("/", response_model=list[Chat])
-def get_chats(db: Session = Depends(get_db)):
-    return db.query(ChatDB).all()  # mi restituisce tutte le chat
-
-
-#  GET: per ottenere una chat singola tramite ID
-@router.get("/{chat_id}", response_model=Chat)
-def get_chat(chat_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)): # ID della chat
-    user_id = current_user["id"]
-    chat = db.query(ChatDB).filter(ChatDB.id == chat_id, ChatDB.user_id == user_id).first() # ottengo la chat
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat non trovata")
-    return chat
 
 
 

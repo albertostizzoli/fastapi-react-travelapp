@@ -1,8 +1,7 @@
 from pydantic import BaseModel # definire schemi di dati con controlli di validazione
 from typing import List, Optional # tipi generici: List per array tipizzati, Optional per valori facoltativi
 
-# classe base per il modello Day
-# serve a definire i campi comuni a tutti i modelli Pydantic relativi ai giorni
+# modello Pydantic che raprresenta  la tabella days
 class DayBase(BaseModel):
     city: str                       # città 
     date: str                       # data
@@ -12,13 +11,11 @@ class DayBase(BaseModel):
     lat: Optional[float] = None     # latitudine
     lng: Optional[float] = None     # longitudine
 
-# modello per creare un nuovo giorno
-# eredita da DayBase, nessuna modifica aggiuntiva
+# modello Pydantic per creare un nuovo giorno
 class DayCreate(DayBase):
     pass
 
-# modello per leggere un giorno già presente nel database
-# aggiunge il campo 'id' che viene generato automaticamente dal DB
+# modello Pydantic per restituire un giorno dal database. Necessario se vuoi fare response_model=Day
 class Day(DayBase):
     id: int                       # ID tappa
     photo: List[str] = []         # foto

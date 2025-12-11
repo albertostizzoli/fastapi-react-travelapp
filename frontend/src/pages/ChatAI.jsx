@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion"; // per le animazioni
-import { FaCompass } from "react-icons/fa";
+import { FaCompass, FaPlus } from "react-icons/fa";
 import ChatAIController from "../controllers/ChatAIController"; // importo il controller della chat AI
 
 function ChatAI() {
@@ -126,8 +126,12 @@ function ChatAI() {
 
                 <button
                     onClick={startNewChat}
-                    className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full shadow-md text-sm">
-                    + Nuova Chat
+                    className="bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                    w-full sm:w-auto font-semibold flex justify-center items-center gap-2 px-4 py-2
+                    backdrop-blur-md border border-white/40 text-white 
+                    rounded-full shadow-md transition-all duration-300 cursor-pointer
+                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:scale-105 text-sm sm:text-base">
+                    <FaPlus size={20} /> Nuova Chat
                 </button>
             </div>
 

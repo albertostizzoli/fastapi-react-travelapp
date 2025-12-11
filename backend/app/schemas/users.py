@@ -1,25 +1,22 @@
 from pydantic import BaseModel # definire schemi di dati con controlli di validazione
 from typing import List, Optional # tipi generici: List per array tipizzati, Optional per valori facoltativi
-from app.schemas.travels import Travel
-from datetime import datetime
+from app.schemas.travels import Travel # importo il modello Pydantic Travel per i viaggi
+from datetime import datetime # importo datetime per la data di registrazione
 
-# classe base per il modello User
-# serve a definire i campi comuni a tutti i modelli Pydantic relativi agli utenti
+# modello Pydantic che rappresenta la tabella users
 class UserBase(BaseModel):
-    name: str                              # nome
-    surname: str                           # cognome
-    email: str                             # email
-    experiences: Optional[List[str]] = None  # esperienze 
-    photo: Optional[str] = None            # foto profilo
+    name: str                                   # nome
+    surname: str                                # cognome
+    email: str                                  # email
+    experiences: Optional[List[str]] = None     # esperienze 
+    photo: Optional[str] = None                 # foto profilo
     registration_date: datetime                 # data di registrazione
 
-# modello per creare un nuovo utente
-# eredita da UserBase, nessuna modifica aggiuntiva
+# modello Pydantic per creare un nuovo utente
 class UserCreate(UserBase):
     password: str        # password
 
-# modello per leggere un'utente già presente nel database
-# aggiunge il campo 'id' che viene generato automaticamente dal DB
+# modello Pydantic per restituire gli utenti e i loro viaggi dal database. Necessario se vuoi fare response_model=User
 class User(UserBase):
     id: int            # ID univoco dell'utente
     travels: List[Travel] = []  # un utente ha una lista di viaggi
