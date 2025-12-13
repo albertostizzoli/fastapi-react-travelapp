@@ -9,6 +9,7 @@ function ChatAIController() {
     const [isRecommending, setIsRecommending] = useState(false); // stato per disabilitare il pulsante Ispirami
     const [hasStartedChat, setHasStartedChat] = useState(false); // stato per iniziare una chat
     const [currentChatId, setCurrentChatId] = useState(null); // stato per l'ID della chat corrente
+    const [chats, setChats] = useState([]); // stato per caricare le chat
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, sono il tuo assistente AI. Chiedimi pure!` : "";
@@ -24,6 +25,22 @@ function ChatAIController() {
             .catch((err) => console.error(err)); // gestisci errori
     }, []); // esegui solo al montaggio
 
+
+    // uso lo useEffect per ottenere i dati delle chat
+    useEffect(() => {
+        const token = localStorage.getItem("token"); // recupera il token JWT
+        if (!token) return; // se non c'è token, non faccio nulla
+
+        axios.get("http://127.0.0.1:8000/chats", {
+            headers: {
+                Authorization: `Bearer ${token}`, //  token nell'header
+            },
+        })
+            .then((res) => setChats(res.data)) // aggiorna lo stato con i dati ricevuti
+            .catch((err) => console.error(err)); // gestisce errori
+    }, []);
+
+
     // resetto la chat all'inizio
     useEffect(() => {
         setCurrentChatId(null); // reset ID chat
@@ -36,7 +53,9 @@ function ChatAIController() {
         messages.length && messages[messages.length - 1].role === "ai" //   controlla se l'ultimo messaggio è dell'AI
             ? messages[messages.length - 1].text // ottieni il testo dell'ultimo messaggio AI
             : "";
-    const typedResponse = useTypewriterEffect(lastAIResponse, 15); // effetto macchina da scrivere per la risposta AI
+    // se è una chat nuova allora l'effetto viene applicato se è una chat già esistente allora no        
+    const typedResponse =  isLoading ? useTypewriterEffect(lastAIResponse, 15) : lastAIResponse;
+
 
     // funzione per inviare un messaggio
     const sendMessage = async () => {
@@ -85,6 +104,33 @@ function ChatAIController() {
             setIsLoading(false); // resetta lo stato di caricamento
         }
     };
+
+    // funzione per caricare le chat
+    const loadChat = async (chatId) => {
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get(
+            `http://127.0.0.1:8000/chats/${chatId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        const history = res.data.messages || [];
+
+        const normalizedMessages = history.flatMap((pair) => [
+            { role: "user", text: pair.user },
+            { role: "ai", text: pair.ai },
+        ]);
+
+        setCurrentChatId(chatId);
+        setMessages(normalizedMessages);
+        setHasStartedChat(true);
+    };
+
+
 
     // funzione per iniziare una nuova chat
     const startNewChat = async () => {
@@ -243,7 +289,10 @@ function ChatAIController() {
         hasStartedChat,       // per indicare che è iniziata una chat
         scrollToBottom,       // funzione per lo scroll automatico
         messagesEndRef,       // riferimento per lo scroll automatico
-        startNewChat          // funzione per iniziare una nuova chat
+        startNewChat,         // funzione per iniziare una nuova chat
+        chats,                // indica le chat caricate
+        setChats,             // stato per caricare le chat
+        loadChat              // funzione per caricare le chat
     }
 }
 
