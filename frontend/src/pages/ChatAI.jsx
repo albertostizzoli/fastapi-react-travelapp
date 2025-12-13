@@ -69,21 +69,20 @@ function ChatAI() {
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="flex flex-col h-[80vh] lg:h-[75vh] sm:h-[80vh] md:h-[90vh]
+                className="relative flex flex-col h-[80vh] lg:h-[75vh] sm:h-[80vh] md:h-[90vh]
                 w-[95%] sm:w-[90%] md:max-w-4xl lg:max-w-6xl mx-auto 
                 mt-4 sm:mt-10 md:mt-12 bg-white/10 dark:bg-white/5 backdrop-blur-3xl
                 border border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.1)]
                 rounded-3xl ring-1 ring-white/10 overflow-hidden">
 
-                {/* HEADER: Titolo AI */}
-                <div className="py-5 text-center">
-                    {!hasStartedChat && (
-                        <h1 className="text-white font-semibold tracking-wide text-xl sm:text-2xl md:text-3xl 
-                        drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
-                            {typedTitle}
-                        </h1>
-                    )}
-                </div>
+                {/* HEADER: Titolo AI centrato */}
+                {!hasStartedChat && (
+                    <h1 className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2
+                       text-white font-semibold tracking-wide text-xl sm:text-2xl md:text-3xl 
+                       drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+                        {typedTitle}
+                    </h1>
+                )}
 
                 {/* AREA MESSAGGI */}
                 <div className=" flex-1 overflow-y-auto p-5 sm:p-6 md:p-8 space-y-5 text-white scrollbar">
@@ -110,8 +109,9 @@ function ChatAI() {
                                         px-4 py-3 rounded-2xl border border-white text-justify
                                         shadow-inner backdrop-blur-xl max-w-[80%] sm:max-w-[70%]
                                         rounded-bl-none"
-                                        dangerouslySetInnerHTML={{__html: i === messages.length - 1 ? formatText(typedResponse)
-                                        : formatText(m.text),
+                                        dangerouslySetInnerHTML={{
+                                            __html: i === messages.length - 1 ? formatText(typedResponse)
+                                                : formatText(m.text),
                                         }}
                                     />
                                 )}
@@ -156,7 +156,7 @@ function ChatAI() {
                         disabled={isRecommending}
                         className={`w-full sm:w-auto font-semibold flex justify-center items-center gap-2 px-4 py-2
                         ${isRecommending ? "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 cursor-not-allowed"
-                        : "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 hover:scale-105"}
+                                : "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 hover:scale-105"}
                         backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-300 cursor-pointer
                         hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-sm sm:text-base`}>

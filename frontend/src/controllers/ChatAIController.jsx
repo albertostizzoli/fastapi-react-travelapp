@@ -12,7 +12,7 @@ function ChatAIController() {
     const [chats, setChats] = useState([]); // stato per caricare le chat
 
     // titolo dinamico dell'AI 
-    const aiTitle = user ? `Ciao ${user.name}, sono il tuo assistente AI. Chiedimi pure!` : "";
+    const aiTitle = user ? `Ciao ${user.name}, chiedimi pure!` : "";
     const typedTitle = useTypewriterEffect(aiTitle, 40); // effetto macchina da scrivere per il titolo
 
     // recupera i dati dell'utente al montaggio del componente
@@ -54,7 +54,7 @@ function ChatAIController() {
             ? messages[messages.length - 1].text // ottieni il testo dell'ultimo messaggio AI
             : "";
     // se è una chat nuova allora l'effetto viene applicato se è una chat già esistente allora no        
-    const typedResponse =  isLoading ? useTypewriterEffect(lastAIResponse, 15) : lastAIResponse;
+    const typedResponse =   useTypewriterEffect(lastAIResponse, 15);
 
 
     // funzione per inviare un messaggio
