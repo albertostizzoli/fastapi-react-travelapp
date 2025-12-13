@@ -68,7 +68,7 @@ function Header() {
 
   return (
     <nav
-      className={`hidden sm:flex p-4 gap-4 justify-between items-center transition-colors duration-300
+      className={`hidden sm:flex mt-1 p-4 gap-4 justify-between items-center transition-colors duration-300
       ${isHome
           ? "text-white dark:text-gray-200"
           : "bg-transparent text-white dark:text-gray-200"
