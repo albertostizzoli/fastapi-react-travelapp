@@ -45,7 +45,7 @@ function TravelDays() {
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative w-full h-[260px] sm:h-80 sm:rounded-3xl rounded-t-3xl overflow-hidden shadow-2xl">
+        className="relative w-full h-[260px] sm:h-80 rounded-t-3xl overflow-hidden shadow-2xl">
         {/* Background image */}
         <AnimatePresence>
           <motion.div
@@ -83,71 +83,43 @@ function TravelDays() {
               {travel.end_date}
             </p>
           </div>
-
-          {/* Select Filtri + Aggiungi Tappa - DESKTOP */}
-          <div className="hidden sm:block absolute bottom-6 left-6 z-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="flex items-center gap-4 p-4 ">
-              <DaysExperiencesSelect
-                selectedExperience={selectedExperience}
-                setSelectedExperience={setSelectedExperience}
-                experienceOptions={experienceOptions}
-              />
-
-              <CitySelect
-                selectedCity={selectedCity}
-                setSelectedCity={setSelectedCity}
-                cityOptions={cityOptions}
-              />
-
-              <Link
-                to="/addDay"
-                state={{ travelId: id }}
-                className="font-semibold mt-4 sm:ms-3 sm:mt-0 px-4 py-2 inline-flex items-center justify-center gap-2
-                bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70
-                backdrop-blur-md border border-white/40 text-white rounded-full shadow-md 
-                transition-all duration-300 hover:scale-105
-                hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-56">
-                <FaPlus size={20} /> Aggiungi Tappa
-              </Link>
-            </motion.div>
-          </div>
         </div>
-
       </motion.div>
 
-      {/* Select Filtri + Aggiungi Tappa - MOBILE */}
-      <div className="sm:hidden p-5 rounded-b-3xl
-        bg-linear-to-br from-white/20 via-white/10 to-transparent
-        backdrop-blur-2xl border border-white/40 shadow-xl">
+      {/* Select Filtri + Aggiungi Tappa  */}
+      <div className="p-6 rounded-b-3xl w-full bg-linear-to-br from-white/20 via-white/10 to-transparent
+          backdrop-blur-2xl border border-white/40 shadow-xl">
 
-        <div className="flex flex-col gap-4">
-          <DaysExperiencesSelect
-            selectedExperience={selectedExperience}
-            setSelectedExperience={setSelectedExperience}
-            experienceOptions={experienceOptions}
-          />
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full justify-between">
+          <div
+            className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
+            <DaysExperiencesSelect
+              selectedExperience={selectedExperience}
+              setSelectedExperience={setSelectedExperience}
+              experienceOptions={experienceOptions}
+            />
 
-          <CitySelect
-            selectedCity={selectedCity}
-            setSelectedCity={setSelectedCity}
-            cityOptions={cityOptions}
-          />
-
+            <CitySelect
+              selectedCity={selectedCity}
+              setSelectedCity={setSelectedCity}
+              cityOptions={cityOptions}
+            />
+          </div>
           <Link
             to="/addDay"
             state={{ travelId: id }}
-            className="font-semibold mt-4 sm:ms-3 sm:mt-0 px-4 py-2 inline-flex items-center justify-center gap-2
+            className="font-semibold mt-4 sm:mt-0 px-4 py-2 inline-flex items-center justify-center gap-2
             bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70
             backdrop-blur-md border border-white/40 text-white rounded-full shadow-md 
-            transition-all duration-300 hover:scale-105
-            hover:shadow-[0_0_15px_rgba(255,255,255,0.30)] w-full sm:w-56">
+            transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.30)]
+            w-full sm:w-56">
             <FaPlus size={20} /> Aggiungi Tappa
           </Link>
-        </div>
+        </motion.div>
       </div>
 
 
