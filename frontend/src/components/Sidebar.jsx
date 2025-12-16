@@ -182,7 +182,7 @@ function Sidebar() {
                 )}
 
                 {/* I miei viaggi */}
-                {!isHome && !isTravels && (
+                {!isHome && !isTravels && !isProfile && (
                   <Link
                     to="/travels"
                     onClick={toggleSidebar}
@@ -198,7 +198,7 @@ function Sidebar() {
                 )}
 
                 {/* Aggiungi viaggio */}
-                {!isHome && !isAdd && (
+                {!isHome && !isAdd && !isProfile && (
                   <Link
                     to="/add"
                     onClick={toggleSidebar}
@@ -216,7 +216,7 @@ function Sidebar() {
 
               {/* Footer */}
               <div className="mt-6 border-t border-white/30 pt-4 flex flex-col gap-4">
-                {!isHome && (
+                {!isHome && !isProfile && (
                   <button
                     onClick={handleLogout}
                     className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">

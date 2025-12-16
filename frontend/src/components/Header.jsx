@@ -68,7 +68,7 @@ function Header() {
 
   return (
     <nav
-      className={`hidden sm:flex mt-1 p-4 gap-4 justify-between items-center transition-colors duration-300
+      className={`hidden sm:flex mt-2 p-4 gap-4 justify-between items-center transition-colors duration-300
       ${isHome
           ? "text-white dark:text-gray-200"
           : "bg-transparent text-white dark:text-gray-200"
@@ -115,7 +115,7 @@ function Header() {
         )}
 
         {/*  LINK VIAGGI */}
-        {!isHome && !isTravels && (
+        {!isHome && !isTravels && !isProfile && (
           <Link
             to="/travels"
             className="flex items-center gap-2 px-4 py-2 font-semibold">
@@ -131,7 +131,7 @@ function Header() {
         )}
 
         {/*  LINK AGGIUNGI */}
-        {!isHome && !isAdd && (
+        {!isHome && !isAdd && !isProfile && (
           <Link
             to="/add"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
@@ -147,7 +147,7 @@ function Header() {
         )}
 
         {/*  LOGOUT */}
-        {!isHome && (
+        {!isHome && !isProfile && (
           <button
             onClick={handleLogout}
             className="px-4 py-2 flex items-center gap-2 font-semibold cursor-pointer">
