@@ -29,7 +29,7 @@ function TravelDaysController() {
 
         const interval = setInterval(() => {
             setCurrentImage(prev => (prev + 1) % images.length);
-        }, 4500);
+        }, 6000);
 
         return () => clearInterval(interval);
     }, [images.length]);

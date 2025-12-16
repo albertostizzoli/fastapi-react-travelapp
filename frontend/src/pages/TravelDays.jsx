@@ -45,9 +45,9 @@ function TravelDays() {
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative w-full h-[260px] sm:h-80 rounded-3xl overflow-hidden shadow-2xl">
+        className="relative w-full h-[260px] sm:h-80 sm:rounded-3xl rounded-t-3xl overflow-hidden shadow-2xl">
         {/* Background image */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           <motion.div
             key={images[currentImage]}
             className="absolute inset-0 bg-cover bg-center"
@@ -69,7 +69,7 @@ function TravelDays() {
         <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* Content */}
-        <div className="relative z-10 h-full p-6 sm:p-10">
+        <div className="relative z-10 h-full p-6 sm:p-10 sm:mt-0 mt-8">
 
           {/* Titolo + Date */}
           <div className="absolute bottom-32 left-1/2 -translate-x-1/2 text-center">
@@ -115,13 +115,12 @@ function TravelDays() {
               </Link>
             </motion.div>
           </div>
-
         </div>
 
       </motion.div>
 
       {/* Select Filtri + Aggiungi Tappa - MOBILE */}
-      <div className="sm:hidden mt-6 p-5 rounded-3xl
+      <div className="sm:hidden p-5 rounded-b-3xl
         bg-linear-to-br from-white/20 via-white/10 to-transparent
         backdrop-blur-2xl border border-white/40 shadow-xl">
 
