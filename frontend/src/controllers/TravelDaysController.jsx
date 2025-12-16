@@ -11,9 +11,34 @@ function TravelDaysController() {
     const [openCardId, setOpenCardId] = useState(null);  // stato per aprire una card dei viaggi e mostare le altre informazioni
     const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
     const [selectedExperience, setSelectedExperience] = useState(""); // stato per filtrare le tappe in base alle esperienze
+    const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico delle immagini dell'hero
 
     const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
     const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
+
+    // prendo come array tutte le foto del viaggio selezionato
+    const heroImages = travel?.days
+        ?.flatMap(d => d.photo || [])
+        .filter(Boolean);
+
+    const images = heroImages?.length ? heroImages : ["/fallback.jpg"];
+
+    // questo useEffect mi permette di fare un carosello automatico di tutte le immagini 
+    useEffect(() => {
+        if (images.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setCurrentImage(prev => (prev + 1) % images.length);
+        }, 4500);
+
+        return () => clearInterval(interval);
+    }, [images.length]);
+
+    // questo useEffect resetta il carosello al caricamento della pagina
+    useEffect(() => {
+        setCurrentImage(0);
+    }, [id]);
+
 
     // Effetto per lo scroll alla card aperta
     useEffect(() => {
@@ -175,7 +200,10 @@ function TravelDaysController() {
         scrollRef,             // ref per lo scroll del carosello
         cardRefs,              // ref per tutte le card
         scrollLeft,            // funzione per scrollare a sinistra
-        scrollRight            // funzione per scrollare a destra
+        scrollRight,           // funzione per scrollare a destra
+        heroImages,            // immagini dell'hero
+        images,                // tutte le immagini
+        currentImage,          // immagine corrente dell'hero
     };
 }
 
