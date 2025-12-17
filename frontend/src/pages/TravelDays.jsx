@@ -94,7 +94,7 @@ function TravelDays() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full justify-between">
 
-          { /* Select Filtro Esperienze e Filtro Città */ }
+          { /* Select Filtro Esperienze e Filtro Città */}
           <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
             <DaysExperiencesSelect
               selectedExperience={selectedExperience}
@@ -109,7 +109,7 @@ function TravelDays() {
             />
           </div>
 
-          { /* Pulsante Aggiungi Tappa */ }
+          { /* Pulsante Aggiungi Tappa */}
           <Link
             to="/addDay"
             state={{ travelId: id }}
@@ -123,233 +123,252 @@ function TravelDays() {
         </motion.div>
       </div>
 
+      <div className=" mt-10 rounded-4xl p-6 lg:p-10 bg-linear-to-br from-blue-500/80 to-orange-500/80 dark:from-slate-900/80 dark:to-slate-500/80
+        backdrop-blur-2xl border border-white/20 shadow-2xl">
 
-      {/* Lista Giorni */}
-      <div className="flex-1 mt-3">
+        <div className="flex flex-col lg:flex-row gap-8">
 
-        {travel.days?.length > 0 ? (
-          <div className="relative w-full overflow-hidden group">
-
-            { /* Le freccie scompaiono quando una card è aperta */}
-            <div className={`hidden lg:block absolute inset-0 pointer-events-none ${openCardId ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}>
-              {/* FRECCIA SINISTRA */}
-              <button
-                onClick={scrollLeft}
-                className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
-                  opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
-                  backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
-                  w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
-                <FaArrowLeft size={20} />
-              </button>
-
-              {/* FRECCIA DESTRA */}
-              <button
-                onClick={scrollRight}
-                className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
-                  opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
-                  backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
-                  w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
-                <FaArrowRight size={20} />
-              </button>
+          { /* Titolo Sinistra */}
+          <div className="lg:w-1/4 flex flex-col justify-start">
+            <div>
+              <h2 className="text-white text-3xl lg:text-4xl font-extrabold drop-shadow-xl">
+                Le tue tappe
+              </h2>
+              <p className="text-white/70 mt-3 text-sm lg:text-base font-medium">
+                Scopri giorno per giorno il tuo viaggio
+              </p>
             </div>
+          </div>
 
-            {/* CAROSELLO */}
-            <motion.div
-              ref={scrollRef}
-              className={`flex gap-6 px-6 py-4 scroll-smooth snap-x snap-mandatory
-              ${openCardId ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
-              style={{ scrollbarWidth: "none" }}
-              variants={{
-                hidden: { opacity: 1 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-              }}
-              initial="hidden"
-              animate="visible">
-                
-              <AnimatePresence>
-                {filteredDays.map((d) => {
+          <div className="lg:w-3/4 lg:pl-4">
+            {/* Lista Giorni */}
+            <div className="flex-1 mt-3">
 
-                  const isOpen = openCardId === d.id; // questo mi permette di aprire e chiudere la card una alla volta
+              {travel.days?.length > 0 ? (
+                <div className="relative w-full overflow-hidden group">
 
-                  return (
-                    <motion.div
-                      key={d.id}
-                      ref={(el) => (cardRefs.current[d.id] = el)} // assegno il ref 
-                      variants={{
-                        hidden: { scale: 0.7, opacity: 0 },
-                        visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
-                      }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      className="min-w-[370px] sm:min-w-[450px] lg:min-w-[450px]">
+                  { /* Le freccie scompaiono quando una card è aperta */}
+                  <div className={`hidden lg:block absolute inset-0 pointer-events-none ${openCardId ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}>
+                    {/* FRECCIA SINISTRA */}
+                    <button
+                      onClick={scrollLeft}
+                      className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
+                      opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
+                      backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
+                      w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                      <FaArrowLeft size={20} />
+                    </button>
 
-                      {/* CARD */}
-                      <motion.div
-                        style={{
-                          boxShadow: isOpen ? "0px 0px 25px rgba(255,255,255,0.30)" : "0px 0px 0px rgba(255,255,255,0)",
-                        }}
-                        className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
-                          backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
-                          transition-all duration-300">
+                    {/* FRECCIA DESTRA */}
+                    <button
+                      onClick={scrollRight}
+                      className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
+                      opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
+                      backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
+                      w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                      <FaArrowRight size={20} />
+                    </button>
+                  </div>
 
-                        {/* Città + Tappa + Data */}
-                        <div className="flex justify-between items-center gap-1.5">
-                          <div>
-                            <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                              {d.city},{" "} {/* Città */}
-                            </p>
-                            <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                              {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title} {/* Tappa */}
-                            </p>
-                            <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
-                              {d.date} {/* Data */}
-                            </p>
-                          </div>
+                  {/* CAROSELLO */}
+                  <motion.div
+                    ref={scrollRef}
+                    className={`flex gap-6 px-6 py-4 scroll-smooth snap-x snap-mandatory
+                    ${openCardId ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
+                    style={{ scrollbarWidth: "none" }}
+                    variants={{
+                      hidden: { opacity: 1 },
+                      visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+                    }}
+                    initial="hidden"
+                    animate="visible">
 
-                          {/* Icona Freccia */}
-                          <motion.button
-                            animate={{ rotate: isOpen ? 180 : 0 }}
-                            transition={{ duration: 0.4 }}
-                            title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
-                            className="cursor-pointer border border-white rounded-full w-12 h-12 
-                              flex items-center justify-center text-white
-                              transition-all duration-300 hover:bg-white hover:text-black"
-                            onClick={() => setOpenCardId(isOpen ? null : d.id)}>
-                            <FaArrowDown size={20} />
-                          </motion.button>
-                        </div>
+                    <AnimatePresence>
+                      {filteredDays.map((d) => {
 
-                        {/* FOTO PREVIEW */}
-                        {d.photo.length > 0 ? (
-                          <div className="flex gap-2 mt-4">
-                            {d.photo.slice(0, 2).map((p, i) => (
-                              <img
-                                key={i}
-                                src={p}
-                                className="w-35 h-28 sm:w-48 object-cover rounded-2xl border border-white/40 shadow-md"
-                              />
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="flex gap-2 mt-4">
-                            {[1, 2].map((_, i) => (
-                              <div
-                                key={i}
-                                className="w-35 h-28 sm:w-45 rounded-2xl border border-white/40 shadow-md
-                                  bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40
-                                  flex items-center justify-center text-white/70">
-                                <FaRegImage className="text-2xl" />
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                        const isOpen = openCardId === d.id; // questo mi permette di aprire e chiudere la card una alla volta
+                        return (
+                          <motion.div
+                            key={d.id}
+                            ref={(el) => (cardRefs.current[d.id] = el)} // assegno il ref 
+                            variants={{
+                              hidden: { scale: 0.7, opacity: 0 },
+                              visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
+                            }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            className="min-w-[370px] sm:min-w-[450px] lg:min-w-[450px]">
 
-                        {/* CONTENUTO ESPANSO */}
-                        <AnimatePresence>
-                          {isOpen && (
+                            {/* CARD */}
                             <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.4 }}
-                              className="overflow-hidden" >
+                              style={{
+                                boxShadow: isOpen ? "0px 0px 25px rgba(255,255,255,0.30)" : "0px 0px 0px rgba(255,255,255,0)",
+                              }}
+                              className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                              backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
+                              transition-all duration-300">
 
-                              {/* descrizione */}
-                              {d.description && (
-                                <p className="text-white mt-4 text-2sm text-justify font-semibold">
-                                  {d.description.length > 120 ? d.description.slice(0, 120) + "..." : d.description}
-                                </p>
-                              )}
+                              {/* Città + Tappa + Data */}
+                              <div className="flex justify-between items-center gap-1.5">
+                                <div>
+                                  <p className="text-white font-extrabold text-2xl drop-shadow-xl">
+                                    {d.city},{" "} {/* Città */}
+                                  </p>
+                                  <p className="text-white font-extrabold text-2xl drop-shadow-xl">
+                                    {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title} {/* Tappa */}
+                                  </p>
+                                  <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
+                                    {d.date} {/* Data */}
+                                  </p>
+                                </div>
 
-                              {/* esperienze */}
-                              {d.experiences && d.experiences.length > 0 ? (
-                                <div className="mt-4 flex flex-wrap gap-2">
+                                {/* Icona Freccia */}
+                                <motion.button
+                                  animate={{ rotate: isOpen ? 180 : 0 }}
+                                  transition={{ duration: 0.4 }}
+                                  title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
+                                  className="cursor-pointer border border-white rounded-full w-12 h-12 
+                                  flex items-center justify-center text-white
+                                  transition-all duration-300 hover:bg-white hover:text-black"
+                                  onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                                  <FaArrowDown size={20} />
+                                </motion.button>
+                              </div>
 
-                                  {/* prime 3 esperienze */}
-                                  {d.experiences.slice(0, 3).map((c, i) => (
-                                    <span
+                              {/* FOTO PREVIEW */}
+                              {d.photo.length > 0 ? (
+                                <div className="flex gap-2 mt-4">
+                                  {d.photo.slice(0, 2).map((p, i) => (
+                                    <img
                                       key={i}
-                                      className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                        bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 text-white">
-                                      {c}
-                                    </span>
+                                      src={p}
+                                      className="w-35 h-28 sm:w-48 object-cover rounded-2xl border border-white/40 shadow-md"
+                                    />
                                   ))}
-
-                                  {/* badge per esperienze extra */}
-                                  {d.experiences.length > 3 && (
-                                    <span
-                                      className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
-                                        bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 text-white italic">
-                                      +{d.experiences.length - 3}
-                                    </span>
-                                  )}
                                 </div>
                               ) : (
-                                <div className="mt-4 flex flex-wrap gap-2">
-                                  <span
-                                    className="font-semibold px-4 py-2 backdrop-blur-md rounded-full 
-                                      bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
-                                      text-2sm text-white/70 italic">
-                                    Nessuna esperienza
-                                  </span>
+                                <div className="flex gap-2 mt-4">
+                                  {[1, 2].map((_, i) => (
+                                    <div
+                                      key={i}
+                                      className="w-35 h-28 sm:w-45 rounded-2xl border border-white/40 shadow-md
+                                      bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40
+                                      flex items-center justify-center text-white/70">
+                                      <FaRegImage className="text-2xl" />
+                                    </div>
+                                  ))}
                                 </div>
                               )}
 
-                              {/* BOTTONI */}
-                              <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7 px-3">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setSelectedDay(d);
-                                  }}
-                                  className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
-                                    bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
-                                    backdrop-blur-md border border-white/40 text-white 
-                                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                    hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                  <FaBookOpen size={20} /> Leggi
-                                </button>
+                              {/* CONTENUTO ESPANSO */}
+                              <AnimatePresence>
+                                {isOpen && (
+                                  <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="overflow-hidden" >
 
-                                <Link
-                                  to={`/days/${d.id}/edit`}
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="w-full flex-1 font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                                    bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
-                                    backdrop-blur-md border border-white/40 text-white 
-                                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                    hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                  <FaEdit size={20} /> Modifica
-                                </Link>
+                                    {/* descrizione */}
+                                    {d.description && (
+                                      <p className="text-white mt-4 text-2sm text-justify font-semibold">
+                                        {d.description.length > 120 ? d.description.slice(0, 120) + "..." : d.description}
+                                      </p>
+                                    )}
 
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setDeleteDayId(d.id);
-                                  }}
-                                  className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
-                                    bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
-                                    backdrop-blur-md border border-white/40 text-white 
-                                    rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                    hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                  <FaTrash size={20} /> Cancella
-                                </button>
-                              </div>
+                                    {/* esperienze */}
+                                    {d.experiences && d.experiences.length > 0 ? (
+                                      <div className="mt-4 flex flex-wrap gap-2">
+
+                                        {/* prime 3 esperienze */}
+                                        {d.experiences.slice(0, 3).map((c, i) => (
+                                          <span
+                                            key={i}
+                                            className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                                            bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 text-white">
+                                            {c}
+                                          </span>
+                                        ))}
+
+                                        {/* badge per esperienze extra */}
+                                        {d.experiences.length > 3 && (
+                                          <span
+                                            className="font-semibold px-4 py-2 backdrop-blur-md text-2sm rounded-full 
+                                            bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 text-white italic">
+                                            +{d.experiences.length - 3}
+                                          </span>
+                                        )}
+                                      </div>
+                                    ) : (
+                                      <div className="mt-4 flex flex-wrap gap-2">
+                                        <span
+                                          className="font-semibold px-4 py-2 backdrop-blur-md rounded-full 
+                                          bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
+                                          text-2sm text-white/70 italic">
+                                          Nessuna esperienza
+                                        </span>
+                                      </div>
+                                    )}
+
+                                    {/* BOTTONI */}
+                                    <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7 px-3">
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setSelectedDay(d);
+                                        }}
+                                        className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                                        bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                                        backdrop-blur-md border border-white/40 text-white 
+                                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                        <FaBookOpen size={20} /> Leggi
+                                      </button>
+
+                                      <Link
+                                        to={`/days/${d.id}/edit`}
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="w-full flex-1 font-semibold px-4 py-2 flex items-center justify-center gap-2 
+                                        bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
+                                        backdrop-blur-md border border-white/40 text-white 
+                                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                        <FaEdit size={20} /> Modifica
+                                      </Link>
+
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setDeleteDayId(d.id);
+                                        }}
+                                        className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                                        bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
+                                        backdrop-blur-md border border-white/40 text-white 
+                                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                        <FaTrash size={20} /> Cancella
+                                      </button>
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
                             </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </motion.div>
+                          </motion.div>
+                        );
+                      })}
+                    </AnimatePresence>
+                  </motion.div>
+                </div>
+              ) : (
+                <p className="font-semibold text-center px-4 py-2 backdrop-blur-md rounded-full 
+                  bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
+                  text-2sm text-white/70 italic">
+                  Nessuna tappa presente
+                </p>
+              )}
+            </div>
           </div>
-        ) : (
-          <p className="font-semibold text-center px-4 py-2 backdrop-blur-md rounded-full 
-              bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
-              text-2sm text-white/70 italic">
-            Nessuna tappa presente
-          </p>
-        )}
+        </div>
       </div>
 
       {/* Modale Leggi di più */}
