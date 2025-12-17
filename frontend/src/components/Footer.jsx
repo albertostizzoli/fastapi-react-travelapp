@@ -9,7 +9,7 @@ function Footer({ className = "" }) {
             <img
                 src="/images/footer_logo.png"
                 alt="TravelDiary Logo"
-                className="h-33 w-auto mx-auto"
+                className="h-33 w-auto mx-auto mt-4"
             />
 
             <div className="flex flex-wrap justify-between w-full max-w-5xl mx-auto">
@@ -39,7 +39,7 @@ function Footer({ className = "" }) {
                 </a>
             </div>
 
-            <span className="text-white text-center text-sm mt-6">
+            <span className="text-white text-center text-sm mt-8 mb-6">
                 &copy; {currentYear} <strong>TravelDiary</strong>. Tutti i diritti riservati.
             </span>
         </footer>

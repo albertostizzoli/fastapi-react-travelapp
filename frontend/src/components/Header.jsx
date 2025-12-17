@@ -125,7 +125,7 @@ function Header() {
             after:w-0 after:h-0.5 after:bg-current
             after:transition-all after:duration-500
             hover:after:w-full">
-              I miei viaggi
+              I tuoi viaggi
             </span>
           </Link>
         )}

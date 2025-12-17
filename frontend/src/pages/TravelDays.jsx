@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
-import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
+import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaBookOpen, FaCheckCircle, FaEdit, FaPlus, FaTrash, FaTimesCircle, FaEllipsisV } from "react-icons/fa"; // importo le icone necessarie
 import CitySelect from "../components/Selects/CitySelect"; // importo il componente per la select delle città
 import DaysExperiencesSelect from "../components/Selects/DaysExperiencesSelect"; // importo il componente per la select delle esperienze
 import DayInfoModal from "../components/Modals/DayInfoModal"; // importo il modale Scopri di più
@@ -33,6 +33,8 @@ function TravelDays() {
     scrollRight,                // funzione per scrollare a destra
     heroImages,                 // tutte le immagini del carosello
     currentImage,               // immagine corrente dell'hero
+    openMenuId,                 // apre il menù dropdown
+    setOpenMenuId               //  stato per indicare l'apertura del menù dropdown
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -135,7 +137,7 @@ function TravelDays() {
                 Le tue tappe
               </h2>
               <p className="text-white/70 mt-3 text-sm lg:text-base font-medium">
-                Scopri giorno per giorno il tuo viaggio
+                Un racconto giorno per giorno del tuo viaggio
               </p>
             </div>
           </div>
@@ -196,9 +198,9 @@ function TravelDays() {
                               visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
                             }}
                             exit={{ opacity: 0, scale: 0.9 }}
-                            className="min-w-[370px] sm:min-w-[450px] lg:min-w-[450px]">
+                            className="min-w-[410px] sm:min-w-[450px] lg:min-w-[450px]">
 
-                            {/* CARD */}
+                            { /* CARD DELLE TAPPE */}
                             <motion.div
                               style={{
                                 boxShadow: isOpen ? "0px 0px 25px rgba(255,255,255,0.30)" : "0px 0px 0px rgba(255,255,255,0)",
@@ -208,31 +210,82 @@ function TravelDays() {
                               transition-all duration-300">
 
                               {/* Città + Tappa + Data */}
-                              <div className="flex justify-between items-center gap-1.5">
+                              <div className="flex justify-between items-center">
+                                {/* Info città, tappa, data */}
                                 <div>
                                   <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                                    {d.city},{" "} {/* Città */}
+                                    {d.city},
                                   </p>
                                   <p className="text-white font-extrabold text-2xl drop-shadow-xl">
-                                    {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title} {/* Tappa */}
+                                    {d.title?.length > 10 ? `${d.title.slice(0, 10)}...` : d.title}
                                   </p>
                                   <p className="text-white text-2xl font-bold opacity-80 drop-shadow-md mt-2">
-                                    {d.date} {/* Data */}
+                                    {d.date}
                                   </p>
                                 </div>
 
-                                {/* Icona Freccia */}
-                                <motion.button
-                                  animate={{ rotate: isOpen ? 180 : 0 }}
-                                  transition={{ duration: 0.4 }}
-                                  title={isOpen ? "Chiudi dettagli" : "Apri dettagli"}
-                                  className="cursor-pointer border border-white rounded-full w-12 h-12 
-                                  flex items-center justify-center text-white
-                                  transition-all duration-300 hover:bg-white hover:text-black"
-                                  onClick={() => setOpenCardId(isOpen ? null : d.id)}>
-                                  <FaArrowDown size={20} />
-                                </motion.button>
+                                {/* Pulsanti freccia + menu dropdown */}
+                                <div className="flex items-center gap-3">
+                                  {/* Freccia per aprire/chiudere la card */}
+                                  <motion.button
+                                    animate={{ rotate: isOpen ? 180 : 0 }}
+                                    transition={{ duration: 0.4 }}
+                                    title={isOpen ? "Chiudi Anteprima" : "Anteprima Tappe"}
+                                    className="cursor-pointer border border-white rounded-full w-12 h-12 
+                                    flex items-center justify-center text-white
+                                    transition-all duration-300 hover:bg-white hover:text-black"
+                                    onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                                    <FaArrowDown size={20} />
+                                  </motion.button>
+
+                                  {/* Menu dropdown */}
+                                  <div className="relative">
+                                    <button
+                                      onClick={() =>
+                                        setOpenMenuId(openMenuId === d.id ? null : d.id)
+                                      }
+                                      className="cursor-pointer border border-white rounded-full w-12 h-12 
+                                      flex items-center justify-center text-white
+                                      transition-all duration-300 hover:bg-white hover:text-black"
+                                      aria-label="Opzioni tappa">
+                                      <FaEllipsisV size={20} />
+                                    </button>
+
+                                    <AnimatePresence>
+                                      {openMenuId === d.id && (
+                                        <motion.div
+                                          initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                                          exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                                          transition={{ duration: 0.2 }}
+                                          className="absolute right-0 mt-2 w-50 bg-white/10 backdrop-blur-xl
+                                          border border-white/30 rounded-xl shadow-xl overflow-hidden z-50">
+                                          <Link
+                                            to={`/days/${d.id}/edit`}
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="font-semibold flex items-center gap-3 px-4 py-3 text-white
+                                            bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
+                                            backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                            <FaEdit /> Modifica Tappa
+                                          </Link>
+                                          <button
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              setDeleteDayId(d.id);
+                                            }}
+                                            className="font-semibold w-full flex items-center gap-3 px-4 py-3 text-white
+                                            bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
+                                            backdrop-blur-md transition-all duration-300 cursor-pointer
+                                            hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                            <FaTrash /> Cancella Tappa
+                                          </button>
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+                                  </div>
+                                </div>
                               </div>
+
 
                               {/* FOTO PREVIEW */}
                               {d.photo.length > 0 ? (
@@ -241,7 +294,7 @@ function TravelDays() {
                                     <img
                                       key={i}
                                       src={p}
-                                      className="w-35 h-28 sm:w-48 object-cover rounded-2xl border border-white/40 shadow-md"
+                                      className="w-37 h-28 sm:w-48 object-cover rounded-2xl border border-white/40 shadow-md"
                                     />
                                   ))}
                                 </div>
@@ -250,7 +303,7 @@ function TravelDays() {
                                   {[1, 2].map((_, i) => (
                                     <div
                                       key={i}
-                                      className="w-35 h-28 sm:w-45 rounded-2xl border border-white/40 shadow-md
+                                      className="w-37 h-28 sm:w-45 rounded-2xl border border-white/40 shadow-md
                                       bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40
                                       flex items-center justify-center text-white/70">
                                       <FaRegImage className="text-2xl" />
@@ -317,36 +370,12 @@ function TravelDays() {
                                           e.stopPropagation();
                                           setSelectedDay(d);
                                         }}
-                                        className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
+                                        className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                                         bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
                                         backdrop-blur-md border border-white/40 text-white 
-                                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                        rounded-full shadow-md transition-all duration-300 hover:scale-105
+                                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                         <FaBookOpen size={20} /> Leggi
-                                      </button>
-
-                                      <Link
-                                        to={`/days/${d.id}/edit`}
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="w-full flex-1 font-semibold px-4 py-2 flex items-center justify-center gap-2 
-                                        bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
-                                        backdrop-blur-md border border-white/40 text-white 
-                                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                        <FaEdit size={20} /> Modifica
-                                      </Link>
-
-                                      <button
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          setDeleteDayId(d.id);
-                                        }}
-                                        className="w-full flex-1 font-semibold mx-2 my-2 px-4 py-2 flex items-center justify-center gap-2 
-                                        bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
-                                        backdrop-blur-md border border-white/40 text-white 
-                                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
-                                        hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                        <FaTrash size={20} /> Cancella
                                       </button>
                                     </div>
                                   </motion.div>

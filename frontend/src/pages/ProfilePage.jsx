@@ -153,7 +153,7 @@ function ProfilePage() {
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                  <FaGlobe size={20} /> I miei viaggi
+                  <FaGlobe size={20} /> I tuoi viaggi
                 </Link>
                 <Link
                   to="/add"
@@ -171,7 +171,7 @@ function ProfilePage() {
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] cursor-pointer">
-                  <FaCompass size={20} /> Il mio prossimo viaggio
+                  <FaCompass size={20} /> Il tuo prossimo viaggio
                 </Link>
               </div>
             </motion.div>

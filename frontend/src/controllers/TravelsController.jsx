@@ -9,6 +9,7 @@ function TravelsController() {
     const [activeCard, setActiveCard] = useState(null); // stato per aprire una card dei viaggi e mostare le altre informazioni
     const [selectedYear, setSelectedYear] = useState(null); // stato per selezionare un'anno dalla select
     const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico sull'hero
+    const [openMenuId, setOpenMenuId] = useState(null); // stato per il menù modifica e cancella
 
     const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
     const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
@@ -32,14 +33,15 @@ function TravelsController() {
 
     // Funzione per ottenere il carosello delle immagini per l'hero
     const heroImages = useMemo(() => {
-        return filteredTravels
+        return travels
             .map(v => ({
                 id: v.id,
                 town: v.town,
                 image: v.days?.[0]?.photo?.[0] || null
             }))
-            .filter(v => v.image); // solo viaggi con almeno una foto
-    }, [filteredTravels]);
+            .filter(v => v.image);
+    }, [travels]);
+
 
     // questo useEffect mi permette di fare un carosello automatico di tutte le immagini 
     useEffect(() => {
@@ -148,7 +150,7 @@ function TravelsController() {
             // Se siamo all'inizio, salta alla fine
             scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: "smooth" }); // scorri alla fine
         } else {
-            scrollContainer.scrollBy({ left: -475, behavior: "smooth" }); // altrimenti scorri a sinistra di 475px
+            scrollContainer.scrollBy({ left: -495, behavior: "smooth" }); // altrimenti scorri a sinistra di 475px
         }
     };
 
@@ -161,7 +163,7 @@ function TravelsController() {
             // Se siamo alla fine, salta all'inizio
             scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
         } else {
-            scrollContainer.scrollBy({ left: 475, behavior: "smooth" });
+            scrollContainer.scrollBy({ left: 495, behavior: "smooth" });
         }
     };
 
@@ -185,7 +187,9 @@ function TravelsController() {
         scrollLeft,        // funzione per scrollare a sinistra
         scrollRight,       // funzione per scrollare a destra
         heroImages,        // funzione per il carosello del'hero
-        currentImage       // stato per il carosello delle immagini
+        currentImage,      // stato per il carosello delle immagini
+        openMenuId,        // apre il menù dropdown
+        setOpenMenuId      //  stato per indicare l'apertura del menù dropdown
     }
 }
 

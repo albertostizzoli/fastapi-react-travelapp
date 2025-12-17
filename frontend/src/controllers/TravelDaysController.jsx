@@ -12,6 +12,7 @@ function TravelDaysController() {
     const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
     const [selectedExperience, setSelectedExperience] = useState(""); // stato per filtrare le tappe in base alle esperienze
     const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico delle immagini dell'hero
+    const [openMenuId, setOpenMenuId] = useState(null); // stato per il menù modifica e cancella
 
     const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
     const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
@@ -44,7 +45,7 @@ function TravelDaysController() {
 
         const interval = setInterval(() => { // utilizzo setInterval di 6 secondi per il carosello
             setCurrentImage(prev => (prev + 1) % heroImages.length); // prev + 1 indica l'immagine successiva
-        }, 6000); 
+        }, 6000);
 
         return () => clearInterval(interval);
     }, [heroImages.length]);
@@ -178,7 +179,7 @@ function TravelDaysController() {
             // Se siamo all'inizio, salta alla fine
             scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: "smooth" }); // scorri alla fine
         } else {
-            scrollContainer.scrollBy({ left: -475, behavior: "smooth" }); // altrimenti scorri a sinistra di 475px
+            scrollContainer.scrollBy({ left: -490, behavior: "smooth" }); // altrimenti scorri a sinistra di 475px
         }
     };
 
@@ -191,7 +192,7 @@ function TravelDaysController() {
             // Se siamo alla fine, salta all'inizio
             scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
         } else {
-            scrollContainer.scrollBy({ left: 475, behavior: "smooth" });
+            scrollContainer.scrollBy({ left: 490, behavior: "smooth" });
         }
     };
 
@@ -220,6 +221,8 @@ function TravelDaysController() {
         heroImages,            // immagini dell'hero
         heroImages,            // tutte le immagini
         currentImage,          // immagine corrente dell'hero
+        openMenuId,            // apre il menù dropdown
+        setOpenMenuId          //  stato per indicare l'apertura del menù dropdown
     };
 }
 
