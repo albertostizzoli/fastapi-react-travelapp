@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 
@@ -8,9 +8,52 @@ function TravelsController() {
     const [message, setMessage] = useState(""); // messaggio di successo o errore
     const [activeCard, setActiveCard] = useState(null); // stato per aprire una card dei viaggi e mostare le altre informazioni
     const [selectedYear, setSelectedYear] = useState(null); // stato per selezionare un'anno dalla select
+    const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico sull'hero
 
     const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
     const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
+
+    // Lista di tutte gli anni nella select
+    const allYears = travels
+        ? [...new Set(travels.map(d => d.year))].sort((a, b) => b - a) // anni unici in ordine decrescente
+        : [];
+
+    // converte gli anni (interi) in stringhe
+    const yearOptions = allYears.map(y => ({
+        value: y,
+        label: y.toString(), // la select mostra sempre stringhe
+    }));
+
+    // Funzione per filtrare i viaggi in base agli anni
+    const filteredTravels = selectedYear
+        ? travels.filter(d => d.year === selectedYear)
+        : travels; // se nessun anno selezionato, mostra tutti
+
+
+    // Funzione per ottenere il carosello delle immagini per l'hero
+    const heroImages = useMemo(() => {
+        return filteredTravels
+            .map(v => ({
+                id: v.id,
+                town: v.town,
+                image: v.days?.[0]?.photo?.[0] || null
+            }))
+            .filter(v => v.image); // solo viaggi con almeno una foto
+    }, [filteredTravels]);
+
+    // questo useEffect mi permette di fare un carosello automatico di tutte le immagini 
+    useEffect(() => {
+        if (!heroImages.length) return;
+
+        const timer = setInterval(() => {
+            setCurrentImage(prev =>
+                prev === heroImages.length - 1 ? 0 : prev + 1
+            );
+        }, 6000);
+
+        return () => clearInterval(timer);
+    }, [heroImages]);
+
 
     // Effetto per lo scroll alla card aperta 
     useEffect(() => {
@@ -96,23 +139,6 @@ function TravelsController() {
         );
     }
 
-    // Lista di tutte gli anni nella select
-    const allYears = travels
-        ? [...new Set(travels.map(d => d.year))].sort((a, b) => b - a) // anni unici in ordine decrescente
-        : [];
-
-    // converte gli anni (interi) in stringhe
-    const yearOptions = allYears.map(y => ({
-        value: y,
-        label: y.toString(), // la select mostra sempre stringhe
-    }));
-
-    // Funzione per filtrare i viaggi in base agli anni
-    const filteredTravels = selectedYear
-        ? travels.filter(d => d.year === selectedYear)
-        : travels; // se nessun anno selezionato, mostra tutti
-
-
     // funzione per scrollare il carosello a sinistra o saltare alla fine
     const scrollLeft = () => {
         if (!scrollRef.current) return; // verifica che il ref sia definito
@@ -156,8 +182,10 @@ function TravelsController() {
         filteredTravels,   // funzione per filtrare i viaggi in base agli anni
         scrollRef,         // ref per lo scroll del carosello
         cardRefs,          // ref per tutte le card
-        scrollLeft,            // funzione per scrollare a sinistra
-        scrollRight            // funzione per scrollare a destra
+        scrollLeft,        // funzione per scrollare a sinistra
+        scrollRight,       // funzione per scrollare a destra
+        heroImages,        // funzione per il carosello del'hero
+        currentImage       // stato per il carosello delle immagini
     }
 }
 

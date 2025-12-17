@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"; // importo Link per la navigazione interna
 import { motion, AnimatePresence } from "framer-motion"; // importo framer-motion per le animazioni
-import { FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
+import { FaPlus, FaArrowDown, FaArrowLeft, FaArrowRight, FaRegImage, FaCalendarDay, FaCheckCircle, FaEdit, FaTrash, FaTimesCircle } from "react-icons/fa"; // importo le icone necessarie
 import YearSelect from "../components/Selects/YearSelect"; // importo la select per gli anni
 import ModalDeleteTravel from "../components/DeleteModals/ModalDeleteTravel"; // importo il modale di conferma eliminazione viaggio
 import TravelsController from "../controllers/TravelsController"; // importo la logica della pagina viaggi
@@ -22,33 +22,84 @@ function Travels() {
     scrollRef,               // ref per lo scroll del carosello
     cardRefs,                // ref per tutte le card
     scrollLeft,              // funzione per scrollare a sinistra
-    scrollRight              // funzione per scrollare a destra
+    scrollRight,             // funzione per scrollare a destra
+    heroImages,              // funzione per il carosello del'hero
+    currentImage             // stato per il carosello delle immagini
   } = TravelsController();   // uso la logica della pagina viaggi
 
 
   return (
     <div className="relative min-h-screen p-8 overflow-visible">
 
-      {/* Paese + Select */}
-      <div className="relative flex sm:flex-row flex-col items-center justify-between
-          mb-10 gap-4 p-4 rounded-3xl bg-linear-to-br from-white/20 via-white/10 to-transparent
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative w-full h-[260px] sm:h-80 rounded-t-3xl overflow-hidden shadow-2xl">
+        {/* Background image */}
+        <AnimatePresence>
+          {heroImages.length > 0 && (
+            <motion.div
+              key={heroImages[currentImage].id}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${heroImages[currentImage].image})`,
+              }}
+              initial={{ opacity: 0, scale: 1.02 }}
+              animate={{ opacity: 1, scale: 1.05 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                opacity: { duration: 1.2 },
+                scale: { duration: 8, ease: "linear" }
+              }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
+
+        {/* Content */}
+        <div className="relative z-10 h-full p-6 sm:p-10 sm:mt-0 mt-8">
+
+          {/* Titolo  */}
+          <div className="absolute bottom-37 left-1/2 -translate-x-1/2 text-center">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-2xl">
+              I miei viaggi
+            </h1>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Select Filtro Anni + Aggiungi Viaggio  */}
+      <div className="p-6 rounded-b-3xl w-full bg-linear-to-br from-white/20 via-white/10 to-transparent
           backdrop-blur-2xl border border-white/40 shadow-xl">
 
-        {/* Paese */}
-        <motion.h1 className="text-4xl font-extrabold text-white text-center relative
-        sm:absolute md:left-1/2 md:-translate-x-1/2  sm:left-auto sm:translate-x-0"
-          initial={{ x: 100, opacity: 0 }}
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}>
-          I miei viaggi
-        </motion.h1>
-
-        {/* Select Anni */}
-        <YearSelect
-          selectedYear={selectedYear}
-          setSelectedYear={setSelectedYear}
-          yearOptions={yearOptions}
-        />
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full justify-between">
+          <div
+            className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
+            {/* Select Anni */}
+            <YearSelect
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+              yearOptions={yearOptions}
+            />
+          </div>
+          <Link
+            to="/add"
+            className="font-semibold mt-4 sm:mt-0 px-4 py-2 inline-flex items-center justify-center gap-2
+            bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70
+            backdrop-blur-md border border-white/40 text-white rounded-full shadow-md 
+            transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.30)]
+            w-full sm:w-56">
+            <FaPlus size={20} /> Aggiungi Viaggio
+          </Link>
+        </motion.div>
       </div>
 
       {/* CAROSELLO DEI VIAGGI */}

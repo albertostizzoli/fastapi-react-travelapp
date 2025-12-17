@@ -198,7 +198,7 @@ function Sidebar() {
                 )}
 
                 {/* Aggiungi viaggio */}
-                {!isHome && !isAdd && !isProfile && (
+                {!isHome && !isAdd && !isProfile && !isTravels && (
                   <Link
                     to="/add"
                     onClick={toggleSidebar}

@@ -131,7 +131,7 @@ function Header() {
         )}
 
         {/*  LINK AGGIUNGI */}
-        {!isHome && !isAdd && !isProfile && (
+        {!isHome && !isAdd && !isProfile && !isTravels && (
           <Link
             to="/add"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
