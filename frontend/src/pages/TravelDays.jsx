@@ -30,8 +30,8 @@ function TravelDays() {
     scrollRef,                  // ref per lo scroll del carosello
     cardRefs,                   // ref per tutte le card
     scrollLeft,                 // funzione per scrollare a sinistra
-    scrollRight,                 // funzione per scrollare a destra
-    images,                     // tutte le immagini
+    scrollRight,                // funzione per scrollare a destra
+    heroImages,                 // tutte le immagini del carosello
     currentImage,               // immagine corrente dell'hero
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
@@ -46,32 +46,30 @@ function TravelDays() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative w-full h-[260px] sm:h-80 rounded-t-3xl overflow-hidden shadow-2xl">
-        {/* Background image */}
+
+        {/* Immagine */}
         <AnimatePresence>
           <motion.div
-            key={images[currentImage]}
+            key={heroImages[currentImage]}
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: `url(${images[currentImage]})`,
+              backgroundImage: `url(${heroImages[currentImage]})`,
             }}
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1.05 }}
             exit={{ opacity: 0 }}
             transition={{
               opacity: { duration: 1.2 },
-              scale: { duration: 8, ease: "linear" }
+              scale: { duration: 8, ease: "easeOut" }
             }}
           />
         </AnimatePresence>
 
-
         {/* Overlay */}
         <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
-        {/* Content */}
+        {/* Titolo + Date */}
         <div className="relative z-10 h-full p-6 sm:p-10 sm:mt-0 mt-8">
-
-          {/* Titolo + Date */}
           <div className="absolute bottom-32 left-1/2 -translate-x-1/2 text-center">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-2xl">
               {travel.town}
@@ -95,8 +93,9 @@ function TravelDays() {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full justify-between">
-          <div
-            className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
+
+          { /* Select Filtro Esperienze e Filtro Città */ }
+          <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
             <DaysExperiencesSelect
               selectedExperience={selectedExperience}
               setSelectedExperience={setSelectedExperience}
@@ -109,6 +108,8 @@ function TravelDays() {
               cityOptions={cityOptions}
             />
           </div>
+
+          { /* Pulsante Aggiungi Tappa */ }
           <Link
             to="/addDay"
             state={{ travelId: id }}
@@ -151,11 +152,12 @@ function TravelDays() {
                 <FaArrowRight size={20} />
               </button>
             </div>
+
             {/* CAROSELLO */}
             <motion.div
               ref={scrollRef}
               className={`flex gap-6 px-6 py-4 scroll-smooth snap-x snap-mandatory
-                ${openCardId ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
+              ${openCardId ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
               style={{ scrollbarWidth: "none" }}
               variants={{
                 hidden: { opacity: 1 },
@@ -163,6 +165,7 @@ function TravelDays() {
               }}
               initial="hidden"
               animate="visible">
+                
               <AnimatePresence>
                 {filteredDays.map((d) => {
 
@@ -384,7 +387,6 @@ function TravelDays() {
       )}
     </div>
   );
-
 }
 
 export default TravelDays;

@@ -37,7 +37,8 @@ function Travels() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative w-full h-[260px] sm:h-80 rounded-t-3xl overflow-hidden shadow-2xl">
-        {/* Background image */}
+
+        {/* Immagine */}
         <AnimatePresence>
           {heroImages.length > 0 && (
             <motion.div
@@ -51,7 +52,7 @@ function Travels() {
               exit={{ opacity: 0 }}
               transition={{
                 opacity: { duration: 1.2 },
-                scale: { duration: 8, ease: "linear" }
+                scale: { duration: 8, ease: "easeOut" }
               }}
             />
           )}
@@ -60,10 +61,8 @@ function Travels() {
         {/* Overlay */}
         <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
-        {/* Content */}
+        {/* Titolo  */}
         <div className="relative z-10 h-full p-6 sm:p-10 sm:mt-0 mt-8">
-
-          {/* Titolo  */}
           <div className="absolute bottom-37 left-1/2 -translate-x-1/2 text-center">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-2xl">
               I miei viaggi
@@ -81,15 +80,17 @@ function Travels() {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full justify-between">
-          <div
-            className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
-            {/* Select Anni */}
+
+          {/* Select Anni */}
+          <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
             <YearSelect
               selectedYear={selectedYear}
               setSelectedYear={setSelectedYear}
               yearOptions={yearOptions}
             />
           </div>
+
+          { /* Pulsante Aggiungi Viaggio */ }
           <Link
             to="/add"
             className="font-semibold mt-4 sm:mt-0 px-4 py-2 inline-flex items-center justify-center gap-2

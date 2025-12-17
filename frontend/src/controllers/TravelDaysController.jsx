@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useParams } from "react-router-dom"; // per prendere l'id del viaggio dai parametri URL
 import axios from "axios";
 
@@ -16,28 +16,44 @@ function TravelDaysController() {
     const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
     const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
 
-    // prendo come array tutte le foto del viaggio selezionato
-    const heroImages = travel?.days
-        ?.flatMap(d => d.photo || [])
-        .filter(Boolean);
 
-    const images = heroImages?.length ? heroImages : ["/fallback.jpg"];
+    // questa funzione mi permette di mescolare in maniera casuale le foto ogni volta
+    function shuffleArray(array) {
+        const shuffled = [...array]; // creo un nuovo array 
+        for (let i = shuffled.length - 1; i > 0; i--) { // ciclo sulla lunghezza dell'array nuovo
+            const j = Math.floor(Math.random() * (i + 1)); // uso la funzione Math.floor e Math.random per rimescolare l'array
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled; // restituisco l'array nuovo con le foto rimescolate
+    }
 
-    // questo useEffect mi permette di fare un carosello automatico di tutte le immagini 
+
+    // prendo con un array tutte le immagini delle tappe
+    const heroImages = useMemo(() => {
+        const imgs = travel?.days
+            ?.flatMap(d => d.photo || []) // utilizzo flatMap per ciclare sugli array delle tappe
+            .filter(Boolean);
+
+        return imgs?.length ? shuffleArray(imgs) : ["/fallback.jpg"]; // richiamo la funzione shuffleArray per rimescolare le foto
+    }, [travel?.id]);
+
+
+    // questo useEffect 
     useEffect(() => {
-        if (images.length <= 1) return;
+        if (heroImages.length <= 1) return;
 
-        const interval = setInterval(() => {
-            setCurrentImage(prev => (prev + 1) % images.length);
-        }, 6000);
+        const interval = setInterval(() => { // utilizzo setInterval di 6 secondi per il carosello
+            setCurrentImage(prev => (prev + 1) % heroImages.length); // prev + 1 indica l'immagine successiva
+        }, 6000); 
 
         return () => clearInterval(interval);
-    }, [images.length]);
+    }, [heroImages.length]);
 
-    // questo useEffect resetta il carosello al caricamento della pagina
+
+    // questo useEffect mi resetta il carosello al caricamento della pagina
     useEffect(() => {
         setCurrentImage(0);
-    }, [id]);
+    }, [travel?.id]);
 
 
     // Effetto per lo scroll alla card aperta
@@ -202,7 +218,7 @@ function TravelDaysController() {
         scrollLeft,            // funzione per scrollare a sinistra
         scrollRight,           // funzione per scrollare a destra
         heroImages,            // immagini dell'hero
-        images,                // tutte le immagini
+        heroImages,            // tutte le immagini
         currentImage,          // immagine corrente dell'hero
     };
 }

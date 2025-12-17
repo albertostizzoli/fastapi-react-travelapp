@@ -35,19 +35,9 @@ function EditTravel() {
 
         {/* INTESTAZIONE */}
         <div className="absolute top-0 left-0 w-full backdrop-blur-2xl bg-linear-to-r from-black/10 to-transparent 
-          border-b border-white/20 px-6 py-4 rounded-t-3xl flex justify-between items-center">
+            border-b border-white/20 p-5 rounded-t-3xl grid place-items-center">
 
-          <Link
-            to="/travels"
-            className="font-semibold px-4 py-2 flex items-center justify-center gap-2 bg-linear-to-br from-red-600 to-rose-500 
-            dark:from-red-600/70 dark:to-rose-500/70 backdrop-blur-md border border-white/40 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out 
-            hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-            <FaArrowLeft size={20} />
-            Viaggi
-          </Link>
-
-          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] text-center
-          sm:absolute md:left-1/2 md:-translate-x-1/2 sm:left-auto sm:translate-x-0">
+          <h2 className="text-2xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
             Modifica Viaggio
           </h2>
         </div>
