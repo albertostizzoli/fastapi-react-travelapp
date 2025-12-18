@@ -269,14 +269,13 @@ function TravelDays() {
                                           animate={{ opacity: 1, y: 0, scale: 1 }}
                                           exit={{ opacity: 0, y: -10, scale: 0.98 }}
                                           transition={{ duration: 0.2 }}
-                                          className="absolute right-0 top-14 w-50 bg-white/10 backdrop-blur-xl
+                                          className="absolute right-0 top-14 w-50
                                           border border-white/30 rounded-xl shadow-xl overflow-hidden z-50">
                                           <Link
                                             to={`/days/${d.id}/edit`}
                                             onClick={(e) => e.stopPropagation()}
-                                            className=" font-semibold flex items-center gap-3 px-4 py-3 text-white
-                                            bg-linear-to-br from-orange-600 to-yellow-500
-                                            hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                            className="font-semibold flex items-center gap-3 px-4 py-3 text-white
+                                            bg-linear-to-br from-orange-600 to-yellow-500">
                                             <FaEdit /> Modifica Tappa
                                           </Link>
 
@@ -286,7 +285,7 @@ function TravelDays() {
                                               setDeleteDayId(d.id);
                                             }}
                                             className="font-semibold w-full flex items-center gap-3 px-4 py-3 text-white
-                                            bg-linear-to-br from-red-600 to-rose-500 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                            bg-linear-to-br from-red-600 to-rose-500 cursor-pointer">
                                             <FaTrash /> Cancella Tappa
                                           </button>
                                         </motion.div>

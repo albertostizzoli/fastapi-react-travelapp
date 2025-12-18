@@ -208,7 +208,7 @@ function Travels() {
                         {/* menù dropdown */}
                         <div
                           ref={menuRef}  // con questo il menù dropdown si può chiudere ovunque nel DOM
-                          className={`absolute top-4 right-4 z-30 opacity-0 group-hover/card:opacity-100
+                          className={`absolute top-4 right-7 z-30 opacity-0 group-hover/card:opacity-100
                           transition-opacity duration-300
                           ${showActions ? "opacity-100" : ""}`}> {/* finche la card è aperta il bottone rimane visibile */}
                           <button
@@ -231,8 +231,8 @@ function Travels() {
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 exit={{ opacity: 0, y: -10, scale: 0.98 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute right-0 mt-2 w-50 bg-white/10 backdrop-blur-xl
-                                 border border-white/30 rounded-xl shadow-xl overflow-hidden">
+                                className="absolute right-0 mt-2 w-50 border border-white/30 
+                                rounded-xl shadow-xl overflow-hidden">
 
                                 <Link
                                   to={`/travels/${v.id}/edit`}
@@ -247,7 +247,7 @@ function Travels() {
                                     setOpenMenuId(null);
                                   }}
                                   className="font-semibold w-full flex items-center gap-3 px-4 py-3 text-white
-                                  bg-linear-to-br from-red-600 to-rose-500">
+                                  bg-linear-to-br from-red-600 to-rose-500 cursor-pointer">
                                   <FaTrash /> Cancella Viaggio
                                 </button>
                               </motion.div>
