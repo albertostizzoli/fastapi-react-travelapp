@@ -12,10 +12,11 @@ function TravelDaysController() {
     const [selectedCity, setSelectedCity] = useState(""); // stato per filtrare le tappe in base alla città
     const [selectedExperience, setSelectedExperience] = useState(""); // stato per filtrare le tappe in base alle esperienze
     const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico delle immagini dell'hero
-    const [openMenuId, setOpenMenuId] = useState(null); // stato per il menù modifica e cancella
+    const [openMenuId, setOpenMenuId] = useState(null); // stato per aprire / chiudere il dropdown menù
 
-    const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
-    const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
+    const scrollRef = useRef(null);  // mi permette di fare lo scroll del carosello
+    const cardRefs = useRef({});     // oggetto per salvare i ref di tutte le card
+    const menuRef = useRef(null);    // mi permette di chiudere il menù dropdown cliccando in ogni punto
 
 
     // questa funzione mi permette di mescolare in maniera casuale le foto ogni volta
@@ -38,8 +39,26 @@ function TravelDaysController() {
         return imgs?.length ? shuffleArray(imgs) : ["/fallback.jpg"]; // richiamo la funzione shuffleArray per rimescolare le foto
     }, [travel?.id]);
 
+    // questo useEffect mi permette di chiudere il menù dropdown cliccando ovunque
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                openMenuId !== null &&
+                menuRef.current &&
+                !menuRef.current.contains(event.target)
+            ) {
+                setOpenMenuId(null);
+            }
+        }
 
-    // questo useEffect 
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [openMenuId]);
+
+
+    // questo useEffect mi permette di avere un carosello automatico per le immagini
     useEffect(() => {
         if (heroImages.length <= 1) return;
 
@@ -222,7 +241,8 @@ function TravelDaysController() {
         heroImages,            // tutte le immagini
         currentImage,          // immagine corrente dell'hero
         openMenuId,            // apre il menù dropdown
-        setOpenMenuId          //  stato per indicare l'apertura del menù dropdown
+        setOpenMenuId,         //  stato per indicare l'apertura del menù dropdown
+        menuRef                // mi permette di chiudere il menù dropdown cliccando ovunque nel DOM
     };
 }
 

@@ -9,10 +9,12 @@ function TravelsController() {
     const [activeCard, setActiveCard] = useState(null); // stato per aprire una card dei viaggi e mostare le altre informazioni
     const [selectedYear, setSelectedYear] = useState(null); // stato per selezionare un'anno dalla select
     const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico sull'hero
-    const [openMenuId, setOpenMenuId] = useState(null); // stato per il menù modifica e cancella
+    const [openMenuId, setOpenMenuId] = useState(null); // stato per aprire / chiudere il dropdown menù
 
     const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
-    const cardRefs = useRef({}); // oggetto per salvare i ref di tutte le card
+    const cardRefs = useRef({});    // oggetto per salvare i ref di tutte le card
+    const menuRef = useRef(null);   // mi permette di chiudere il menù dropdown cliccando in ogni punto
+
 
     // Lista di tutte gli anni nella select
     const allYears = travels
@@ -41,6 +43,25 @@ function TravelsController() {
             }))
             .filter(v => v.image);
     }, [travels]);
+
+
+    // questo useEffect mi permette di chiudere il menù dropdown cliccando ovunque
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                openMenuId !== null &&
+                menuRef.current &&
+                !menuRef.current.contains(event.target)
+            ) {
+                setOpenMenuId(null);
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [openMenuId]);
 
 
     // questo useEffect mi permette di fare un carosello automatico di tutte le immagini 
@@ -189,7 +210,8 @@ function TravelsController() {
         heroImages,        // funzione per il carosello del'hero
         currentImage,      // stato per il carosello delle immagini
         openMenuId,        // apre il menù dropdown
-        setOpenMenuId      //  stato per indicare l'apertura del menù dropdown
+        setOpenMenuId,     //  stato per indicare l'apertura del menù dropdown
+        menuRef            // mi permette di chiudere il menù dropdown cliccando in ogni punto
     }
 }
 

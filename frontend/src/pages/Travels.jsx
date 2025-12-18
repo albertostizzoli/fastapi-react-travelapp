@@ -25,8 +25,9 @@ function Travels() {
     scrollRight,             // funzione per scrollare a destra
     heroImages,              // funzione per il carosello del'hero
     currentImage,            // stato per il carosello delle immagini
-    openMenuId,
-    setOpenMenuId
+    openMenuId,              // apre il menù dropdown
+    setOpenMenuId,           //  stato per indicare l'apertura del menù dropdown
+    menuRef            // mi permette di chiudere il menù dropdown cliccando in ogni punto
   } = TravelsController();   // uso la logica della pagina viaggi
 
 
@@ -165,13 +166,14 @@ function Travels() {
                   {filteredTravels.map((v) => {
 
                     const isOpen = activeCard === v.id; // questo mi permette di aprire e chiudere una card alla volta
+                    const showActions = isOpen || openMenuId === v.id; // questo mi permette di vedere i 2 bottoni di apertura card e menù finchè la card rimane aperta
 
                     return (
                       <motion.div
                         key={v.id}
                         ref={(el) => (cardRefs.current[v.id] = el)} // assegno il ref 
                         className="min-w-[355px] sm:min-w-[485px] lg:min-w-[485px] snap-center
-                        group relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                        group/card relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
                         backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
                         transition-all duration-300"
                         variants={{
@@ -203,6 +205,57 @@ function Travels() {
                           </div>
                         )}
 
+                        {/* menù dropdown */}
+                        <div
+                          ref={menuRef}  // con questo il menù dropdown si può chiudere ovunque nel DOM
+                          className={`absolute top-4 right-4 z-30 opacity-0 group-hover/card:opacity-100
+                          transition-opacity duration-300
+                          ${showActions ? "opacity-100" : ""}`}> {/* finche la card è aperta il bottone rimane visibile */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenMenuId(openMenuId === v.id ? null : v.id);
+                            }}
+                            className="w-12 h-12 flex items-center justify-center
+                            rounded-full bg-white/20 backdrop-blur-md
+                            border border-white/30 text-white hover:bg-white/30
+                            transition cursor-pointer"
+                            title={openMenuId ? "Chiudi Menù" : "Apri Menù"}>
+                            <FaEllipsisV size={20} />
+                          </button>
+
+                          <AnimatePresence>
+                            {openMenuId === v.id && (
+                              <motion.div
+                                initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                                transition={{ duration: 0.2 }}
+                                className="absolute right-0 mt-2 w-50 bg-white/10 backdrop-blur-xl
+                                 border border-white/30 rounded-xl shadow-xl overflow-hidden">
+
+                                <Link
+                                  to={`/travels/${v.id}/edit`}
+                                  className="font-semibold flex items-center gap-3 px-4 py-3 text-white
+                                   bg-linear-to-br from-orange-600 to-yellow-500">
+                                  <FaEdit /> Modifica Viaggio
+                                </Link>
+
+                                <button
+                                  onClick={() => {
+                                    setDeleteId(v.id);
+                                    setOpenMenuId(null);
+                                  }}
+                                  className="font-semibold w-full flex items-center gap-3 px-4 py-3 text-white
+                                  bg-linear-to-br from-red-600 to-rose-500">
+                                  <FaTrash /> Cancella Viaggio
+                                </button>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+
+
                         {/* Contenuto */}
                         <div className="p-6 flex flex-col gap-3">
                           <div className="flex justify-between items-center">
@@ -223,10 +276,12 @@ function Travels() {
                               onClick={() => setActiveCard(activeCard === v.id ? null : v.id)}
                               animate={{ rotate: activeCard === v.id ? 180 : 0 }}
                               transition={{ duration: 0.4 }}
-                              title={activeCard ? "Chiudi Anteprima" : "Anteprima del viaggio"}
-                              className="cursor-pointer border border-white rounded-full w-12 h-12 
+                              title={activeCard ? "Chiudi Anteprima Viaggio" : "Apri Anteprima Viaggio"}
+                              className={`cursor-pointer border border-white rounded-full w-12 h-12 
                               flex items-center justify-center text-white
-                              transition-all duration-300 hover:bg-white hover:text-black">
+                              transition-all duration-300 hover:bg-white hover:text-black
+                              opacity-0 group-hover/card:opacity-100
+                              ${showActions ? "opacity-100" : ""}`}>
                               <FaArrowDown size={20} />
                             </motion.button>
                           </div>
@@ -278,53 +333,6 @@ function Travels() {
                                     hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                     <FaCalendarDay size={20} className="mr-1" /> Vai alle Tappe
                                   </Link>
-
-                                  <div className="absolute top-4 right-4 z-20">
-                                    <button
-                                      onClick={() =>
-                                        setOpenMenuId(openMenuId === v.id ? null : v.id)
-                                      }
-                                      className="w-12 h-12 flex items-center justify-center
-                                      rounded-full bg-white/20 backdrop-blur-md
-                                      border border-white/30 text-white hover:bg-white/30 
-                                      transition cursor-pointer"
-                                      aria-label="Opzioni viaggio">
-                                      <FaEllipsisV size={20} />
-                                    </button>
-
-                                    { /* Menù dropdown */}
-                                    <AnimatePresence>
-                                      {openMenuId === v.id && (
-                                        <motion.div
-                                          initial={{ opacity: 0, y: -10, scale: 0.98 }}
-                                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                                          exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                                          transition={{ duration: 0.2 }}
-                                          className="absolute right-0 mt-2 w-50 bg-white/10 backdrop-blur-xl
-                                          border border-white/30 rounded-xl
-                                          shadow-xl overflow-hidden">
-                                          <Link
-                                            to={`/travels/${v.id}/edit`}
-                                            className="font-semibold flex items-center gap-3 px-4 py-3 text-white
-                                            bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
-                                            backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                            <FaEdit /> Modifica Viaggio
-                                          </Link>
-                                          <button
-                                            onClick={() => {
-                                              setDeleteId(v.id);
-                                              setOpenMenuId(null);
-                                            }}
-                                            className="font-semibold w-full flex items-center gap-3 px-4 py-3 text-white
-                                            bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
-                                            backdrop-blur-md transition-all duration-300 cursor-pointer
-                                            hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
-                                            <FaTrash /> Cancella Viaggio
-                                          </button>
-                                        </motion.div>
-                                      )}
-                                    </AnimatePresence>
-                                  </div>
                                 </div>
                               </motion.div>
                             )}

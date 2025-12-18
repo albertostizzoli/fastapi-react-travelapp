@@ -122,8 +122,8 @@ function Sidebar() {
                   <button
                     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                     className="relative w-14 h-7 py-2 flex items-center justify-between rounded-full text-white border border-white 
-                  transition-all duration-300 cursor-pointer"
-                    title="Cambia tema">
+                    transition-all duration-300 cursor-pointer"
+                    title={theme === "dark" ? "Light Mode" : "Dark Mode"}>
 
                     {/* Icone */}
                     <span className="text-sm ml-1"><FaMoon size={20} /></span>
@@ -132,8 +132,7 @@ function Sidebar() {
                     {/* Pallina */}
                     <span
                       className={`absolute w-6 h-6 rounded-full bg-white shadow-sm transition-transform duration-300
-                  ${theme === "dark" ? "translate-x-7" : "translate-x-0"}`}
-                    ></span>
+                    ${theme === "dark" ? "translate-x-7" : "translate-x-0"}`}></span>
                   </button>
 
                   {/* Pulsante Chiudi Sidebar */}

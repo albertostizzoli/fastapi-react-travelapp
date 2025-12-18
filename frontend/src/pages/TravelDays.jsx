@@ -34,7 +34,8 @@ function TravelDays() {
     heroImages,                 // tutte le immagini del carosello
     currentImage,               // immagine corrente dell'hero
     openMenuId,                 // apre il menù dropdown
-    setOpenMenuId               //  stato per indicare l'apertura del menù dropdown
+    setOpenMenuId,              //  stato per indicare l'apertura del menù dropdown
+    menuRef                     // mi permette di chiudere il menù dropdown cliccando ovunque nel DOM
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -189,6 +190,8 @@ function TravelDays() {
                       {filteredDays.map((d) => {
 
                         const isOpen = openCardId === d.id; // questo mi permette di aprire e chiudere la card una alla volta
+                        const showActions = isOpen || openMenuId === d.id; // questo mi permette di vedere i 2 bottoni di apertura card e menù finchè la card rimane aperta
+
                         return (
                           <motion.div
                             key={d.id}
@@ -205,7 +208,7 @@ function TravelDays() {
                               style={{
                                 boxShadow: isOpen ? "0px 0px 25px rgba(255,255,255,0.30)" : "0px 0px 0px rgba(255,255,255,0)",
                               }}
-                              className="group bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                              className="group/day bg-linear-to-br from-white/20 via-white/10 to-transparent 
                               backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-xl
                               transition-all duration-300">
 
@@ -225,32 +228,40 @@ function TravelDays() {
                                 </div>
 
                                 {/* Pulsanti freccia + menu dropdown */}
-                                <div className="flex items-center gap-3">
-                                  {/* Freccia per aprire/chiudere la card */}
+                                <div className="relative w-24 h-12">
+                                  {/* Freccia */}
                                   <motion.button
                                     animate={{ rotate: isOpen ? 180 : 0 }}
                                     transition={{ duration: 0.4 }}
-                                    title={isOpen ? "Chiudi Anteprima" : "Anteprima Tappe"}
-                                    className="cursor-pointer border border-white rounded-full w-12 h-12 
-                                    flex items-center justify-center text-white
-                                    transition-all duration-300 hover:bg-white hover:text-black"
-                                    onClick={() => setOpenCardId(isOpen ? null : d.id)}>
+                                    title={isOpen ? "Chiudi Anteprima Tappe" : "Apri Anteprima Tappe"}
+                                    onClick={() => setOpenCardId(isOpen ? null : d.id)}
+                                    className={`absolute right-15 top-0 w-12 h-12 cursor-pointer
+                                    border border-white rounded-full flex items-center justify-center text-white
+                                    transition-all duration-300 hover:bg-white hover:text-black
+                                    opacity-0 group-hover/day:opacity-100
+                                    ${showActions ? "opacity-100" : ""}`}> {/* finche la card è aperta il bottone rimane visibile */}
                                     <FaArrowDown size={20} />
                                   </motion.button>
 
-                                  {/* Menu dropdown */}
-                                  <div className="relative">
+                                  {/* Bottone menu */}
+                                  <div
+                                    ref={menuRef}  // con questo il menù dropdown si può chiudere ovunque nel DOM
+                                    className={`absolute right-0 top-0 w-12 h-12 transition-opacity duration-300
+                                    opacity-0 group-hover/day:opacity-100
+                                    ${showActions ? "opacity-100" : ""}`}>
                                     <button
-                                      onClick={() =>
-                                        setOpenMenuId(openMenuId === d.id ? null : d.id)
-                                      }
-                                      className="cursor-pointer border border-white rounded-full w-12 h-12 
-                                      flex items-center justify-center text-white
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setOpenMenuId(openMenuId === d.id ? null : d.id);
+                                      }}
+                                      className="w-12 h-12 cursor-pointer border border-white rounded-full
+                                      flex items-center justify-center text-white 
                                       transition-all duration-300 hover:bg-white hover:text-black"
-                                      aria-label="Opzioni tappa">
+                                      title={openMenuId ? "Chiudi Menù" : "Apri Menù"}>
                                       <FaEllipsisV size={20} />
                                     </button>
 
+                                    {/* Dropdown */}
                                     <AnimatePresence>
                                       {openMenuId === d.id && (
                                         <motion.div
@@ -258,25 +269,24 @@ function TravelDays() {
                                           animate={{ opacity: 1, y: 0, scale: 1 }}
                                           exit={{ opacity: 0, y: -10, scale: 0.98 }}
                                           transition={{ duration: 0.2 }}
-                                          className="absolute right-0 mt-2 w-50 bg-white/10 backdrop-blur-xl
+                                          className="absolute right-0 top-14 w-50 bg-white/10 backdrop-blur-xl
                                           border border-white/30 rounded-xl shadow-xl overflow-hidden z-50">
                                           <Link
                                             to={`/days/${d.id}/edit`}
                                             onClick={(e) => e.stopPropagation()}
-                                            className="font-semibold flex items-center gap-3 px-4 py-3 text-white
-                                            bg-linear-to-br from-orange-600 to-yellow-500 dark:from-orange-600/70 dark:to-yellow-500/70
-                                            backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                            className=" font-semibold flex items-center gap-3 px-4 py-3 text-white
+                                            bg-linear-to-br from-orange-600 to-yellow-500
+                                            hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                                             <FaEdit /> Modifica Tappa
                                           </Link>
+
                                           <button
                                             onClick={(e) => {
                                               e.stopPropagation();
                                               setDeleteDayId(d.id);
                                             }}
                                             className="font-semibold w-full flex items-center gap-3 px-4 py-3 text-white
-                                            bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
-                                            backdrop-blur-md transition-all duration-300 cursor-pointer
-                                            hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
+                                            bg-linear-to-br from-red-600 to-rose-500 hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]">
                                             <FaTrash /> Cancella Tappa
                                           </button>
                                         </motion.div>
@@ -372,7 +382,7 @@ function TravelDays() {
                                         }}
                                         className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
                                         bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
-                                        backdrop-blur-md border border-white/40 text-white 
+                                        backdrop-blur-md border border-white/40 text-white cursor-pointer 
                                         rounded-full shadow-md transition-all duration-300 hover:scale-105
                                         hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                         <FaBookOpen size={20} /> Leggi
