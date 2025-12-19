@@ -13,6 +13,8 @@ function TravelDaysController() {
     const [selectedExperience, setSelectedExperience] = useState(""); // stato per filtrare le tappe in base alle esperienze
     const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico delle immagini dell'hero
     const [openMenuId, setOpenMenuId] = useState(null); // stato per aprire / chiudere il dropdown menù
+    const [leftLabel, setLeftLabel] = useState("Scorri a sinistra"); // stato per lo scorrimento a sinistra
+    const [rightLabel, setRightLabel] = useState("Scorri a destra"); // stato per lo scorrimento a destra
 
     const scrollRef = useRef(null);  // mi permette di fare lo scroll del carosello
     const cardRefs = useRef({});     // oggetto per salvare i ref di tutte le card
@@ -189,31 +191,78 @@ function TravelDaysController() {
         })
         : [];
 
-    // funzione per scrollare il carosello a sinistra o saltare alla fine
+    // funzione per lo scorrimento a sinistra
     const scrollLeft = () => {
-        if (!scrollRef.current) return; // verifica che il ref sia definito
-        const scrollContainer = scrollRef.current; // il contenitore scrollabile
+        if (!scrollRef.current) return;
+        const scrollContainer = scrollRef.current;
 
         if (scrollContainer.scrollLeft <= 0) {
-            // Se siamo all'inizio, salta alla fine
-            scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: "smooth" }); // scorri alla fine
+            // siamo alla fine, salto all'inizio
+            scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: "smooth" });
+            setLeftLabel("Scorri a sinistra");
+            setRightLabel("Vai alla prima tappa");
+
+            // siamo all'inizio, salto alla fine
         } else {
-            scrollContainer.scrollBy({ left: -490, behavior: "smooth" }); // altrimenti scorri a sinistra di 475px
+            scrollContainer.scrollBy({ left: -495, behavior: "smooth" });
+            setLeftLabel(scrollContainer.scrollLeft - 495 <= 0 ? "Vai all'ultima tappa" : "Scorri a sinistra");
+            setRightLabel("Scorri a destra");
         }
     };
 
-    // funzione per scrollare il carosello a destra o saltare all'inizio
+    // funzione per lo scorrimento a destra
     const scrollRight = () => {
         if (!scrollRef.current) return;
         const scrollContainer = scrollRef.current;
 
-        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) { // verifica se siamo alla fine
-            // Se siamo alla fine, salta all'inizio
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+            // siamo all'inizio, salto alla fine
             scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
+            setLeftLabel("Vai all'ultima tappa");
+            setRightLabel("Scorri a destra");
+
+            // siamo alla fine, salto all'inizio
         } else {
-            scrollContainer.scrollBy({ left: 490, behavior: "smooth" });
+            scrollContainer.scrollBy({ left: 495, behavior: "smooth" });
+            setLeftLabel("Scorri a sinistra");
+            setRightLabel(scrollContainer.scrollLeft + scrollContainer.clientWidth + 495 >= scrollContainer.scrollWidth ? "Vai alla prima tappa" : "Scorri a destra");
         }
     };
+
+    // questo useEffect al caricamento della pagina indica la posizione del carosello
+    useEffect(() => {
+        if (!scrollRef.current || !travel?.days?.length) return; // prendo la lunghezza dei dati delle tappe
+
+        const scrollContainer = scrollRef.current; // costante del carosello
+
+        const updateLabels = () => {
+
+            // se siamo all'inzio del carosello
+            if (scrollContainer.scrollLeft <= 0) {
+                setLeftLabel("Vai all'ultima tappa");
+                setRightLabel("Scorri a destra");
+
+            // se siamo alla fine del carosello
+            } else if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+                setLeftLabel("Scorri a sinistra");
+                setRightLabel("Vai alla prima tappa");
+
+            // se siamo nel mezzo
+            } else {
+                setLeftLabel("Scorri a sinistra");
+                setRightLabel("Scorri a destra");
+            }
+        };
+
+        // aggiorna subito dopo il render
+        updateLabels();
+
+        // opzionale: aggiorna anche quando si scrolla manualmente
+        scrollContainer.addEventListener("scroll", updateLabels);
+        return () => scrollContainer.removeEventListener("scroll", updateLabels);
+    }, [travel?.days]);
+
+
 
     return {
         id,                    // id del viaggio
@@ -242,7 +291,9 @@ function TravelDaysController() {
         currentImage,          // immagine corrente dell'hero
         openMenuId,            // apre il menù dropdown
         setOpenMenuId,         //  stato per indicare l'apertura del menù dropdown
-        menuRef                // mi permette di chiudere il menù dropdown cliccando ovunque nel DOM
+        menuRef,               // mi permette di chiudere il menù dropdown cliccando ovunque nel DOM
+        leftLabel,             // indica che scorre a sinistra
+        rightLabel             // indica che scorre a destra
     };
 }
 

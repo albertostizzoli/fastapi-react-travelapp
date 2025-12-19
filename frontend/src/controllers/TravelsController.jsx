@@ -10,6 +10,8 @@ function TravelsController() {
     const [selectedYear, setSelectedYear] = useState(null); // stato per selezionare un'anno dalla select
     const [currentImage, setCurrentImage] = useState(0); // stato per il carosello automatico sull'hero
     const [openMenuId, setOpenMenuId] = useState(null); // stato per aprire / chiudere il dropdown menù
+    const [leftLabel, setLeftLabel] = useState("Scorri a sinistra"); // stato per lo scorrimento a sinistra
+    const [rightLabel, setRightLabel] = useState("Scorri a destra"); // stato per lo scorrimento a destra
 
     const scrollRef = useRef(null); // mi permette di fare lo scroll del carosello
     const cardRefs = useRef({});    // oggetto per salvare i ref di tutte le card
@@ -162,31 +164,65 @@ function TravelsController() {
         );
     }
 
-    // funzione per scrollare il carosello a sinistra o saltare alla fine
+    // funzione per lo scorrimento a sinistra
     const scrollLeft = () => {
-        if (!scrollRef.current) return; // verifica che il ref sia definito
-        const scrollContainer = scrollRef.current; // il contenitore scrollabile
+        if (!scrollRef.current) return;
+        const scrollContainer = scrollRef.current;
 
         if (scrollContainer.scrollLeft <= 0) {
-            // Se siamo all'inizio, salta alla fine
-            scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: "smooth" }); // scorri alla fine
+            // siamo alla fine, salto all'inizio
+            scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: "smooth" });
+            setLeftLabel("Scorri a sinistra");
+            setRightLabel("Vai al primo viaggio");
+
+            // siamo alla fine, salto all'inizio
         } else {
-            scrollContainer.scrollBy({ left: -495, behavior: "smooth" }); // altrimenti scorri a sinistra di 475px
+            scrollContainer.scrollBy({ left: -495, behavior: "smooth" });
+            setLeftLabel(scrollContainer.scrollLeft - 495 <= 0 ? "Vai all'ultimo viaggio" : "Scorri a sinistra");
+            setRightLabel("Scorri a destra");
         }
     };
 
-    // funzione per scrollare il carosello a destra o saltare all'inizio
+    // funzione per lo scorrimento a destra
     const scrollRight = () => {
         if (!scrollRef.current) return;
         const scrollContainer = scrollRef.current;
 
-        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) { // verifica se siamo alla fine
-            // Se siamo alla fine, salta all'inizio
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+            // siamo all'inzio, salto alla fine
             scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
+            setLeftLabel("Vai all'ultimo viaggio");
+            setRightLabel("Scorri a destra");
+
+            // siamo all'inzio, salto alla fine
         } else {
             scrollContainer.scrollBy({ left: 495, behavior: "smooth" });
+            setLeftLabel("Scorri a sinistra");
+            setRightLabel(scrollContainer.scrollLeft + scrollContainer.clientWidth + 495 >= scrollContainer.scrollWidth ? "Vai al primo viaggio" : "Scorri a destra");
         }
     };
+
+    // questo useEffect al caricamento della pagina indica la posizione del carosello
+    useEffect(() => {
+        if (!scrollRef.current) return;
+        const scrollContainer = scrollRef.current;
+
+        // se siamo all'inizio
+        if (scrollContainer.scrollLeft <= 0) {
+            setLeftLabel("Vai all'ultimo viaggio");
+            setRightLabel("Scorri a destra");
+        }
+        // se siamo alla fine
+        else if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+            setLeftLabel("Scorri a sinistra");
+            setRightLabel("Vai al primo viaggio");
+        }
+        // altrimenti
+        else {
+            setLeftLabel("Scorri a sinistra");
+            setRightLabel("Scorri a destra");
+        }
+    }, []); // eseguito solo al montaggio
 
 
     return {
@@ -211,7 +247,9 @@ function TravelsController() {
         currentImage,      // stato per il carosello delle immagini
         openMenuId,        // apre il menù dropdown
         setOpenMenuId,     //  stato per indicare l'apertura del menù dropdown
-        menuRef            // mi permette di chiudere il menù dropdown cliccando in ogni punto
+        menuRef,           // mi permette di chiudere il menù dropdown cliccando in ogni punto
+        leftLabel,         // indica che scorre a sinistra
+        rightLabel         // indica che scorre a destra
     }
 }
 

@@ -27,7 +27,9 @@ function Travels() {
     currentImage,            // stato per il carosello delle immagini
     openMenuId,              // apre il menù dropdown
     setOpenMenuId,           //  stato per indicare l'apertura del menù dropdown
-    menuRef            // mi permette di chiudere il menù dropdown cliccando in ogni punto
+    menuRef,                 // mi permette di chiudere il menù dropdown cliccando in ogni punto
+    leftLabel,               // indica che scorre a sinistra
+    rightLabel               // indica che scorre a destra
   } = TravelsController();   // uso la logica della pagina viaggi
 
 
@@ -131,6 +133,7 @@ function Travels() {
                   {/* Freccia sinistra */}
                   <button
                     onClick={scrollLeft}
+                    title={leftLabel}
                     className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
                     opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white
                     backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
@@ -141,6 +144,7 @@ function Travels() {
                   {/* Freccia destra */}
                   <button
                     onClick={scrollRight}
+                    title={rightLabel}
                     className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
                     opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
                     backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50

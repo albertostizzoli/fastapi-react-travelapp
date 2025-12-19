@@ -34,8 +34,10 @@ function TravelDays() {
     heroImages,                 // tutte le immagini del carosello
     currentImage,               // immagine corrente dell'hero
     openMenuId,                 // apre il menù dropdown
-    setOpenMenuId,              //  stato per indicare l'apertura del menù dropdown
-    menuRef                     // mi permette di chiudere il menù dropdown cliccando ovunque nel DOM
+    setOpenMenuId,              // stato per indicare l'apertura del menù dropdown
+    menuRef,                    // mi permette di chiudere il menù dropdown cliccando ovunque nel DOM
+    leftLabel,                  // indica che scorre a sinistra
+    rightLabel                  // indica che scorre a destra
   } = TravelDaysController();   // utilizzo il controller per ottenere la logica della pagina
 
   if (!travel) return <p className="text-center mt-8">⏳ Caricamento...</p>;
@@ -155,6 +157,7 @@ function TravelDays() {
                     {/* FRECCIA SINISTRA */}
                     <button
                       onClick={scrollLeft}
+                      title={leftLabel}
                       className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
                       opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
                       backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
@@ -165,6 +168,7 @@ function TravelDays() {
                     {/* FRECCIA DESTRA */}
                     <button
                       onClick={scrollRight}
+                      title={rightLabel}
                       className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
                       opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
                       backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
@@ -384,7 +388,7 @@ function TravelDays() {
                                         backdrop-blur-md border border-white/40 text-white cursor-pointer 
                                         rounded-full shadow-md transition-all duration-300 hover:scale-105
                                         hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                                        <FaBookOpen size={20} /> Leggi
+                                        <FaBookOpen size={20} /> Approfondisci
                                       </button>
                                     </div>
                                   </motion.div>
