@@ -208,7 +208,7 @@ function Travels() {
                         {/* menù dropdown */}
                         <div
                           ref={menuRef}  // con questo il menù dropdown si può chiudere ovunque nel DOM
-                          className={`absolute top-4 right-7 z-30 opacity-0 group-hover/card:opacity-100
+                          className={`absolute top-4 right-6 z-30 opacity-0 group-hover/card:opacity-100
                           transition-opacity duration-300
                           ${showActions ? "opacity-100" : ""}`}> {/* finche la card è aperta il bottone rimane visibile */}
                           <button
@@ -217,9 +217,9 @@ function Travels() {
                               setOpenMenuId(openMenuId === v.id ? null : v.id);
                             }}
                             className="w-12 h-12 flex items-center justify-center
-                            rounded-full bg-white/20 backdrop-blur-md
-                            border border-white/30 text-white hover:bg-white/30
-                            transition cursor-pointer"
+                            rounded-3xl backdrop-blur-md
+                            border border-white/30 text-white hover:bg-white
+                            transition cursor-pointer hover:text-black"
                             title={openMenuId ? "Chiudi Menù" : "Apri Menù"}>
                             <FaEllipsisV size={20} />
                           </button>
@@ -323,7 +323,7 @@ function Travels() {
                                 )}
 
                                 {/* Pulsanti */}
-                                <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7">
+                                <div className="flex flex-col lg:flex-row justify-center items-center mt-5 px-3 py-3">
                                   <Link
                                     to={`/travels/${v.id}/days`}
                                     className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap

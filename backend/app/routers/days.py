@@ -51,7 +51,7 @@ async def add_day_travel(
         raise HTTPException(status_code=404, detail="Viaggio non trovato")
 
     # ottengo le coordinate geografiche per il giorno
-    lat, lng = get_coordinates(title, city, travel.town)
+    lat, lng = await get_coordinates(title, city, travel.town)
 
     # carico le foto su Cloudinary in parallelo
     photo_urls = []
@@ -135,7 +135,7 @@ async def update_day_travel(
     db_day.photo = photo_urls
 
     # aggiorno lat/lng
-    db_day.lat, db_day.lng = get_coordinates(title, city, travel.town)
+    db_day.lat, db_day.lng = await get_coordinates(title, city, travel.town)
 
     db.commit()
     db.refresh(db_day)

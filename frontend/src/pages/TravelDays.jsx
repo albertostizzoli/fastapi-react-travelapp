@@ -254,7 +254,7 @@ function TravelDays() {
                                         e.stopPropagation();
                                         setOpenMenuId(openMenuId === d.id ? null : d.id);
                                       }}
-                                      className="w-12 h-12 cursor-pointer border border-white rounded-full
+                                      className="w-12 h-12 cursor-pointer border border-white rounded-3xl
                                       flex items-center justify-center text-white 
                                       transition-all duration-300 hover:bg-white hover:text-black"
                                       title={openMenuId ? "Chiudi Menù" : "Apri Menù"}>
@@ -373,7 +373,7 @@ function TravelDays() {
                                     )}
 
                                     {/* BOTTONI */}
-                                    <div className="flex flex-col lg:flex-row justify-center items-center gap-3 mt-7 px-3">
+                                    <div className="flex flex-col lg:flex-row justify-center items-center mt-5 px-3 py-3">
                                       <button
                                         onClick={(e) => {
                                           e.stopPropagation();
