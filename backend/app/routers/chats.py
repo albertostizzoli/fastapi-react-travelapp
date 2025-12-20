@@ -67,14 +67,11 @@ def clean_title(title: str) -> str:
     words = title.split()
     return " ".join(words[:6])
 
-# Dizionario in memoria per salvare la cronologia delle chat per ogni utente
-chat_history = {}
 
 # POST: funzione per generare il messaggio dall'AI
 @router.post("/")
 def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     user_id = current_user["id"]
-    history = chat_history.get(user_id, [])
 
     #  Gestione creazione nuova chat 
     if msg.mode == "new_chat": # se la modalità è nuova chat
@@ -90,9 +87,6 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         db.add(new_chat) # aggiungo la nuova chat alla sessione
         db.commit() # salvo la chat nel DB
         db.refresh(new_chat) # aggiorno l'istanza con i dati dal DB
-
-        # reset cronologia in memoria
-        chat_history[user_id] = []
 
         return {
             "response": "Nuova chat creata!",
@@ -118,18 +112,19 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         db.commit() # salvo nel DB
         db.refresh(chat_db) # aggiorno l'istanza
 
+    history = chat_db.messages or []
 
-    # Costruzione del contesto della conversazione: ultimi 6 scambi
+    MAX_STORED_HISTORY = 20 # numero massimo di messaggi persistiti nel DB (storico completo per la chat), serve per persistenza e UI
+    CONTEXT_WINDOW = 3 # numero di scambi recenti passati all'AI come contesto (memoria corta), serve solo per mantenere coerenza nella risposta
+
+    # Costruzione del contesto della conversazione: ultimi 3 scambi
     conversation_context = "\n".join([
         f"Utente: {ex['user']}\nAssistente: {ex['ai']}"
-        for ex in history[-3:]
+        for ex in history[-CONTEXT_WINDOW:]
     ])
 
     # prendo l'ultimo messaggio dell'AI per fornire contesto
     last_ai = history[-1]["ai"] if history else ""
-
-    # riduzione History a 5 messaggi
-    MAX_HISTORY = 5
 
 
     # controllo se l'utente vuole terminare
@@ -138,10 +133,11 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         farewell = "È stato un piacere aiutarti! Buon viaggio e alla prossima 😊"
         # aggiorno la cronologia
         history.append({"user": msg.message, "ai": farewell})
-        chat_history[user_id] = history[MAX_HISTORY:]
+
+        # salva solo gli ultimi 20 messaggi
+        chat_db.messages = history[-MAX_STORED_HISTORY:]
 
         # salvo la chat nel DB
-        chat_db.messages = history
         db.add(chat_db)
         db.commit()
         db.refresh(chat_db)
@@ -204,12 +200,11 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
         # pulisco il testo rimuovendo caratteri indesiderati
         cleaned_text = (response.text.replace("**", "").replace("*", "").replace("###", "").replace("\n\n", "\n").strip())
 
-        # aggiornamento cronologia con limite a 5 messaggi
+        # aggiornamento cronologia con limite a 20 messaggi
         history.append({"user": msg.message, "ai": cleaned_text})
-        chat_history[user_id] = history[-MAX_HISTORY:]
+        chat_db.messages = history[-MAX_STORED_HISTORY:]
 
         # salvo la chat nel DB
-        chat_db.messages = history
         if not chat_db.title or chat_db.title == "Nuova Chat": # chiamo le 2 funzioni per generare il titolo
            raw_title = generate_ai_title(msg.message)
            chat_db.title = clean_title(raw_title)
@@ -253,6 +248,9 @@ def get_travel_recommendations(user_id: int, data: RecommendationRequest, db: Se
         db.commit() # salvo nel DB
         db.refresh(chat) # aggiorno l'istanza
 
+    history = chat.messages or []
+    MAX_STORED_HISTORY = 20      # quanto salvi nel DB
+
     # recupero le esperienze di viaggio dell'utente    
     experiences = get_user_experiences(user_id, db) 
     experiences_text = ", ".join(experiences) if experiences else "nessuna esperienza specificata"
@@ -281,11 +279,8 @@ def get_travel_recommendations(user_id: int, data: RecommendationRequest, db: Se
     cleaned_text = (response.replace("**", "").replace("*", "").replace("###", "").replace("##", "").replace("\n\n", "\n").strip())
 
     # aggiorna cronologia in memoria e DB
-    history = chat_history.get(user_id, [])
     history.append({"user": "Richiesta raccomandazioni basata sulle esperienze", "ai": cleaned_text})
-    chat_history[user_id] = history[-5:]  # limita a 5 messaggi
-
-    chat.messages = chat_history[user_id]  # salva l'intera cronologia nel DB
+    chat.messages = history[-MAX_STORED_HISTORY:]
 
     #  Genera il titolo (solo se primo messaggio)
     if len(history) == 1:
