@@ -34,6 +34,39 @@ def get_chat(chat_id: int, db: Session = Depends(get_db), current_user: dict = D
         raise HTTPException(status_code=404, detail="Chat non trovata")
     return chat
 
+# funzione per generare il titolo della chat con l'AI
+def generate_ai_title(message: str) -> str:
+    prompt = f"""
+    Genera UN SOLO titolo per una chat di viaggio.
+
+    REGOLE OBBLIGATORIE:
+    - massimo 6 parole
+    - una sola riga
+    - nessuna lista
+    - nessuna spiegazione
+    - nessuna domanda
+    - nessun testo extra
+    - non usare virgolette
+
+    Messaggio dell'utente:
+    "{message}"
+
+    Rispondi SOLO con il titolo.
+    """
+    return travel_model.generate_content(prompt).text.strip()
+
+# funzione per pulire il titolo della chat 
+def clean_title(title: str) -> str:
+    # prende solo la prima riga
+    title = title.split("\n")[0]
+
+    # rimuove bullet o simboli strani
+    title = title.replace("*", "").replace("-", "").strip()
+
+    # forza max 6 parole
+    words = title.split()
+    return " ".join(words[:6])
+
 # Dizionario in memoria per salvare la cronologia delle chat per ogni utente
 chat_history = {}
 
@@ -45,9 +78,13 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
 
     #  Gestione creazione nuova chat 
     if msg.mode == "new_chat": # se la modalità è nuova chat
+
+        title = "Nuova Chat"  # placeholder iniziale
+
         # creo una nuova chat nel DB
         new_chat = ChatDB(
             user_id=user_id, # ID dell'utente
+            title=title, # titolo della chat
             messages=[] # nessun messaggio iniziale
         )
         db.add(new_chat) # aggiungo la nuova chat alla sessione
@@ -173,6 +210,11 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
 
         # salvo la chat nel DB
         chat_db.messages = history
+        if not chat_db.title or chat_db.title == "Nuova Chat": # chiamo le 2 funzioni per generare il titolo
+           raw_title = generate_ai_title(msg.message)
+           chat_db.title = clean_title(raw_title)
+
+
         db.add(chat_db)
         db.commit()
         db.refresh(chat_db)
@@ -194,14 +236,19 @@ def get_user_experiences(user_id: int, db: Session):
 def get_travel_recommendations(user_id: int, data: RecommendationRequest, db: Session = Depends(get_db)):
 
     chat_id = data.chat_id # ID della chat
+    title = "Nuova Chat"  # placeholder iniziale
 
     # recupera o creo una chat
     if chat_id:
-        chat = db.query(ChatDB).filter(ChatDB.id == chat_id).first() # ottengo la chat
+        chat = db.query(ChatDB).filter(ChatDB.id == chat_id, ChatDB.user_id == user_id).first() # ottengo la chat
         if not chat:
             raise HTTPException(status_code=404, detail="Chat non trovata")
     else:
-        chat = ChatDB(user_id=user_id) # creo nuova chat
+        chat = ChatDB( # creo una nuova chat
+            user_id=user_id,
+            title=title,
+            messages=[]
+            )
         db.add(chat) # aggiungo alla sessione
         db.commit() # salvo nel DB
         db.refresh(chat) # aggiorno l'istanza
@@ -239,6 +286,13 @@ def get_travel_recommendations(user_id: int, data: RecommendationRequest, db: Se
     chat_history[user_id] = history[-5:]  # limita a 5 messaggi
 
     chat.messages = chat_history[user_id]  # salva l'intera cronologia nel DB
+
+    #  Genera il titolo (solo se primo messaggio)
+    if len(history) == 1:
+       title_seed = f"Raccomandazioni viaggio: {experiences_text}"
+       raw_title = generate_ai_title(title_seed)
+       chat.title = clean_title(raw_title)
+
     db.add(chat)
     db.commit()
     db.refresh(chat)

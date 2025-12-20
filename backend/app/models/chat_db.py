@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, JSON  # definisco le colonne e tipi di dato per i modelli ORM
+from sqlalchemy import Column, String, JSON, Integer, ForeignKey  # definisco le colonne e tipi di dato per i modelli ORM
 from sqlalchemy.orm import relationship # per poter gestire la relazione ORM bidirezionale
 from app.database import Base  # Importa la base ORM da cui derivano tutti i modelli
 
@@ -8,6 +8,7 @@ class ChatDB(Base):
 
     # Colonne della tabella
     id = Column(Integer, primary_key=True, index=True)    # ID univoco della chat
+    title = Column(String, nullable=False)                # titolo della chat
     messages = Column(JSON, nullable=False)               # messaggi della chat in formato JSON
 
     user_id = Column(Integer, ForeignKey("users.id"))     # Chiave esterna

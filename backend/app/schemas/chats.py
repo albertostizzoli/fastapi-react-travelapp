@@ -13,7 +13,8 @@ class RecommendationRequest(BaseModel):
 
 # classe che rappresenta una chat completa con messaggi già salvati
 class ChatBase(BaseModel):
-     messages: List[dict] = [] # lista di messaggi nella chat
+     title: str                  # titolo della chat
+     messages: List[dict] = []   # lista di messaggi nella chat
 
 # classe per restituire le chat dal database nel frontend ereditando da ChatBase, ti serve se vuoi fare response_model=Chat
 class Chat(ChatBase):

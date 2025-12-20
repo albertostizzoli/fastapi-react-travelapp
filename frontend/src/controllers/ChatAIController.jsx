@@ -10,6 +10,7 @@ function ChatAIController() {
     const [hasStartedChat, setHasStartedChat] = useState(false); // stato per iniziare una chat
     const [currentChatId, setCurrentChatId] = useState(null); // stato per l'ID della chat corrente
     const [chats, setChats] = useState([]); // stato per caricare le chat
+    const [currentChatTitle, setCurrentChatTitle] = useState(""); // stato per il titolo della chat
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, chiedimi pure!` : "";
@@ -127,6 +128,7 @@ function ChatAIController() {
 
         setCurrentChatId(chatId);
         setMessages(normalizedMessages);
+        setCurrentChatTitle(res.data.title); 
         setHasStartedChat(true);
     };
 
@@ -292,7 +294,8 @@ function ChatAIController() {
         startNewChat,         // funzione per iniziare una nuova chat
         chats,                // indica le chat caricate
         setChats,             // stato per caricare le chat
-        loadChat              // funzione per caricare le chat
+        loadChat,             // funzione per caricare le chat
+        currentChatTitle,     // titolo della chat
     }
 }
 

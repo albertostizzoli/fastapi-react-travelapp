@@ -37,6 +37,7 @@ CREATE TABLE days (
 
 CREATE TABLE chats (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
     messages JSON,
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
