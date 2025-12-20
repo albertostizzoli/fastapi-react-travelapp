@@ -13,6 +13,7 @@ function ChatAIController() {
     const [currentChatTitle, setCurrentChatTitle] = useState(""); // stato per il titolo della chat
     const [deleteId, setDeleteId] = useState(null); // stato per l'id della chat da eliminare
     const [message, setMessage] = useState(""); // messaggio di successo o errore
+    const [applyTypewriter, setApplyTypewriter] = useState(false);   // stato per gestire se applicare l'effetto solo ai nuovi messaggi
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, chiedimi pure!` : "";
@@ -56,8 +57,6 @@ function ChatAIController() {
         messages.length && messages[messages.length - 1].role === "ai" //   controlla se l'ultimo messaggio è dell'AI
             ? messages[messages.length - 1].text // ottieni il testo dell'ultimo messaggio AI
             : "";
-    // se è una chat nuova allora l'effetto viene applicato se è una chat già esistente allora no        
-    const typedResponse = useTypewriterEffect(lastAIResponse, 15);
 
 
     // funzione per inviare un messaggio
@@ -98,6 +97,7 @@ function ChatAIController() {
 
             const aiMessage = { role: "ai", text: clean }; // crea il messaggio AI
             setMessages((prev) => [...prev, aiMessage]); // aggiungi il messaggio AI alla lista
+            setApplyTypewriter(true); // abilito l'effetto macchina da scrivere solo per i nuovi messaggi
         } catch (err) {
             setMessages((prev) => [ // aggiungi un messaggio di errore in caso di fallimento
                 ...prev, // mantieni i messaggi precedenti
@@ -108,32 +108,47 @@ function ChatAIController() {
         }
     };
 
-    // funzione per caricare le chat
+    const typedResponse = useTypewriterEffect(lastAIResponse, 15, applyTypewriter);
+
+
+    // quando il messaggio è completamente renderizzato, resetto il flag
+    useEffect(() => {
+        // Se l'effetto macchina da scrivere è attivo e il testo digitato è completo
+        if (applyTypewriter && typedResponse === lastAIResponse) {
+            setApplyTypewriter(false); // allora l'effetto si disattiva e non si ripete
+        }
+    }, [typedResponse, lastAIResponse, applyTypewriter]); // Dipendenze: si attiva ogni volta che cambia il testo digitato, l'ultimo messaggio AI o il flag
+
+
+    // Funzione per caricare una chat esistente dal backend
     const loadChat = async (chatId) => {
         const token = localStorage.getItem("token");
 
+        // richiedo al backend i dati della chat
         const res = await axios.get(
             `http://127.0.0.1:8000/chats/${chatId}`,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`, // Header con token per autenticazione
                 },
             }
         );
 
+        // ottengo la cronologia dei messaggi dalla risposta (array di oggetti {user, ai})
         const history = res.data.messages || [];
 
+        // normalizzo la cronologia in un formato uniforme per il frontend:
+        // ogni coppia viene trasformata in due oggetti: uno per l'utente e uno per l'AI
         const normalizedMessages = history.flatMap((pair) => [
             { role: "user", text: pair.user },
             { role: "ai", text: pair.ai },
         ]);
 
-        setCurrentChatId(chatId);
-        setMessages(normalizedMessages);
-        setCurrentChatTitle(res.data.title);
-        setHasStartedChat(true);
+        setCurrentChatId(chatId);               // aggiorna lo stato con l'ID della chat corrente
+        setMessages(normalizedMessages);        // aggiorna lo stato dei messaggi della chat (frontend)
+        setCurrentChatTitle(res.data.title);    // imposta il titolo della chat attiva
+        setHasStartedChat(true);                // indica che la chat è stata iniziata e può mostrare l'interfaccia per i messaggi
     };
-
 
 
     // funzione per iniziare una nuova chat
@@ -154,7 +169,6 @@ function ChatAIController() {
         setCurrentChatId(data.chat_id);  //  ora la nuova chat esiste!
         setMessages([]);                 // reset messaggi visivi
     };
-
 
 
     // funzione per formattare il testo con paragrafi e liste
@@ -184,24 +198,31 @@ function ChatAIController() {
     };
 
     // Hook effetto macchina da scrivere (riutilizzato anche per il titolo)
-    function useTypewriterEffect(text, speed = 25) {
-        const [displayedText, setDisplayedText] = useState(""); // stato per il testo visualizzato
+    function useTypewriterEffect(text, speed = 25, active = true) {
+        const [displayedText, setDisplayedText] = useState(""); // stato che contiene il testo parzialmente visualizzato
 
-        // effetto macchina da scrivere
+        // useEffect che si attiva ogni volta che cambiano `text`, `speed` o `active`
         useEffect(() => {
-            if (!text) return; // se il testo è vuoto, non fare nulla
-            setDisplayedText(""); // reset del testo visualizzato
-            let i = 0; // indice per tracciare la posizione corrente nel testo
-            const interval = setInterval(() => { // intervallo per aggiungere caratteri
-                setDisplayedText(text.slice(0, i)); // aggiorna il testo visualizzato
-                i++; // incrementa l'indice
-                if (i > text.length) clearInterval(interval); // se il testo è completo, ferma l'intervallo
-            }, speed); // velocità di digitazione
-            return () => clearInterval(interval); // pulizia dell'intervallo
-        }, [text, speed]); //  dipendenze dell'effetto
+            if (!text || !active) { // Controllo: se non c'è testo o l'effetto non è attivo
+                setDisplayedText(text); // se non è attivo, mostra tutto subito
+                return;
+            }
 
-        return displayedText; // ritorna il testo visualizzato
+            setDisplayedText(""); // resetta il testo visualizzato prima di iniziare
+            let i = 0; // indice per tracciare la posizione corrente nel testo
+            const interval = setInterval(() => {
+                setDisplayedText(text.slice(0, i)); // aggiorna lo stato con il testo parziale
+                i++; // indice incrementato
+                if (i > text.length) clearInterval(interval); // ferma l'intervallo quando il testo è completo
+            }, speed); // velocità di digitazione definita dall'argomento `speed`
+
+            // Cleanup: cancella l'intervallo quando il componente si smonta o cambia `text`, `speed` o `active`
+            return () => clearInterval(interval);
+        }, [text, speed, active]);
+
+        return displayedText;  // ritorna il testo da visualizzare nel componente
     }
+
 
     // Funzione asincrona che recupera le raccomandazioni personalizzate per l'utente
     const getRecommendations = async () => {
@@ -234,6 +255,8 @@ function ChatAIController() {
                 ...prev.filter(m => m.text !== waitingMsg), // rimuove il messaggio di attesa
                 { role: "ai", text: data.recommendations },  // aggiunge la risposta AI ricevuta dal backend
             ]);
+
+            setApplyTypewriter(true); // abilito l'effetto macchina da scrivere solo per i nuovi messaggi
 
         } catch (err) {
             console.error(err); // stampa l'errore in console per debug
