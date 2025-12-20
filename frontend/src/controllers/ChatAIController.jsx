@@ -11,6 +11,8 @@ function ChatAIController() {
     const [currentChatId, setCurrentChatId] = useState(null); // stato per l'ID della chat corrente
     const [chats, setChats] = useState([]); // stato per caricare le chat
     const [currentChatTitle, setCurrentChatTitle] = useState(""); // stato per il titolo della chat
+    const [deleteId, setDeleteId] = useState(null); // stato per l'id della chat da eliminare
+    const [message, setMessage] = useState(""); // messaggio di successo o errore
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, chiedimi pure!` : "";
@@ -55,7 +57,7 @@ function ChatAIController() {
             ? messages[messages.length - 1].text // ottieni il testo dell'ultimo messaggio AI
             : "";
     // se è una chat nuova allora l'effetto viene applicato se è una chat già esistente allora no        
-    const typedResponse =   useTypewriterEffect(lastAIResponse, 15);
+    const typedResponse = useTypewriterEffect(lastAIResponse, 15);
 
 
     // funzione per inviare un messaggio
@@ -128,7 +130,7 @@ function ChatAIController() {
 
         setCurrentChatId(chatId);
         setMessages(normalizedMessages);
-        setCurrentChatTitle(res.data.title); 
+        setCurrentChatTitle(res.data.title);
         setHasStartedChat(true);
     };
 
@@ -271,6 +273,36 @@ function ChatAIController() {
         scrollToBottom();
     }, [messages, isLoading]);
 
+
+    // con questa cancello tutti i dati della chat
+    const handleDelete = () => {
+        const token = localStorage.getItem("token"); // recupera il token JWT
+        if (!token) return; // se non c'è token, non faccio nulla
+
+        axios.delete(`http://127.0.0.1:8000/chats/${deleteId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // invia il token
+            },
+        })
+            .then(() => {
+                // aggiorna la lista rimuovendo la chat cancellata
+                setChats(chats.filter((t) => t.id !== deleteId));
+                setDeleteId(null);
+
+                // mostra messaggio di successo
+                setMessage({ text: "Chat Cancellata!", icon: "success" });
+
+                // nasconde il messaggio dopo 2 secondi
+                setTimeout(() => setMessage(""), 2000);
+            })
+            .catch((err) => {
+                console.error("Errore durante l'eliminazione della chat:", err);
+                // mostra messaggio di errore
+                setMessage({ text: "Errore: Chat Non Cancellata!", icon: "error" });
+                setTimeout(() => setMessage(""), 2500);
+            });
+    };
+
     return {
         user,                // dati dell'utente
         messages,            // messaggi della chat
@@ -296,6 +328,10 @@ function ChatAIController() {
         setChats,             // stato per caricare le chat
         loadChat,             // funzione per caricare le chat
         currentChatTitle,     // titolo della chat
+        message,              // messaggio di conferma o errore
+        handleDelete,         // funzione per eliminare la chat
+        deleteId,             // id della chat da eliminare
+        setDeleteId,          // funzione per impostare l'id della chat da eliminare
     }
 }
 

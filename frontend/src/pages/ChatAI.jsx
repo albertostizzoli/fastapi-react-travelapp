@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"; // per le animazioni
-import { FaCompass, FaPlus } from "react-icons/fa";
+import { FaCompass, FaPlus, FaTrash, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import ModalDeleteChat from "../components/DeleteModals/ModalDeleteChat"; // importo il modale di conferma eliminazione chat
 import ChatAIController from "../controllers/ChatAIController"; // importo il controller della chat AI
 
 function ChatAI() {
@@ -20,6 +21,10 @@ function ChatAI() {
         startNewChat,       // funzione per iniziare una nuova chat
         chats,              // indica le chat caricate
         loadChat,           // funzione per caricare le chat
+        message,            // messaggio di conferma o errore
+        handleDelete,       // funzione per eliminare la chat
+        deleteId,           // id della chat da eliminare
+        setDeleteId,        // funzione per impostare l'id della chat da eliminare
     } = ChatAIController();  // uso il controller della chat AI
 
 
@@ -32,22 +37,33 @@ function ChatAI() {
 
                 <div className="flex-1 overflow-y-auto space-y-1 p-5 scrollbar">
                     {chats.length === 0 && (
-                        <p className="text-white/60 text-sm text-center mt-4">
+                        <p className="text-white text-xl text-center mt-4">
                             Nessuna chat salvata
                         </p>
                     )}
 
                     {chats.map((chat) => (
-                        <button
-                            key={chat.id}
-                            onClick={() => loadChat(chat.id)}
-                            className="w-full text-left px-4 py-2 rounded-xl text-white 
-                            text-xl hover:bg-white/10 transition cursor-pointer">
+                        <div key={chat.id} className="flex items-center gap-2 min-w-0">
+                            {/* Titolo */}
+                            <button
+                                onClick={() => loadChat(chat.id)}
+                                className="flex-1 text-left px-4 py-2 rounded-xl text-white 
+                                text-xl hover:bg-white/10 transition cursor-pointer overflow-hidden">
+                                <div className="truncate font-medium">
+                                    {chat.title || `Chat #${chat.id}`}
+                                </div>
+                            </button>
 
-                            <div className="truncate font-medium">
-                                {chat.title || `Chat #${chat.id}`}
-                            </div>
-                        </button>
+                            {/* Pulsante cancellazione */}
+                            <button
+                                title="Cancella Chat"
+                                onClick={() => setDeleteId(chat.id)}
+                                className="font-semibold flex items-center gap-2 px-3 py-2 text-white
+                                bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
+                                cursor-pointer rounded-xl shrink-0">
+                                <FaTrash />
+                            </button>
+                        </div>
                     ))}
                 </div>
 
@@ -59,9 +75,9 @@ function ChatAI() {
                         backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-300 cursor-pointer
                         hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:scale-105
-                        text-base sm:text-2sm">
+                        text-base sm:text-xl">
                         <FaPlus />
-                        Nuova chat
+                        Nuova Chat
                     </button>
                 </div>
             </aside>
@@ -161,12 +177,40 @@ function ChatAI() {
                                 : "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 hover:scale-105"}
                         backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-300 cursor-pointer
-                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-base sm:text-2sm`}>
+                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-base sm:text-xl`}>
                         <FaCompass size={20} />
                         {isRecommending ? "Analizzo..." : "Consigliami"}
                     </motion.button>
                 </div>
             </motion.div>
+
+            {/* Modale eliminazione */}
+            <ModalDeleteChat
+                isOpen={!!deleteId}
+                onConfirm={handleDelete}
+                onCancel={() => setDeleteId(null)}
+                chat={chats?.find(v => v.id === deleteId)} // trova la chat dall'id
+            />
+
+            {/* Messaggio conferma */}
+            {message && (
+                <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 50 }}
+                    transition={{ duration: 0.5 }}
+                    className="fixed top-6 right-6 flex items-center gap-3bg-white/10 backdrop-blur-lg 
+                      border border-white/40 text-white px-6 py-3 rounded-full shadow-xl z-9999
+                      bg-linear-to-r from-blue-600 to-orange-600 dark:from-slate-900 dark:to-slate-500">
+                    {message.icon === "success" && (
+                        <FaCheckCircle size={20} className="text-green-400 text-2xl mr-2" />
+                    )}
+                    {message.icon === "error" && (
+                        <FaTimesCircle size={20} className="text-red-400 text-2xl mr-2" />
+                    )}
+                    <p className="text-xl font-semibold">{message.text}</p>
+                </motion.div>
+            )}
         </div>
     );
 }

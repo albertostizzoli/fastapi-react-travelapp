@@ -70,7 +70,7 @@ def clean_title(title: str) -> str:
 # Dizionario in memoria per salvare la cronologia delle chat per ogni utente
 chat_history = {}
 
-# funzione per generare il messaggio dall'AI
+# POST: funzione per generare il messaggio dall'AI
 @router.post("/")
 def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     user_id = current_user["id"]
@@ -231,7 +231,7 @@ def get_user_experiences(user_id: int, db: Session):
     return user.experiences if user and user.experiences else []
 
 
-# funzione per ottenere il messaggio dall'AI in base alle esperienze dell'utente
+# POST: funzione per ottenere il messaggio dall'AI in base alle esperienze dell'utente
 @router.post("/recommendations/{user_id}")
 def get_travel_recommendations(user_id: int, data: RecommendationRequest, db: Session = Depends(get_db)):
 
@@ -298,6 +298,26 @@ def get_travel_recommendations(user_id: int, data: RecommendationRequest, db: Se
     db.refresh(chat)
 
     return {"recommendations": cleaned_text, "chat_id": chat.id }  # ritorna chat_id per continuare la conversazione
+
+
+# DELETE: funzione per cancellare una chat
+@router.delete("/{chat_id}")
+def delete_chat(chat_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user_id = current_user["id"]
+    # cerco la chat filtrando per user_id
+    chat = db.query(ChatDB).filter(
+        ChatDB.id == chat_id,
+        ChatDB.user_id == user_id
+    ).first()
+
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat non trovata")
+    
+    db.delete(chat)  # cancella la chat
+    db.commit()      # conferma le modifiche nel database
+    return {"messaggio": f"Chat {chat_id} eliminata con successo"}
+
+
 
 
 
