@@ -287,7 +287,6 @@ function TravelDaysController() {
         scrollLeft,            // funzione per scrollare a sinistra
         scrollRight,           // funzione per scrollare a destra
         heroImages,            // immagini dell'hero
-        heroImages,            // tutte le immagini
         currentImage,          // immagine corrente dell'hero
         openMenuId,            // apre il menù dropdown
         setOpenMenuId,         //  stato per indicare l'apertura del menù dropdown

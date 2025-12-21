@@ -14,6 +14,7 @@ function ChatAIController() {
     const [deleteId, setDeleteId] = useState(null); // stato per l'id della chat da eliminare
     const [message, setMessage] = useState(""); // messaggio di successo o errore
     const [applyTypewriter, setApplyTypewriter] = useState(false);   // stato per gestire se applicare l'effetto solo ai nuovi messaggi
+    const [isChatListOpen, setIsChatListOpen] = useState(false); // stato modale chat
 
     // titolo dinamico dell'AI 
     const aiTitle = user ? `Ciao ${user.name}, chiedimi pure!` : "";
@@ -355,6 +356,8 @@ function ChatAIController() {
         handleDelete,         // funzione per eliminare la chat
         deleteId,             // id della chat da eliminare
         setDeleteId,          // funzione per impostare l'id della chat da eliminare
+        isChatListOpen,     // indica il modale della lista delle chat aperto / chiuso
+        setIsChatListOpen   // indica se il modale della lista delle chat è aperto o chiuso
     }
 }
 

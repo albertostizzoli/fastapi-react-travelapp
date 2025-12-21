@@ -29,6 +29,7 @@ function Sidebar() {
   // Rotte dinamiche nella sidebar
   const path = location.pathname;
   const isHome = path === "/";
+  const isLogin = path === "/loginregister";
   const isTravels = path === "/travels";
   const isAdd = path === "/add";
   const isProfile = path === "/profile";
@@ -161,7 +162,7 @@ function Sidebar() {
                 )}
 
                 {/* Profilo */}
-                {!isHome && !isProfile && user && (
+                {!isHome && !isProfile && user && !isLogin && (
                   <Link
                     to="/profile"
                     onClick={toggleSidebar}
@@ -181,7 +182,7 @@ function Sidebar() {
                 )}
 
                 {/* I tuoi viaggi */}
-                {!isHome && !isTravels && !isProfile && (
+                {!isHome && !isTravels && !isProfile && !isLogin && (
                   <Link
                     to="/travels"
                     onClick={toggleSidebar}
@@ -197,7 +198,7 @@ function Sidebar() {
                 )}
 
                 {/* Aggiungi viaggio */}
-                {!isHome && !isAdd && !isProfile && !isTravels && (
+                {!isHome && !isAdd && !isProfile && !isTravels && !isLogin && (
                   <Link
                     to="/add"
                     onClick={toggleSidebar}
@@ -215,7 +216,7 @@ function Sidebar() {
 
               {/* Footer */}
               <div className="mt-6 border-t border-white/30 pt-4 flex flex-col gap-4">
-                {!isHome && !isProfile && (
+                {!isHome && !isProfile && !isLogin && (
                   <button
                     onClick={handleLogout}
                     className="text-white text-lg px-4 py-2 flex items-center gap-2 font-semibold">

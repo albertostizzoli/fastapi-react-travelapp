@@ -25,6 +25,7 @@ function Header() {
   // Rotte dinamiche della navbar
   const path = location.pathname;
   const isHome = path === "/";
+  const isLogin = path === "/loginregister";
   const isTravels = path === "/travels";
   const isAdd = path === "/add";
   const isProfile = path === "/profile";
@@ -68,7 +69,7 @@ function Header() {
 
   return (
     <nav
-      className={`hidden sm:flex mt-2 p-4 gap-4 justify-between items-center transition-colors duration-300
+      className={`hidden sm:flex mt-2 sm:p-4 p-6 gap-4 justify-between items-center transition-colors duration-300
       ${isHome
           ? "text-white dark:text-gray-200"
           : "bg-transparent text-white dark:text-gray-200"
@@ -95,7 +96,7 @@ function Header() {
         )}
 
         {/*  LINK PROFILO */}
-        {!isHome && !isProfile && user && (
+        {!isHome && !isProfile && user && !isLogin && (
           <Link
             to="/profile"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
@@ -115,7 +116,7 @@ function Header() {
         )}
 
         {/*  LINK VIAGGI */}
-        {!isHome && !isTravels && !isProfile && (
+        {!isHome && !isTravels && !isProfile && !isLogin && (
           <Link
             to="/travels"
             className="flex items-center gap-2 px-4 py-2 font-semibold">
@@ -131,7 +132,7 @@ function Header() {
         )}
 
         {/*  LINK AGGIUNGI */}
-        {!isHome && !isAdd && !isProfile && !isTravels && (
+        {!isHome && !isAdd && !isProfile && !isTravels && !isLogin && (
           <Link
             to="/add"
             className="px-4 py-2 flex items-center gap-2 font-semibold">
@@ -147,7 +148,7 @@ function Header() {
         )}
 
         {/*  LOGOUT */}
-        {!isHome && !isProfile && (
+        {!isHome && !isProfile && !isLogin && (
           <button
             onClick={handleLogout}
             className="px-4 py-2 flex items-center gap-2 font-semibold cursor-pointer">

@@ -150,11 +150,11 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
     L'assistente ha appena detto: "{last_ai}"
     L'utente risponde: "{msg.message}"
 
-    Analizza la risposta dell'utente nel contesto di quanto detto dall'assistente.
-    Se riguarda viaggi, turismo, destinazioni o esperienze di viaggio,
-    restituisci una sola parola (es. "mete", "budget", "stagione", "consiglio").
-    Se NON riguarda i viaggi, rispondi "fuori_tema".
-    Rispondi solo con una parola.
+    Analizza la risposta dell'utente nel contesto della conversazione.
+    Se riguarda viaggi, turismo, destinazioni, esperienze, attività, trasporti, cibo locale o cultura, 
+    restituisci una sola parola rappresentativa dell'intento (es. "mete", "budget", "stagione", "consiglio", "attività", "cultura").
+    Se NON riguarda i viaggi, rispondi solo con "fuori_tema".
+    Rispondi esclusivamente con UNA parola in minuscolo.
     """
     intent = travel_model.generate_content(intent_prompt).text.strip().lower()
 
@@ -179,7 +179,8 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
 
     # Prompt principale per la risposta AI
     prompt = f"""
-    Sei un assistente AI esperto di viaggi e turismo.
+    Sei un assistente AI esperto di viaggi e turismo, disponibile a fornire consigli pratici, 
+    idee, informazioni su mete, attività, trasporti, alloggi, stagioni, budget e cultura locale.
 
     Ecco la conversazione precedente:
     {conversation_context}
@@ -187,11 +188,13 @@ def generate_message(msg: UserMessage, db: Session = Depends(get_db), current_us
     Nuovo messaggio:
     Utente: "{msg.message}"
 
-    Analizza il contesto e rispondi in modo coerente con la conversazione.
-    Mantieni coerenza con la destinazione e la stagione già discusse.
-    Evita di ripetere ciò che è già stato detto.
-    Fornisci risposte chiare, pratiche e amichevoli.
-    Alla fine, se opportuno, poni una sola domanda di follow-up pertinente.
+    Rispondi in modo chiaro, dettagliato e amichevole.
+    Mantieni coerenza con la destinazione, stagione e budget già discussi.
+    Evita ripetizioni e frasi generiche.
+    Suggerisci soluzioni concrete e personalizzate per l'utente.
+    Alla fine, se appropriato, poni una sola domanda di follow-up pertinente per stimolare la conversazione 
+    e aiutare l'utente a pianificare meglio il viaggio.
+    Rispondi solo in lingua italiana.
     """
 
     try:
@@ -256,20 +259,29 @@ def get_travel_recommendations(user_id: int, data: RecommendationRequest, db: Se
     experiences_text = ", ".join(experiences) if experiences else "nessuna esperienza specificata"
 
     prompt = f"""
-    Sei un assistente AI esperto di viaggi. 
+    Sei un assistente AI esperto e appassionato di viaggi, disponibile come consulente personale dell'utente. 
     L'utente ha le seguenti esperienze di viaggio: {experiences_text}.
-    Il tuo compito è consigliare 3 destinazioni di viaggio, 
-    ciascuna con almeno 4 tappe o attività specifiche, che si allineano alle esperienze dell'utente.
+
+    Il tuo compito è consigliare 3 destinazioni di viaggio, ciascuna con almeno 4 tappe o attività specifiche, 
+    che siano coerenti con le esperienze e preferenze dell'utente. Puoi includere:
+    - attrazioni culturali e storiche
+    - attività all'aperto e avventura
+    - esperienze gastronomiche locali
+    - natura e paesaggi
+    - relax e benessere
+    - trasporti e logistica pratica
 
     Requisiti di stile:
-    - Inizia sempre con un saluto cordiale e personalizzato.
-    - Rispondi in modo chiaro, pratico e amichevole.
-    - Le destinazioni devono essere originali e non ripetere luoghi o tappe già suggerite in precedenti risposte.
-    - Se hai già fornito suggerimenti simili in passato, proponi alternative nuove o meno note, anche di nicchia.
-    - Alterna destinazioni di città, natura, cultura, avventura, gastronomia e relax per garantire varietà geografica e tematica.
+    - Inizia con un saluto cordiale e personalizzato.
+    - Rispondi in modo chiaro, dettagliato, pratico e amichevole.
+    - Mantieni varietà geografica e tematica tra le destinazioni.
+    - Evita ripetizioni di destinazioni o tappe già suggerite in precedenti risposte.
+    - Suggerisci alternative nuove o meno conosciute, includendo idee creative o di nicchia.
+    - Fornisci consigli concreti e realistici, utili per pianificare il viaggio.
+    - Alla fine, se appropriato, poni una sola domanda di follow-up per stimolare l'utente a specificare preferenze o pianificare meglio il viaggio.
 
     Obiettivo:
-    Fornire ispirazione sempre nuova basata sulle preferenze dell'utente, evitando qualsiasi ripetizione di idee già proposte.
+    Ispirare l'utente con proposte nuove e personalizzate, mantenendo sempre il focus su viaggi e turismo.
     """
 
     # ottengo il testo generato dall'AI

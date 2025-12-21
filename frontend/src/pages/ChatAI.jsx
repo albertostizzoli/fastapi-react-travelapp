@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"; // per le animazioni
-import { FaCompass, FaPlus, FaTrash, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaCompass, FaList, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import ChatListModal from "../components/Modals/ModalListChat"; // importo il modale della lista delle chat
 import ModalDeleteChat from "../components/DeleteModals/ModalDeleteChat"; // importo il modale di conferma eliminazione chat
 import ChatAIController from "../controllers/ChatAIController"; // importo il controller della chat AI
 
@@ -25,62 +26,23 @@ function ChatAI() {
         handleDelete,       // funzione per eliminare la chat
         deleteId,           // id della chat da eliminare
         setDeleteId,        // funzione per impostare l'id della chat da eliminare
+        isChatListOpen,     // indica il modale della lista delle chat aperto / chiuso
+        setIsChatListOpen   // indica se il modale della lista delle chat è aperto o chiuso
     } = ChatAIController();  // uso il controller della chat AI
 
 
     return (
         <div className="flex">
 
-            {/* SIDEBAR */}
-            <aside className="w-72 ms-6 flex flex-col mt-12 bg-white/10 dark:bg-white/5 backdrop-blur-3xl
-            border border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.1)] rounded-3xl">
-
-                <div className="flex-1 overflow-y-auto space-y-1 p-5 scrollbar">
-                    {chats.length === 0 && (
-                        <p className="text-white text-xl text-center mt-4">
-                            Nessuna chat salvata
-                        </p>
-                    )}
-
-                    {chats.map((chat) => (
-                        <div key={chat.id} className="flex items-center gap-2 min-w-0">
-                            {/* Titolo */}
-                            <button
-                                onClick={() => loadChat(chat.id)}
-                                className="flex-1 text-left px-4 py-2 rounded-xl text-white 
-                                text-xl hover:bg-white/10 transition cursor-pointer overflow-hidden">
-                                <div className="truncate font-medium">
-                                    {chat.title || `Chat #${chat.id}`}
-                                </div>
-                            </button>
-
-                            {/* Pulsante cancellazione */}
-                            <button
-                                title="Cancella Chat"
-                                onClick={() => setDeleteId(chat.id)}
-                                className="font-semibold flex items-center gap-2 px-3 py-2 text-white
-                                bg-linear-to-br from-red-600 to-rose-500 dark:from-red-600/70 dark:to-rose-500/70
-                                cursor-pointer rounded-xl shrink-0">
-                                <FaTrash />
-                            </button>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="p-3 sm:p-4 border-t border-white/40">
-                    <button
-                        onClick={startNewChat}
-                        className="w-full bg-linear-to-br from-green-600 to-teal-500 dark:from-green-600/70 dark:to-teal-500/70
-                        font-semibold flex justify-center items-center gap-2 px-4 py-2 sm:py-3
-                        backdrop-blur-md border border-white/40 text-white 
-                        rounded-full shadow-md transition-all duration-300 cursor-pointer
-                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:scale-105
-                        text-base sm:text-xl">
-                        <FaPlus />
-                        Nuova Chat
-                    </button>
-                </div>
-            </aside>
+            { /* Modale Lista Chat */ }
+            <ChatListModal
+                isOpen={isChatListOpen}
+                onClose={() => setIsChatListOpen(false)}
+                chats={chats}
+                loadChat={loadChat}
+                startNewChat={startNewChat}
+                setDeleteId={setDeleteId}
+            />
 
             { /* CONTENUTO CHAT */}
             <motion.div
@@ -95,9 +57,9 @@ function ChatAI() {
 
                 {/* HEADER: Titolo AI centrato */}
                 {!hasStartedChat && (
-                    <h1 className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2
-                       text-white font-semibold tracking-wide text-xl sm:text-2xl md:text-3xl 
-                       drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+                    <h1 className="absolute top-[30%] sm:top-[35%] md:top-[40%]
+                        left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-semibold tracking-wide
+                        text-3xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] text-center">
                         {typedTitle}
                     </h1>
                 )}
@@ -152,10 +114,9 @@ function ChatAI() {
                 <div className="p-3 sm:p-4 flex flex-col sm:flex-row items-center gap-3 backdrop-blur-xl">
 
                     {/* INPUT */}
-                    <input className="w-full border border-white rounded-full 
-                    px-4 pr-16 py-2 sm:py-3 text-white placeholder-white 
-                    focus:outline-none focus:ring-2 focus:ring-orange-400 dark:focus:ring-blue-400 transition 
-                    text-sm sm:text-base"
+                    <input className="w-full sm:flex-1 sm:min-w-0 border border-white rounded-full px-4 pr-16 py-2 sm:py-3
+                         text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-orange-400
+                          dark:focus:ring-blue-400 transition text-sm sm:text-base"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) =>
@@ -172,15 +133,26 @@ function ChatAI() {
                         whileTap={{ scale: 0.95 }}
                         onClick={handleRecommend}
                         disabled={isRecommending}
-                        className={`w-full sm:w-auto font-semibold flex justify-center items-center gap-2 px-4 py-2 sm:py-3
+                        className={`w-full sm:w-auto font-semibold flex justify-center items-center gap-2 px-4 py-2 
                         ${isRecommending ? "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 cursor-not-allowed"
                                 : "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 hover:scale-105"}
                         backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-300 cursor-pointer
-                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-base sm:text-xl`}>
+                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-base sm:text-2sm`}>
                         <FaCompass size={20} />
                         {isRecommending ? "Analizzo..." : "Consigliami"}
                     </motion.button>
+
+                    <button
+                        onClick={() => setIsChatListOpen(true)}
+                        className="w-full sm:w-auto font-semibold flex justify-center items-center gap-2 px-4 py-2
+                        bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                        backdrop-blur-md border border-white/40 text-white 
+                        rounded-full shadow-md transition-all duration-300 cursor-pointer hover:scale-105
+                        hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-base sm:text-2sm">
+                        <FaList size={20} />
+                        Lista Chat
+                    </button>
                 </div>
             </motion.div>
 

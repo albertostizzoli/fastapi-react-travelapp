@@ -35,18 +35,18 @@ function LoginRegisterPage() {
   } = FormAuth();           // utilizzo la logica dei form di login/registrazione
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-evenly gap-2 px-4 py-6">
+    <div className="mt-0 sm:mt-3 flex flex-col md:flex-row items-center justify-center md:justify-evenly gap-2 px-4 py-6">
       {/* Logo a sinistra */}
       <div className="flex items-center justify-center md:justify-end md:w-auto mb-6 md:mb-0 bg-transparent ">
         <img
           src="/images/logo.png"
           alt="Logo TravelDiary"
-          className="w-48 sm:w-56 md:w-72 lg:w-80 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+          className="w-50 h-44 sm:h-full sm:w-56 md:w-72 lg:w-80 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
         />
       </div>
 
       {/* Form e toggle a destra */}
-      <div className="flex flex-col items-center justify-center p-6 w-full relative sm:w-[600px] 
+      <div className="flex flex-col items-center justify-center w-full relative sm:w-[600px] 
             md:w-[600px] lg:w-[600px] px-2 sm:px-4">
         {/* Toggle Login/Registrati */}
         <div className="relative flex mb-6 bg-linear-to-br from-white/20 via-white/10 to-transparent
@@ -56,7 +56,7 @@ function LoginRegisterPage() {
             layout
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className={`absolute top-1 bottom-1 w-1/2 rounded-full shadow-md ${isLogin
-              ? 'bg-linear-to-r from-orange-600/70 to-rose-500/60 left-1 dark:from-amber-400/60 dark:to-orange-500/50'
+              ? 'bg-linear-to-r from-orange-600 to-rose-500 left-1 dark:from-amber-400/60 dark:to-orange-500/50'
               : 'bg-linear-to-r from-blue-600/70 to-cyan-500/60 right-1 dark:from-blue-400/60 dark:to-indigo-500/50'
               }`}
           />
@@ -64,7 +64,7 @@ function LoginRegisterPage() {
             onClick={() => setIsLogin(true)}
             className={`cursor-pointer relative z-10 flex-1 text-center py-2 rounded-full font-semibold transition 
             ${isLogin ? 'text-gray-900' : 'text-white'}`}>
-            Login
+            Accedi
           </button>
           <button
             onClick={() => setIsLogin(false)}
@@ -89,7 +89,7 @@ function LoginRegisterPage() {
                 className="bg-linear-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl border border-white/40 
                 shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] rounded-3xl p-8 w-[400px] md:mx-auto flex flex-col">
 
-                <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Login</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-white drop-shadow">Accedi</h2>
 
                 { /* Email */}
                 <div className="mb-4">
