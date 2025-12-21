@@ -388,7 +388,7 @@ function TravelDays() {
                                         backdrop-blur-md border border-white/40 text-white cursor-pointer 
                                         rounded-full shadow-md transition-all duration-300 hover:scale-105
                                         hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
-                                        <FaBookOpen size={20} /> Approfondisci
+                                        <FaBookOpen size={20} /> Leggi di più
                                       </button>
                                     </div>
                                   </motion.div>
@@ -402,7 +402,7 @@ function TravelDays() {
                   </motion.div>
                 </div>
               ) : (
-                <p className="font-semibold text-center px-4 py-2 backdrop-blur-md rounded-full 
+                <p className="font-semibold text-center mt-8 px-4 py-2 backdrop-blur-md rounded-full 
                   bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
                   text-2sm text-white/70 italic">
                   Nessuna tappa presente
