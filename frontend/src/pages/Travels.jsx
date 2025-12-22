@@ -34,7 +34,7 @@ function Travels() {
 
 
   return (
-    <div className="relative min-h-screen p-8 overflow-visible">
+    <div className="relative p-8 overflow-visible">
 
       {/* Header */}
       <motion.div
@@ -136,9 +136,9 @@ function Travels() {
                       onClick={scrollLeft}
                       title={leftLabel}
                       className="pointer-events-auto absolute left-0 top-1/2 -translate-y-1/2 z-20
-                    opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white
-                    backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
-                    w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                      opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white
+                      backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
+                      w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
                       <FaArrowLeft size={20} />
                     </button>
 
@@ -147,9 +147,9 @@ function Travels() {
                       onClick={scrollRight}
                       title={rightLabel}
                       className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 z-20
-                    opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
-                    backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
-                    w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                      opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 hover:bg-white 
+                      backdrop-blur-xl cursor-pointer text-white hover:text-black border border-white/50
+                      w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
                       <FaArrowRight size={20} />
                     </button>
                   </div>
@@ -159,7 +159,7 @@ function Travels() {
                 <motion.div
                   ref={scrollRef}
                   className={`flex items-start gap-6 overflow-x-auto no-scrollbar px-6 py-4 scroll-smooth snap-x snap-mandatory
-                ${activeCard ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
+                  ${activeCard ? "overflow-x-hidden" : "overflow-x-auto"}`} // questo impedisce lo scroll quando una card è aperta
                   variants={{
                     hidden: { opacity: 1 },
                     visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
@@ -178,9 +178,9 @@ function Travels() {
                           key={v.id}
                           ref={(el) => (cardRefs.current[v.id] = el)} // assegno il ref 
                           className="min-w-[355px] sm:min-w-[485px] lg:min-w-[485px] snap-center
-                        group/card relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
-                        backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
-                        transition-all duration-300"
+                          group/card relative bg-linear-to-br from-white/20 via-white/10 to-transparent 
+                          backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden shadow-xl
+                          transition-all duration-300"
                           variants={{
                             hidden: { scale: 0, opacity: 0 },
                             visible: { scale: 1, opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
@@ -203,8 +203,8 @@ function Travels() {
                               <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-80"></div>
                             </div>
                           ) : (
-                            <div className="w-full h-52 bg-linear-to-br from-blue-200/40 to-orange-200/40 
-                        dark:from-slate-700/40 dark:to-slate-600/40 flex flex-col items-center justify-center text-gray-100">
+                            <div className="w-full h-52 bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
+                                flex flex-col items-center justify-center text-gray-100">
                               <FaRegImage className="text-4xl opacity-60" />
                               <span className="text-xl opacity-70">Nessuna Foto</span>
                             </div>
@@ -214,17 +214,17 @@ function Travels() {
                           <div
                             ref={menuRef}  // con questo il menù dropdown si può chiudere ovunque nel DOM
                             className={`absolute top-4 right-6 z-30 opacity-0 group-hover/card:opacity-100
-                          transition-opacity duration-300
-                          ${showActions ? "opacity-100" : ""}`}> {/* finche la card è aperta il bottone rimane visibile */}
+                            transition-opacity duration-300
+                            ${showActions ? "opacity-100" : ""}`}> {/* finche la card è aperta il bottone rimane visibile */}
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setOpenMenuId(openMenuId === v.id ? null : v.id);
                               }}
                               className="w-12 h-12 flex items-center justify-center
-                            rounded-3xl backdrop-blur-md
-                            border border-white/30 text-white hover:bg-white
-                            transition cursor-pointer hover:text-black"
+                              rounded-3xl backdrop-blur-md
+                              border border-white/30 text-white hover:bg-white
+                              transition cursor-pointer hover:text-black"
                               title={openMenuId ? "Chiudi Menù" : "Apri Menù"}>
                               <FaEllipsisV size={20} />
                             </button>
@@ -237,12 +237,12 @@ function Travels() {
                                   exit={{ opacity: 0, y: -10, scale: 0.98 }}
                                   transition={{ duration: 0.2 }}
                                   className="absolute right-0 mt-2 w-50 border border-white/30 
-                                rounded-xl shadow-xl overflow-hidden">
+                                  rounded-xl shadow-xl overflow-hidden">
 
                                   <Link
                                     to={`/travels/${v.id}/edit`}
                                     className="font-semibold flex items-center gap-3 px-4 py-3 text-white
-                                   bg-linear-to-br from-orange-600 to-yellow-500">
+                                    bg-linear-to-br from-orange-600 to-yellow-500">
                                     <FaEdit /> Modifica Viaggio
                                   </Link>
 
@@ -252,7 +252,7 @@ function Travels() {
                                       setOpenMenuId(null);
                                     }}
                                     className="font-semibold w-full flex items-center gap-3 px-4 py-3 text-white
-                                  bg-linear-to-br from-red-600 to-rose-500 cursor-pointer">
+                                    bg-linear-to-br from-red-600 to-rose-500 cursor-pointer">
                                     <FaTrash /> Cancella Viaggio
                                   </button>
                                 </motion.div>
@@ -283,10 +283,10 @@ function Travels() {
                                 transition={{ duration: 0.4 }}
                                 title={activeCard ? "Chiudi Anteprima Viaggio" : "Apri Anteprima Viaggio"}
                                 className={`cursor-pointer border border-white rounded-full w-12 h-12 
-                              flex items-center justify-center text-white
-                              transition-all duration-300 hover:bg-white hover:text-black
-                              opacity-0 group-hover/card:opacity-100
-                              ${showActions ? "opacity-100" : ""}`}>
+                                flex items-center justify-center text-white
+                                transition-all duration-300 hover:bg-white hover:text-black
+                                opacity-0 group-hover/card:opacity-100
+                                ${showActions ? "opacity-100" : ""}`}>
                                 <FaArrowDown size={20} />
                               </motion.button>
                             </div>
@@ -332,10 +332,10 @@ function Travels() {
                                     <Link
                                       to={`/travels/${v.id}/days`}
                                       className="flex-1 w-full font-semibold px-4 py-2 flex justify-center items-center gap-2 whitespace-nowrap
-                                    bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
-                                    backdrop-blur-md border border-white/40 text-white 
-                                    rounded-full shadow-md transition-all duration-300 hover:scale-105
-                                    hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                                      bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70
+                                      backdrop-blur-md border border-white/40 text-white 
+                                      rounded-full shadow-md transition-all duration-300 hover:scale-105
+                                      hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
                                       <FaCalendarDay size={20} className="mr-1" /> Vai alle Tappe
                                     </Link>
                                   </div>
@@ -351,9 +351,9 @@ function Travels() {
               </div>
             ) : (
               <p className="font-semibold text-center mt-8 px-4 py-2 backdrop-blur-md rounded-full 
-                  bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
-                  text-2sm text-white/70 italic">
-                Nessuna viaggio presente
+                bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
+                text-2sm text-white/70 italic">
+                Nessun Viaggio Presente
               </p>
             )}
           </div>

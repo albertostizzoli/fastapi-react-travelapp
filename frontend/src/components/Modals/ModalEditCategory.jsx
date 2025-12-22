@@ -32,7 +32,7 @@ function ModalEditCategory({ isOpen, onClose, categories, setCategories }) {
                         </h2>
 
                         {/* Lista categorie */}
-                        <div className="space-y-6 flex-1 overflow-y-auto pr-2 scrollbar">
+                        <div className="space-y-6 flex-1 overflow-y-auto p-3 scrollbar">
                             {travellers.map((cat) => (
                                 <div key={cat.category}>
                                     <h3 className="text-lg font-semibold text-white mb-2 drop-shadow-sm">

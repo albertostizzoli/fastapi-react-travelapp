@@ -405,7 +405,7 @@ function TravelDays() {
                 <p className="font-semibold text-center mt-8 px-4 py-2 backdrop-blur-md rounded-full 
                   bg-linear-to-br from-blue-200/40 to-orange-200/40 dark:from-slate-700/40 dark:to-slate-600/40 
                   text-2sm text-white/70 italic">
-                  Nessuna tappa presente
+                  Nessuna Tappa Presente
                 </p>
               )}
             </div>

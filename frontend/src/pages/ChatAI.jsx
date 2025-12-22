@@ -134,8 +134,8 @@ function ChatAI() {
                         onClick={handleRecommend}
                         disabled={isRecommending}
                         className={`w-full sm:w-auto font-semibold flex justify-center items-center gap-2 px-4 py-2 
-                        ${isRecommending ? "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 cursor-not-allowed"
-                                : "bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70 hover:scale-105"}
+                        ${isRecommending ? "bg-linear-to-br from-blue-600 to-purple-500 dark:from-blue-600/70 dark:to-purple-500/70 cursor-not-allowed"
+                        : "bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 hover:scale-105"}
                         backdrop-blur-md border border-white/40 text-white 
                         rounded-full shadow-md transition-all duration-300 cursor-pointer
                         hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] text-base sm:text-2sm`}>

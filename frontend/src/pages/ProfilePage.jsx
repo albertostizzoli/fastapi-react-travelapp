@@ -27,7 +27,7 @@ function ProfilePage() {
 
 
   return (
-    <div className="flex flex-col min-h-screen text-white sm:p-8 p-4 relative overflow-hidden">
+    <div className="flex flex-col text-white p-4 relative overflow-hidden">
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
 
@@ -149,7 +149,7 @@ function ProfilePage() {
                 <Link
                   to="/travels"
                   className="font-semibold flex justify-center items-center gap-2 px-4 py-2
-                  bg-linear-to-br from-yellow-600 to-red-500 dark:from-yellow-600/70 dark:to-red-500/70
+                  bg-linear-to-br from-lime-600 to-orange-500 dark:from-lime-600/70 dark:to-orange-500/70
                   backdrop-blur-md border border-white/40 text-white 
                   rounded-full shadow-md transition-all duration-300 hover:scale-105
                   hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
@@ -199,7 +199,7 @@ function ProfilePage() {
                   {recentTravels.slice(0, 1).map((travel, idx) => (
                     <li
                       key={idx}
-                      className="p-4 bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70
+                      className="p-4 bg-linear-to-br from-lime-600 to-orange-500 dark:from-lime-600/70 dark:to-orange-500/70
                       backdrop-blur-md rounded-3xl shadow-lg hover:scale-[1.03] hover:shadow-2xl 
                       transition-all duration-300 border border-white/40">
 
