@@ -90,7 +90,7 @@ function ExperienceSelect({ allExperiences, selectedExperiences, setEditForm}) {
           {selectedExperiences.map((exp, index) => (
             <span
               key={index}
-              className="bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70 
+              className="bg-linear-to-br from-blue-600 to-red-500 dark:from-blue-600/70 dark:to-red-500/70 
               px-3 py-1 rounded-full text-sm text-white flex items-center gap-2 shadow-md">
               {exp}
               <button
