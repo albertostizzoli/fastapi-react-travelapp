@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaCheck, FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
+import { FaCheck, FaEye, FaEyeSlash, FaTimes, FaCamera } from "react-icons/fa";
 import travellers from "../../store/travellers";
 import ExperienceSelect from "../Selects/ExperiencesSelect";
 
@@ -18,12 +18,26 @@ function EditProfileModal({
 
   const [password, setPassword] = useState(""); // stato per la password
   const [isFocused, setIsFocused] = useState(false); // stato per mostare modale per validazione password
+  const [photo, setPhoto] = useState(null); // stato per la foto profilo
   // stato per la validazione della password
   const [validation, setValidation] = useState({
     isValid: false,
     errors: { length: false, upper: false, lower: false, number: false, special: false },
   });
 
+  const fileInputRef = useRef(null); // riferimento all’input nascosto
+
+  // all’interno del componente
+  useEffect(() => {
+    if (!isOpen) {
+      setPhoto(null); // resetta l’anteprima quando il modale si chiude
+    } else {
+      // se editForm.photo esiste, impostalo come anteprima
+      if (editForm.photo) {
+        setPhoto(editForm.photo);
+      }
+    }
+  }, [isOpen, editForm.photo]);
 
   // aggiorna lo stato del form di modifica
   const handleChange = (e) => {
@@ -33,6 +47,24 @@ function EditProfileModal({
       [name]: files ? files[0] : value,
     }));
   };
+
+  // Funzione per gestire la selezione della foto
+  const handlePhotoSelect = () => {
+    fileInputRef.current.click(); // simula il click sull’input file nascosto
+  };
+
+  // Funzione per gestire il cambiamento del file selezionato
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+      setEditForm((prev) => ({
+        ...prev,
+        photo: file,
+      }));
+    }
+  };
+
 
   // Funzione per la validazione della password
   const validatePassword = (password) => {
@@ -204,13 +236,32 @@ function EditProfileModal({
               />
 
               {/* Upload immagine */}
-              <input
-                type="file"
-                name="photo"
-                accept="image/*"
-                onChange={handleChange}
-                className="w-full text-sm text-white cursor-pointer hover:text-white hover:underline transition"
-              />
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handlePhotoSelect}
+                  className=" font-semibold px-4 py-2 bg-linear-to-br from-blue-600 to-cyan-500 dark:from-blue-600/70 dark:to-cyan-500/70 
+                  backdrop-blur-md border border-white/40 text-white rounded-full shadow-md transition-all duration-300 ease-in-out 
+                  hover:scale-105 cursor-pointer flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]">
+                  <FaCamera size={20} /> Cambia Foto
+                </button>
+
+                {photo && (
+                  <img
+                    src={URL.createObjectURL(photo)}
+                    alt="Anteprima profilo"
+                    className="w-20 h-20 rounded-full object-cover ml-2 border border-white/40"
+                  />
+                )}
+
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  style={{ display: "none" }}
+                />
+              </div>
             </div>
 
             {/* Pulsanti */}
